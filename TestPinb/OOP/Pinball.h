@@ -20,12 +20,32 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifndef utils_h
-#define utils_h
 
+#ifndef Pinball_h
+#define Pinball_h
 
 #include "defines.h"
+#include "Vector.h"
 
-void myStrcpy(char *str1, const char *str2);
-long Millis();
+class PinballObject;
+class HardwareSerial;
+
+class Pinball
+{
+public:
+	Pinball(const char *szName, HardwareSerial *serial, bool master=false);
+	char *getName() { return m_szName; }
+	bool IsMaster() { return m_master; }
+	void LogMessage(const char *szMessage);
+	void AddPinballObject(PinballObject *Pinballobj);
+	void Init();
+	void Loop();
+
+private:
+	char m_szName[10];
+	bool m_master;
+	HardwareSerial *m_serial;
+	Vector<PinballObject *> m_PinballObjs;
+};
+
 #endif

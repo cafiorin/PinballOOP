@@ -2,14 +2,14 @@
 //
 
 #include "stdafx.h"
-#include "OOP\PinballArduino.h"
+#include "OOP\Pinball.h"
 #include "OOP\PinballObject.h"
 #include "OOP\HardwareSerial.h"
 
 int main()
 {
 	HardwareSerial *serial = new HardwareSerial();
-	PinballArduino *pPinballMaster = new PinballArduino("Master", serial, true);
+	Pinball *pPinballMaster = new Pinball("Master", serial, true);
 
 	PinballObject *pObj1 = new PinballObject("t1", pPinballMaster);
 	PinballObject *pObj2 = new PinballObject("t2", pPinballMaster);

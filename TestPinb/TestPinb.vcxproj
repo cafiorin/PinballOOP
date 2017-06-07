@@ -147,8 +147,11 @@
   <ItemGroup>
     <ClInclude Include="OOP\defines.h" />
     <ClInclude Include="OOP\HardwareSerial.h" />
-    <ClInclude Include="OOP\PinballArduino.h" />
+    <ClInclude Include="OOP\Input.h" />
+    <ClInclude Include="OOP\Output.h" />
+    <ClInclude Include="OOP\Pinball.h" />
     <ClInclude Include="OOP\PinballObject.h" />
+    <ClInclude Include="OOP\Port.h" />
     <ClInclude Include="OOP\Utils.h" />
     <ClInclude Include="OOP\Vector.h" />
     <ClInclude Include="stdafx.h" />
@@ -156,8 +159,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OOP\HardwareSerial.cpp" />
-    <ClCompile Include="OOP\PinballArduino.cpp" />
+    <ClCompile Include="OOP\Input.cpp" />
+    <ClCompile Include="OOP\Output.cpp" />
+    <ClCompile Include="OOP\Pinball.cpp" />
     <ClCompile Include="OOP\PinballObject.cpp" />
+    <ClCompile Include="OOP\Port.cpp" />
     <ClCompile Include="OOP\Utils.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TestPinb.cpp" />

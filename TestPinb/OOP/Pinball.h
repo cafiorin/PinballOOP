@@ -34,6 +34,7 @@ class Pinball
 {
 public:
 	Pinball(const char *szName, HardwareSerial *serial, bool master=false);
+	virtual ~Pinball();
 	char *getName() { return m_szName; }
 	bool IsMaster() { return m_master; }
 	void LogMessage(const char *szMessage);

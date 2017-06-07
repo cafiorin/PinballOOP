@@ -49,11 +49,17 @@ Port::Port(Pinball *pinball, const char *szName, int portNumber):PinballObject(s
 {
     m_enabled = true;
 	m_portNumber = portNumber;
-	Init();
+	
+	#ifdef DEBUGMESSAGES
+	Debug("Port Constructor");
+	#endif
 }
 
 //-------------------------------------------------------//
 Port::~Port()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Port Destructor");
+	#endif
 }

@@ -33,6 +33,25 @@ Pinball::Pinball(const char *szName, HardwareSerial *serial, bool master)
 	strcpy(m_szName, szName);
 	m_master = master;
 	m_serial = serial;
+	
+	#ifdef DEBUGMESSAGES
+	LogMessage("Pinball Constructor");
+	#endif
+}
+
+/*---------------------------------------------------------------------*/
+Pinball::~Pinball()
+/*---------------------------------------------------------------------*/
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage("Pinball Destructor");
+	#endif
+
+	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
+	{
+		delete m_PinballObjs[i];
+	}
+
 }
 
 /*---------------------------------------------------------------------*/
@@ -48,6 +67,10 @@ void Pinball::LogMessage(const char *szMessage)
 void Pinball::AddPinballObject(PinballObject *Pinballobj)
 /*---------------------------------------------------------------------*/
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::AddPinballObject");
+	#endif
+
 	m_PinballObjs.push_back(Pinballobj);
 }
 
@@ -55,6 +78,10 @@ void Pinball::AddPinballObject(PinballObject *Pinballobj)
 void Pinball::Init()
 /*---------------------------------------------------------------------*/
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::Init");
+	#endif
+
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
 		m_PinballObjs[i]->Init();
@@ -66,6 +93,10 @@ void Pinball::Init()
 void Pinball::Loop()
 /*---------------------------------------------------------------------*/
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::Loop");
+	#endif
+
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
 		m_PinballObjs[i]->Loop();

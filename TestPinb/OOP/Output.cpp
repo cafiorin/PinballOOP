@@ -24,21 +24,31 @@
 
 
 //-------------------------------------------------------//
-Output::Output(Pinball *pinball, const char *szName, int port):Port(pinball,szName, port)
+Output::Output(const char *szName, Pinball *pinball, int port):Port(pinball,szName, port)
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Output Constructor");
+	#endif
 }
 
 //-------------------------------------------------------//
 Output::~Output()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Output Destructor");
+	#endif
 }
 
 //-------------------------------------------------------//
 bool Output::Init()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Output::Init");
+	#endif
+
 	#ifdef ARDUINO
     pinMode(m_portNumber, OUTPUT);
 	#endif
@@ -52,6 +62,10 @@ bool Output::Init()
 void Output::TurnOn()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Output::TurnOn");
+	#endif
+
 	if(m_enabled)
 	{
 		m_turnOn = true;
@@ -66,6 +80,10 @@ void Output::TurnOn()
 void Output::TurnOff()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Output::TurnOff");
+	#endif
+
 	if(m_enabled)
 	{
 		m_turnOn = false;

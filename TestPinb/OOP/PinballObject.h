@@ -32,6 +32,7 @@ class PinballObject
 {
 public:
 	PinballObject(const char *szName, Pinball *pinball);
+	virtual ~PinballObject();
 	char *getName() { return m_szName; }
 	bool IsEnabled() { return m_enabled; }
 	void LogMessage(const char *szMessage);

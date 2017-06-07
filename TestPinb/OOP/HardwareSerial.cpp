@@ -40,4 +40,5 @@ void HardwareSerial::println(const char *szLog)
 /*---------------------------------------------------------------------*/
 {
 	printf(szLog);
+	printf("\n");
 }

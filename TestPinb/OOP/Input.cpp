@@ -23,43 +23,64 @@
 #include "Input.h"
 
 //-------------------------------------------------------//
-Input::Input(Pinball *pinball, const char *szName, int portNumber):Port(pinball,szName,portNumber)
+Input::Input(const char *szName, Pinball *pinball, int portNumber):Port(pinball,szName,portNumber)
 //-------------------------------------------------------//
 {
 	m_debounceDelay=50;
+	
+	#ifdef DEBUGMESSAGES
+	Debug("Input Constructor");
+	#endif
+	
+	#ifdef DOS
+	m_emulateInput = false;
+	#endif
+
+	Init();
 }
 
 //-------------------------------------------------------//
 Input::~Input()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Input Destructor");
+	#endif
 }
 
 //-------------------------------------------------------//
 bool Input::Init()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Input::Init");
+	#endif
+
 	#ifdef ARDUINO
 	pinMode(m_portNumber, INPUT);
 	#endif
 
 	m_startReading = false;
-	m_lastState = CheckPort();
+	m_lastState = GetInput();
 	m_lastDebounceTime = Millis();
 
 	return true;
 }
 
 //-------------------------------------------------------//
-bool Input::CheckPort()
+bool Input::GetInput()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Input::GetInput");
+	#endif
+
 	#ifdef ARDUINO
 	return (digitalRead(m_portNumber) == LOW);
 	#endif
 
 	#ifdef DOS
-	return true;
+	return m_emulateInput;
 	#endif
 }
 
@@ -67,12 +88,16 @@ bool Input::CheckPort()
 bool Input::CheckEdgePositive()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Input::CheckEdgePositive");
+	#endif
+
   bool edge = false;
   if(m_enabled)
   {
-	  bool reading = CheckPort();
+	  bool reading = GetInput();
 
-	  // If the switch changed, due to noise or pressing:
+	  // If the input changed, due to noise or pressing:
 	  if (reading != m_lastState && reading == true && m_lastState == false) 
 	  {
 		// reset the debouncing timer
@@ -82,7 +107,7 @@ bool Input::CheckEdgePositive()
 
 	  if (m_startReading && ((Millis() - m_lastDebounceTime) > m_debounceDelay)) 
 	  {
-		// if the button state has changed:
+		// if input state has changed:
 		if (reading == true) 
 		{
 			edge = true;

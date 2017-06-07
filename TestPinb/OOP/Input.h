@@ -31,20 +31,26 @@ class Input : public Port
 {
 
 public:
-	Input(Pinball *pinball, const char *szName, int portNumber);
+	Input(const char *szName, Pinball *pinball, int portNumber);
 	virtual ~Input();
-	bool CheckPort();
+	bool GetInput();
 	bool CheckEdgePositive();
 	void SetDebounceDelay(long debounce){m_debounceDelay = debounce;}
-
-protected:
 	virtual bool Init();
+	
+	#ifdef DOS
+	void EmulateInput(bool value) { m_emulateInput = value; }
+	#endif
 
 private:
 	bool m_lastState;
 	long m_lastDebounceTime;  // the last time the output pin was toggled
 	long m_debounceDelay;    // the debounce time; increase if the output flickers
 	bool m_startReading;
+	
+	#ifdef DOS
+	bool m_emulateInput;
+	#endif
 
 };
 #endif // !defined(EA_493584A8_374D_4c41_813B_7DEB885806F1__INCLUDED_)

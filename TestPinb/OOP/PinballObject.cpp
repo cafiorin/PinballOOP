@@ -32,18 +32,31 @@ PinballObject::PinballObject(const char *szName, Pinball *pinball)
 	m_enabled = true;
 	m_pinball = pinball;
 	
+	#ifdef DEBUGMESSAGES
+	Debug("PinballObject Constructor");
+	#endif
+
 	if(m_pinball != NULL)
 		m_pinball->AddPinballObject(this);
-
-	Init();
 }
+
+/*---------------------------------------------------------------------*/
+PinballObject::~PinballObject()
+/*---------------------------------------------------------------------*/
+{
+	#ifdef DEBUGMESSAGES
+	Debug("PinballObject Destructor");
+	#endif
+
+}
+
 
 /*---------------------------------------------------------------------*/
 void PinballObject::LogMessage(const char *szMessage)
 /*---------------------------------------------------------------------*/
 {
-	char szMsg[30];
-	sprintf(szMsg, "[%s]:%s\n", m_szName, szMessage);
+	char szMsg[50];
+	sprintf(szMsg, "[%s]:%s", m_szName, szMessage);
 	
 	if (m_pinball != NULL)
 		m_pinball->LogMessage(szMsg);
@@ -63,7 +76,7 @@ bool PinballObject::Init()
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Init");
+	Debug("PinballObject::Init");
 	#endif
 
 	return true;
@@ -74,7 +87,7 @@ bool PinballObject::Loop()
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Loop");
+	Debug("PinballObject::Loop");
 	#endif
 
 	return false;

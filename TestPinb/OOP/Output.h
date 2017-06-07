@@ -29,15 +29,14 @@
 class Output : public Port
 {
 public:
-	Output(Pinball *pinball, const char *szName, int portNumber);
+	Output(const char *szName, Pinball *pinball, int portNumber);
 	virtual ~Output();
 	bool IsTurnOn(){return m_turnOn;}
 	void TurnOn();
 	void TurnOff();
-
+	virtual bool Init();
 
 protected:
-	virtual bool Init();
 	bool m_turnOn;
 };
 #endif // !defined(EA_A5DC726B_BD74_4c6c_8409_19F521E789F5__INCLUDED_)

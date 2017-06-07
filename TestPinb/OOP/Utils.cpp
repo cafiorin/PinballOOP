@@ -3,10 +3,10 @@
 void myStrcpy(char *str1, const char *str2)
 {
 	int bufsize = sizeof(str1);
-	int len = strlen(str2);
+	int len = (int) strlen(str2);
 	if (len < bufsize)
 	{
-		strncpy(str1, str2, len);
+		strcpy(str1, str2);
 	}
 	else
 	{

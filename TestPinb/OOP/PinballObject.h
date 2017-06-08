@@ -24,7 +24,7 @@ public:
 
 //virtual methods	
 	virtual bool Init();
-	virtual bool Loop();
+	virtual bool Loop(int value);
 
 private:
 	char m_szName[10];

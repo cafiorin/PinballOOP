@@ -24,7 +24,7 @@ public:
 	void LogMessage(const char *szMessage);
 	void AddPinballObject(PinballObject *Pinballobj);
 	void Init();
-	void Loop();
+	void Loop(int value);
 
 private:
 	char m_szName[10];

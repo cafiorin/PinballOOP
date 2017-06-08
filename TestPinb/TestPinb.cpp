@@ -25,21 +25,38 @@ int main()
 	//PinballObject *pObj2 = new PinballObject("t2", pPinballMaster);
 	//PinballObject *pObj3 = new PinballObject("t3", pPinballMaster);
 	printf("==== Input === \n\n");
-	PinballObject *pInput = new Input("i0", pPinballMaster,1);
+	PinballObject *pInput1 = new Input("input1", pPinballMaster,1);
+	PinballObject *pInput2 = new Input("input2", pPinballMaster,2);
+	PinballObject *pInput3 = new Input("input3", pPinballMaster,3);
 
 	printf("\n\n==== Output === \n\n");
-	PinballObject *pOutput= new Output("i1", pPinballMaster,2);
+	PinballObject *pOutput= new Output("output", pPinballMaster,2);
 
 	printf("\n\n==== Init === \n\n");
 	pPinballMaster->Init();
 
-	printf("\n\n==== Loop === \n\n");
-	pPinballMaster->Loop();
+	printf("\n\n==== START LOOP use ESC to exit === \n\n");
+	int ch = 0;
+
+	do
+	{
+		if (_kbhit())
+		{
+			ch = _getch();
+			printf("Key pressed : %c\n", ch);
+		}
+		else
+		{
+			ch = 0;
+		}
+
+		//printf("\n\n==== Loop === \n\n");
+		pPinballMaster->Loop(ch - '0');
+	} while (ch != 27);
 
 	printf("\n\n==== Destruct === \n\n");
 	delete  pPinballMaster;
 
-	getchar();
     return 0;
 }
 

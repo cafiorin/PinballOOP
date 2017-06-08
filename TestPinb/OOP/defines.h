@@ -9,6 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 #define DEBUGMESSAGES
+//#define DEBUGMESSAGESLOOP
 
 #define DOS
 //#define ARDUINO
@@ -24,6 +25,11 @@ http://pinballhomemade.blogspot.com.br
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <conio.h>
+#include <iostream>
+
+using namespace std;
+
 #endif // DOS
 
 #endif

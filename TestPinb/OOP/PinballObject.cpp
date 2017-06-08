@@ -67,10 +67,10 @@ bool PinballObject::Init()
 }
 
 /*---------------------------------------------------------------------*/
-bool PinballObject::Loop()
+bool PinballObject::Loop(int value)
 /*---------------------------------------------------------------------*/
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESLOOP
 	Debug("PinballObject::Loop");
 	#endif
 

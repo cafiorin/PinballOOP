@@ -22,7 +22,8 @@ public:
 	bool CheckEdgePositive();
 	void SetDebounceDelay(long debounce){m_debounceDelay = debounce;}
 	virtual bool Init();
-	
+	virtual bool Loop(int value);
+
 	#ifdef DOS
 	void EmulateInput(bool value) { m_emulateInput = value; }
 	#endif

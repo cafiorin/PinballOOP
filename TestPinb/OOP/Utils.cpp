@@ -30,7 +30,7 @@ long Millis()
 	#endif
 	
 	#ifdef DOS
-	return (long) time(NULL);
+	return (long) (time(NULL)*1000);
 	#endif
 
 }

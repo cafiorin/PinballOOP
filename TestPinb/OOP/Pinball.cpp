@@ -75,15 +75,22 @@ void Pinball::Init()
 
 
 /*---------------------------------------------------------------------*/
-void Pinball::Loop()
+void Pinball::Loop(int value)
 /*---------------------------------------------------------------------*/
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESLOOP
 	LogMessage("Pinball::Loop");
 	#endif
 
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
-		m_PinballObjs[i]->Loop();
+		if (m_PinballObjs[i]->Loop(value))
+		{
+			#ifdef DEBUGMESSAGES
+			char szMsg[50];
+			sprintf(szMsg, "%s Loop return true", m_PinballObjs[i]->getName());
+			LogMessage(szMsg);
+			#endif
+		}
 	}
 }

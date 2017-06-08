@@ -56,7 +56,7 @@ bool Input::Init()
 bool Input::GetInput()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESLOOP
 	Debug("Input::GetInput");
 	#endif
 
@@ -65,7 +65,13 @@ bool Input::GetInput()
 	#endif
 
 	#ifdef DOS
-	return m_emulateInput;
+	if (m_emulateInput)
+	{
+		m_emulateInput=false;
+		return true;
+	}
+
+	return false;
 	#endif
 }
 
@@ -73,35 +79,45 @@ bool Input::GetInput()
 bool Input::CheckEdgePositive()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESLOOP
 	Debug("Input::CheckEdgePositive");
 	#endif
 
-  bool edge = false;
   if(m_enabled)
   {
+	  bool edge = false;
 	  bool reading = GetInput();
 
 	  // If the input changed, due to noise or pressing:
 	  if (reading != m_lastState && reading == true && m_lastState == false) 
 	  {
-		// reset the debouncing timer
-		m_lastDebounceTime = Millis();
-		m_startReading = true;
-	  }
-
-	  if (m_startReading && ((Millis() - m_lastDebounceTime) > m_debounceDelay)) 
-	  {
-		// if input state has changed:
-		if (reading == true) 
-		{
-			edge = true;
-		}
-		m_startReading = false;
+		  if ((Millis() - m_lastDebounceTime) > m_debounceDelay)
+		  {
+			  // if input state has changed:
+			  edge = true;
+		  }
+		  // reset the debouncing timer
+		  m_lastDebounceTime = Millis();
 	  }
 
 	  m_lastState = reading;
+	  return edge;
   }
-  return edge;
+  return false;
 }
 
+//-------------------------------------------------------//
+bool Input::Loop(int value)
+//-------------------------------------------------------//
+{
+#ifdef DEBUGMESSAGESLOOP
+	Debug("Input::Loop");
+#endif
+
+#ifdef DOS
+	if (m_portNumber == value) 
+		m_emulateInput = !m_emulateInput;
+#endif
+
+	return CheckEdgePositive();
+}

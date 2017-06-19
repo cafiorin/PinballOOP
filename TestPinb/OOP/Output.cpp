@@ -15,6 +15,8 @@ Output::Output(const char *szName, Pinball *pinball, int port):Port(pinball,szNa
 	#ifdef DEBUGMESSAGES
 	Debug("Output Constructor");
 	#endif
+
+	Init();
 }
 
 //-------------------------------------------------------//
@@ -47,12 +49,12 @@ bool Output::Init()
 void Output::TurnOn()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
-	Debug("Output::TurnOn");
-	#endif
-
 	if(m_enabled)
 	{
+		#ifdef DEBUGMESSAGES
+		Debug("Output::TurnOn");
+		#endif
+
 		m_turnOn = true;
 
 		#ifdef ARDUINO
@@ -62,15 +64,56 @@ void Output::TurnOn()
 }
 
 //-------------------------------------------------------//
+void Output::TurnOnByTimer(long time)
+//-------------------------------------------------------//
+{
+	if (m_enabled)
+	{
+		#ifdef DEBUGMESSAGES
+		Debug("Output::TurnOnByTime");
+		#endif
+
+		m_timerDelay = time;
+		m_lastTimer = Millis();
+		TurnOn();
+	}
+}
+
+//-------------------------------------------------------//
+bool Output::Loop(int value)
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGESLOOP
+	Debug("Output::Loop");
+	#endif
+
+	if (m_enabled && m_timerDelay > 0)
+	{
+		if ((Millis() - m_lastTimer) > m_timerDelay)
+		{
+			#ifdef DEBUGMESSAGES
+			Debug("Output::Timeout !");
+			#endif
+
+			TurnOff();
+			return true;
+		}
+	}
+	return false;
+}
+
+//-------------------------------------------------------//
 void Output::TurnOff()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
-	Debug("Output::TurnOff");
-	#endif
 
 	if(m_enabled)
 	{
+		#ifdef DEBUGMESSAGES
+		Debug("Output::TurnOff");
+		#endif
+
+		m_timerDelay = 0;
 		m_turnOn = false;
 
 		#ifdef ARDUINO

@@ -30,13 +30,16 @@ int main()
 	PinballObject *pInput3 = new Input("input3", pPinballMaster,3);
 
 	printf("\n\n==== Output === \n\n");
-	PinballObject *pOutput= new Output("output", pPinballMaster,2);
+	Output *pOutput= new Output("output", pPinballMaster,2);
 
 	printf("\n\n==== Init === \n\n");
 	pPinballMaster->Init();
 
 	printf("\n\n==== START LOOP use ESC to exit === \n\n");
 	int ch = 0;
+
+	//Test output
+	pOutput->TurnOnByTimer(2000);
 
 	do
 	{
@@ -49,6 +52,7 @@ int main()
 		{
 			ch = 0;
 		}
+
 
 		//printf("\n\n==== Loop === \n\n");
 		pPinballMaster->Loop(ch - '0');

@@ -15,6 +15,7 @@ http://pinballhomemade.blogspot.com.br
 #include "OOP\HardwareSerial.h"
 #include "OOP\Input.h"
 #include "OOP\Output.h"
+#include "OOP\SlingShot.h"
 
 int main()
 {
@@ -32,14 +33,18 @@ int main()
 	printf("\n\n==== Output === \n\n");
 	Output *pOutput= new Output("output", pPinballMaster,2);
 
+	printf("\n\n==== SlingShot === \n\n");
+	SlingShot *pSling = new SlingShot("sling", pPinballMaster, 3,4,5);
+
+
 	printf("\n\n==== Init === \n\n");
 	pPinballMaster->Init();
 
-	printf("\n\n==== START LOOP use ESC to exit === \n\n");
-	int ch = 0;
-
 	//Test output
 	pOutput->TurnOnByTimer(2000);
+
+	printf("\n\n==== START LOOP use ESC to exit === \n\n");
+	int ch = 0;
 
 	do
 	{

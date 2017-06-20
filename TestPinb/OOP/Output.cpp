@@ -16,6 +16,8 @@ Output::Output(const char *szName, Pinball *pinball, int port):Port(pinball,szNa
 	Debug("Output Constructor");
 	#endif
 
+	m_TimerOn = new Timer(100, "TOon", pinball);
+
 	Init();
 }
 
@@ -74,7 +76,7 @@ void Output::TurnOnByTimer(long time)
 		#endif
 
 		m_timerDelay = time;
-		m_lastTimer = Millis();
+		m_TimerOn->Init();
 		TurnOn();
 	}
 }
@@ -89,7 +91,7 @@ bool Output::Loop(int value)
 
 	if (m_enabled && m_timerDelay > 0)
 	{
-		if ((Millis() - m_lastTimer) > m_timerDelay)
+		if (m_TimerOn->Check(m_timerDelay))
 		{
 			#ifdef DEBUGMESSAGES
 			Debug("Output::Timeout !");

@@ -11,12 +11,13 @@ http://pinballhomemade.blogspot.com.br
 Input::Input(const char *szName, Pinball *pinball, int portNumber):Port(pinball,szName,portNumber)
 //-------------------------------------------------------//
 {
-	m_debounceDelay=50;
-	
 	#ifdef DEBUGMESSAGES
 	Debug("Input Constructor");
 	#endif
-	
+
+	m_TimerDebounce = new Timer(m_debounceDelay, "TimerD", pinball);
+	m_debounceDelay = 50;
+
 	#ifdef DOS
 	m_emulateInput = false;
 	#endif
@@ -47,7 +48,7 @@ bool Input::Init()
 
 	m_startReading = false;
 	m_lastState = GetInput();
-	m_lastDebounceTime = Millis();
+	m_TimerDebounce->Init();
 
 	return true;
 }
@@ -91,13 +92,13 @@ bool Input::CheckEdgePositive()
 	  // If the input changed, due to noise or pressing:
 	  if (reading != m_lastState && reading == true && m_lastState == false) 
 	  {
-		  if ((Millis() - m_lastDebounceTime) > m_debounceDelay)
+		  if (m_TimerDebounce->Check())
 		  {
 			  // if input state has changed:
 			  edge = true;
 		  }
 		  // reset the debouncing timer
-		  m_lastDebounceTime = Millis();
+		  m_TimerDebounce->Init();
 	  }
 
 	  m_lastState = reading;
@@ -119,5 +120,5 @@ bool Input::Loop(int value)
 		m_emulateInput = !m_emulateInput;
 #endif
 
-	return CheckEdgePositive();
+	return false;
 }

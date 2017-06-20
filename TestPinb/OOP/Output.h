@@ -11,6 +11,7 @@ http://pinballhomemade.blogspot.com.br
 #include "defines.h"
 #include "Utils.h"
 #include "Port.h"
+#include "Timer.h"
 
 class Output : public Port
 {
@@ -29,6 +30,6 @@ protected:
 	long m_timerDelay;
 
 private:	
-	long m_lastTimer;
+	Timer *m_TimerOn;
 };
 #endif // !defined(EA_A5DC726B_BD74_4c6c_8409_19F521E789F5__INCLUDED_)

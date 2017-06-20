@@ -11,6 +11,7 @@ http://pinballhomemade.blogspot.com.br
 #include "defines.h"
 #include "Utils.h"
 #include "Port.h"
+#include "Timer.h"
 
 class Input : public Port
 {
@@ -30,10 +31,10 @@ public:
 
 private:
 	bool m_lastState;
-	long m_lastDebounceTime;  // the last time the output pin was toggled
 	long m_debounceDelay;    // the debounce time; increase if the output flickers
 	bool m_startReading;
-	
+	Timer *m_TimerDebounce;
+
 	#ifdef DOS
 	bool m_emulateInput;
 	#endif

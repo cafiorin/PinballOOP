@@ -6,8 +6,8 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
-#ifndef HardwareSerial_h
-#define HardwareSerial_h
+#ifndef HardwareSerial__INCLUDED_
+#define HardwareSerial__INCLUDED_
 
 #include "defines.h"
 

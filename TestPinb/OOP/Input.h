@@ -5,8 +5,8 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#if !defined(EA_493584A8_374D_4c41_813B_7DEB885806F1__INCLUDED_)
-#define EA_493584A8_374D_4c41_813B_7DEB885806F1__INCLUDED_
+#if !defined(_Input__INCLUDED_)
+#define _Input__INCLUDED_
 
 #include "defines.h"
 #include "Utils.h"
@@ -40,4 +40,4 @@ private:
 	#endif
 
 };
-#endif // !defined(EA_493584A8_374D_4c41_813B_7DEB885806F1__INCLUDED_)
+#endif // !defined(_Input__INCLUDED_)

@@ -5,8 +5,8 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifndef PinballObject_h
-#define PinballObject_h
+#ifndef PinballObject__INCLUDED_
+#define PinballObject__INCLUDED_
 
 #include "defines.h"
 

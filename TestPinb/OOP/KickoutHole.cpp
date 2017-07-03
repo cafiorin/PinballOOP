@@ -41,6 +41,13 @@ bool KickoutHole::Init()
 	Debug("KickoutHole::Init");
 	#endif
 
+	m_ball = false;
+	if (m_input1->GetInput())
+	{
+		m_output->TurnOnByTimer();
+		return true;
+	}
+
 	return false;
 }
 

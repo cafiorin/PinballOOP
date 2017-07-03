@@ -5,8 +5,8 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifndef Vector_h
-#define Vector_h
+#ifndef Vector__INCLUDED_
+#define Vector__INCLUDED_
 
 // Minimal class to replace std::vector
 template<typename Data>

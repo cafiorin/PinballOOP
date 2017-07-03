@@ -5,8 +5,8 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#if !defined(EA_6839F9BC_FCE5_403e_AC3C_D7C5DF31399B__INCLUDED_)
-#define EA_6839F9BC_FCE5_403e_AC3C_D7C5DF31399B__INCLUDED_
+#if !defined(Port__INCLUDED_)
+#define Port__INCLUDED_
 
 #include "defines.h"
 #include "PinballObject.h"
@@ -22,4 +22,4 @@ protected:
 	int m_portNumber;
 
 };
-#endif // !defined(EA_6839F9BC_FCE5_403e_AC3C_D7C5DF31399B__INCLUDED_)
+#endif // !defined(Port__INCLUDED_)

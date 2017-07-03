@@ -20,11 +20,21 @@ public:
 	virtual bool Loop(int value);
 
 	bool Check(long time=0);
+	void ChangeValue(long time) 
+	{ 
+		m_time = time; 
+		Init();
+	}
 
 protected:
+	#ifdef DOS
+	clock_t m_time;
+	clock_t m_lastTime;  // the last time
+	#endif
+	
+	#ifdef ARDUINO
 	long m_time;
 	long m_lastTime;  // the last time
-
-
+	#endif
 };
 #endif // !defined(Timer__INCLUDED_)

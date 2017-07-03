@@ -23,14 +23,25 @@ void myStrcpy(char *str1, const char *str2)
 
 }
 
+#ifdef ARDUINO
 long Millis()
 {
-	#ifdef ARDUINO
 	return millis();
-	#endif
-	
-	#ifdef DOS
-	return (long) (time(NULL)*1000);
-	#endif
-
 }
+
+#endif
+
+#ifdef DOS
+clock_t Millis()
+{
+	return clock();
+}
+
+long timediff(clock_t t2, clock_t t1) 
+{
+	long elapsed;
+	elapsed = ((double)t2 - t1) / CLOCKS_PER_SEC * 1000;
+	return elapsed;
+}
+#endif
+

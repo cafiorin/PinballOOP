@@ -49,16 +49,26 @@ bool Timer::Check(long time /*=0 default*/)
 {
 	if (m_enabled)
 	{
-		#ifdef DEBUGMESSAGES
+		#ifdef DEBUGMESSAGESLOOP
 		Debug("Timer::Check");
 		#endif
 
 		bool ret = false;
 
+		#ifdef ARDUINO
 		if (time == 0)
 			ret = ((Millis() - m_lastTime) > m_time);
 		else
 			ret = ((Millis() - m_lastTime) > time);
+		#endif
+
+		#ifdef DOS
+		if (time == 0)
+			ret = (timediff(Millis() , m_lastTime) > m_time);
+		else
+			ret = (timediff(Millis() , m_lastTime) > time);
+		#endif
+
 
 		if (ret)
 			m_enabled = false;

@@ -16,32 +16,30 @@ http://pinballhomemade.blogspot.com.br
 #include "OOP\Input.h"
 #include "OOP\Output.h"
 #include "OOP\SlingShot.h"
+#include "OOP\Bumper.h"
+#include "OOP\KickoutHole.h"
 
 int main()
 {
 	HardwareSerial *serial = new HardwareSerial();
 	Pinball *pPinballMaster = new Pinball("Master", serial, true);
 
-	//PinballObject *pObj1 = new PinballObject("t1", pPinballMaster);
-	//PinballObject *pObj2 = new PinballObject("t2", pPinballMaster);
-	//PinballObject *pObj3 = new PinballObject("t3", pPinballMaster);
 	printf("==== Input === \n\n");
 	PinballObject *pInput1 = new Input("input1", pPinballMaster,1);
-	PinballObject *pInput2 = new Input("input2", pPinballMaster,2);
-	//PinballObject *pInput3 = new Input("input3", pPinballMaster,3);
 
 	printf("\n\n==== Output === \n\n");
 	Output *pOutput= new Output("output", pPinballMaster,2);
 
-	printf("\n\n==== SlingShot === \n\n");
-	SlingShot *pSling = new SlingShot("sling", pPinballMaster, 3,4,5);
-
+	printf("\n\n==== SlingShot, Bumper and KickoutHole === \n\n");
+	SlingShot *pSling = new SlingShot("sling", pPinballMaster, 3, 4, 5);
+	Bumper *pBumper = new Bumper("bumper", pPinballMaster, 6, 7);
+	KickoutHole *pHole = new KickoutHole("hole", pPinballMaster, 8, 9);
 
 	printf("\n\n==== Init === \n\n");
 	pPinballMaster->Init();
 
 	//Test output
-	pOutput->TurnOnByTimer(2000);
+	pOutput->TurnOnByTimer(500);
 
 	printf("\n\n==== START LOOP use ESC to exit === \n\n");
 	int ch = 0;

@@ -20,7 +20,26 @@ class Vector
     Vector(Vector const &other) : d_size(other.d_size), d_capacity(other.d_capacity), d_data(0) { d_data = (Data *)malloc(d_capacity*sizeof(Data)); memcpy(d_data, other.d_data, d_size*sizeof(Data)); }; // Copy constuctor
     ~Vector() { free(d_data); }; // Destructor
     Vector &operator=(Vector const &other) { free(d_data); d_size = other.d_size; d_capacity = other.d_capacity; d_data = (Data *)malloc(d_capacity*sizeof(Data)); memcpy(d_data, other.d_data, d_size*sizeof(Data)); return *this; }; // Needed for memory management
-    void push_back(Data const &x) { if (d_capacity == d_size) resize(); d_data[d_size++] = x; }; // Adds new value. If needed, allocates more space
+    void push_back(Data const &x) 
+	{ 
+		if (d_capacity == d_size) resize(); 
+		d_data[d_size++] = x; 
+	}; 
+
+	void pop_back(Data const &x)
+	{
+		bool start_copy = false;
+		for (int i = 0; i < d_size-1; i++)
+		{
+			if (start_copy || d_data[i] == x)
+			{
+				start_copy = true;
+				d_data[i] = d_data[i + 1];
+			}
+		}
+		d_size--;
+	};
+	// Adds new value. If needed, allocates more space
     size_t size() const { return d_size; }; // Size getter
     Data const &operator[](size_t idx) const { return d_data[idx]; }; // Const getter
     Data &operator[](size_t idx) { return d_data[idx]; }; // Changeable getter

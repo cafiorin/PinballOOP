@@ -32,6 +32,8 @@ PinballObject::~PinballObject()
 	Debug("PinballObject Destructor");
 	#endif
 
+	if (m_pinball != NULL)
+		m_pinball->RemovePinballObject(this);
 }
 
 

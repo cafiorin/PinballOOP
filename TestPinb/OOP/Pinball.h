@@ -23,6 +23,7 @@ public:
 	bool IsMaster() { return m_master; }
 	void LogMessage(const char *szMessage);
 	void AddPinballObject(PinballObject *Pinballobj);
+	void RemovePinballObject(PinballObject *Pinballobj);
 	void Init();
 	void Loop(int value);
 

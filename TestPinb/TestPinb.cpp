@@ -28,7 +28,7 @@ int main()
 	printf("==== Input === \n\n");
 	PinballObject *pInput1 = new Input("input1", pPinballMaster,1);
 	PinballObject *pInput2 = new Input("input2", pPinballMaster,2);
-	PinballObject *pInput3 = new Input("input3", pPinballMaster,3);
+	//PinballObject *pInput3 = new Input("input3", pPinballMaster,3);
 
 	printf("\n\n==== Output === \n\n");
 	Output *pOutput= new Output("output", pPinballMaster,2);

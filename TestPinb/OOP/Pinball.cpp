@@ -60,6 +60,18 @@ void Pinball::AddPinballObject(PinballObject *Pinballobj)
 }
 
 /*---------------------------------------------------------------------*/
+void Pinball::RemovePinballObject(PinballObject *Pinballobj)
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::RemovePinballObject");
+#endif
+
+	m_PinballObjs.pop_back(Pinballobj);
+}
+
+
+/*---------------------------------------------------------------------*/
 void Pinball::Init()
 /*---------------------------------------------------------------------*/
 {

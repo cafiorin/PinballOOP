@@ -6,6 +6,7 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "SlingShot.h"
+#include "PinballObject.h"
 
 //-------------------------------------------------------//
 SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput) : PinballObject(szName, pinball)

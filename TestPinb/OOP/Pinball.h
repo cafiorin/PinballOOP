@@ -8,6 +8,12 @@ http://pinballhomemade.blogspot.com.br
 #ifndef Pinball__INCLUDED_
 #define Pinball__INCLUDED_
 
+#ifdef ARDUINO
+#include <SFEMP3Shield.h>
+#include <Wire.h>
+#include "ht1632pinball.h"
+#endif // ARDUINO
+
 #include "defines.h"
 #include "Vector.h"
 
@@ -17,7 +23,12 @@ class HardwareSerial;
 class Pinball
 {
 public:
-	Pinball(const char *szName, HardwareSerial *serial, bool master=false);
+#ifdef ARDUINO
+	Pinball(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial, bool master=false);
+#endif
+#ifdef DOS
+	Pinball(const char *szName, HardwareSerial *serial, bool master = false);
+#endif
 	virtual ~Pinball();
 	char *getName() { return m_szName; }
 	bool IsMaster() { return m_master; }
@@ -26,6 +37,15 @@ public:
 	void RemovePinballObject(PinballObject *Pinballobj);
 	void Init();
 	void Loop(int value);
+	void playSong(char song[], bool priority=true);
+	void ChangeVolume(bool plus, uint8_t delta = 5);
+	void clearDisplay(int line);
+	void printText(char *text1, char *text2, char font);
+
+protected:
+#ifdef ARDUINO
+	SFEMP3Shield *m_MP3player;
+#endif // ARDUINO
 
 private:
 	char m_szName[10];

@@ -149,6 +149,7 @@
     <ClInclude Include="OOP\defines.h" />
     <ClInclude Include="OOP\DropTarget.h" />
     <ClInclude Include="OOP\HardwareSerial.h" />
+    <ClInclude Include="OOP\ht1632pinball.h" />
     <ClInclude Include="OOP\Input.h" />
     <ClInclude Include="OOP\KickoutHole.h" />
     <ClInclude Include="OOP\Light.h" />

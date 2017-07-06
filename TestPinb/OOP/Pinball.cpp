@@ -12,13 +12,23 @@ http://pinballhomemade.blogspot.com.br
 #include "Vector.h"
 
 /*---------------------------------------------------------------------*/
+#ifdef ARDUINO
+Pinball::Pinball(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial, bool master = false);
+#endif
+
+#ifdef DOS
 Pinball::Pinball(const char *szName, HardwareSerial *serial, bool master)
+#endif
 /*---------------------------------------------------------------------*/
 {
 	strcpy(m_szName, szName);
 	m_master = master;
 	m_serial = serial;
 	
+	#ifdef ARDUINO
+	m_MP3player = MP3player;
+	#endif
+
 	#ifdef DEBUGMESSAGES
 	LogMessage("Pinball Constructor");
 	#endif
@@ -106,3 +116,118 @@ void Pinball::Loop(int value)
 		}
 	}
 }
+
+//-----------------------------------------------------------------------//
+void Pinball::playSong(char song[], bool priority /*default=true*/)
+//-----------------------------------------------------------------------//
+{
+	#ifdef DOS
+	char szMsg[50];
+	sprintf(szMsg, "Play song: %s", song);
+	LogMessage(szMsg);
+	#endif // DOS
+
+
+	#ifdef ARDUINO
+	if (song != NULL)
+	{
+		if (priority && m_MP3player->getState() == playback)
+		{
+			m_MP3player->stopTrack();
+		}
+
+		int8_t result = m_MP3player->playMP3(song);
+		if (result != 0)
+		{
+			char szMsg[50];
+			sprintf(szMsg, "Error code: %d when trying to play track", result);
+			LogMessage(szMsg);
+		}
+	}
+	#endif // ARDUINO
+
+}
+
+//-----------------------------------------------------------------------//
+void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
+//-----------------------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::ChangeVolume");
+	#endif
+
+	#ifdef DOS
+	LogMessage("Change Volume");
+	#endif // DOS
+
+
+	#ifdef ARDUINO
+	union twobyte mp3_vol;
+	mp3_vol.word = m_MP3player->getVolume();
+	uint8_t volume = mp3_vol.byte[1];
+	if(plus)
+		volume += delta;
+	else
+		volume -= delta;
+
+	if (volume >= 254)
+	{
+		volume = 254;
+	}
+	else if (volume <= 2)
+	{
+		volume = 2;
+	}
+
+	m_MP3player->setVolume(volume, volume);
+	#endif // ARDUINO
+}
+
+//-----------------------------------------------------------------------//
+void Pinball::clearDisplay(int line)
+//-----------------------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::clearDisplay");
+	#endif
+
+
+#ifdef DOS
+	//TODO:
+#endif // DOS
+
+
+#ifdef ARDUINO
+	char textcol[] = "        ";
+
+	if (line == 0) // Clear All
+	{
+		textcolor1(0, 1, textcol, RED, 1);
+		textcolor1(0, 9, textcol, GREEN, 1);
+	}
+	else if (line == 1)
+	{
+		textcolor1(0, 1, textcol, RED, 1);
+	}
+	else
+	{
+		textcolor1(0, 9, textcol, GREEN, 1);
+	}
+#endif
+}
+
+//-----------------------------------------------------------------------//
+void Pinball::printText(char *text1, char *text2, char font)
+//-----------------------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::printText");
+	#endif
+
+	#ifdef ARDUINO
+	clearDisplay(0);
+	textcolor1(1, 1, text1, RED, font);
+	textcolor1(1, 8 + font, text2, GREEN, font);
+	#endif
+}
+

@@ -10,6 +10,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 #include "HardwareSerial.h"
 #include "Vector.h"
+#include "Utils.h"
 
 /*---------------------------------------------------------------------*/
 #ifdef ARDUINO
@@ -89,10 +90,14 @@ void Pinball::Init()
 	LogMessage("Pinball::Init");
 	#endif
 
+	printText("Pinball", "init", 0);
+
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
 		m_PinballObjs[i]->Init();
 	}
+
+	printText("Pinball", "OK", 0);
 }
 
 
@@ -187,17 +192,15 @@ void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 void Pinball::clearDisplay(int line)
 //-----------------------------------------------------------------------//
 {
+	if (!m_master)
+		return;
+
 	#ifdef DEBUGMESSAGES
 	LogMessage("Pinball::clearDisplay");
 	#endif
 
 
-#ifdef DOS
-	//TODO:
-#endif // DOS
-
-
-#ifdef ARDUINO
+	#ifdef ARDUINO
 	char textcol[] = "        ";
 
 	if (line == 0) // Clear All
@@ -213,16 +216,41 @@ void Pinball::clearDisplay(int line)
 	{
 		textcolor1(0, 9, textcol, GREEN, 1);
 	}
-#endif
+	#endif
 }
 
 //-----------------------------------------------------------------------//
 void Pinball::printText(char *text1, char *text2, char font)
 //-----------------------------------------------------------------------//
 {
+	if (!m_master)
+		return;
+
 	#ifdef DEBUGMESSAGES
 	LogMessage("Pinball::printText");
 	#endif
+
+
+	#ifdef DOS
+	int xCursor, yCursor;
+	getCursorXY(xCursor, yCursor);
+
+	int x = 70;
+	int y = 1;
+	clrbox(x, y, x+10, y+3, BLACK);
+	box(x, y, x+10, y+3, y+6, y+6, "Display");
+
+	setcolor(RED);
+	gotoxy(x+2, y+1);
+	printf(text1);
+
+	setcolor(GREEN);
+	gotoxy(x+2, y+2);
+	printf(text2);
+
+	gotoxy(xCursor, yCursor);
+	#endif
+
 
 	#ifdef ARDUINO
 	clearDisplay(0);

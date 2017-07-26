@@ -29,6 +29,7 @@ http://pinballhomemade.blogspot.com.br
 #include <string>
 #include <conio.h>
 #include <iostream>
+#include <Windows.h>
 
 using namespace std;
 

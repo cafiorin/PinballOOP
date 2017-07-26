@@ -18,51 +18,105 @@ http://pinballhomemade.blogspot.com.br
 #include "OOP\SlingShot.h"
 #include "OOP\Bumper.h"
 #include "OOP\KickoutHole.h"
+#include "OOP\Utils.h"
+
+void InitObjectsToPinballMaster(Pinball *pPinball)
+{
+	PinballObject *pInput1 = new Input("input1", pPinball, 1);
+
+	Output *pOutput = new Output("output", pPinball, 2);
+
+	SlingShot *pSling = new SlingShot("sling", pPinball, 3, 4, 5);
+	Bumper *pBumper = new Bumper("bumper", pPinball, 6, 7);
+	KickoutHole *pHole = new KickoutHole("hole", pPinball, 8, 9);
+
+	pOutput->TurnOnByTimer(500);
+}
+
+void InitObjectsToPinballSlave(Pinball *pPinball)
+{
+
+}
+
+int ikeyCount = 0;
+char szKey[80];
+int Ard = 0;
+
+
+void PrintReadKey()
+{
+	int x = 70;
+	int y = 20;
+	clrbox(x, y, x + 15, y + 2, BLACK);
+
+	setcolor(WHITE);
+	box(x, y, x + 15, y + 2, y + 7, y + 7, "Key");
+	gotoxy(x + 2, y + 1);
+	printf("Read Key :");
+}
+
+int ReadKey()
+{
+	if (_kbhit())
+	{
+		char  ch = _getch();
+		if (ch >= '0' && ch <= '9')
+		{
+			szKey[ikeyCount] = ch;
+			ikeyCount++;
+			szKey[ikeyCount] = 0;
+		}
+		else if (ch == 27)
+		{
+			return -2;
+		}
+		else if (ch == 13)
+		{
+			int sw = atoi(szKey);
+			ikeyCount = 0;
+			szKey[ikeyCount] = 0;
+			PrintReadKey();
+			return sw;
+		}
+
+		PrintReadKey();
+		printf("%s", szKey);
+
+	}
+
+	return -1;
+}
 
 int main()
 {
 	HardwareSerial *serial = new HardwareSerial();
 	Pinball *pPinballMaster = new Pinball("Master", serial, true);
+	InitObjectsToPinballMaster(pPinballMaster);
 
-	printf("==== Input === \n\n");
-	PinballObject *pInput1 = new Input("input1", pPinballMaster,1);
+	HardwareSerial *serial2 = new HardwareSerial(100);
+	Pinball *pPinballSlave = new Pinball("Slave", serial2);
+	InitObjectsToPinballSlave(pPinballMaster);
 
-	printf("\n\n==== Output === \n\n");
-	Output *pOutput= new Output("output", pPinballMaster,2);
-
-	printf("\n\n==== SlingShot, Bumper and KickoutHole === \n\n");
-	SlingShot *pSling = new SlingShot("sling", pPinballMaster, 3, 4, 5);
-	Bumper *pBumper = new Bumper("bumper", pPinballMaster, 6, 7);
-	KickoutHole *pHole = new KickoutHole("hole", pPinballMaster, 8, 9);
-
-	printf("\n\n==== Init === \n\n");
 	pPinballMaster->Init();
+	pPinballSlave->Init();
 
-	//Test output
-	pOutput->TurnOnByTimer(500);
+	PrintReadKey();
 
-	printf("\n\n==== START LOOP use ESC to exit === \n\n");
 	int ch = 0;
-
 	do
 	{
-		if (_kbhit())
+		ch = ReadKey();
+		if (ch != -2 && ch != -1)
 		{
-			ch = _getch();
-			printf("Key pressed : %c\n", ch);
-		}
-		else
-		{
-			ch = 0;
+			pPinballMaster->Loop(ch);
+			pPinballSlave->Loop(ch);
+			gotoxy(72 + 10 + ikeyCount, 21);
 		}
 
+	} while (ch != -2);
 
-		//printf("\n\n==== Loop === \n\n");
-		pPinballMaster->Loop(ch - '0');
-	} while (ch != 27);
-
-	printf("\n\n==== Destruct === \n\n");
 	delete  pPinballMaster;
+	delete  pPinballSlave;
 
     return 0;
 }

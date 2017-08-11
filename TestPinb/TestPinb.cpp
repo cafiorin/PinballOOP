@@ -35,7 +35,7 @@ void InitObjectsToPinballMaster(Pinball *pPinball)
 
 void InitObjectsToPinballSlave(Pinball *pPinball)
 {
-
+	SlingShot *pSling = new SlingShot("sling2", pPinball, 1, 2, 3);
 }
 
 int ikeyCount = 0;
@@ -95,7 +95,7 @@ int main()
 
 	HardwareSerial *serial2 = new HardwareSerial(100);
 	Pinball *pPinballSlave = new Pinball("Slave", serial2);
-	InitObjectsToPinballSlave(pPinballMaster);
+	InitObjectsToPinballSlave(pPinballSlave);
 
 	pPinballMaster->Init();
 	pPinballSlave->Init();
@@ -108,9 +108,21 @@ int main()
 		ch = ReadKey();
 		if (ch != -2 && ch != -1)
 		{
-			pPinballMaster->Loop(ch);
-			pPinballSlave->Loop(ch);
+			if (ch > 200)
+			{
+				pPinballSlave->Loop(ch-200);
+			}
+			else
+			{
+				pPinballMaster->Loop(ch);
+			}
+
 			gotoxy(72 + 10 + ikeyCount, 21);
+		}
+		else
+		{
+			pPinballMaster->Loop(0);
+			pPinballSlave->Loop(0);
 		}
 
 	} while (ch != -2);

@@ -72,6 +72,9 @@
     <ClInclude Include="OOP\ht1632pinball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OOP\OutBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -117,6 +120,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\OutBall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

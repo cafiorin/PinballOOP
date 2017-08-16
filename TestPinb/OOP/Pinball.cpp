@@ -14,6 +14,8 @@ http://pinballhomemade.blogspot.com.br
 
 /*---------------------------------------------------------------------*/
 #ifdef ARDUINO
+#include <Wire.h>
+
 Pinball::Pinball(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial, bool master = false);
 #endif
 

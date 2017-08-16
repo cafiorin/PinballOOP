@@ -19,6 +19,7 @@ http://pinballhomemade.blogspot.com.br
 #include "OOP\Bumper.h"
 #include "OOP\KickoutHole.h"
 #include "OOP\DropTarget.h"
+#include "OOP\DropTargetWithRemoteInput.h"
 #include "OOP\OutBall.h"
 #include "OOP\Utils.h"
 
@@ -40,7 +41,7 @@ void InitObjectsToPinballMaster(Pinball *pPinball)
 
 	DropTarget *pDropTarget5 = new DropTarget("DT5", pPinball, I11,I12,I13,I14,I15,O5);
 	Input *pInputRolloverStarRed1 = new Input("RSR1", pPinball, I16);
-	DropTarget *pDropTarget3 = new DropTarget("DT3", pPinball, I17, I18, I19, O6);
+	DropTargetWithRemoteInput *pDropTarget3 = new DropTargetWithRemoteInput("DT3", pPinball, I17, I18, I19, O6);
 
 	Input *pInputTargetRed2    = new Input("TR2", pPinball, I20);
 	Input *pInputTargetYellow2 = new Input("TY2", pPinball, I21);

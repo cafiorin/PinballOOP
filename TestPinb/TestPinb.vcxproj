@@ -157,7 +157,9 @@
     <ClInclude Include="OOP\OutBall.h" />
     <ClInclude Include="OOP\Output.h" />
     <ClInclude Include="OOP\Pinball.h" />
+    <ClInclude Include="OOP\PinballMaster.h" />
     <ClInclude Include="OOP\PinballObject.h" />
+    <ClInclude Include="OOP\PinballSlave.h" />
     <ClInclude Include="OOP\Port.h" />
     <ClInclude Include="OOP\RemoteInput.h" />
     <ClInclude Include="OOP\SlingShot.h" />
@@ -178,7 +180,9 @@
     <ClCompile Include="OOP\OutBall.cpp" />
     <ClCompile Include="OOP\Output.cpp" />
     <ClCompile Include="OOP\Pinball.cpp" />
+    <ClCompile Include="OOP\PinballMaster.cpp" />
     <ClCompile Include="OOP\PinballObject.cpp" />
+    <ClCompile Include="OOP\PinballSlave.cpp" />
     <ClCompile Include="OOP\Port.cpp" />
     <ClCompile Include="OOP\RemoteInput.cpp" />
     <ClCompile Include="OOP\SlingShot.cpp" />

@@ -81,6 +81,12 @@
     <ClInclude Include="OOP\DropTargetWithRemoteInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OOP\PinballMaster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OOP\PinballSlave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -135,6 +141,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\DropTargetWithRemoteInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\PinballMaster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\PinballSlave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

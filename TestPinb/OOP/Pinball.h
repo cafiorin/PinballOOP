@@ -41,13 +41,14 @@ public:
 	void ChangeVolume(bool plus, uint8_t delta = 5);
 	void clearDisplay(int line);
 	void printText(char *text1, char *text2, char font);
+	void sendMessageToAnotherArduino(char msg);
+	char receiveMessageFromAnotherArduino();
 
 protected:
 #ifdef ARDUINO
 	SFEMP3Shield *m_MP3player;
 #endif // ARDUINO
 
-private:
 	char m_szName[10];
 	bool m_master;
 	HardwareSerial *m_serial;

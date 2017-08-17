@@ -261,3 +261,38 @@ void Pinball::printText(char *text1, char *text2, char font)
 	#endif
 }
 
+//-----------------------------------------------------------------------//
+void Pinball::sendMessageToAnotherArduino(char msg)
+//-----------------------------------------------------------------------//
+{
+#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::sendMessageToAnotherArduino");
+#endif
+
+}
+
+//-----------------------------------------------------------------------//
+char Pinball::receiveMessageFromAnotherArduino()
+//-----------------------------------------------------------------------//
+{
+#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::receiveMessageFromAnotherArduino");
+#endif
+
+#ifdef ARDUINO
+	while (Wire.available() > 0)
+	{
+		char c = Wire.read(); // receive byte as a character
+
+		char msg[6];
+		sprintf(msg, "%d", c);
+		char sw[] = "SW";
+		m_thisSR1->printText(sw, msg, 1);
+		m_thisSR1->AcionaChave(c);
+	}
+#endif // ARDUINO
+	return 0;
+}
+
+
+

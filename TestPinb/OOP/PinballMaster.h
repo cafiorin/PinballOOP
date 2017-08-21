@@ -31,6 +31,10 @@ public:
 	PinballMaster(const char *szName, HardwareSerial *serial);
 #endif
 	virtual ~PinballMaster();
+
+	void TurnOnRemoteInput(char sw);
+	virtual void sendMessageToAnotherArduino(char msg);
+	virtual char receiveMessageFromAnotherArduino();
 };
 
 #endif

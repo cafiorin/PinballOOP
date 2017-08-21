@@ -41,8 +41,8 @@ public:
 	void ChangeVolume(bool plus, uint8_t delta = 5);
 	void clearDisplay(int line);
 	void printText(char *text1, char *text2, char font);
-	void sendMessageToAnotherArduino(char msg);
-	char receiveMessageFromAnotherArduino();
+	virtual void sendMessageToAnotherArduino(char msg);
+	virtual char receiveMessageFromAnotherArduino();
 
 protected:
 #ifdef ARDUINO

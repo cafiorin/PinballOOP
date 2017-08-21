@@ -72,6 +72,8 @@ int main()
 	HardwareSerial *serial2 = new HardwareSerial(100);
 	PinballSlave *pPinballSlave = new PinballSlave("Slave", serial2);
 
+	pPinballSlave->SetPinballMaster(pPinballMaster);
+
 	pPinballMaster->Init();
 	pPinballSlave->Init();
 

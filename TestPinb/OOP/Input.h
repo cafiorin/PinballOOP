@@ -22,6 +22,8 @@ public:
 	bool GetInput();
 	bool CheckEdgePositive();
 	void SetDebounceDelay(long debounce){m_debounceDelay = debounce;}
+	int GetPortNumber() { return m_portNumber; }
+
 	virtual bool Init();
 	virtual bool Loop(int value);
 
@@ -34,6 +36,7 @@ private:
 	long m_debounceDelay;    // the debounce time; increase if the output flickers
 	bool m_startReading;
 	Timer *m_TimerDebounce;
+	int m_portNumber;
 
 	#ifdef DOS
 	bool m_emulateInput;

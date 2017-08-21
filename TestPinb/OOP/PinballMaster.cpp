@@ -4,8 +4,6 @@
 Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-
 #include "PinballMaster.h"
 #include "Pinball.h"
 #include "PinballObject.h"
@@ -23,7 +21,53 @@ http://pinballhomemade.blogspot.com.br
 #include "OutBall.h"
 
 
+#ifdef ARDUINO
+#include <Wire.h>
+
+const int address_master = 4;  // the address to be used by the communicating devices
 PinballMaster *m_PinballMaster = NULL;
+
+//-----------------------------------------------------------------------//
+void receiveMessageFromAnotherArduino(int howMany)
+//-----------------------------------------------------------------------//
+{
+	while (Wire.available() > 0)
+	{
+		char c = Wire.read(); // receive byte as a character
+
+		char msg[6];
+		sprintf(msg, "%d", c);
+		char sw[] = "SW";
+		m_PinballMaster->printText(sw, msg, 1);
+
+		m_PinballMaster->TurnOnRemoteInput(c);
+	}
+}
+
+//-----------------------------------------------------------------------//
+void SetupWire()
+//-----------------------------------------------------------------------//
+{
+	Wire.begin(address_master); // join I2C bus using this address
+	Wire.onReceive(receiveMessageFromAnotherArduino); // register event to handle requests
+}
+
+//-----------------------------------------------------------------------//
+void sendMessageToAnotherArduinoGlobal(char c)
+//-----------------------------------------------------------------------//
+{
+	// send the data
+	Wire.beginTransmission(5); // transmit to device
+	Wire.write(c);
+	Wire.endTransmission();
+}
+
+#endif // ARDUINO
+/*---------------------------------------------------------------------*/
+
+
+//							C L A S S
+
 
 /*---------------------------------------------------------------------*/
 #ifdef ARDUINO
@@ -39,7 +83,10 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	LogMessage("PinballMaster Constructor");
 	#endif
 
+	#ifdef ARDUINO
 	m_PinballMaster = this;
+	SetupWire();
+	#endif
 
 	//Create all objects to Arduino Master
 	Output *pTurnFlipperOn = new Output("TFO", this, O0);
@@ -92,4 +139,40 @@ PinballMaster::~PinballMaster()
 	#endif
 }
 
+//-----------------------------------------------------------------------//
+void PinballMaster::TurnOnRemoteInput(char sw)
+//-----------------------------------------------------------------------//
+{
+	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
+	{
+		if (m_PinballObjs[i]->IsRemoteObject())
+		{
+			Input *input = dynamic_cast<Input *>(m_PinballObjs[i]);
+			if (input != NULL)
+			{
+				if (input->GetPortNumber() == sw)
+				{
+					input->EmulateInput(true);
+				}
+			}
+		}
+	}
+}
+
+void PinballMaster::sendMessageToAnotherArduino(char msg)
+{
+	#ifdef ARDUINO
+	sendMessageToAnotherArduinoGlobal(msg);
+	#endif // ARDUINO
+
+	#ifdef DOS
+
+	#endif
+
+}
+
+char PinballMaster::receiveMessageFromAnotherArduino()
+{
+	return 0;
+}
 

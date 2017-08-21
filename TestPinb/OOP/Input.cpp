@@ -14,7 +14,7 @@ Input::Input(const char *szName, Pinball *pinball, int portNumber):Port(pinball,
 	#ifdef DEBUGMESSAGES
 	Debug("Input Constructor");
 	#endif
-
+	m_portNumber = portNumber;
 	m_TimerDebounce = new Timer(m_debounceDelay, "TimerD", pinball);
 	m_debounceDelay = 50;
 

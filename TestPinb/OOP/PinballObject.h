@@ -19,6 +19,7 @@ public:
 	virtual ~PinballObject();
 	char *getName() { return m_szName; }
 	bool IsEnabled() { return m_enabled; }
+	bool IsRemoteObject() { return m_remote; }
 	void Enable() { m_enabled = true; }
 	void Disable() { m_enabled = false; }
 	void LogMessage(const char *szMessage);
@@ -31,6 +32,7 @@ public:
 protected:
 	char m_szName[10];
 	bool m_enabled;
+	bool m_remote;
 	Pinball *m_pinball;
 };
 

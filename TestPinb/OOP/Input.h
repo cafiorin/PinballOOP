@@ -17,7 +17,7 @@ class Input : public Port
 {
 
 public:
-	Input(const char *szName, Pinball *pinball, int portNumber);
+	Input(const char *szName, Pinball *pinball, int portNumber, bool sendEventToAnotherArduino=false);
 	virtual ~Input();
 	bool GetInput();
 	bool CheckEdgePositive();
@@ -30,6 +30,9 @@ public:
 	#ifdef DOS
 	void EmulateInput(bool value) { m_emulateInput = value; }
 	#endif
+
+protected:
+	bool m_sendEventToAnotherArduino;
 
 private:
 	bool m_lastState;

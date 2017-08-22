@@ -16,7 +16,7 @@ RemoteInput::RemoteInput(const char *szName, Pinball *pinball, int portNumber):P
 	#endif
 
 	m_emulateRemoteInput = false;
-
+	m_portNumber = portNumber;
 	Init();
 }
 

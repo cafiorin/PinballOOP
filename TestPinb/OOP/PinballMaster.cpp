@@ -128,6 +128,16 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	Input *pInputTargetHigher = new Input("TH", this, I33);
 	Input *pInputSpinner = new Input("Spin", this, I37);
 
+	//Remote Inputs:
+	RemoteInput *pInputRampIn = new RemoteInput("RampIn", this, I34);
+	RemoteInput *pInputRampOut1 = new RemoteInput("RampO1", this, I35);
+	RemoteInput *pInputRampOut2 = new RemoteInput("RampO2", this, I36);
+
+	RemoteInput *pInputStartButton = new RemoteInput("SB", this, I38);
+	RemoteInput *pInputMenu = new RemoteInput("BM", this, I39);
+	RemoteInput *pInputVolumePlus = new RemoteInput("VP", this, I40);
+	RemoteInput *pInputVolumeMinus = new RemoteInput("VM", this, I41);
+
 }
 
 /*---------------------------------------------------------------------*/
@@ -143,11 +153,15 @@ PinballMaster::~PinballMaster()
 void PinballMaster::TurnOnRemoteInput(char sw)
 //-----------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("PinballMaster TurnOnRemoteInput");
+	#endif
+
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
 		if (m_PinballObjs[i]->IsRemoteObject())
 		{
-			Input *input = dynamic_cast<Input *>(m_PinballObjs[i]);
+			RemoteInput *input = dynamic_cast<RemoteInput *>(m_PinballObjs[i]);
 			if (input != NULL)
 			{
 				if (input->GetPortNumber() == sw)

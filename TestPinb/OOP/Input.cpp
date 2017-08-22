@@ -6,9 +6,10 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Input.h"
+#include "Pinball.h"
 
 //-------------------------------------------------------//
-Input::Input(const char *szName, Pinball *pinball, int portNumber):Port(pinball,szName,portNumber)
+Input::Input(const char *szName, Pinball *pinball, int portNumber,bool sendEventToAnotherArduino):Port(pinball,szName,portNumber)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -17,6 +18,7 @@ Input::Input(const char *szName, Pinball *pinball, int portNumber):Port(pinball,
 	m_portNumber = portNumber;
 	m_TimerDebounce = new Timer(m_debounceDelay, "TimerD", pinball);
 	m_debounceDelay = 50;
+	m_sendEventToAnotherArduino = sendEventToAnotherArduino;
 
 	#ifdef DOS
 	m_emulateInput = false;
@@ -96,6 +98,16 @@ bool Input::CheckEdgePositive()
 		  {
 			  // if input state has changed:
 			  edge = true;
+			  
+			  #ifdef DEBUGMESSAGES
+			  Debug("Input::CheckEdgePositive True");
+			  #endif
+
+			  if (m_sendEventToAnotherArduino)
+			  {
+				  m_pinball->sendMessageToAnotherArduino(m_portNumber);
+			  }
+
 		  }
 		  // reset the debouncing timer
 		  m_TimerDebounce->Init();

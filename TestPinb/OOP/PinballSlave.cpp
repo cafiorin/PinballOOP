@@ -87,18 +87,18 @@ PinballSlave::PinballSlave(const char *szName, HardwareSerial *serial) : Pinball
 #endif
 	m_PinballMaster = NULL;
 
-	Input *pInputDropTarget31 = new Input("DT31", this, I17);
-	Input *pInputDropTarget32 = new Input("DT32", this, I18);
-	Input *pInputDropTarget33 = new Input("DT33", this, I19);
+	Input *pInputDropTarget31 = new Input("DT31", this, I17,true);
+	Input *pInputDropTarget32 = new Input("DT32", this, I18, true);
+	Input *pInputDropTarget33 = new Input("DT33", this, I19, true);
 
-	Input *pInputRampIn = new Input("RampIn", this, I34);
-	Input *pInputRampOut1 = new Input("RampO1", this, I35);
-	Input *pInputRampOut2 = new Input("RampO2", this, I36);
+	Input *pInputRampIn = new Input("RampIn", this, I34, true);
+	Input *pInputRampOut1 = new Input("RampO1", this, I35, true);
+	Input *pInputRampOut2 = new Input("RampO2", this, I36, true);
 
-	Input *pInputStartButton = new Input("SB", this, I38);
-	Input *pInputMenu = new Input("BM", this, I39);
-	Input *pInputVolumePlus = new Input("VP", this, I40);
-	Input *pInputVolumeMinus = new Input("VM", this, I41);
+	Input *pInputStartButton = new Input("SB", this, I38, true);
+	Input *pInputMenu = new Input("BM", this, I39, true);
+	Input *pInputVolumePlus = new Input("VP", this, I40, true);
+	Input *pInputVolumeMinus = new Input("VM", this, I41, true);
 
 }
 
@@ -133,10 +133,6 @@ void PinballSlave::Loop(int value)
 		Input *input = dynamic_cast<Input *>(m_PinballObjs[i]);
 		if (input != NULL && input->CheckEdgePositive())
 		{
-			#ifdef ARDUINO
-			sendMessageToAnotherArduino(input->GetPortNumber());
-			#endif // ARDUINO
-
 			#ifdef DOS
 			if (m_PinballMaster != NULL)
 				m_PinballMaster->TurnOnRemoteInput(input->GetPortNumber());

@@ -15,6 +15,7 @@ RemoteInput::RemoteInput(const char *szName, Pinball *pinball, int portNumber):P
 	Debug("RemoteInput Constructor");
 	#endif
 
+	m_remote = true;
 	m_emulateRemoteInput = false;
 	m_portNumber = portNumber;
 	Init();
@@ -61,6 +62,13 @@ bool RemoteInput::Loop(int value)
 #ifdef DEBUGMESSAGESLOOP
 	Debug("RemoteInput::Loop");
 #endif
+	if (CheckEdgePositive())
+	{
+		#ifdef DEBUGMESSAGES
+		Debug("RemoteInput::Turn on!");
+		#endif
 
+		return true;
+	}
 	return false;
 }

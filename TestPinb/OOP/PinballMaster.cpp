@@ -166,7 +166,7 @@ void PinballMaster::TurnOnRemoteInput(char sw)
 			{
 				if (input->GetPortNumber() == sw)
 				{
-					input->EmulateInput(true);
+					input->EmulateRemoteInput(true);
 				}
 			}
 		}

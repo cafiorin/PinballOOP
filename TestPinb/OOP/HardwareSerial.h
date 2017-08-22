@@ -16,13 +16,14 @@ http://pinballhomemade.blogspot.com.br
 class HardwareSerial
 {
 public:
-	HardwareSerial(int xlog=1);
+	HardwareSerial(int xlog=1,int ylog=1);
 	~HardwareSerial();
 	void println(const char *szLog);
 	
 	int m_line;
 	char m_strings[MAX_STRINGS][50];
 	int m_XInit;
+	int m_YInit;
 
 };
 

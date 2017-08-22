@@ -9,12 +9,13 @@ http://pinballhomemade.blogspot.com.br
 #include "Utils.h"
 
 /*---------------------------------------------------------------------*/
-HardwareSerial::HardwareSerial(int xlog)
+HardwareSerial::HardwareSerial(int xlog, int ylog)
 /*---------------------------------------------------------------------*/
 {
 	m_XInit = xlog;
+	m_YInit = ylog;
 	int x = m_XInit;
-	int y = 1;
+	int y = m_YInit;
 	setcolor(WHITE);
 	clrbox(x, y, x + 52, y + MAX_STRINGS + 1, BLACK);
 	m_line = -1;
@@ -31,7 +32,7 @@ void HardwareSerial::println(const char *szLog)
 /*---------------------------------------------------------------------*/
 {
 	int x = m_XInit;
-	int y = 1;
+	int y = m_YInit;
 	setcolor(WHITE);
 	box(x, y, x + 52, y + MAX_STRINGS + 1, y + 6, y + 6, "Logger");
 

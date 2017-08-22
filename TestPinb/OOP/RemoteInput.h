@@ -24,8 +24,18 @@ public:
 	virtual bool Init();
 	virtual bool Loop(int value);
 
-	void EmulateRemoteInput(bool value) { m_emulateRemoteInput = value; }
+	void EmulateRemoteInput(bool value) 
+	{ 
+		#ifdef DEBUGMESSAGES
+		LogMessage("RemoteInput EmulateRemoteInput");
+		#endif
+
+		m_emulateRemoteInput = value; 
+	}
+
 	bool GetRemoteInput() { return m_emulateRemoteInput; }
+	int GetPortNumber() { return m_portNumber; }
+
 private:
 	bool m_emulateRemoteInput;
 };

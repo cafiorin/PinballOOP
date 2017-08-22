@@ -74,6 +74,21 @@ int main()
 
 	pPinballSlave->SetPinballMaster(pPinballMaster);
 
+	HardwareSerial *inputs = new HardwareSerial(1, 30);
+	inputs->println("Start Button - 238");
+	inputs->println("Menu  Button - 239");
+	inputs->println("Up Button    - 240");
+	inputs->println("Down Button  - 241");
+
+	inputs->println("DT31    - 217");
+	inputs->println("DT32    - 218");
+	inputs->println("DT33    - 219");
+	inputs->println("RampIn  - 234");
+	inputs->println("RampOut1- 235");
+	inputs->println("RampOut2- 236");
+	
+	inputs->println("Inputs - 01 - 37");
+
 	pPinballMaster->Init();
 	pPinballSlave->Init();
 

@@ -24,6 +24,7 @@ public:
 	void Disable() { m_enabled = false; }
 	void LogMessage(const char *szMessage);
 	void Debug(const char *szMessage);
+	Pinball *GetPinball() { return m_pinball; }
 
 //virtual methods	
 	virtual bool Init();

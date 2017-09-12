@@ -19,6 +19,7 @@ http://pinballhomemade.blogspot.com.br
 #include "DropTarget.h"
 #include "DropTargetWithRemoteInput.h"
 #include "OutBall.h"
+#include "Menu.h"
 
 
 #ifdef ARDUINO
@@ -87,6 +88,8 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	m_PinballMaster = this;
 	SetupWire();
 	#endif
+
+	m_Menu = new Menu("Menu", this);
 
 	//Create all objects to Arduino Master
 	Output *pTurnFlipperOn = new Output("TFO", this, O0);
@@ -168,6 +171,8 @@ void PinballMaster::TurnOnRemoteInput(char sw)
 				{
 					input->EmulateRemoteInput(true);
 				}
+
+				m_Menu->Loop(input->GetPortNumber());
 			}
 		}
 	}

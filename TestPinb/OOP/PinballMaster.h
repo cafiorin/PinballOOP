@@ -20,6 +20,7 @@ http://pinballhomemade.blogspot.com.br
 
 class PinballObject;
 class HardwareSerial;
+class Menu;
 
 class PinballMaster : public Pinball
 {
@@ -31,6 +32,7 @@ public:
 	PinballMaster(const char *szName, HardwareSerial *serial);
 #endif
 	virtual ~PinballMaster();
+	Menu *m_Menu;
 
 	void TurnOnRemoteInput(char sw);
 	virtual void sendMessageToAnotherArduino(char msg);

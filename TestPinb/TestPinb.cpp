@@ -24,10 +24,10 @@ void PrintReadKey()
 {
 	int x = 70;
 	int y = 20;
-	clrbox(x, y, x + 15, y + 2, BLACK);
+	clrbox(x, y, x + 18, y + 2, BLACK);
 
 	setcolor(WHITE);
-	box(x, y, x + 15, y + 2, y + 7, y + 7, "Key");
+	box(x, y, x + 18, y + 2, y + 7, y + 7, "");
 	gotoxy(x + 2, y + 1);
 	printf("Read Key :");
 }
@@ -47,7 +47,7 @@ int ReadKey()
 		{
 			return -2;
 		}
-		else if (ch == 13)
+		else if (ch == 13) // ENTER
 		{
 			int sw = atoi(szKey);
 			ikeyCount = 0;
@@ -55,10 +55,17 @@ int ReadKey()
 			PrintReadKey();
 			return sw;
 		}
+		else if (ch == 127 || ch == 8) //BACKSPACE
+		{
+			if (ikeyCount > 0)
+			{
+				ikeyCount--;
+				szKey[ikeyCount] = 0;
+			}
+		}
 
 		PrintReadKey();
-		printf("%s", szKey);
-
+		printf("%s  ", szKey);
 	}
 
 	return -1;

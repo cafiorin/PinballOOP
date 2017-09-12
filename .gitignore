@@ -31,3 +31,7 @@
 *.out
 *.app
 /TestPinb/x64/Debug
+/.vs/TestPinb/v15/ipch/AutoPCH/TESTPINB-91c52378
+/.vs/TestPinb/v15
+/.vs/TestPinb/v15/ipch/AutoPCH/TESTPINB-91c52378/UTILS-906f9e81/UTILS.ipch
+x64/Debug/lnk{E27513BD-0240-449C-9B64-2E8E8BE5288C}.tmp

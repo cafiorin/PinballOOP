@@ -7,6 +7,8 @@ http://pinballhomemade.blogspot.com.br
 
 #include "Utils.h"
 
+#pragma execution_character_set("utf-8") 
+
 void myStrcpy(char *str1, const char *str2)
 {
 	int bufsize = sizeof(str1);
@@ -40,7 +42,7 @@ clock_t Millis()
 long timediff(clock_t t2, clock_t t1) 
 {
 	long elapsed;
-	elapsed = ((double)t2 - t1) / CLOCKS_PER_SEC * 1000;
+	elapsed = (long) ((double)t2 - t1) / CLOCKS_PER_SEC * 1000;
 	return elapsed;
 }
 
@@ -94,10 +96,10 @@ void box(unsigned x, unsigned y, unsigned sx, unsigned sy, unsigned char col, un
 		m = (sx - x);                       //differential
 		j = m / 8;                          //adjust
 		j = j - 1;                          //more adjustment
-		gotoxy(x, y); cprintf("┌");         //Top left corner of box
-		gotoxy(sx, y); cprintf("¬");        //Top right corner of box
-		gotoxy(x, sy); cprintf("└");        //Bottom left corner of box
-		gotoxy(sx, sy); cprintf("┌");       //Bottom right corner of box
+		gotoxy(x, y); cprintf("*"); //   ┌       //Top left corner of box
+		gotoxy(sx, y); cprintf("*"); //  ┐       //Top right corner of box
+		gotoxy(x, sy); cprintf("*"); //  └       //Bottom left corner of box
+		gotoxy(sx, sy); cprintf("*"); // ┘       //Bottom right corner of box
 
 		for (i = x + 1; i<sx; i++)
 		{

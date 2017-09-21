@@ -26,8 +26,15 @@ protected:
 	#ifdef ARDUINO
 	#endif
 
+	void StartMenu();
 	char* GetMenuLine1();
 	char* GetMenuLine2();
+	void PrintMenu();
+	void GetNextOption();
+	void GetPrevOption();
 
+	bool m_isShowing;
+	int m_option;
+	int m_subOption;
 };
 #endif // !defined(Menu__INCLUDED_)

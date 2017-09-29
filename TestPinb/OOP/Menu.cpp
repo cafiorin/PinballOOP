@@ -42,8 +42,8 @@ bool Menu::Init()
 	
 	m_enabled = true;
 	m_isShowing = false;
-	m_line1 = 0;
-	m_line2 = 0;
+	m_option = 0;
+	m_subOption = 0;
 
 	return false;
 }
@@ -71,20 +71,56 @@ void Menu::StartMenu()
 }
 
 
-
-char szLine1[10] = "Menu";
-char szLine2[10] = "Test>";
+int optionQuant[] = { 2,3,3 };
 
 char* Menu::GetMenuLine1()
 {
-	//TODO: Get from Array
-	return szLine1;
+	switch (m_option)
+	{
+		case 0:
+			return "Menu";
+		case 1:
+			return "Test";
+		case 2:
+			return "Config";
+	}
+	return "";
 }
 
 char* Menu::GetMenuLine2()
 {
-	//TODO: GetFrom Array
-	return szLine2;
+	switch (m_option)
+	{
+	case 0:
+		switch (m_subOption)
+		{
+		case 0:
+			return "Test";
+		case 1:
+			return "Config";
+		}
+	case 1:
+		switch (m_subOption)
+		{
+		case 0:
+			return "Led";
+		case 1:
+			return "Bobina";
+		case 2:
+			return "Som";
+		}
+	case 2:
+		switch (m_subOption)
+		{
+		case 0:
+			return "Volume";
+		case 1:
+			return "SFX";
+		case 2:
+			return "Balls";
+		}
+	}
+	return "";
 }
 
 

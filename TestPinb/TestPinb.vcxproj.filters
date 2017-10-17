@@ -93,6 +93,18 @@
     <ClInclude Include="OOP\Multiplex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OOP\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OOP\Stage0.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OOP\StageBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OOP\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -159,6 +171,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\Multiplex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\Stage0.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\StageBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

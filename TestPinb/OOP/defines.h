@@ -8,6 +8,8 @@ http://pinballhomemade.blogspot.com.br
 #ifndef defines_h
 #define defines_h
 
+#define MAX_BALLS 5
+
 #define TIME_COIL_ON 20
 
 #define DEBUGMESSAGES

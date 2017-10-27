@@ -1,9 +1,11 @@
 #ifdef ARDUINO
-
 #include <Arduino.h>
+#endif
+
+#include "Utils.h"
 #include "Multiplex.h"
 
-static const uint8_t _muxChAddress[16][4] = {
+static const int _muxChAddress[16][4] = {
     {0,0,0,0}, //channel 0
     {1,0,0,0}, //channel 1
     {0,1,0,0}, //channel 2
@@ -22,7 +24,7 @@ static const uint8_t _muxChAddress[16][4] = {
     {1,1,1,1}  //channel 15
 };
 
-Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIG, const uint8_t OUTSIG, const uint8_t chipSelect1, const uint8_t chipSelect2, const uint8_t chipSelect3, const uint8_t chipSelect4, const uint8_t chipSelect5)
+Multiplex::Multiplex(const int S0,const int S1,const int S2,const int S3,const int SIG, const int OUTSIG, const int chipSelect1, const int chipSelect2, const int chipSelect3, const int chipSelect4, const int chipSelect5)
 {
 	_adrsPin[0] = S0;
 	_adrsPin[1] = S1;
@@ -38,7 +40,7 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	_chipSelect5 = chipSelect5;
 }
 
-void Multiplex::enableChip(uint8_t chipNumber)
+void Multiplex::enableChip(int chipNumber)
 {
 	// set all to Disable (HIGH)
 	digitalWrite(_chipSelect1, HIGH);
@@ -53,7 +55,7 @@ void Multiplex::enableChip(uint8_t chipNumber)
 
 void Multiplex::init()
 {
-	uint8_t i;
+	int i;
 
 	pinMode(_sig, INPUT);
 	pinMode(_outsig, OUTPUT);
@@ -88,9 +90,9 @@ void Multiplex::resetAllOutput()
 	digitalWrite(_chipSelect4, LOW);
 	digitalWrite(_chipSelect5, LOW);
 
-	for (i = 0; i < 16; i++)
+	for (int i = 0; i < 16; i++)
 	{
-		_addressing(ch);
+		_addressing(i);
 	}
 
 	digitalWrite(_chipSelect4, HIGH);
@@ -98,10 +100,10 @@ void Multiplex::resetAllOutput()
 }
 
 
-void Multiplex::writeChannel(bool enableChip4, uint8_t ch,int value)
+void Multiplex::writeChannel(bool enableChip4, int ch,int value)
 {
 	if (ch < 0 || ch > 15)
-		return 0;
+		return ;
 
 	digitalWrite(_outsig, value);
 	_addressing(ch);
@@ -113,7 +115,7 @@ void Multiplex::writeChannel(bool enableChip4, uint8_t ch,int value)
 }
 
 
-int Multiplex::readChannel(uint8_t ch)
+int Multiplex::readChannel(int ch)
 {
 	if (ch < 0 || ch > 47)
 		return 0;
@@ -138,9 +140,9 @@ int Multiplex::readChannel(uint8_t ch)
 }
 
 
-void Multiplex::_addressing(uint8_t ch)
+void Multiplex::_addressing(int ch)
 {
-	uint8_t i;
+	int i;
 	for (i = 0; i < 4; i ++)
 	{
 		#if defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MKL26Z64__)
@@ -151,4 +153,3 @@ void Multiplex::_addressing(uint8_t ch)
 	}
 }
 
-#endif

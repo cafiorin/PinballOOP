@@ -34,6 +34,11 @@ long Millis()
 #endif
 
 #ifdef DOS
+
+void pinMode(int port, int io) {}
+void digitalWrite(int port, int value) {}
+int digitalRead(int port) { return LOW; }
+
 clock_t Millis()
 {
 	return clock();

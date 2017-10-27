@@ -35,6 +35,10 @@ long Millis();
 #define YELLOW	14
 #define WHITE	15
 
+#define HIGH 1
+#define LOW 0
+#define INPUT 0
+#define OUTPUT 1
 
 clock_t Millis();
 long timediff(clock_t t2, clock_t t1);
@@ -48,6 +52,9 @@ void putbox(unsigned x, unsigned y, unsigned sx, unsigned sy, unsigned char col,
 void txtPlot(unsigned char x, unsigned char y, unsigned char Color);
 void delay(unsigned int milliseconds);
 
+void pinMode(int port, int io);
+void digitalWrite(int port, int value);
+int digitalRead(int port);
 #endif
 
 #endif

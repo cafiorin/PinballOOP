@@ -55,13 +55,7 @@ bool Input::GetInput()
 	Debug("Input::GetInput");
 	#endif
 
-	if (m_InputValue)
-	{
-		m_InputValue = false;
-		return true;
-	}
-
-	return false;
+	return m_InputValue;
 }
 
 //-------------------------------------------------------//
@@ -103,9 +97,9 @@ void Input::SetInput (bool value)
 bool Input::Loop(int value)
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGESLOOP
+	#ifdef DEBUGMESSAGESLOOP
 	Debug("Input::Loop");
-#endif
+	#endif
 
 	return false;
 }

@@ -146,6 +146,10 @@ bool PinballMaster::NotifyEvent(int id, int event)
 {
 	if (event == EVENT_EDGEPOSITIVE)
 	{
+		#ifdef DEBUGMESSAGES
+		Debug("PinballMaster::NotifyEvent edge Positive");
+		#endif
+
 		return true;
 	}
 	return false;

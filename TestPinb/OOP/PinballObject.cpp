@@ -17,12 +17,14 @@ PinballObject::PinballObject(const char *szName, Pinball *pinball)
 	m_pinball = pinball;
 	m_remote = false;
 
-	#ifdef DEBUGMESSAGES
-	Debug("PinballObject Constructor");
-	#endif
+	if (m_pinball != NULL && m_pinball != pinball)
+	{
+		#ifdef DEBUGMESSAGES
+		Debug("PinballObject Constructor");
+		#endif
 
-	if(m_pinball != NULL)
 		m_pinball->AddPinballObject(this);
+	}
 }
 
 /*---------------------------------------------------------------------*/

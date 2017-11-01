@@ -75,12 +75,6 @@
     <ClInclude Include="OOP\OutBall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OOP\RemoteInput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\DropTargetWithRemoteInput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OOP\PinballMaster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -156,12 +150,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\OutBall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\RemoteInput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\DropTargetWithRemoteInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\PinballMaster.cpp">

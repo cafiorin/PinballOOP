@@ -21,6 +21,7 @@ http://pinballhomemade.blogspot.com.br
 class PinballObject;
 class HardwareSerial;
 class Menu;
+class Multiplex;
 
 class PinballMaster : public Pinball
 {
@@ -33,10 +34,12 @@ public:
 #endif
 	virtual ~PinballMaster();
 	Menu *m_Menu;
+	Multiplex *m_Multiplex;
 
-	void TurnOnRemoteInput(char sw);
 	virtual void sendMessageToAnotherArduino(char msg);
 	virtual char receiveMessageFromAnotherArduino();
+	virtual bool NotifyEvent(int id, int event);
+
 };
 
 #endif

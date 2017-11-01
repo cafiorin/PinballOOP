@@ -15,7 +15,7 @@ Output::Output(const char *szName, Pinball *pinball, int port):Port(pinball,szNa
 	#ifdef DEBUGMESSAGES
 	Debug("Output Constructor");
 	#endif
-
+	m_portNumber = port;
 	m_TimerOn = new Timer(100, "TOon", pinball);
 
 	Init();

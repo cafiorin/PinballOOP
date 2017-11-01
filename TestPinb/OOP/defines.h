@@ -12,6 +12,10 @@ http://pinballhomemade.blogspot.com.br
 
 #define TIME_COIL_ON 20
 
+//Events
+#define EVENT_EDGEPOSITIVE 1
+#define EVENT_EDGENEGATIVE 2
+
 #define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 

@@ -80,3 +80,13 @@ bool PinballObject::Loop(int value)
 	return false;
 }
 
+//---------------------------------------------------------------------//
+bool PinballObject::NotifyEvent(int id, int event)
+//---------------------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGESLOOP
+	Debug("PinballObject::NotifyEvent");
+	#endif
+
+	return false;
+}

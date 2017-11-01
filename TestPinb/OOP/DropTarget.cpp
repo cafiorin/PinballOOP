@@ -20,9 +20,9 @@ DropTarget::DropTarget(const char *szName, Pinball *pinball,
 #endif
 
 	m_sizeInputs = 3;
-	m_input[0] = new Input("DT31In", pinball, portNumberInput1);
-	m_input[1] = new Input("DT32In", pinball, portNumberInput2);
-	m_input[2] = new Input("DT33In", pinball, portNumberInput3);
+	m_input[0] = new Input("DT31In", pinball, portNumberInput1,this);
+	m_input[1] = new Input("DT32In", pinball, portNumberInput2, this);
+	m_input[2] = new Input("DT33In", pinball, portNumberInput3, this);
 
 	m_output = new Output("DT3Out", pinball, portNumberOutput);
 
@@ -44,11 +44,11 @@ DropTarget::DropTarget(const char *szName, Pinball *pinball,
 #endif
 
 	m_sizeInputs = 5;
-	m_input[0] = new Input("DT51In", pinball, portNumberInput1);
-	m_input[1] = new Input("DT52In", pinball, portNumberInput2);
-	m_input[2] = new Input("DT53In", pinball, portNumberInput3);
-	m_input[3] = new Input("DT54In", pinball, portNumberInput4);
-	m_input[4] = new Input("DT55In", pinball, portNumberInput5);
+	m_input[0] = new Input("DT51In", pinball, portNumberInput1, this);
+	m_input[1] = new Input("DT52In", pinball, portNumberInput2, this);
+	m_input[2] = new Input("DT53In", pinball, portNumberInput3, this);
+	m_input[3] = new Input("DT54In", pinball, portNumberInput4, this);
+	m_input[4] = new Input("DT55In", pinball, portNumberInput5, this);
 
 	m_output = new Output("DT5Out", pinball, portNumberOutput);
 

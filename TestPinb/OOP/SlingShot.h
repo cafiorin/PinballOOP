@@ -20,6 +20,7 @@ public:
 	virtual ~SlingShot();
 	virtual bool Init();
 	virtual bool Loop(int value);
+	virtual bool NotifyEvent(int id, int event);
 
 protected:
 	Input *m_input1;

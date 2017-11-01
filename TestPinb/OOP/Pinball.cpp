@@ -11,16 +11,18 @@ http://pinballhomemade.blogspot.com.br
 #include "HardwareSerial.h"
 #include "Vector.h"
 #include "Utils.h"
+#include "Input.h"
+#include "Output.h"
 
 /*---------------------------------------------------------------------*/
 #ifdef ARDUINO
 #include <Wire.h>
 
-Pinball::Pinball(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial, bool master = false);
+Pinball::Pinball(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial, bool master = false)
 #endif
 
 #ifdef DOS
-Pinball::Pinball(const char *szName, HardwareSerial *serial, bool master)
+Pinball::Pinball(const char *szName, HardwareSerial *serial, bool master) : PinballObject (szName, this)
 #endif
 /*---------------------------------------------------------------------*/
 {
@@ -70,6 +72,20 @@ void Pinball::AddPinballObject(PinballObject *Pinballobj)
 	#endif
 
 	m_PinballObjs.push_back(Pinballobj);
+
+	Input *input = dynamic_cast<Input *>(Pinballobj);
+	if ( input != NULL)
+	{
+		m_Inputs[input->GetPortNumber()] = input;
+	}
+	else
+	{
+		Output *output = dynamic_cast<Output *>(Pinballobj);
+		if (output != NULL)
+		{
+			m_Outputs[output->GetPortNumber()] = output;
+		}
+	}
 }
 
 /*---------------------------------------------------------------------*/
@@ -85,7 +101,7 @@ void Pinball::RemovePinballObject(PinballObject *Pinballobj)
 
 
 /*---------------------------------------------------------------------*/
-void Pinball::Init()
+bool Pinball::Init()
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGES
@@ -100,11 +116,12 @@ void Pinball::Init()
 	}
 
 	printText("Pinball", "OK", 0);
+	return true;
 }
 
 
 /*---------------------------------------------------------------------*/
-void Pinball::Loop(int value)
+bool Pinball::Loop(int value)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP
@@ -122,6 +139,8 @@ void Pinball::Loop(int value)
 			#endif
 		}
 	}
+
+	return true;
 }
 
 //-----------------------------------------------------------------------//

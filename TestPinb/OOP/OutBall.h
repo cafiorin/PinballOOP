@@ -20,6 +20,7 @@ public:
 	virtual ~OutBall();
 	virtual bool Init();
 	virtual bool Loop(int value);
+	virtual bool NotifyEvent(int id, int event);
 
 	void LanchBall();
 	int GetBalls() { return m_nBalls; }

@@ -35,8 +35,6 @@ void receiveMessageFromAnotherArduino(int howMany)
 		sprintf(msg, "%d", c);
 		char sw[] = "SW";
 		m_PinballSlave->printText(sw, msg, 1);
-
-		m_PinballSlave->TurnOnRemoteInput(c);
 	}
 }
 
@@ -85,21 +83,8 @@ PinballSlave::PinballSlave(const char *szName, HardwareSerial *serial) : Pinball
 	m_PinballSlave = this;
 	SetupWire();
 #endif
+
 	m_PinballMaster = NULL;
-
-	Input *pInputDropTarget31 = new Input("DT31", this, I17,true);
-	Input *pInputDropTarget32 = new Input("DT32", this, I18, true);
-	Input *pInputDropTarget33 = new Input("DT33", this, I19, true);
-
-	Input *pInputRampIn = new Input("RampIn", this, I34, true);
-	Input *pInputRampOut1 = new Input("RampO1", this, I35, true);
-	Input *pInputRampOut2 = new Input("RampO2", this, I36, true);
-
-	Input *pInputStartButton = new Input("SB", this, I38, true);
-	Input *pInputMenu = new Input("BM", this, I39, true);
-	Input *pInputVolumePlus = new Input("VP", this, I40, true);
-	Input *pInputVolumeMinus = new Input("VM", this, I41, true);
-
 }
 
 /*---------------------------------------------------------------------*/
@@ -112,7 +97,7 @@ PinballSlave::~PinballSlave()
 }
 
 /*---------------------------------------------------------------------*/
-void PinballSlave::Loop(int value)
+bool PinballSlave::Loop(int value)
 /*---------------------------------------------------------------------*/
 {
 #ifdef DEBUGMESSAGESLOOP
@@ -129,15 +114,7 @@ void PinballSlave::Loop(int value)
 			LogMessage(szMsg);
 			#endif
 		}
-
-		Input *input = dynamic_cast<Input *>(m_PinballObjs[i]);
-		if (input != NULL && input->CheckEdgePositive())
-		{
-			#ifdef DOS
-			if (m_PinballMaster != NULL)
-				m_PinballMaster->TurnOnRemoteInput(input->GetPortNumber());
-			#endif
 	}
 
-	}
+	return true;
 }

@@ -20,6 +20,7 @@ public:
 	virtual ~KickoutHole();
 	virtual bool Init();
 	virtual bool Loop(int value);
+	virtual bool NotifyEvent(int id, int event);
 
 	void LanchBall();
 	bool IsThereBall() { return m_ball; }

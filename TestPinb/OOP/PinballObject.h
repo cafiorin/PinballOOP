@@ -29,6 +29,7 @@ public:
 //virtual methods	
 	virtual bool Init();
 	virtual bool Loop(int value);
+	virtual bool NotifyEvent(int id, int event);
 
 protected:
 	char m_szName[10];

@@ -15,7 +15,7 @@ KickoutHole::KickoutHole(const char *szName, Pinball *pinball, int portNumberInp
 	Debug("KickoutHole Constructor");
 	#endif
 
-	m_input1 = new Input("KHIn", pinball, portNumberInput);
+	m_input1 = new Input("KHIn", pinball, portNumberInput,this);
 	m_output = new Output("KHOut", pinball, portNumberOutput);
 
 	Init();
@@ -52,6 +52,19 @@ bool KickoutHole::Init()
 }
 
 //-------------------------------------------------------//
+bool KickoutHole::NotifyEvent(int id, int event)
+//-------------------------------------------------------//
+{
+	if (event == EVENT_EDGEPOSITIVE)
+	{
+		m_ball = true;
+		return true;
+	}
+	return false;
+}
+
+
+//-------------------------------------------------------//
 bool KickoutHole::Loop(int value)
 //-------------------------------------------------------//
 {
@@ -60,12 +73,6 @@ bool KickoutHole::Loop(int value)
 		#ifdef DEBUGMESSAGESLOOP
 		Debug("KickoutHole::Loop");
 		#endif
-
-		if (m_input1->CheckEdgePositive())
-		{
-			m_ball = true;
-			return true;
-		}
 	}
 
 	return false;

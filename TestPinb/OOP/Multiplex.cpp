@@ -30,6 +30,7 @@ Multiplex::Multiplex(const int S0,const int S1,const int S2,const int S3,const i
 	_adrsPin[1] = S1;
 	_adrsPin[2] = S2;
 	_adrsPin[3] = S3;
+	
 	_sig = SIG;
 	_outsig = OUTSIG;
 
@@ -152,4 +153,5 @@ void Multiplex::_addressing(int ch)
 		#endif
 	}
 }
+
 

@@ -16,7 +16,7 @@ Bumper::Bumper(const char *szName, Pinball *pinball, int portNumberInput, int po
 	Debug("Bumper Constructor");
 	#endif
 
-	m_input = new Input("BperIn", pinball, portNumberInput);
+	m_input = new Input("BperIn", pinball, portNumberInput,this);
 	m_output = new Output("BperOut", pinball, portNumberOutput);
 
 	Init();
@@ -46,6 +46,18 @@ bool Bumper::Init()
 }
 
 //-------------------------------------------------------//
+bool Bumper::NotifyEvent(int id, int event)
+//-------------------------------------------------------//
+{
+	if (event == EVENT_EDGEPOSITIVE)
+	{
+		m_output->TurnOnByTimer(TIME_COIL_ON);
+		return true;
+	}
+	return false;
+}
+
+//-------------------------------------------------------//
 bool Bumper::Loop(int value)
 //-------------------------------------------------------//
 {
@@ -54,11 +66,6 @@ bool Bumper::Loop(int value)
 		#ifdef DEBUGMESSAGESLOOP
 		Debug("Bumper Loop");
 		#endif
-
-		if (m_input->CheckEdgePositive())
-		{
-			m_output->TurnOnByTimer(TIME_COIL_ON);
-		}
 	}
 
 	return false;

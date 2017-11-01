@@ -17,33 +17,24 @@ class Input : public Port
 {
 
 public:
-	Input(const char *szName, Pinball *pinball, int portNumber, bool sendEventToAnotherArduino=false);
+	Input(const char *szName, Pinball *pinball, int portNumber, PinballObject *pinballObject);
 	virtual ~Input();
+
 	bool GetInput();
-	bool CheckEdgePositive();
 	void SetDebounceDelay(long debounce){m_debounceDelay = debounce;}
 	int GetPortNumber() { return m_portNumber; }
 
 	virtual bool Init();
 	virtual bool Loop(int value);
 
-	#ifdef DOS
-	void EmulateInput(bool value) { m_emulateInput = value; }
-	#endif
-
-protected:
-	bool m_sendEventToAnotherArduino;
+	void SetInput(bool value);
 
 private:
-	bool m_lastState;
 	long m_debounceDelay;    // the debounce time; increase if the output flickers
-	bool m_startReading;
 	Timer *m_TimerDebounce;
 	int m_portNumber;
-
-	#ifdef DOS
-	bool m_emulateInput;
-	#endif
+	bool m_InputValue;
+	PinballObject *m_pinballObjectParent;
 
 };
 #endif // !defined(_Input__INCLUDED_)

@@ -16,11 +16,13 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 #include "Vector.h"
+#include "PinballObject.h"
 
-class PinballObject;
 class HardwareSerial;
+class Input;
+class Output;
 
-class Pinball
+class Pinball : public PinballObject
 {
 public:
 #ifdef ARDUINO
@@ -35,12 +37,13 @@ public:
 	void LogMessage(const char *szMessage);
 	void AddPinballObject(PinballObject *Pinballobj);
 	void RemovePinballObject(PinballObject *Pinballobj);
-	void Init();
-	void Loop(int value);
+	bool Init();
+	bool Loop(int value);
 	void playSong(char song[], bool priority=true);
 	void ChangeVolume(bool plus, uint8_t delta = 5);
 	void clearDisplay(int line);
 	void printText(char *text1, char *text2, char font);
+	
 	virtual void sendMessageToAnotherArduino(char msg);
 	virtual char receiveMessageFromAnotherArduino();
 
@@ -53,6 +56,8 @@ protected:
 	bool m_master;
 	HardwareSerial *m_serial;
 	Vector<PinballObject *> m_PinballObjs;
+	Input *m_Inputs[48];
+	Output *m_Outputs[32];
 };
 
 #endif

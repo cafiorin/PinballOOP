@@ -148,7 +148,6 @@
     <ClInclude Include="OOP\Bumper.h" />
     <ClInclude Include="OOP\defines.h" />
     <ClInclude Include="OOP\DropTarget.h" />
-    <ClInclude Include="OOP\DropTargetWithRemoteInput.h" />
     <ClInclude Include="OOP\Game.h" />
     <ClInclude Include="OOP\HardwareSerial.h" />
     <ClInclude Include="OOP\ht1632pinball.h" />
@@ -166,7 +165,6 @@
     <ClInclude Include="OOP\PinballSlave.h" />
     <ClInclude Include="OOP\Player.h" />
     <ClInclude Include="OOP\Port.h" />
-    <ClInclude Include="OOP\RemoteInput.h" />
     <ClInclude Include="OOP\SlingShot.h" />
     <ClInclude Include="OOP\Stage0.h" />
     <ClInclude Include="OOP\StageBase.h" />
@@ -179,7 +177,6 @@
   <ItemGroup>
     <ClCompile Include="OOP\Bumper.cpp" />
     <ClCompile Include="OOP\DropTarget.cpp" />
-    <ClCompile Include="OOP\DropTargetWithRemoteInput.cpp" />
     <ClCompile Include="OOP\Game.cpp" />
     <ClCompile Include="OOP\HardwareSerial.cpp" />
     <ClCompile Include="OOP\Input.cpp" />
@@ -196,7 +193,6 @@
     <ClCompile Include="OOP\PinballSlave.cpp" />
     <ClCompile Include="OOP\Player.cpp" />
     <ClCompile Include="OOP\Port.cpp" />
-    <ClCompile Include="OOP\RemoteInput.cpp" />
     <ClCompile Include="OOP\SlingShot.cpp" />
     <ClCompile Include="OOP\Stage0.cpp" />
     <ClCompile Include="OOP\StageBase.cpp" />

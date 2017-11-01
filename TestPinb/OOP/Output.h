@@ -18,6 +18,8 @@ class Output : public Port
 public:
 	Output(const char *szName, Pinball *pinball, int portNumber);
 	virtual ~Output();
+
+	int GetPortNumber() { return m_portNumber; }
 	bool IsTurnOn(){return m_turnOn;}
 	void TurnOn();
 	void TurnOnByTimer(long time=TIME_COIL_ON);
@@ -28,6 +30,7 @@ public:
 protected:
 	bool m_turnOn;
 	long m_timerDelay;
+	int m_portNumber;
 
 private:	
 	Timer *m_TimerOn;

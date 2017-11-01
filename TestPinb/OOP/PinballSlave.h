@@ -39,7 +39,7 @@ public:
 
 #endif
 	virtual ~PinballSlave();
-	virtual void Loop(int value);
+	virtual bool Loop(int value);
 
 };
 

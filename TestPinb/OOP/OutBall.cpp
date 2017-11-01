@@ -21,9 +21,9 @@ OutBall::OutBall(const char *szName, Pinball *pinball, int portNumberInput1, int
 	Debug("OutBall Constructor");
 	#endif
 
-	m_input1 = new Input("OBIn1", pinball, portNumberInput1);
+	m_input1 = new Input("OBIn1", pinball, portNumberInput1,this);
 	m_output1 = new Output("OBOut1", pinball, portNumberOutput1);
-	m_input2 = new Input("OBIn2", pinball, portNumberInput2);
+	m_input2 = new Input("OBIn2", pinball, portNumberInput2,this);
 	m_output2 = new Output("OBOut2", pinball, portNumberOutput2);
 
 	m_nBalls = 4;
@@ -82,25 +82,29 @@ bool OutBall::Init()
 }
 
 //-------------------------------------------------------//
+bool OutBall::NotifyEvent(int id, int event)
+//-------------------------------------------------------//
+{
+	if (event == EVENT_EDGEPOSITIVE)
+	{
+		IncBalls();
+		if (m_input1->GetInput() && !m_input2->GetInput())
+		{
+			m_output1->TurnOnByTimer();
+		}
+		return true;
+	}
+	return false;
+}
+
+
+//-------------------------------------------------------//
 bool OutBall::Loop(int value)
 //-------------------------------------------------------//
 {
-	if (m_enabled)
-	{
-		#ifdef DEBUGMESSAGESLOOP
-		Debug("OutBall::Loop");
-		#endif
-
-		if (m_input1->CheckEdgePositive())
-		{
-			IncBalls();
-			if (m_input1->GetInput() && !m_input2->GetInput())
-			{
-				m_output1->TurnOnByTimer();
-			}
-			return true;
-		}
-	}
+	#ifdef DEBUGMESSAGESLOOP
+	Debug("OutBall::Loop");
+	#endif
 
 	return false;
 }

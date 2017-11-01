@@ -9,20 +9,18 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 
 //-------------------------------------------------------//
-Input::Input(const char *szName, Pinball *pinball, int portNumber,bool sendEventToAnotherArduino):Port(pinball,szName,portNumber)
+Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject *pinballObject):Port(pinball,szName,portNumber)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	Debug("Input Constructor");
 	#endif
+
 	m_portNumber = portNumber;
 	m_TimerDebounce = new Timer(m_debounceDelay, "TimerD", pinball);
 	m_debounceDelay = 50;
-	m_sendEventToAnotherArduino = sendEventToAnotherArduino;
-
-	#ifdef DOS
-	m_emulateInput = false;
-	#endif
+	m_InputValue = false;
+	m_pinballObjectParent = pinballObject;
 
 	Init();
 }
@@ -44,12 +42,6 @@ bool Input::Init()
 	Debug("Input::Init");
 	#endif
 
-	#ifdef ARDUINO
-	pinMode(m_portNumber, INPUT);
-	#endif
-
-	m_startReading = false;
-	m_lastState = GetInput();
 	m_TimerDebounce->Init();
 
 	return true;
@@ -63,60 +55,48 @@ bool Input::GetInput()
 	Debug("Input::GetInput");
 	#endif
 
-	#ifdef ARDUINO
-	return (digitalRead(m_portNumber) == LOW);
-	#endif
-
-	#ifdef DOS
-	if (m_emulateInput)
+	if (m_InputValue)
 	{
-		m_emulateInput=false;
+		m_InputValue = false;
 		return true;
 	}
 
 	return false;
-	#endif
 }
 
 //-------------------------------------------------------//
-bool Input::CheckEdgePositive()
+void Input::SetInput (bool value)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGESLOOP
-	Debug("Input::CheckEdgePositive");
+	#ifdef DEBUGMESSAGES
+	Debug("Input::SetInput");
 	#endif
 
-  if(m_enabled)
-  {
-	  bool edge = false;
-	  bool reading = GetInput();
+	if (m_InputValue != value)
+	{
+		if (m_TimerDebounce->Check())
+		{
+			if (m_InputValue)
+			{
+				#ifdef DEBUGMESSAGES
+				Debug("Input::Edge Positive");
+				#endif
 
-	  // If the input changed, due to noise or pressing:
-	  if (reading != m_lastState && reading == true && m_lastState == false) 
-	  {
-		  if (m_TimerDebounce->Check())
-		  {
-			  // if input state has changed:
-			  edge = true;
-			  
-			  #ifdef DEBUGMESSAGES
-			  Debug("Input::CheckEdgePositive True");
-			  #endif
+				m_pinballObjectParent->NotifyEvent(m_portNumber, EVENT_EDGEPOSITIVE);
+			}
+			else
+			{
+				#ifdef DEBUGMESSAGES
+				Debug("Input::Edge Negative");
+				#endif
 
-			  if (m_sendEventToAnotherArduino)
-			  {
-				  m_pinball->sendMessageToAnotherArduino(m_portNumber);
-			  }
+				m_pinballObjectParent->NotifyEvent(m_portNumber, EVENT_EDGENEGATIVE);
+			}
 
-		  }
-		  // reset the debouncing timer
-		  m_TimerDebounce->Init();
-	  }
-
-	  m_lastState = reading;
-	  return edge;
-  }
-  return false;
+			m_InputValue = value;
+			m_TimerDebounce->Init();
+		}
+	}
 }
 
 //-------------------------------------------------------//
@@ -125,11 +105,6 @@ bool Input::Loop(int value)
 {
 #ifdef DEBUGMESSAGESLOOP
 	Debug("Input::Loop");
-#endif
-
-#ifdef DOS
-	if (m_portNumber == value) 
-		m_emulateInput = !m_emulateInput;
 #endif
 
 	return false;

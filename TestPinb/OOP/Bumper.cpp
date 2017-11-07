@@ -9,7 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
-Bumper::Bumper(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput) : PinballObject(szName, pinball)
+Bumper::Bumper(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -17,7 +17,7 @@ Bumper::Bumper(const char *szName, Pinball *pinball, int portNumberInput, int po
 	#endif
 
 	m_input = new Input("BperIn", pinball, portNumberInput,this);
-	m_output = new Output("BperOut", pinball, portNumberOutput);
+	m_output = new Output("BperOut", pinball, portNumberOutput, multiplex);
 
 	Init();
 }
@@ -49,6 +49,10 @@ bool Bumper::Init()
 bool Bumper::NotifyEvent(int id, int event)
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Bumper::NotifyEvent");
+	#endif
+
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);

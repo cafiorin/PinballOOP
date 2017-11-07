@@ -22,6 +22,7 @@ Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject
 	m_InputValue = false;
 	m_pinballObjectParent = pinballObject;
 
+	m_pinball->AddPinballInput(this);
 	Init();
 }
 
@@ -62,7 +63,7 @@ bool Input::GetInput()
 void Input::SetInput (bool value)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESLOOP
 	Debug("Input::SetInput");
 	#endif
 

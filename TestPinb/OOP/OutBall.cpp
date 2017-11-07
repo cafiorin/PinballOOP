@@ -14,7 +14,7 @@ http://pinballhomemade.blogspot.com.br
 #include "OutBall.h"
 
 //-------------------------------------------------------//
-OutBall::OutBall(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberOutput1, int portNumberInput2, int portNumberOutput2) : PinballObject(szName, pinball)
+OutBall::OutBall(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberOutput1, int portNumberInput2, int portNumberOutput2, Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -22,9 +22,9 @@ OutBall::OutBall(const char *szName, Pinball *pinball, int portNumberInput1, int
 	#endif
 
 	m_input1 = new Input("OBIn1", pinball, portNumberInput1,this);
-	m_output1 = new Output("OBOut1", pinball, portNumberOutput1);
+	m_output1 = new Output("OBOut1", pinball, portNumberOutput1, multiplex);
 	m_input2 = new Input("OBIn2", pinball, portNumberInput2,this);
-	m_output2 = new Output("OBOut2", pinball, portNumberOutput2);
+	m_output2 = new Output("OBOut2", pinball, portNumberOutput2, multiplex);
 
 	m_nBalls = 4;
 	Init();
@@ -85,6 +85,10 @@ bool OutBall::Init()
 bool OutBall::NotifyEvent(int id, int event)
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("OutBall::NotifyEvent");
+	#endif
+
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		IncBalls();

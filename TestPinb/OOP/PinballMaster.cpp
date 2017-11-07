@@ -88,14 +88,21 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 
 	m_Menu = new Menu("Menu", this);
 
-	m_Multiplex = new Multiplex(22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32);
+	m_Multiplex = new Multiplex(this, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32);
+
+
+	Input *pInputStartButton = new Input("SB", this, I0, this);
+	Input *pInputMenu = new Input("BM", this, I39, this);
+	Input *pInputVolumePlus = new Input("VP", this, I40, this);
+	Input *pInputVolumeMinus = new Input("VM", this, I41, this);
+
 
 	//Create all objects to Arduino Master
-	Output *pTurnFlipperOn = new Output("TFO", this, O0);
+	Output *pTurnFlipperOn = new Output("TFO", this, O0, m_Multiplex);
 
-	OutBall *pOutBall = new OutBall("OB", this, I1, O1, I2, O2);
-	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, I3, I3ALT, O3);
-	SlingShot *pSlingShotRight = new SlingShot("SLR", this, I4, I4ALT, O4);
+	OutBall *pOutBall = new OutBall("OB", this, I1, O1, I2, O2, m_Multiplex);
+	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, I3, I37, O3, m_Multiplex);
+	SlingShot *pSlingShotRight = new SlingShot("SLR", this, I4, I38, O4, m_Multiplex);
 
 	Input *pInputOutLaneLeft = new Input("OLL", this, I5,this);
 	Input *pInputReturnBallLeft = new Input("RBL", this, I6, this);
@@ -105,7 +112,7 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	Input *pInputTargetGreen1 = new Input("TG1", this, I9, this);
 	Input *pInputTargetRed1 = new Input("TR1", this, I10, this);
 
-	DropTarget *pDropTarget5 = new DropTarget("DT5", this, I11, I12, I13, I14, I15, O5);
+	DropTarget *pDropTarget5 = new DropTarget("DT5", this, I11, I12, I13, I14, I15, O5,m_Multiplex);
 	Input *pInputRolloverStarRed1 = new Input("RSR1", this, I16, this);
 	//DropTargetWithRemoteInput *pDropTarget3 = new DropTargetWithRemoteInput("DT3", this, I17, I18, I19, O6);
 
@@ -115,10 +122,10 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 
 	Input *pInputTargetYellow1 = new Input("TY1", this, I23, this);
 
-	KickoutHole *pHole = new KickoutHole("HOLE", this, I24, O7);
-	Bumper *pBumperLeft = new Bumper("BL", this, I25, O8);
-	Bumper *pBumperCenter = new Bumper("BC", this, I26, O9);
-	Bumper *pBumperRight = new Bumper("BR", this, I27, O10);
+	KickoutHole *pHole = new KickoutHole("HOLE", this, I24, O7, m_Multiplex);
+	Bumper *pBumperLeft = new Bumper("BL", this, I25, O8, m_Multiplex);
+	Bumper *pBumperCenter = new Bumper("BC", this, I26, O9, m_Multiplex);
+	Bumper *pBumperRight = new Bumper("BR", this, I27, O10, m_Multiplex);
 
 	Input *pInputRolloverStarGreen = new Input("RSG", this, I28, this);
 
@@ -133,11 +140,6 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	Input *pInputRampIn = new Input("RampIn", this, I34, this);
 	Input *pInputRampOut1 = new Input("RampO1", this, I35, this);
 	Input *pInputRampOut2 = new Input("RampO2", this, I36, this);
-
-	Input *pInputStartButton = new Input("SB", this, I38, this);
-	Input *pInputMenu = new Input("BM", this, I39, this);
-	Input *pInputVolumePlus = new Input("VP", this, I40, this);
-	Input *pInputVolumeMinus = new Input("VM", this, I41, this);
 }
 
 //---------------------------------------------------------------------//

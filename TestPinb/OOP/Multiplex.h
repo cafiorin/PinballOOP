@@ -30,15 +30,20 @@
 #include "Arduino.h"
 #endif
 
-class Multiplex 
+class Pinball;
+class PinballObject;
+
+class Multiplex : public PinballObject
 {
  public:
-	 Multiplex(const int S0, const int S1, const int S2, const int S3, const int SIG, const int OUTSIG, const int chipSelect1, const int chipSelect2, const int chipSelect3, const int chipSelect4, const int chipSelect5);
-	 void 			init();
+	 Multiplex(Pinball *pinball, const int S0, const int S1, const int S2, const int S3, const int SIG, const int OUTSIG, const int chipSelect1, const int chipSelect2, const int chipSelect3, const int chipSelect4, const int chipSelect5);
+	 void 			setup();
 	 void			enableChip(int chipNumber);
 	 int 			readChannel(int ch);
-	 void			writeChannel(bool enableChip4, int ch, int value);
+	 void			writeChannel(int ch, int value);
 	 void			resetAllOutput();
+
+	 virtual bool Loop(int value);
 
  private:
 	 int	 _adrsPin[4];

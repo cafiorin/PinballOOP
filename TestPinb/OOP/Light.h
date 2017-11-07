@@ -16,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 class Light : public Output
 {
 public:
-	Light(const char *szName, Pinball *pinball, int portNumber);
+	Light(const char *szName, Pinball *pinball, int portNumber, Multiplex *multiplex);
 	virtual ~Light();
 	virtual bool Init();
 	virtual bool Loop(int value);

@@ -16,8 +16,8 @@ http://pinballhomemade.blogspot.com.br
 class DropTarget : public PinballObject
 {
 public:
-	DropTarget(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberOutput);
-	DropTarget(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberInput5, int portNumberOutput);
+	DropTarget(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberOutput,Multiplex *multiplex);
+	DropTarget(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberInput5, int portNumberOutput,Multiplex *multiplex);
 	virtual ~DropTarget();
 	virtual bool Init();
 	virtual bool Loop(int value);

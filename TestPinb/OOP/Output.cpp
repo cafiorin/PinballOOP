@@ -6,10 +6,11 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Output.h"
-
+#include "Pinball.h"
+#include "Multiplex.h"
 
 //-------------------------------------------------------//
-Output::Output(const char *szName, Pinball *pinball, int port):Port(pinball,szName, port)
+Output::Output(const char *szName, Pinball *pinball, int port, Multiplex *multiplex ):Port(pinball,szName, port)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -17,6 +18,9 @@ Output::Output(const char *szName, Pinball *pinball, int port):Port(pinball,szNa
 	#endif
 	m_portNumber = port;
 	m_TimerOn = new Timer(100, "TOon", pinball);
+	m_Multiplex = multiplex;
+
+	pinball->AddPinballOutput(this);
 
 	Init();
 }
@@ -59,9 +63,7 @@ void Output::TurnOn()
 
 		m_turnOn = true;
 
-		#ifdef ARDUINO
-		digitalWrite(m_portNumber, HIGH);
-		#endif
+		m_Multiplex->writeChannel(m_portNumber, HIGH);
 	}
 }
 
@@ -118,8 +120,6 @@ void Output::TurnOff()
 		m_timerDelay = 0;
 		m_turnOn = false;
 
-		#ifdef ARDUINO
-		digitalWrite(m_portNumber, LOW);
-		#endif
+		m_Multiplex->writeChannel(m_portNumber, LOW);
 	}
 }

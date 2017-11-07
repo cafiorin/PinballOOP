@@ -13,10 +13,12 @@ http://pinballhomemade.blogspot.com.br
 #include "Port.h"
 #include "Timer.h"
 
+class Multiplex;
+
 class Output : public Port
 {
 public:
-	Output(const char *szName, Pinball *pinball, int portNumber);
+	Output(const char *szName, Pinball *pinball, int portNumber, Multiplex *multiplex);
 	virtual ~Output();
 
 	int GetPortNumber() { return m_portNumber; }
@@ -31,6 +33,7 @@ protected:
 	bool m_turnOn;
 	long m_timerDelay;
 	int m_portNumber;
+	Multiplex *m_Multiplex;
 
 private:	
 	Timer *m_TimerOn;

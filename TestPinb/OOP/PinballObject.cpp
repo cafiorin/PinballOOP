@@ -17,7 +17,7 @@ PinballObject::PinballObject(const char *szName, Pinball *pinball)
 	m_pinball = pinball;
 	m_remote = false;
 
-	if (m_pinball != NULL && m_pinball != pinball)
+	if (m_pinball != NULL && m_pinball != this)
 	{
 		#ifdef DEBUGMESSAGES
 		Debug("PinballObject Constructor");
@@ -35,7 +35,7 @@ PinballObject::~PinballObject()
 	Debug("PinballObject Destructor");
 	#endif
 
-	if (m_pinball != NULL)
+	if (m_pinball != NULL && m_pinball != this)
 		m_pinball->RemovePinballObject(this);
 }
 

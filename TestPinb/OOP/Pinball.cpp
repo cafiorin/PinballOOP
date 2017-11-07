@@ -30,6 +30,17 @@ Pinball::Pinball(const char *szName, HardwareSerial *serial, bool master) : Pinb
 	m_master = master;
 	m_serial = serial;
 	
+	for (int ch = 0; ch < MAX_INPUTCHANNELS; ch++)
+	{
+		m_Inputs[ch] = NULL;
+	}
+
+	for (int ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
+	{
+		m_Outputs[ch] = NULL;
+	}
+
+
 	#ifdef ARDUINO
 	m_MP3player = MP3player;
 	#endif
@@ -64,6 +75,26 @@ void Pinball::LogMessage(const char *szMessage)
 }
 
 /*---------------------------------------------------------------------*/
+void Pinball::AddPinballInput(Input *input)
+/*---------------------------------------------------------------------*/
+{
+	if (input != NULL)
+	{
+		m_Inputs[input->GetPortNumber()] = input;
+	}
+}
+
+/*---------------------------------------------------------------------*/
+void Pinball::AddPinballOutput(Output *output)
+/*---------------------------------------------------------------------*/
+{
+	if (output != NULL)
+	{
+		m_Outputs[output->GetPortNumber()] = output;
+	}
+}
+
+/*---------------------------------------------------------------------*/
 void Pinball::AddPinballObject(PinballObject *Pinballobj)
 /*---------------------------------------------------------------------*/
 {
@@ -72,20 +103,6 @@ void Pinball::AddPinballObject(PinballObject *Pinballobj)
 	#endif
 
 	m_PinballObjs.push_back(Pinballobj);
-
-	Input *input = dynamic_cast<Input *>(Pinballobj);
-	if ( input != NULL)
-	{
-		m_Inputs[input->GetPortNumber()] = input;
-	}
-	else
-	{
-		Output *output = dynamic_cast<Output *>(Pinballobj);
-		if (output != NULL)
-		{
-			m_Outputs[output->GetPortNumber()] = output;
-		}
-	}
 }
 
 /*---------------------------------------------------------------------*/

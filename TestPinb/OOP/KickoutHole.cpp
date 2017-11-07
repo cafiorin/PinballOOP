@@ -8,7 +8,7 @@ http://pinballhomemade.blogspot.com.br
 #include "KickoutHole.h"
 
 //-------------------------------------------------------//
-KickoutHole::KickoutHole(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput) : PinballObject(szName, pinball)
+KickoutHole::KickoutHole(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -16,7 +16,7 @@ KickoutHole::KickoutHole(const char *szName, Pinball *pinball, int portNumberInp
 	#endif
 
 	m_input1 = new Input("KHIn", pinball, portNumberInput,this);
-	m_output = new Output("KHOut", pinball, portNumberOutput);
+	m_output = new Output("KHOut", pinball, portNumberOutput,multiplex);
 
 	Init();
 }
@@ -55,6 +55,10 @@ bool KickoutHole::Init()
 bool KickoutHole::NotifyEvent(int id, int event)
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("KickoutHole::NotifyEvent");
+	#endif
+
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_ball = true;

@@ -18,6 +18,9 @@ http://pinballhomemade.blogspot.com.br
 #include "Vector.h"
 #include "PinballObject.h"
 
+#define MAX_INPUTCHANNELS 48
+#define MAX_OUTPUTCHANNELS 32
+
 class HardwareSerial;
 class Input;
 class Output;
@@ -46,6 +49,12 @@ public:
 	
 	virtual void sendMessageToAnotherArduino(char msg);
 	virtual char receiveMessageFromAnotherArduino();
+
+	Input *GetInput(int channel) { return m_Inputs[channel]; }
+	Output *GetOutput(int channel) { return m_Outputs[channel]; }
+
+	void AddPinballInput(Input *input);
+	void AddPinballOutput(Output *output);
 
 protected:
 #ifdef ARDUINO

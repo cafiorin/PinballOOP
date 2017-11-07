@@ -14,6 +14,7 @@ http://pinballhomemade.blogspot.com.br
 #include "OOP\PinballSlave.h"
 #include "OOP\HardwareSerial.h"
 #include "OOP\Utils.h"
+#include "OOP\Input.h"
 
 int ikeyCount = 0;
 char szKey[80];
@@ -82,17 +83,10 @@ int main()
 	pPinballSlave->SetPinballMaster(pPinballMaster);
 
 	HardwareSerial *inputs = new HardwareSerial(1, 30);
-	inputs->println("Start Button - 238");
-	inputs->println("Menu  Button - 239");
-	inputs->println("Up Button    - 240");
-	inputs->println("Down Button  - 241");
-
-	inputs->println("DT31    - 217");
-	inputs->println("DT32    - 218");
-	inputs->println("DT33    - 219");
-	inputs->println("RampIn  - 234");
-	inputs->println("RampOut1- 235");
-	inputs->println("RampOut2- 236");
+	inputs->println("Start Button - 00");
+	inputs->println("Menu  Button - 01");
+	inputs->println("Up Button    - 02");
+	inputs->println("Down Button  - 03");
 	
 	inputs->println("Inputs - 01 - 37");
 
@@ -107,22 +101,19 @@ int main()
 		ch = ReadKey();
 		if (ch != -2 && ch != -1)
 		{
-			if (ch > 200)
+			Input *input = pPinballMaster->GetInput(ch);
+			if (input != NULL)
 			{
-				pPinballSlave->Loop(ch-200);
-			}
-			else
-			{
-				pPinballMaster->Loop(ch);
-			}
+				input->SetInput(true);
+				delay(200);
+				input->SetInput(false);
 
-			gotoxy(72 + 10 + ikeyCount, 21);
+				gotoxy(72 + 10 + ikeyCount, 21);
+			}
 		}
-		else
-		{
-			pPinballMaster->Loop(0);
-			pPinballSlave->Loop(0);
-		}
+		
+		pPinballMaster->Loop(0);
+		pPinballSlave->Loop(0);
 
 	} while (ch != -2);
 

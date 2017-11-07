@@ -99,9 +99,6 @@
     <ClInclude Include="OOP\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OOP\InputControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -174,9 +171,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\InputControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

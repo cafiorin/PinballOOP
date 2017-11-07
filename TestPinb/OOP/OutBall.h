@@ -16,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 class OutBall : public PinballObject
 {
 public:
-	OutBall(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberOutput1, int portNumberInput2, int portNumberOutput2);
+	OutBall(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberOutput1, int portNumberInput2, int portNumberOutput2, Multiplex *multiplex);
 	virtual ~OutBall();
 	virtual bool Init();
 	virtual bool Loop(int value);

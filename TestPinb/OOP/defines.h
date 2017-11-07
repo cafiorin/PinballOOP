@@ -20,12 +20,11 @@ http://pinballhomemade.blogspot.com.br
 //#define DEBUGMESSAGESLOOP
 
 //Inputs
+#define I0 0
 #define I1 1
 #define I2 2
 #define I3 3
-#define I3ALT 39
 #define I4 4
-#define I4ALT 38
 #define I5 5
 #define I6 6
 #define I7 7
@@ -64,8 +63,7 @@ http://pinballhomemade.blogspot.com.br
 #define I40 40
 #define I41 41
 
-//OutPut COIN
-#define O0 13
+#define O0 0
 #define O1 1
 #define O2 2
 #define O3 3

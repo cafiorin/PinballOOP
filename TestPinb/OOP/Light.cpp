@@ -9,7 +9,7 @@ http://pinballhomemade.blogspot.com.br
 
 
 //-------------------------------------------------------//
-Light::Light(const char *szName, Pinball *pinball, int port):Output(szName, pinball, port)
+Light::Light(const char *szName, Pinball *pinball, int port, Multiplex *multiplex):Output(szName, pinball, port,multiplex)
 //-------------------------------------------------------//
 {
 #ifdef DEBUGMESSAGES

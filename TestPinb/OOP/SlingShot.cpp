@@ -10,7 +10,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
-SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput) : PinballObject(szName, pinball)
+SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput, Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -20,7 +20,7 @@ SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1,
 	m_input1 = new Input("SLIn1", pinball, portNumberInput1, this);
 	m_input2 = new Input("SLIn2", pinball, portNumberInput2, this);
 	
-	m_output = new Output("SLOut", pinball, portNumberOutput);
+	m_output = new Output("SLOut", pinball, portNumberOutput, multiplex);
 
 	Init();
 }
@@ -53,6 +53,10 @@ bool SlingShot::Init()
 bool SlingShot::NotifyEvent(int id, int event)
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Slingshot::NotifyEvent");
+	#endif
+
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);

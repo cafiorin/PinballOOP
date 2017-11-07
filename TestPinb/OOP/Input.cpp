@@ -71,7 +71,7 @@ void Input::SetInput (bool value)
 	{
 		if (m_TimerDebounce->Check())
 		{
-			if (m_InputValue)
+			if (value)
 			{
 				#ifdef DEBUGMESSAGES
 				Debug("Input::Edge Positive");

@@ -45,7 +45,7 @@ bool Menu::Init()
 	m_option = 0;
 	m_subOption = 0;
 
-	return false;
+	return true;
 }
 
 

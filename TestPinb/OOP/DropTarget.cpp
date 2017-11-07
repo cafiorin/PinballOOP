@@ -7,6 +7,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "DropTarget.h"
 #include "Output.h"
+#include "Pinball.h"
 
 //-------------------------------------------------------//
 DropTarget::DropTarget(const char *szName, Pinball *pinball, 
@@ -79,24 +80,24 @@ DropTarget::~DropTarget()
 bool DropTarget::Init()
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	Debug("DropTarget::Init");
-#endif
+	#endif
 	
 	Reset();
-	return false;
+	return true;
 }
 
 //-------------------------------------------------------//
-bool DropTarget::Loop(int value)
+bool DropTarget::NotifyEvent(int id, int event)
 //-------------------------------------------------------//
 {
-	if (m_enabled)
-	{
-		#ifdef DEBUGMESSAGESLOOP
-		Debug("DropTarget::Loop");
-		#endif
+	#ifdef DEBUGMESSAGES
+	Debug("DropTarget::NotifyEvent");
+	#endif
 
+	if (event == EVENT_EDGEPOSITIVE)
+	{
 		bool allTargets = false;
 		for (int i = 0; i < m_sizeInputs; i++)
 		{
@@ -113,11 +114,23 @@ bool DropTarget::Loop(int value)
 
 		if (allTargets)
 		{
+			m_pinball->NotifyEvent(m_sizeInputs, EVENT_DROPTARGETDOWN);
 			Reset();
 		}
 
 		return (allTargets);
 	}
+	return false;
+}
+
+
+//-------------------------------------------------------//
+bool DropTarget::Loop(int value)
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGESLOOP
+	Debug("DropTarget::Loop");
+	#endif
 
 	return false;
 }

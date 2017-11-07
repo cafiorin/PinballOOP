@@ -104,9 +104,8 @@ int main()
 			Input *input = pPinballMaster->GetInput(ch);
 			if (input != NULL)
 			{
-				input->SetInput(true);
-				delay(200);
-				input->SetInput(false);
+				bool value = input->GetInput();
+				input->SetInput(!value);
 
 				gotoxy(72 + 10 + ikeyCount, 21);
 			}

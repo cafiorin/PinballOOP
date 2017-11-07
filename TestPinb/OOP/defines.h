@@ -16,6 +16,8 @@ http://pinballhomemade.blogspot.com.br
 #define EVENT_EDGEPOSITIVE 1
 #define EVENT_EDGENEGATIVE 2
 
+#define EVENT_DROPTARGETDOWN 3
+
 #define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 

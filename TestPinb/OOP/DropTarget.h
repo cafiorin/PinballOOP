@@ -21,6 +21,7 @@ public:
 	virtual ~DropTarget();
 	virtual bool Init();
 	virtual bool Loop(int value);
+	virtual bool NotifyEvent(int id, int event);
 
 	void Reset();
 	bool IsAllTargets() { return m_AllTargets; }

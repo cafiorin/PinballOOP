@@ -129,7 +129,10 @@ bool Pinball::Init()
 
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
-		m_PinballObjs[i]->Init();
+		if (!m_PinballObjs[i]->Init())
+		{
+			printText("Pinball", "error", 0);
+		}
 	}
 
 	printText("Pinball", "OK", 0);

@@ -154,6 +154,16 @@ bool PinballMaster::NotifyEvent(int id, int event)
 
 		return true;
 	}
+	else if (event == EVENT_DROPTARGETDOWN)
+	{
+		#ifdef DEBUGMESSAGES
+		Debug("PinballMaster::NotifyEvent Droptarget");
+		#endif
+
+		return true;
+	}
+
+
 	return false;
 }
 

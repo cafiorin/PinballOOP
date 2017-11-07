@@ -44,11 +44,14 @@ PinballObject::~PinballObject()
 void PinballObject::LogMessage(const char *szMessage)
 /*---------------------------------------------------------------------*/
 {
-	char szMsg[50];
-	sprintf(szMsg, "[%s]:%s", m_szName, szMessage);
-	
-	if (m_pinball != NULL)
-		m_pinball->LogMessage(szMsg);
+	if (strlen(szMessage) + strlen(m_szName) + 1 < 50)
+	{
+		char szMsg[50];
+		sprintf(szMsg, "[%s]:%s", m_szName, szMessage);
+
+		if (m_pinball != NULL)
+			m_pinball->LogMessage(szMsg);
+	}
 }
 
 /*---------------------------------------------------------------------*/

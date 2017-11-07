@@ -46,6 +46,11 @@ bool SlingShot::Init()
 	Debug("SlingShot Init");
 	#endif
 
+	if (!m_input1->GetInput() && !m_input2->GetInput())
+	{
+		return true;
+	}
+
 	return false;
 }
 

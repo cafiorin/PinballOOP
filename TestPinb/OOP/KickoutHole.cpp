@@ -45,10 +45,9 @@ bool KickoutHole::Init()
 	if (m_input1->GetInput())
 	{
 		m_output->TurnOnByTimer();
-		return true;
 	}
 
-	return false;
+	return true;
 }
 
 //-------------------------------------------------------//

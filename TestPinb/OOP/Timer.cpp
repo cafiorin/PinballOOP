@@ -40,7 +40,7 @@ bool Timer::Init()
 	m_enabled = true;
 	m_lastTime = Millis();
 
-	return false;
+	return true;
 }
 
 //-------------------------------------------------------//

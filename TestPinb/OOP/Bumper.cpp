@@ -42,7 +42,7 @@ bool Bumper::Init()
 	Debug("Bumper Init");
 	#endif
 
-	return false;
+	return true;
 }
 
 //-------------------------------------------------------//

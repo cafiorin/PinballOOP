@@ -27,6 +27,7 @@ class PinballMaster : public Pinball
 public:
 #ifdef ARDUINOLIB
 	PinballMaster();
+	void Setup(SFEMP3Shield *MP3player, HardwareSerial *serial);
 #endif
 
 #ifdef DOS
@@ -37,8 +38,12 @@ public:
 	Menu *m_Menu;
 	Multiplex *m_Multiplex;
 
+	void clearDisplay(int line);
+	void printText(char *text1, char *text2, char font);
+
 	virtual bool NotifyEvent(int id, int event);
 	virtual bool Init();
+	virtual bool Loop(int value);
 
 	#ifdef ARDUINOLIB
 	PinballMaster *m_PinballMaster;

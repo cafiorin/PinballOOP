@@ -30,6 +30,7 @@ public:
 #ifdef ARDUINOLIB
 	PinballSlave();
 	PinballSlave *m_PinballSlave;
+	void Setup(SFEMP3Shield *MP3player, HardwareSerial *serial);
 #endif
 
 #ifdef DOS
@@ -40,7 +41,9 @@ public:
 #endif
 
 	virtual ~PinballSlave();
+
 	virtual bool Loop(int value);
+	virtual bool Init();
 
 };
 

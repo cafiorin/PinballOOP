@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OOP\AttractMode.h" />
     <ClInclude Include="OOP\Bumper.h" />
     <ClInclude Include="OOP\defines.h" />
     <ClInclude Include="OOP\DropTarget.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="OOP\AttractMode.cpp" />
     <ClCompile Include="OOP\Bumper.cpp" />
     <ClCompile Include="OOP\DropTarget.cpp" />
     <ClCompile Include="OOP\Game.cpp" />

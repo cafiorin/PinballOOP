@@ -2,8 +2,8 @@
 #define StageBase__INCLUDED_
 
 #include "defines.h"
-#include "Pinball.h"
 
+class Pinball;
 
 class StageBase
 {
@@ -11,7 +11,8 @@ public:
 	StageBase(Pinball *pinball);
 	virtual ~StageBase();
 
-	void ShowStage(int stage);
+	virtual void Init() {};
+	virtual void Loop() {};
 
 protected:
 	Pinball *m_Pinball;

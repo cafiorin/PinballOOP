@@ -53,18 +53,24 @@ PinballSlave::PinballSlave()
 	m_PinballSlave = this;
 	SetupWire();
 }
+
+/*---------------------------------------------------------------------*/
+void PinballSlave::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
+/*---------------------------------------------------------------------*/
+{
+	m_serial = serial;
+	m_MP3player = MP3player;
+}
+
 #endif
 
 #ifdef DOS
 /*---------------------------------------------------------------------*/
-PinballSlave::PinballSlave(const char *szName, HardwareSerial *serial) : Pinball(szName, serial, true)
+PinballSlave::PinballSlave(const char *szName, HardwareSerial *serial) : Pinball(szName, serial)
 /*---------------------------------------------------------------------*/
 {
-	#ifdef DEBUGMESSAGES
-	LogMessage("PinballSlave Constructor");
-	#endif
-
 	m_PinballMaster = NULL;
+	m_Status = StatusPinball::initializing;
 }
 #endif
 
@@ -78,24 +84,21 @@ PinballSlave::~PinballSlave()
 }
 
 /*---------------------------------------------------------------------*/
+bool PinballSlave::Init()
+/*---------------------------------------------------------------------*/
+{
+	m_Status = StatusPinball::waitingmessages;
+	return true;
+}
+
+
+/*---------------------------------------------------------------------*/
 bool PinballSlave::Loop(int value)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP
 	LogMessage("Pinball::Loop");
 	#endif
-
-	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
-	{
-		if (m_PinballObjs[i]->Loop(value))
-		{
-			#ifdef DEBUGMESSAGES
-			char szMsg[50];
-			sprintf(szMsg, "%s Loop return true", m_PinballObjs[i]->getName());
-			LogMessage(szMsg);
-			#endif
-		}
-	}
 
 	return true;
 }

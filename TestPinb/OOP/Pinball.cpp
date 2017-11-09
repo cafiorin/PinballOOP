@@ -17,66 +17,25 @@ http://pinballhomemade.blogspot.com.br
 #ifdef ARDUINOLIB
 #include <Wire.h>
 #include <SFEMP3Shield.h>
-#include "ht1632pinball.h"
 
 //---------------------------------------------------------------------//
 Pinball::Pinball() : PinballObject("Pinball", this)
 //---------------------------------------------------------------------//
 {
+	m_Status = StatusPinball::initializing;
 }
 
-/*---------------------------------------------------------------------*/
-void Pinball::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial, bool master)
-/*---------------------------------------------------------------------*/
-{
-	m_serial = serial;
-	m_MP3player = MP3player;
-	m_master = master;
-
-	for (int ch = 0; ch < MAX_INPUTCHANNELS; ch++)
-	{
-		m_Inputs[ch] = NULL;
-	}
-
-	for (int ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
-	{
-		m_Outputs[ch] = NULL;
-	}
-
-	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball Constructor");
-	#endif
-}
 
 #endif
 
 #ifdef DOS
 /*---------------------------------------------------------------------*/
-Pinball::Pinball(const char *szName, HardwareSerial *serial, bool master) : PinballObject (szName, this)
+Pinball::Pinball(const char *szName, HardwareSerial *serial) : PinballObject (szName, this)
 /*---------------------------------------------------------------------*/
 {
 	strcpy(m_szName, szName);
-	m_master = master;
 	m_serial = serial;
-	
-	for (int ch = 0; ch < MAX_INPUTCHANNELS; ch++)
-	{
-		m_Inputs[ch] = NULL;
-	}
-
-	for (int ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
-	{
-		m_Outputs[ch] = NULL;
-	}
-
-
-	#ifdef ARDUINOLIB
-	m_MP3player = MP3player;
-	#endif
-
-	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball Constructor");
-	#endif
+	m_Status = StatusPinball::initializing;
 }
 #endif
 
@@ -155,17 +114,6 @@ bool Pinball::Init()
 	LogMessage("Pinball::Init");
 	#endif
 
-	printText("Pinball", "init", 0);
-
-	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
-	{
-		if (!m_PinballObjs[i]->Init())
-		{
-			printText("Pinball", "error", 0);
-		}
-	}
-
-	printText("Pinball", "OK", 0);
 	return true;
 }
 
@@ -177,18 +125,6 @@ bool Pinball::Loop(int value)
 	#ifdef DEBUGMESSAGESLOOP
 	LogMessage("Pinball::Loop");
 	#endif
-
-	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
-	{
-		if (m_PinballObjs[i]->Loop(value))
-		{
-			#ifdef DEBUGMESSAGES
-			char szMsg[50];
-			sprintf(szMsg, "%s Loop return true", m_PinballObjs[i]->getName());
-			LogMessage(szMsg);
-			#endif
-		}
-	}
 
 	return true;
 }
@@ -260,91 +196,22 @@ void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 }
 
 //-----------------------------------------------------------------------//
-void Pinball::clearDisplay(int line)
-//-----------------------------------------------------------------------//
-{
-	if (!m_master)
-		return;
-
-	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball::clearDisplay");
-	#endif
-
-
-	#ifdef ARDUINOLIB
-	char textcol[] = "        ";
-
-	if (line == 0) // Clear All
-	{
-		textcolor1(0, 1, textcol, RED, 1);
-		textcolor1(0, 9, textcol, GREEN, 1);
-	}
-	else if (line == 1)
-	{
-		textcolor1(0, 1, textcol, RED, 1);
-	}
-	else
-	{
-		textcolor1(0, 9, textcol, GREEN, 1);
-	}
-	#endif
-}
-
-//-----------------------------------------------------------------------//
-void Pinball::printText(char *text1, char *text2, char font)
-//-----------------------------------------------------------------------//
-{
-	if (!m_master)
-		return;
-
-	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball::printText");
-	#endif
-
-
-	#ifdef DOS
-	int xCursor, yCursor;
-	getCursorXY(xCursor, yCursor);
-
-	int x = 70;
-	int y = 1;
-	clrbox(x, y, x+10, y+3, BLACK);
-	box(x, y, x+10, y+3, y+6, y+6, "Display");
-
-	setcolor(RED);
-	gotoxy(x+2, y+1);
-	printf(text1);
-
-	setcolor(GREEN);
-	gotoxy(x+2, y+2);
-	printf(text2);
-
-	gotoxy(xCursor, yCursor);
-	#endif
-
-
-	#ifdef ARDUINOLIB
-	clearDisplay(0);
-	textcolor1(1, 1, text1, RED, font);
-	textcolor1(1, 8 + font, text2, GREEN, font);
-	#endif
-}
-
-//-----------------------------------------------------------------------//
 void Pinball::sendMessageToAnotherArduino(char msg)
 //-----------------------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	LogMessage("Pinball::sendMessageToAnotherArduino");
-#endif
+	#endif
 
-	#ifdef ARDUINOLIB
+#ifdef ARDUINOLIB
 	// send the data
-	Wire.beginTransmission(5); // transmit to device
+	Wire.beginTransmission(4); // transmit to device
 	Wire.write(msg);
 	Wire.endTransmission();
-	#endif
+#endif
 }
+
+
 
 //-----------------------------------------------------------------------//
 char Pinball::receiveMessageFromAnotherArduino(int howMany)

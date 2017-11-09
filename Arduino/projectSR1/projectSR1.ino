@@ -34,7 +34,7 @@ void setup()
  	}
     
 	//Pinball    
-    m_pinball.Setup(&MP3player, &Serial, true);
+    m_pinball.Setup(&MP3player, &Serial);
 
     Serial.println(F("init ok"));
 }

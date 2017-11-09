@@ -9,12 +9,12 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 #include "Utils.h"
-#include "PinballObject.h"
+#include "PinballMaster.h"
 
-class Menu : public PinballObject
+class Menu
 {
 public:
-	Menu(const char *szName, Pinball *pinball);
+	Menu(const char *szName, PinballMaster *pinball);
 	virtual ~Menu();
 	virtual bool Init();
 	virtual bool Loop(int value);
@@ -36,5 +36,7 @@ protected:
 	bool m_isShowing;
 	int m_option;
 	int m_subOption;
+
+	PinballMaster *m_Pinball;
 };
 #endif // !defined(Menu__INCLUDED_)

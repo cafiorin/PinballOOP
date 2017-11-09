@@ -13,12 +13,15 @@ http://pinballhomemade.blogspot.com.br
 #define KeyDown 41
 
 //-------------------------------------------------------//
-Menu::Menu(const char *szName, Pinball *pinball) : PinballObject(szName, pinball)
+Menu::Menu(const char *szName, PinballMaster *pinball) 
 //-------------------------------------------------------//
 {
+	m_Pinball = pinball;
+	
 	#ifdef DEBUGMESSAGES
-	Debug("Menu Constructor");
+	m_Pinball->Debug("Menu Constructor");
 	#endif
+
 
 	Init();
 }
@@ -28,7 +31,7 @@ Menu::~Menu()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Menu Destructor");
+	m_Pinball->Debug("Menu Destructor");
 	#endif
 }
 
@@ -37,10 +40,9 @@ bool Menu::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Menu::Init");
+	m_Pinball->Debug("Menu::Init");
 	#endif
 	
-	m_enabled = true;
 	m_isShowing = false;
 	m_option = 0;
 	m_subOption = 0;
@@ -135,7 +137,7 @@ void Menu::PrintMenu()
 {
 	char *szLine1 = GetMenuLine1();
 	char *szLine2 = GetMenuLine2();
-	m_pinball->printText(szLine1, szLine2, 0);
+	m_Pinball->printText(szLine1, szLine2, 0);
 }
 
 void Menu::GetNextOption()
@@ -154,12 +156,9 @@ void Menu::GetPrevOption()
 bool Menu::Loop(int value)
 //-------------------------------------------------------//
 {
-	if (m_enabled)
-	{
 		#ifdef DEBUGMESSAGESLOOP
-		Debug("Menu::Loop");
+		m_Pinball->Debug("Menu::Loop");
 		#endif
-	}
 
 	if (value == MenuBtn)
 	{

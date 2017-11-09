@@ -27,6 +27,10 @@ http://pinballhomemade.blogspot.com.br
 //#define DEBUGMESSAGESLOOP
 
 //Inputs
+#define INPUT_START_BUTTON 0
+#define INPUT_MENU_BUTTON 1
+
+
 #define I0 0
 #define I1 1
 #define I2 2

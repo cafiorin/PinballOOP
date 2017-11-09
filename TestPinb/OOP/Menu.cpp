@@ -75,6 +75,7 @@ int optionQuant[] = { 2,3,3 };
 
 char* Menu::GetMenuLine1()
 {
+	/*
 	switch (m_option)
 	{
 		case 0:
@@ -85,10 +86,13 @@ char* Menu::GetMenuLine1()
 			return "Config";
 	}
 	return "";
+	*/
+	return NULL;
 }
 
 char* Menu::GetMenuLine2()
 {
+	/*
 	switch (m_option)
 	{
 	case 0:
@@ -121,6 +125,9 @@ char* Menu::GetMenuLine2()
 		}
 	}
 	return "";
+	*/
+
+	return NULL;
 }
 
 

@@ -10,6 +10,11 @@ http://pinballhomemade.blogspot.com.br
 #define HardwareSerial__INCLUDED_
 
 #include "defines.h"
+
+#ifdef DOS
+
+
+#include "defines.h"
 #include "Vector.h"
 
 #define MAX_STRINGS 25
@@ -26,5 +31,7 @@ public:
 	int m_YInit;
 
 };
+#endif
+
 
 #endif

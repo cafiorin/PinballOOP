@@ -23,7 +23,7 @@ protected:
 	#ifdef DOS
 	#endif
 	
-	#ifdef ARDUINO
+	#ifdef ARDUINOLIB
 	#endif
 
 	void StartMenu();

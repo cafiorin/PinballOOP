@@ -26,7 +26,7 @@
 #ifndef _MULTIPLEX_H_
 #define _MULTIPLEX_H_
 
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 #include "Arduino.h"
 #endif
 

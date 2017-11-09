@@ -18,7 +18,7 @@ http://pinballhomemade.blogspot.com.br
 #endif // DOS
 
 
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 #include <Wire.h>
 const int address_master = 4;  // the address to be used by the communicating devices
 PinballSlave *m_PinballSlave = NULL;
@@ -27,15 +27,7 @@ PinballSlave *m_PinballSlave = NULL;
 void receiveMessageFromAnotherArduino(int howMany)
 //-----------------------------------------------------------------------//
 {
-	while (Wire.available() > 0)
-	{
-		char c = Wire.read(); // receive byte as a character
-
-		char msg[6];
-		sprintf(msg, "%d", c);
-		char sw[] = "SW";
-		m_PinballSlave->printText(sw, msg, 1);
-	}
+	m_PinballSlave->receiveMessageFromAnotherArduino(howMany);
 }
 
 //-----------------------------------------------------------------------//
@@ -46,63 +38,52 @@ void SetupWire()
 	Wire.onReceive(receiveMessageFromAnotherArduino); // register event to handle requests
 }
 
-//-----------------------------------------------------------------------//
-void sendMessageToAnotherArduino(char c)
-//-----------------------------------------------------------------------//
-{
-	// send the data
-	Wire.beginTransmission(5); // transmit to device
-	Wire.write(c);
-	Wire.endTransmission();
-}
+#endif // ARDUINOLIB
 
-#endif // ARDUINO
+
 /*---------------------------------------------------------------------*/
-
-
 //							C L A S S
-
-
 /*---------------------------------------------------------------------*/
 
+#ifdef ARDUINOLIB
 /*---------------------------------------------------------------------*/
-#ifdef ARDUINO
-PinballSlave::PinballSlave(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial, bool master = false) : Pinball(szName, serial, true)
+PinballSlave::PinballSlave()
+/*---------------------------------------------------------------------*/
+{
+	m_PinballSlave = this;
+	SetupWire();
+}
 #endif
 
 #ifdef DOS
+/*---------------------------------------------------------------------*/
 PinballSlave::PinballSlave(const char *szName, HardwareSerial *serial) : Pinball(szName, serial, true)
-#endif
 /*---------------------------------------------------------------------*/
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	LogMessage("PinballSlave Constructor");
-#endif
-
-#ifdef ARDUINO
-	m_PinballSlave = this;
-	SetupWire();
-#endif
+	#endif
 
 	m_PinballMaster = NULL;
 }
+#endif
 
 /*---------------------------------------------------------------------*/
 PinballSlave::~PinballSlave()
 /*---------------------------------------------------------------------*/
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	LogMessage("PinballSlave Destructor");
-#endif
+	#endif
 }
 
 /*---------------------------------------------------------------------*/
 bool PinballSlave::Loop(int value)
 /*---------------------------------------------------------------------*/
 {
-#ifdef DEBUGMESSAGESLOOP
+	#ifdef DEBUGMESSAGESLOOP
 	LogMessage("Pinball::Loop");
-#endif
+	#endif
 
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{

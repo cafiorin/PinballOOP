@@ -1,4 +1,4 @@
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 #include <Arduino.h>
 #endif
 

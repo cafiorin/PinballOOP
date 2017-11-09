@@ -12,11 +12,10 @@ http://pinballhomemade.blogspot.com.br
 #include "Vector.h"
 #include "Pinball.h"
 
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 #include <SFEMP3Shield.h>
 #include <Wire.h>
-#include "ht1632pinball.h"
-#endif // ARDUINO
+#endif // ARDUINOLIB
 
 #ifdef DOS
 #include "PinballMaster.h"
@@ -28,16 +27,18 @@ class HardwareSerial;
 class PinballSlave : public Pinball
 {
 public:
-#ifdef ARDUINO
-	PinballSlave(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial);
+#ifdef ARDUINOLIB
+	PinballSlave();
+	PinballSlave *m_PinballSlave;
 #endif
+
 #ifdef DOS
 	PinballSlave(const char *szName, HardwareSerial *serial);
 
 	PinballMaster *m_PinballMaster;
 	void SetPinballMaster(PinballMaster *pinball) { m_PinballMaster = pinball; }
-
 #endif
+
 	virtual ~PinballSlave();
 	virtual bool Loop(int value);
 

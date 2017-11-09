@@ -21,71 +21,68 @@ http://pinballhomemade.blogspot.com.br
 #include "Menu.h"
 #include "Multiplex.h"
 
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 #include <Wire.h>
 
 const int address_master = 4;  // the address to be used by the communicating devices
 PinballMaster *m_PinballMaster = NULL;
 
 //-----------------------------------------------------------------------//
-void receiveMessageFromAnotherArduino(int howMany)
+void receiveMessageFromAnotherArduinoToMaster(int howMany)
 //-----------------------------------------------------------------------//
 {
-	while (Wire.available() > 0)
-	{
-		char c = Wire.read(); // receive byte as a character
-
-		char msg[6];
-		sprintf(msg, "%d", c);
-		char sw[] = "SW";
-		m_PinballMaster->printText(sw, msg, 1);
-	}
+	m_PinballMaster->receiveMessageFromAnotherArduino(howMany);
 }
 
 //-----------------------------------------------------------------------//
-void SetupWire()
+void SetupWireToMaster()
 //-----------------------------------------------------------------------//
 {
 	Wire.begin(address_master); // join I2C bus using this address
-	Wire.onReceive(receiveMessageFromAnotherArduino); // register event to handle requests
+	Wire.onReceive(receiveMessageFromAnotherArduinoToMaster); // register event to handle requests
 }
 
-//-----------------------------------------------------------------------//
-void sendMessageToAnotherArduinoGlobal(char c)
-//-----------------------------------------------------------------------//
-{
-	// send the data
-	Wire.beginTransmission(5); // transmit to device
-	Wire.write(c);
-	Wire.endTransmission();
-}
-
-#endif // ARDUINO
+#endif // ARDUINOLIB
 /*---------------------------------------------------------------------*/
 
 
 //							C L A S S
 
 
+#ifdef ARDUINOLIB
 /*---------------------------------------------------------------------*/
-#ifdef ARDUINO
-PinballMaster::PinballMaster(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial, bool master = false) : Pinball(szName, serial, true)
-#endif
-
-#ifdef DOS
-PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinball(szName, serial, true)
-#endif
+PinballMaster::PinballMaster() 
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage("PinballMaster Constructor");
 	#endif
 
-	#ifdef ARDUINO
 	m_PinballMaster = this;
-	SetupWire();
+	SetupWireToMaster();
+
+	Init();
+}
+#endif
+
+#ifdef DOS
+/*---------------------------------------------------------------------*/
+PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinball(szName, serial, true)
+/*---------------------------------------------------------------------*/
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage("PinballMaster Constructor");
 	#endif
 
+	Init();
+}
+
+#endif
+
+//---------------------------------------------------------------------//
+bool PinballMaster::Init()
+//---------------------------------------------------------------------//
+{
 	m_Menu = new Menu("Menu", this);
 
 	m_Multiplex = new Multiplex(this, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32);
@@ -104,7 +101,7 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, I3, I37, O3, m_Multiplex);
 	SlingShot *pSlingShotRight = new SlingShot("SLR", this, I4, I38, O4, m_Multiplex);
 
-	Input *pInputOutLaneLeft = new Input("OLL", this, I5,this);
+	Input *pInputOutLaneLeft = new Input("OLL", this, I5, this);
 	Input *pInputReturnBallLeft = new Input("RBL", this, I6, this);
 	Input *pInputReturnBallRight = new Input("RBR", this, I7, this);
 	Input *pInputOutLaneRight = new Input("OLR", this, I8, this);
@@ -112,9 +109,9 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	Input *pInputTargetGreen1 = new Input("TG1", this, I9, this);
 	Input *pInputTargetRed1 = new Input("TR1", this, I10, this);
 
-	DropTarget *pDropTarget5 = new DropTarget("DT5", this, I11, I12, I13, I14, I15, O5,m_Multiplex);
+	DropTarget *pDropTarget5 = new DropTarget("DT5", this, I11, I12, I13, I14, I15, O5, m_Multiplex);
 	Input *pInputRolloverStarRed1 = new Input("RSR1", this, I16, this);
-	//DropTargetWithRemoteInput *pDropTarget3 = new DropTargetWithRemoteInput("DT3", this, I17, I18, I19, O6);
+	DropTarget *pDropTarget3 = new DropTarget("DT3", this, I17, I18, I19, O6, m_Multiplex);
 
 	Input *pInputTargetRed2 = new Input("TR2", this, I20, this);
 	Input *pInputTargetYellow2 = new Input("TY2", this, I21, this);
@@ -140,6 +137,8 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	Input *pInputRampIn = new Input("RampIn", this, I34, this);
 	Input *pInputRampOut1 = new Input("RampO1", this, I35, this);
 	Input *pInputRampOut2 = new Input("RampO2", this, I36, this);
+	
+	return true;
 }
 
 //---------------------------------------------------------------------//
@@ -174,22 +173,5 @@ PinballMaster::~PinballMaster()
 	#ifdef DEBUGMESSAGES
 	LogMessage("PinballMaster Destructor");
 	#endif
-}
-
-void PinballMaster::sendMessageToAnotherArduino(char msg)
-{
-	#ifdef ARDUINO
-	sendMessageToAnotherArduinoGlobal(msg);
-	#endif // ARDUINO
-
-	#ifdef DOS
-
-	#endif
-
-}
-
-char PinballMaster::receiveMessageFromAnotherArduino()
-{
-	return 0;
 }
 

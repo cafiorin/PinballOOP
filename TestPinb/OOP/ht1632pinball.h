@@ -1,7 +1,7 @@
 #ifndef HT1632PINBALL__h
 #define HT1632PINBALL__h
 
-#ifdef ARDUINO
+#include "defines.h"
 
 #define FONT_4x6
 #define FONT
@@ -1663,4 +1663,3 @@ const unsigned char PROGMEM Jahr2_bits [] = {
 #endif
 
 
-#endif

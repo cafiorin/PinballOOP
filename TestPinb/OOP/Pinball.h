@@ -8,11 +8,10 @@ http://pinballhomemade.blogspot.com.br
 #ifndef Pinball__INCLUDED_
 #define Pinball__INCLUDED_
 
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 #include <SFEMP3Shield.h>
 #include <Wire.h>
-#include "ht1632pinball.h"
-#endif // ARDUINO
+#endif // ARDUINOLIB
 
 #include "defines.h"
 #include "Vector.h"
@@ -24,13 +23,16 @@ http://pinballhomemade.blogspot.com.br
 class HardwareSerial;
 class Input;
 class Output;
+class SFEMP3Shield;
 
 class Pinball : public PinballObject
 {
 public:
-#ifdef ARDUINO
-	Pinball(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial, bool master=false);
+#ifdef ARDUINOLIB
+	Pinball();
+	void Setup(SFEMP3Shield *MP3player, HardwareSerial *serial, bool master);
 #endif
+
 #ifdef DOS
 	Pinball(const char *szName, HardwareSerial *serial, bool master = false);
 #endif
@@ -47,8 +49,8 @@ public:
 	void clearDisplay(int line);
 	void printText(char *text1, char *text2, char font);
 	
-	virtual void sendMessageToAnotherArduino(char msg);
-	virtual char receiveMessageFromAnotherArduino();
+	void sendMessageToAnotherArduino(char msg);
+	char receiveMessageFromAnotherArduino(int howMany);
 
 	Input *GetInput(int channel) { return m_Inputs[channel]; }
 	Output *GetOutput(int channel) { return m_Outputs[channel]; }
@@ -57,9 +59,9 @@ public:
 	void AddPinballOutput(Output *output);
 
 protected:
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 	SFEMP3Shield *m_MP3player;
-#endif // ARDUINO
+#endif // ARDUINOLIB
 
 	char m_szName[10];
 	bool m_master;

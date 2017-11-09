@@ -8,6 +8,11 @@ http://pinballhomemade.blogspot.com.br
 #ifndef defines_h
 #define defines_h
 
+//-----------------------
+//#define DOS
+#define ARDUINOLIB
+//-----------------------
+
 #define MAX_BALLS 5
 
 #define TIME_COIL_ON 20
@@ -80,14 +85,10 @@ http://pinballhomemade.blogspot.com.br
 #define O12 12
 
 
-
-
-#define DOS
-//#define ARDUINO
-
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 #include "Arduino.h"
-#endif //ARDUINO
+#pragma GCC diagnostic ignored "-Wwrite-strings"
+#endif //ARDUINOLIB
 
 #ifdef DOS
 #include "..\stdafx.h"

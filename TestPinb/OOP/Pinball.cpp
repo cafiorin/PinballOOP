@@ -14,16 +14,45 @@ http://pinballhomemade.blogspot.com.br
 #include "Input.h"
 #include "Output.h"
 
-/*---------------------------------------------------------------------*/
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 #include <Wire.h>
+#include <SFEMP3Shield.h>
+#include "ht1632pinball.h"
 
-Pinball::Pinball(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial, bool master = false)
+//---------------------------------------------------------------------//
+Pinball::Pinball() : PinballObject("Pinball", this)
+//---------------------------------------------------------------------//
+{
+}
+
+/*---------------------------------------------------------------------*/
+void Pinball::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial, bool master)
+/*---------------------------------------------------------------------*/
+{
+	m_serial = serial;
+	m_MP3player = MP3player;
+	m_master = master;
+
+	for (int ch = 0; ch < MAX_INPUTCHANNELS; ch++)
+	{
+		m_Inputs[ch] = NULL;
+	}
+
+	for (int ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
+	{
+		m_Outputs[ch] = NULL;
+	}
+
+	#ifdef DEBUGMESSAGES
+	LogMessage("Pinball Constructor");
+	#endif
+}
+
 #endif
 
 #ifdef DOS
+/*---------------------------------------------------------------------*/
 Pinball::Pinball(const char *szName, HardwareSerial *serial, bool master) : PinballObject (szName, this)
-#endif
 /*---------------------------------------------------------------------*/
 {
 	strcpy(m_szName, szName);
@@ -41,7 +70,7 @@ Pinball::Pinball(const char *szName, HardwareSerial *serial, bool master) : Pinb
 	}
 
 
-	#ifdef ARDUINO
+	#ifdef ARDUINOLIB
 	m_MP3player = MP3player;
 	#endif
 
@@ -49,6 +78,7 @@ Pinball::Pinball(const char *szName, HardwareSerial *serial, bool master) : Pinb
 	LogMessage("Pinball Constructor");
 	#endif
 }
+#endif
 
 /*---------------------------------------------------------------------*/
 Pinball::~Pinball()
@@ -174,7 +204,7 @@ void Pinball::playSong(char song[], bool priority /*default=true*/)
 	#endif // DOS
 
 
-	#ifdef ARDUINO
+	#ifdef ARDUINOLIB
 	if (song != NULL)
 	{
 		if (priority && m_MP3player->getState() == playback)
@@ -190,7 +220,7 @@ void Pinball::playSong(char song[], bool priority /*default=true*/)
 			LogMessage(szMsg);
 		}
 	}
-	#endif // ARDUINO
+	#endif // ARDUINOLIB
 
 }
 
@@ -207,7 +237,7 @@ void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 	#endif // DOS
 
 
-	#ifdef ARDUINO
+	#ifdef ARDUINOLIB
 	union twobyte mp3_vol;
 	mp3_vol.word = m_MP3player->getVolume();
 	uint8_t volume = mp3_vol.byte[1];
@@ -226,7 +256,7 @@ void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 	}
 
 	m_MP3player->setVolume(volume, volume);
-	#endif // ARDUINO
+	#endif // ARDUINOLIB
 }
 
 //-----------------------------------------------------------------------//
@@ -241,7 +271,7 @@ void Pinball::clearDisplay(int line)
 	#endif
 
 
-	#ifdef ARDUINO
+	#ifdef ARDUINOLIB
 	char textcol[] = "        ";
 
 	if (line == 0) // Clear All
@@ -293,7 +323,7 @@ void Pinball::printText(char *text1, char *text2, char font)
 	#endif
 
 
-	#ifdef ARDUINO
+	#ifdef ARDUINOLIB
 	clearDisplay(0);
 	textcolor1(1, 1, text1, RED, font);
 	textcolor1(1, 8 + font, text2, GREEN, font);
@@ -308,17 +338,23 @@ void Pinball::sendMessageToAnotherArduino(char msg)
 	LogMessage("Pinball::sendMessageToAnotherArduino");
 #endif
 
+	#ifdef ARDUINOLIB
+	// send the data
+	Wire.beginTransmission(5); // transmit to device
+	Wire.write(msg);
+	Wire.endTransmission();
+	#endif
 }
 
 //-----------------------------------------------------------------------//
-char Pinball::receiveMessageFromAnotherArduino()
+char Pinball::receiveMessageFromAnotherArduino(int howMany)
 //-----------------------------------------------------------------------//
 {
 #ifdef DEBUGMESSAGES
 	LogMessage("Pinball::receiveMessageFromAnotherArduino");
 #endif
 
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 	while (Wire.available() > 0)
 	{
 		char c = Wire.read(); // receive byte as a character
@@ -326,10 +362,10 @@ char Pinball::receiveMessageFromAnotherArduino()
 		char msg[6];
 		sprintf(msg, "%d", c);
 		char sw[] = "SW";
-		m_thisSR1->printText(sw, msg, 1);
-		m_thisSR1->AcionaChave(c);
+		
+		//this->NotifyEvent(DATARECEIVED, (int)c);
 	}
-#endif // ARDUINO
+#endif // ARDUINOLIB
 	return 0;
 }
 

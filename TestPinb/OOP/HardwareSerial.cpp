@@ -4,8 +4,10 @@
 Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 #include "HardwareSerial.h"
+
+#ifdef DOS
+
 #include "Utils.h"
 
 /*---------------------------------------------------------------------*/
@@ -52,3 +54,5 @@ void HardwareSerial::println(const char *szLog)
 	gotoxy(x + 2, y + 1 + m_line);
 	printf("%-50s",m_strings[m_line]);
 }
+
+#endif

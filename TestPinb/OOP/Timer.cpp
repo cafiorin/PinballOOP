@@ -55,7 +55,7 @@ bool Timer::Check(long time /*=0 default*/)
 
 		bool ret = false;
 
-		#ifdef ARDUINO
+		#ifdef ARDUINOLIB
 		if (time == 0)
 			ret = ((Millis() - m_lastTime) > m_time);
 		else

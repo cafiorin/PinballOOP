@@ -25,7 +25,7 @@ void myStrcpy(char *str1, const char *str2)
 
 }
 
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 long Millis()
 {
 	return millis();

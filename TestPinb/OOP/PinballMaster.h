@@ -8,11 +8,10 @@ http://pinballhomemade.blogspot.com.br
 #ifndef PinballMaster__INCLUDED_
 #define PinballMaster__INCLUDED_
 
-#ifdef ARDUINO
+#ifdef ARDUINOLIB
 #include <SFEMP3Shield.h>
 #include <Wire.h>
-#include "ht1632pinball.h"
-#endif // ARDUINO
+#endif // ARDUINOLIB
 
 #include "defines.h"
 #include "Vector.h"
@@ -26,19 +25,24 @@ class Multiplex;
 class PinballMaster : public Pinball
 {
 public:
-#ifdef ARDUINO
-	PinballMaster(const char *szName, SFEMP3Shield *MP3player, HardwareSerial *serial);
+#ifdef ARDUINOLIB
+	PinballMaster();
 #endif
+
 #ifdef DOS
 	PinballMaster(const char *szName, HardwareSerial *serial);
 #endif
+
 	virtual ~PinballMaster();
 	Menu *m_Menu;
 	Multiplex *m_Multiplex;
 
-	virtual void sendMessageToAnotherArduino(char msg);
-	virtual char receiveMessageFromAnotherArduino();
 	virtual bool NotifyEvent(int id, int event);
+	virtual bool Init();
+
+	#ifdef ARDUINOLIB
+	PinballMaster *m_PinballMaster;
+	#endif
 
 };
 

@@ -42,7 +42,7 @@ bool Output::Init()
 	Debug("Output::Init");
 	#endif
 
-	#ifdef ARDUINO
+	#ifdef ARDUINOLIB
     pinMode(m_portNumber, OUTPUT);
 	#endif
 

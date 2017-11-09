@@ -32,7 +32,7 @@ protected:
 	clock_t m_lastTime;  // the last time
 	#endif
 	
-	#ifdef ARDUINO
+	#ifdef ARDUINOLIB
 	long m_time;
 	long m_lastTime;  // the last time
 	#endif

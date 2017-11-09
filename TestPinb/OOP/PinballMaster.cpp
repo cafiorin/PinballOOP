@@ -25,11 +25,10 @@ http://pinballhomemade.blogspot.com.br
 #include <Wire.h>
 #include "ht1632pinball.h"
 
-const int address_master = 4;  // the address to be used by the communicating devices
 PinballMaster *m_PinballMaster = NULL;
 
 //-----------------------------------------------------------------------//
-void receiveMessageFromAnotherArduinoToMaster(int howMany)
+void receiveMessageFromAnotherArduinoMaster(int howMany)
 //-----------------------------------------------------------------------//
 {
 	m_PinballMaster->receiveMessageFromAnotherArduino(howMany);
@@ -39,8 +38,8 @@ void receiveMessageFromAnotherArduinoToMaster(int howMany)
 void SetupWireToMaster()
 //-----------------------------------------------------------------------//
 {
-	Wire.begin(address_master); // join I2C bus using this address
-	Wire.onReceive(receiveMessageFromAnotherArduinoToMaster); // register event to handle requests
+	Wire.begin(ADDRESS_MASTER); // join I2C bus using this address
+	Wire.onReceive(receiveMessageFromAnotherArduinoMaster); // register event to handle requests
 }
 
 #endif // ARDUINOLIB
@@ -336,3 +335,11 @@ void PinballMaster::printText(char *text1, char *text2, char font)
 	#endif
 }
 
+/*---------------------------------------------------------------------*/
+void PinballMaster::DataReceived(char c)
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGES
+	LogMessage("PinballMaster::DataReceived");
+#endif
+}

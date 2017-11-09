@@ -13,6 +13,10 @@ http://pinballhomemade.blogspot.com.br
 #define ARDUINOLIB
 //-----------------------
 
+#define ADDRESS_MASTER 4
+#define ADDRESS_SLAVE  5
+#define INIT_THEME 0
+
 #define MAX_BALLS 5
 
 #define TIME_COIL_ON 20

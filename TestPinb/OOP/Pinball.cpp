@@ -195,7 +195,7 @@ void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 }
 
 //-----------------------------------------------------------------------//
-void Pinball::sendMessageToAnotherArduino(char msg)
+void Pinball::sendMessageToAnotherArduino(int address, char msg)
 //-----------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -204,7 +204,7 @@ void Pinball::sendMessageToAnotherArduino(char msg)
 
 #ifdef ARDUINOLIB
 	// send the data
-	Wire.beginTransmission(4); // transmit to device
+	Wire.beginTransmission(address); // transmit to device
 	Wire.write(msg);
 	Wire.endTransmission();
 #endif
@@ -224,12 +224,7 @@ char Pinball::receiveMessageFromAnotherArduino(int howMany)
 	while (Wire.available() > 0)
 	{
 		char c = Wire.read(); // receive byte as a character
-
-		char msg[6];
-		sprintf(msg, "%d", c);
-		char sw[] = "SW";
-		
-		//this->NotifyEvent(DATARECEIVED, (int)c);
+		DataReceived(c);
 	}
 #endif // ARDUINOLIB
 	return 0;

@@ -44,6 +44,7 @@ public:
 	virtual bool NotifyEvent(int id, int event);
 	virtual bool Init();
 	virtual bool Loop(int value);
+	virtual void DataReceived(char c);
 
 	#ifdef ARDUINOLIB
 	PinballMaster *m_PinballMaster;

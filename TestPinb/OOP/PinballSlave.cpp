@@ -20,11 +20,10 @@ http://pinballhomemade.blogspot.com.br
 
 #ifdef ARDUINOLIB
 #include <Wire.h>
-const int address_master = 4;  // the address to be used by the communicating devices
 PinballSlave *m_PinballSlave = NULL;
 
 //-----------------------------------------------------------------------//
-void receiveMessageFromAnotherArduino(int howMany)
+void receiveMessageFromAnotherArduinoSlave(int howMany)
 //-----------------------------------------------------------------------//
 {
 	m_PinballSlave->receiveMessageFromAnotherArduino(howMany);
@@ -34,8 +33,8 @@ void receiveMessageFromAnotherArduino(int howMany)
 void SetupWire()
 //-----------------------------------------------------------------------//
 {
-	Wire.begin(address_master); // join I2C bus using this address
-	Wire.onReceive(receiveMessageFromAnotherArduino); // register event to handle requests
+	Wire.begin(ADDRESS_SLAVE); // join I2C bus using this address
+	Wire.onReceive(receiveMessageFromAnotherArduinoSlave); // register event to handle requests
 }
 
 #endif // ARDUINOLIB
@@ -109,4 +108,23 @@ bool PinballSlave::Loop(int value)
 	#endif
 
 	return true;
+}
+
+
+/*---------------------------------------------------------------------*/
+void PinballSlave::DataReceived(char c)
+/*---------------------------------------------------------------------*/
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage("PinballSlave::DataReceived");
+	#endif
+
+	switch (c)
+	{
+		case INIT_THEME:
+		{
+			playSong("Theme.mp3"); //TODO:
+		}
+		break;
+	}
 }

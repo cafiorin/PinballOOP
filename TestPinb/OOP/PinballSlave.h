@@ -44,7 +44,7 @@ public:
 
 	virtual bool Loop(int value);
 	virtual bool Init();
-
+	virtual void DataReceived(char c);
 };
 
 #endif

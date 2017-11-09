@@ -19,11 +19,12 @@ public:
 	virtual bool Init();
 	virtual bool Loop(int value);
 
+	void Start();
 	bool Check(long time=0);
 	void ChangeValue(long time) 
 	{ 
 		m_time = time; 
-		Init();
+		Start();
 	}
 
 protected:

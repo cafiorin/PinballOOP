@@ -17,7 +17,6 @@ Light::Light(const char *szName, Pinball *pinball, int port, Multiplex *multiple
 #endif
 
 	m_timerBlinking = new Timer(700, "TBlink", this->m_pinball);
-	m_timerBlinking->Disable();
 
 	Init();
 }
@@ -57,7 +56,7 @@ bool Light::Loop(int value)
 		else
 			TurnOn();
 
-		m_timerBlinking->Init();
+		m_timerBlinking->Start();
 	}
 
 	return Output::Loop(value);

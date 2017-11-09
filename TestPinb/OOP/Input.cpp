@@ -17,8 +17,8 @@ Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject
 	#endif
 
 	m_portNumber = portNumber;
-	m_TimerDebounce = new Timer(m_debounceDelay, "TimerD", pinball);
 	m_debounceDelay = 50;
+	m_TimerDebounce = new Timer(m_debounceDelay, "TimerD", pinball);
 	m_InputValue = false;
 	m_pinballObjectParent = pinballObject;
 
@@ -43,7 +43,7 @@ bool Input::Init()
 	Debug("Input::Init");
 	#endif
 
-	m_TimerDebounce->Init();
+	m_TimerDebounce->Start();
 
 	return true;
 }
@@ -89,7 +89,13 @@ void Input::SetInput (bool value)
 			}
 
 			m_InputValue = value;
-			m_TimerDebounce->Init();
+			m_TimerDebounce->Start();
+		}
+		else
+		{
+			#ifdef DEBUGMESSAGES
+			Debug("Input::Debounce ignore");
+			#endif
 		}
 	}
 }

@@ -33,7 +33,6 @@ Pinball::Pinball() : PinballObject("Pinball", this)
 Pinball::Pinball(const char *szName, HardwareSerial *serial) : PinballObject (szName, this)
 /*---------------------------------------------------------------------*/
 {
-	strcpy(m_szName, szName);
 	m_serial = serial;
 	m_Status = StatusPinball::initializing;
 }

@@ -78,7 +78,7 @@ void Output::TurnOnByTimer(long time)
 		#endif
 
 		m_timerDelay = time;
-		m_TimerOn->Init();
+		m_TimerOn->Start();
 		TurnOn();
 	}
 }

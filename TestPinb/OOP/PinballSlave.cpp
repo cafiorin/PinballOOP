@@ -71,6 +71,10 @@ PinballSlave::PinballSlave(const char *szName, HardwareSerial *serial) : Pinball
 {
 	m_PinballMaster = NULL;
 	m_Status = StatusPinball::initializing;
+	
+	#ifdef DEBUGMESSAGES
+	LogMessage("PinballSlave Constructor");
+	#endif
 }
 #endif
 
@@ -87,6 +91,10 @@ PinballSlave::~PinballSlave()
 bool PinballSlave::Init()
 /*---------------------------------------------------------------------*/
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("PinballSlave Init");
+	#endif
+	
 	m_Status = StatusPinball::waitingmessages;
 	return true;
 }
@@ -97,7 +105,7 @@ bool PinballSlave::Loop(int value)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP
-	LogMessage("Pinball::Loop");
+	LogMessage("PinballSlave::Loop");
 	#endif
 
 	return true;

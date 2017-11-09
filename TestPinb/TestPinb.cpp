@@ -90,9 +90,6 @@ int main()
 	
 	inputs->println("Inputs - 01 - 37");
 
-	pPinballMaster->Init();
-	pPinballSlave->Init();
-
 	PrintReadKey();
 
 	int ch = 0;

@@ -118,6 +118,10 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 bool PinballMaster::Init()
 //---------------------------------------------------------------------//
 {
+	m_Status = StatusPinball::initializing;
+	printText("Pinball", "init", 0);
+
+	m_AttractMode = new AttractMode(this);
 	m_Menu = new Menu("Menu", this);
 
 	m_Multiplex = new Multiplex(this, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32);
@@ -173,9 +177,6 @@ bool PinballMaster::Init()
 	Input *pInputRampOut1 = new Input("RampO1", this, I35, this);
 	Input *pInputRampOut2 = new Input("RampO2", this, I36, this);
 	
-	m_Status = StatusPinball::initializing;
-	printText("Pinball", "init", 0);
-
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
 		if (!m_PinballObjs[i]->Init())

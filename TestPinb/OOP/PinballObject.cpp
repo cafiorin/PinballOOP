@@ -15,7 +15,6 @@ PinballObject::PinballObject(const char *szName, Pinball *pinball)
 	strcpy(m_szName, szName);
 	m_enabled = true;
 	m_pinball = pinball;
-	m_remote = false;
 
 	if (m_pinball != NULL && m_pinball != this)
 	{

@@ -16,6 +16,7 @@ Timer::Timer(long time, const char *szName, Pinball *pinball) : PinballObject(sz
 	#endif
 
 	m_time = time;
+	m_enabled = false;
 
 	Init();
 }
@@ -37,11 +38,21 @@ bool Timer::Init()
 	Debug("Timer::Init");
 	#endif
 	
-	m_enabled = true;
-	m_lastTime = Millis();
-
 	return true;
 }
+
+//-------------------------------------------------------//
+void Timer::Start()
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	Debug("Timer::Start");
+	#endif
+
+	m_enabled = true;
+	m_lastTime = Millis();
+}
+
 
 //-------------------------------------------------------//
 bool Timer::Check(long time /*=0 default*/)

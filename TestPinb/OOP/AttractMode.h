@@ -7,7 +7,7 @@
 class AttractMode : public StageBase
 {
 public:
-	AttractMode(Pinball *pinball);
+	AttractMode(PinballMaster *pinball);
 	virtual ~AttractMode();
 
 	virtual void Init();

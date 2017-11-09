@@ -78,19 +78,19 @@ http://pinballhomemade.blogspot.com.br
 #define I40 40
 #define I41 41
 
-#define O0 0
-#define O1 1
-#define O2 2
-#define O3 3
-#define O4 4
-#define O5 5
-#define O6 6
-#define O7 7
-#define O8 8
-#define O9 9
-#define O10 10
-#define O11 11
-#define O12 12
+#define Out0 0
+#define Out1 1
+#define Out2 2
+#define Out3 3
+#define Out4 4
+#define Out5 5
+#define Out6 6
+#define Out7 7
+#define Out8 8
+#define Out9 9
+#define Out10 10
+#define Out11 11
+#define Out12 12
 
 
 #ifdef ARDUINOLIB

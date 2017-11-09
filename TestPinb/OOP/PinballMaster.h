@@ -16,6 +16,7 @@ http://pinballhomemade.blogspot.com.br
 #include "defines.h"
 #include "Vector.h"
 #include "Pinball.h"
+#include "LedControl.h"
 
 class PinballObject;
 class HardwareSerial;
@@ -37,6 +38,7 @@ public:
 	virtual ~PinballMaster();
 	Menu *m_Menu;
 	Multiplex *m_Multiplex;
+	LedControl *m_LedControl;
 
 	void clearDisplay(int line);
 	void printText(char *text1, char *text2, char font);

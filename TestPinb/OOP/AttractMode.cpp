@@ -7,10 +7,10 @@ http://pinballhomemade.blogspot.com.br
 
 #include "AttractMode.h"
 #include "StageBase.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 
 //-----------------------------------------------------------
-AttractMode::AttractMode(Pinball *pinball):StageBase(pinball)
+AttractMode::AttractMode(PinballMaster *pinball):StageBase(pinball)
 //-----------------------------------------------------------
 {
 }
@@ -33,5 +33,6 @@ void AttractMode::Init()
 void AttractMode::Loop()
 //-----------------------------------------------------------
 {
+	m_Pinball->m_LedControl->Loop();
 }
 

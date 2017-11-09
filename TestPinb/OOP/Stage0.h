@@ -7,7 +7,7 @@
 class Stage0 : public StageBase
 {
 public:
-	Stage0(Pinball *pinball);
+	Stage0(PinballMaster *pinball);
 	virtual ~Stage0();
 };
 

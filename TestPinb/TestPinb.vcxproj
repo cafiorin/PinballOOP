@@ -154,6 +154,7 @@
     <ClInclude Include="OOP\ht1632pinball.h" />
     <ClInclude Include="OOP\Input.h" />
     <ClInclude Include="OOP\KickoutHole.h" />
+    <ClInclude Include="OOP\LedControl.h" />
     <ClInclude Include="OOP\Light.h" />
     <ClInclude Include="OOP\Menu.h" />
     <ClInclude Include="OOP\Multiplex.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="OOP\HardwareSerial.cpp" />
     <ClCompile Include="OOP\Input.cpp" />
     <ClCompile Include="OOP\KickoutHole.cpp" />
+    <ClCompile Include="OOP\LedControl.cpp" />
     <ClCompile Include="OOP\Light.cpp" />
     <ClCompile Include="OOP\Menu.cpp" />
     <ClCompile Include="OOP\Multiplex.cpp" />

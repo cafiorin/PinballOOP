@@ -1,7 +1,7 @@
 #include "StageBase.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 
-StageBase::StageBase(Pinball *pinball)
+StageBase::StageBase(PinballMaster *pinball)
 {
 	m_Pinball = pinball;
 }

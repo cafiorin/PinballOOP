@@ -120,6 +120,7 @@ bool PinballMaster::Init()
 	m_Status = StatusPinball::initializing;
 	printText("Pinball", "init", 0);
 
+	m_LedControl = new LedControl(5,this); //TODO: 5 ?
 	m_AttractMode = new AttractMode(this);
 	m_Menu = new Menu("Menu", this);
 
@@ -133,11 +134,11 @@ bool PinballMaster::Init()
 
 
 	//Create all objects to Arduino Master
-	Output *pTurnFlipperOn = new Output("TFO", this, O0, m_Multiplex);
+	Output *pTurnFlipperOn = new Output("TFO", this, Out0, m_Multiplex);
 
-	OutBall *pOutBall = new OutBall("OB", this, I1, O1, I2, O2, m_Multiplex);
-	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, I3, I37, O3, m_Multiplex);
-	SlingShot *pSlingShotRight = new SlingShot("SLR", this, I4, I38, O4, m_Multiplex);
+	OutBall *pOutBall = new OutBall("OB", this, I1, Out1, I2, Out2, m_Multiplex);
+	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, I3, I37, Out3, m_Multiplex);
+	SlingShot *pSlingShotRight = new SlingShot("SLR", this, I4, I38, Out4, m_Multiplex);
 
 	Input *pInputOutLaneLeft = new Input("OLL", this, I5, this);
 	Input *pInputReturnBallLeft = new Input("RBL", this, I6, this);
@@ -147,9 +148,9 @@ bool PinballMaster::Init()
 	Input *pInputTargetGreen1 = new Input("TG1", this, I9, this);
 	Input *pInputTargetRed1 = new Input("TR1", this, I10, this);
 
-	DropTarget *pDropTarget5 = new DropTarget("DT5", this, I11, I12, I13, I14, I15, O5, m_Multiplex);
+	DropTarget *pDropTarget5 = new DropTarget("DT5", this, I11, I12, I13, I14, I15, Out5, m_Multiplex);
 	Input *pInputRolloverStarRed1 = new Input("RSR1", this, I16, this);
-	DropTarget *pDropTarget3 = new DropTarget("DT3", this, I17, I18, I19, O6, m_Multiplex);
+	DropTarget *pDropTarget3 = new DropTarget("DT3", this, I17, I18, I19, Out6, m_Multiplex);
 
 	Input *pInputTargetRed2 = new Input("TR2", this, I20, this);
 	Input *pInputTargetYellow2 = new Input("TY2", this, I21, this);
@@ -157,10 +158,10 @@ bool PinballMaster::Init()
 
 	Input *pInputTargetYellow1 = new Input("TY1", this, I23, this);
 
-	KickoutHole *pHole = new KickoutHole("HOLE", this, I24, O7, m_Multiplex);
-	Bumper *pBumperLeft = new Bumper("BL", this, I25, O8, m_Multiplex);
-	Bumper *pBumperCenter = new Bumper("BC", this, I26, O9, m_Multiplex);
-	Bumper *pBumperRight = new Bumper("BR", this, I27, O10, m_Multiplex);
+	KickoutHole *pHole = new KickoutHole("HOLE", this, I24, Out7, m_Multiplex);
+	Bumper *pBumperLeft = new Bumper("BL", this, I25, Out8, m_Multiplex);
+	Bumper *pBumperCenter = new Bumper("BC", this, I26, Out9, m_Multiplex);
+	Bumper *pBumperRight = new Bumper("BR", this, I27, Out10, m_Multiplex);
 
 	Input *pInputRolloverStarGreen = new Input("RSG", this, I28, this);
 

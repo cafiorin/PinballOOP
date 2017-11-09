@@ -3,19 +3,19 @@
 
 #include "defines.h"
 
-class Pinball;
+class PinballMaster;
 
 class StageBase
 {
 public:
-	StageBase(Pinball *pinball);
+	StageBase(PinballMaster *pinball);
 	virtual ~StageBase();
 
 	virtual void Init() {};
 	virtual void Loop() {};
 
 protected:
-	Pinball *m_Pinball;
+	PinballMaster *m_Pinball;
 };
 
 #endif

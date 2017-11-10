@@ -136,11 +136,11 @@ bool PinballMaster::Init()
 
 
 	//Create all objects to Arduino Master
-	Output *pTurnFlipperOn = new Output("TFO", this, Out0, m_Multiplex);
+	Output *pTurnFlipperOn = new Output("TFO", this, OUTPUT_FLIPPER_ON_5V, m_Multiplex);
 
-	OutBall *pOutBall = new OutBall("OB", this, I1, Out1, I2, Out2, m_Multiplex);
-	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, INPUT_SW_SLINGSHOT_LEFT1, INPUT_SW_SLINGSHOT_LEFT2, Out3, m_Multiplex);
-	SlingShot *pSlingShotRight = new SlingShot("SLR", this, INPUT_SW_SLINGSHOT_RIGHT1, INPUT_SW_SLINGSHOT_RIGHT2, Out4, m_Multiplex);
+	OutBall *pOutBall = new OutBall("OB", this, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL1_48V, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL2_48V, m_Multiplex);
+	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, INPUT_SW_SLINGSHOT_LEFT1, INPUT_SW_SLINGSHOT_LEFT2, OUTPUT_SLINGSHOTLEFT_48V, m_Multiplex);
+	SlingShot *pSlingShotRight = new SlingShot("SLR", this, INPUT_SW_SLINGSHOT_RIGHT1, INPUT_SW_SLINGSHOT_RIGHT2, OUTPUT_SLINGSHOTRIGHT_48V, m_Multiplex);
 
 	Input *pInputOutLaneLeft = new Input("OLL", this, INPUT_SW_OUTLANE_LEFT, this);
 	Input *pInputReturnBallLeft = new Input("RBL", this, INPUT_SW_RETURNBALL_LEFT, this);
@@ -150,9 +150,9 @@ bool PinballMaster::Init()
 	Input *pInputTargetGreen1 = new Input("TG1", this, INPUT_SW_TARGET_GREEN1, this);
 	Input *pInputTargetRed1 = new Input("TR1", this, INPUT_SW_TARGET_RED1, this);
 
-	DropTarget *pDropTarget5 = new DropTarget("DT5", this, INPUT_SW_DROPTARGET_51, INPUT_SW_DROPTARGET_52, INPUT_SW_DROPTARGET_53, INPUT_SW_DROPTARGET_54, INPUT_SW_DROPTARGET_55, Out5, m_Multiplex);
+	DropTarget *pDropTarget5 = new DropTarget("DT5", this, INPUT_SW_DROPTARGET_51, INPUT_SW_DROPTARGET_52, INPUT_SW_DROPTARGET_53, INPUT_SW_DROPTARGET_54, INPUT_SW_DROPTARGET_55, OUTPUT_DROPTARGET5_48V, m_Multiplex);
 	Input *pInputRolloverStarRed1 = new Input("RSR1", this, INPUT_SW_ROLLOVER_STAR_RED1, this);
-	DropTarget *pDropTarget3 = new DropTarget("DT3", this, INPUT_SW_DROPTARGET_31, INPUT_SW_DROPTARGET_32, INPUT_SW_DROPTARGET_33, Out6, m_Multiplex);
+	DropTarget *pDropTarget3 = new DropTarget("DT3", this, INPUT_SW_DROPTARGET_31, INPUT_SW_DROPTARGET_32, INPUT_SW_DROPTARGET_33, OUTPUT_DROPTARGET3_48V, m_Multiplex);
 
 	Input *pInputTargetRed2 = new Input("TR2", this, INPUT_SW_TARGET_RED2, this);
 	Input *pInputTargetYellow2 = new Input("TY2", this, INPUT_SW_TARGET_YELLOW2, this);
@@ -160,10 +160,10 @@ bool PinballMaster::Init()
 
 	Input *pInputTargetYellow1 = new Input("TY1", this, INPUT_SW_TARGET_YELLOW1, this);
 
-	KickoutHole *pHole = new KickoutHole("HOLE", this, INPUT_SW_HOLE, Out7, m_Multiplex);
-	Bumper *pBumperLeft = new Bumper("BL", this, INPUT_SW_BUMPER_LEFT, Out8, m_Multiplex);
-	Bumper *pBumperCenter = new Bumper("BC", this, INPUT_SW_BUMPER_CENTER, Out9, m_Multiplex);
-	Bumper *pBumperRight = new Bumper("BR", this, INPUT_SW_BUMPER_RIGHT, Out10, m_Multiplex);
+	KickoutHole *pHole = new KickoutHole("HOLE", this, INPUT_SW_HOLE, OUTPUT_HOLE_48V, m_Multiplex);
+	Bumper *pBumperLeft = new Bumper("BL", this, INPUT_SW_BUMPER_LEFT, OUTPUT_BUMPER_LEFT_48V, m_Multiplex);
+	Bumper *pBumperCenter = new Bumper("BC", this, INPUT_SW_BUMPER_CENTER, OUTPUT_BUMPER_CENTER_48V, m_Multiplex);
+	Bumper *pBumperRight = new Bumper("BR", this, INPUT_SW_BUMPER_RIGHT, OUTPUT_BUMPER_RIGHT_48V, m_Multiplex);
 
 	Input *pInputRolloverStarGreen = new Input("RSG", this, INPUT_SW_ROLLOVER_STAR_GREEN, this);
 

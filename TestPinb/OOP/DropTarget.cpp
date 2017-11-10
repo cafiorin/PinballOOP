@@ -89,7 +89,7 @@ bool DropTarget::Init()
 }
 
 //-------------------------------------------------------//
-bool DropTarget::NotifyEvent(int id, int event)
+bool DropTarget::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -114,7 +114,7 @@ bool DropTarget::NotifyEvent(int id, int event)
 
 		if (allTargets)
 		{
-			m_pinball->NotifyEvent(m_sizeInputs, EVENT_DROPTARGETDOWN);
+			m_pinball->NotifyEvent(this, EVENT_DROPTARGETDOWN, m_sizeInputs);
 			Reset();
 		}
 
@@ -123,17 +123,6 @@ bool DropTarget::NotifyEvent(int id, int event)
 	return false;
 }
 
-
-//-------------------------------------------------------//
-bool DropTarget::Loop(int value)
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGESLOOP
-	Debug("DropTarget::Loop");
-	#endif
-
-	return false;
-}
 
 //-------------------------------------------------------//
 void DropTarget::Reset()

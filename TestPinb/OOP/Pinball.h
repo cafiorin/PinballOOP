@@ -51,8 +51,6 @@ public:
 	void LogMessage(const char *szMessage);
 	void AddPinballObject(PinballObject *Pinballobj);
 	void RemovePinballObject(PinballObject *Pinballobj);
-	bool Init();
-	bool Loop(int value);
 	void playSong(char song[], bool priority=true);
 	void ChangeVolume(bool plus, uint8_t delta = 5);
 	

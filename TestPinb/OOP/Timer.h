@@ -11,13 +11,20 @@ http://pinballhomemade.blogspot.com.br
 #include "Utils.h"
 #include "PinballObject.h"
 
+enum TimerType
+{
+	once,
+	continuous
+};
+
 class Timer : public PinballObject
 {
 public:
-	Timer(long time, const char *szName, Pinball *pinball);
+	Timer(long time, const char *szName, Pinball *pinball, PinballObject *parent=NULL, TimerType type=TimerType::once);
 	virtual ~Timer();
-	virtual bool Init();
 	virtual bool Loop(int value);
+	PinballObject *m_parent;
+	TimerType m_type;
 
 	void Start();
 	bool Check(long time=0);

@@ -35,18 +35,7 @@ Bumper::~Bumper()
 }
 
 //-------------------------------------------------------//
-bool Bumper::Init()
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	Debug("Bumper Init");
-	#endif
-
-	return true;
-}
-
-//-------------------------------------------------------//
-bool Bumper::NotifyEvent(int id, int event)
+bool Bumper::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -61,16 +50,3 @@ bool Bumper::NotifyEvent(int id, int event)
 	return false;
 }
 
-//-------------------------------------------------------//
-bool Bumper::Loop(int value)
-//-------------------------------------------------------//
-{
-	if (m_enabled)
-	{
-		#ifdef DEBUGMESSAGESLOOP
-		Debug("Bumper Loop");
-		#endif
-	}
-
-	return false;
-}

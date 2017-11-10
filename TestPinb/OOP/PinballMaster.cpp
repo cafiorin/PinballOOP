@@ -12,6 +12,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Utils.h"
 
 #include "Input.h"
+#include "Timer.h"
 #include "Output.h"
 #include "SlingShot.h"
 #include "Bumper.h"
@@ -60,8 +61,6 @@ PinballMaster::PinballMaster()
 
 	m_PinballMaster = this;
 	SetupWireToMaster();
-
-	Init();
 }
 
 /*---------------------------------------------------------------------*/
@@ -84,6 +83,8 @@ void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 	#ifdef DEBUGMESSAGES
 	LogMessage("Pinball Constructor");
 	#endif
+
+	Init();
 }
 
 #endif
@@ -123,7 +124,8 @@ bool PinballMaster::Init()
 	m_LedControl = new LedControl(5,this); //TODO: 5 ?
 	m_AttractMode = new AttractMode(this);
 	m_Menu = new Menu("Menu", this);
-
+	m_TimerToShowPlayers = new Timer(1000,"TimerSP", this, this, TimerType::continuous);
+	m_nSecondsTimerToShowPlayers = 5;
 	m_Multiplex = new Multiplex(this, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32);
 
 
@@ -187,6 +189,10 @@ bool PinballMaster::Init()
 
 	printText("Pinball", "OK", 0);
 
+	delay(200);
+
+	printText("PRESS", "START", 0);
+
 	m_Status = StatusPinball::attractmode;
 	m_AttractMode->Init();
 
@@ -194,7 +200,7 @@ bool PinballMaster::Init()
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::NotifyEvent(int id, int event)
+bool PinballMaster::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //---------------------------------------------------------------------//
 {
 	if (event == EVENT_EDGEPOSITIVE)
@@ -206,17 +212,38 @@ bool PinballMaster::NotifyEvent(int id, int event)
 		if (m_Status == StatusPinball::attractmode)
 		{
 			//Start Button pressed
-			if (id == INPUT_START_BUTTON)
+			if (valueToSend == INPUT_START_BUTTON)
 			{
+				m_TimerToShowPlayers->Start();
 				m_Status = StatusPinball::getplayers;
+				m_nPlayers = 1;
+				m_nSecondsTimerToShowPlayers = 5;
+				ShowChooseNumberOfPlayers();
 			}
 			// Menu Button pressed
-			else if (id == INPUT_MENU_BUTTON)
+			else if (valueToSend == INPUT_MENU_BUTTON)
 			{
 				m_Status = StatusPinball::menusetup;
 			}
-
 		}
+
+		else if (m_Status == StatusPinball::getplayers)
+		{
+			//Start Button pressed
+			if (valueToSend == INPUT_START_BUTTON)
+			{
+				m_Status = StatusPinball::getplayers;
+				m_nPlayers++;
+				if (m_nPlayers > MAX_PLAYERS)
+				{
+					m_nPlayers = 1;
+				}
+				m_nSecondsTimerToShowPlayers = 5;
+				ShowChooseNumberOfPlayers();
+				m_TimerToShowPlayers->Start();
+			}
+		}
+
 
 		return true;
 	}
@@ -228,10 +255,54 @@ bool PinballMaster::NotifyEvent(int id, int event)
 
 		return true;
 	}
+	else if (event == EVENT_TIMEISOVER)
+	{
+		#ifdef DEBUGMESSAGES
+		Debug("PinballMaster::Timer is over");
+		#endif
 
+		if (sender == m_TimerToShowPlayers)
+		{
+			#ifdef DEBUGMESSAGES
+			Debug("...Timer is over show players");
+			#endif
+			m_nSecondsTimerToShowPlayers--;
+			ShowChooseNumberOfPlayers();
+			if (m_nSecondsTimerToShowPlayers <= 0)
+			{
+				m_TimerToShowPlayers->Disable();
+				StartGame(m_nPlayers);
+			}
+		}
+
+		return true;
+	}
 
 	return false;
 }
+
+//---------------------------------------------------------------------//
+void PinballMaster::StartGame(int Players)
+//---------------------------------------------------------------------//
+{
+	//TODO:
+	m_Status = StatusPinball::playingmode;
+	printText("Player 1", "0000", 0);
+}
+
+
+//---------------------------------------------------------------------//
+void PinballMaster::ShowChooseNumberOfPlayers()
+//---------------------------------------------------------------------//
+{
+	if (m_Status == StatusPinball::getplayers)
+	{
+		char szPlayers[10];
+		sprintf(szPlayers, "%d  %ds", m_nPlayers, m_nSecondsTimerToShowPlayers);
+		printText("Players", szPlayers, 1);
+	}
+}
+
 
 /*---------------------------------------------------------------------*/
 PinballMaster::~PinballMaster()
@@ -250,25 +321,25 @@ bool PinballMaster::Loop(int value)
 	LogMessage("PinballMaster::Loop");
 	#endif
 
-	if (m_Status == StatusPinball::playingmode)
+	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
-		for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
-		{
-			m_PinballObjs[i]->Loop(value);
-		}
+		m_PinballObjs[i]->Loop(value);
 	}
-	else
-	{
 
-		switch (m_Status)
+	switch (m_Status)
+	{
+		case StatusPinball::attractmode:
 		{
-			case StatusPinball::attractmode:
-			{
-				m_AttractMode->Loop();
-			}
-			break;
+			m_AttractMode->Loop();
 		}
+		break;
+
+		case StatusPinball::getplayers:
+		{
+		}
+		break;
 	}
+
 	return true;
 }
 

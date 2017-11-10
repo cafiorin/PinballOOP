@@ -82,7 +82,7 @@ bool OutBall::Init()
 }
 
 //-------------------------------------------------------//
-bool OutBall::NotifyEvent(int id, int event)
+bool OutBall::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

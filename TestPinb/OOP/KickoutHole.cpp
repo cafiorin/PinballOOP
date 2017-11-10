@@ -51,7 +51,7 @@ bool KickoutHole::Init()
 }
 
 //-------------------------------------------------------//
-bool KickoutHole::NotifyEvent(int id, int event)
+bool KickoutHole::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -66,20 +66,6 @@ bool KickoutHole::NotifyEvent(int id, int event)
 	return false;
 }
 
-
-//-------------------------------------------------------//
-bool KickoutHole::Loop(int value)
-//-------------------------------------------------------//
-{
-	if (m_enabled)
-	{
-		#ifdef DEBUGMESSAGESLOOP
-		Debug("KickoutHole::Loop");
-		#endif
-	}
-
-	return false;
-}
 
 //-------------------------------------------------------//
 void KickoutHole::LanchBall()

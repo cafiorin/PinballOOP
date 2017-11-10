@@ -22,6 +22,7 @@ class PinballObject;
 class HardwareSerial;
 class Menu;
 class Multiplex;
+class Timer;
 
 class PinballMaster : public Pinball
 {
@@ -43,7 +44,7 @@ public:
 	void clearDisplay(int line);
 	void printText(char *text1, char *text2, char font);
 
-	virtual bool NotifyEvent(int id, int event);
+	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 	virtual bool Init();
 	virtual bool Loop(int value);
 	virtual void DataReceived(char c);
@@ -52,6 +53,12 @@ public:
 	PinballMaster *m_PinballMaster;
 	#endif
 
+	void StartGame(int Players);
+
+	int m_nPlayers;
+	void ShowChooseNumberOfPlayers();
+	Timer *m_TimerToShowPlayers;
+	int m_nSecondsTimerToShowPlayers;
 };
 
 #endif

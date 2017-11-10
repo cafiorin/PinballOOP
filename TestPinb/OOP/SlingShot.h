@@ -20,7 +20,7 @@ public:
 	virtual ~SlingShot();
 	virtual bool Init();
 	virtual bool Loop(int value);
-	virtual bool NotifyEvent(int id, int event);
+	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 protected:
 	Input *m_input1;

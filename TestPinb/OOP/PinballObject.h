@@ -28,7 +28,7 @@ public:
 //virtual methods	
 	virtual bool Init();
 	virtual bool Loop(int value);
-	virtual bool NotifyEvent(int id, int event);
+	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 protected:
 	char m_szName[10];

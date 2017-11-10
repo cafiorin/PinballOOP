@@ -16,7 +16,13 @@ Output::Output(const char *szName, Pinball *pinball, int port, Multiplex *multip
 	#ifdef DEBUGMESSAGES
 	Debug("Output Constructor");
 	#endif
+	
 	m_portNumber = port;
+	
+	#ifdef ARDUINOLIB
+	pinMode(m_portNumber, OUTPUT);
+	#endif
+
 	m_TimerOn = new Timer(100, "TOon", pinball);
 	m_Multiplex = multiplex;
 
@@ -42,12 +48,7 @@ bool Output::Init()
 	Debug("Output::Init");
 	#endif
 
-	#ifdef ARDUINOLIB
-    pinMode(m_portNumber, OUTPUT);
-	#endif
-
 	TurnOff();
-
 	return true;
 }
 

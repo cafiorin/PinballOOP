@@ -20,7 +20,7 @@ public:
 	virtual ~OutBall();
 	virtual bool Init();
 	virtual bool Loop(int value);
-	virtual bool NotifyEvent(int id, int event);
+	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 	void LanchBall();
 	int GetBalls() { return m_nBalls; }

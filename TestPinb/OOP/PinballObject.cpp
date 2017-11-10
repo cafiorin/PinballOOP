@@ -85,7 +85,7 @@ bool PinballObject::Loop(int value)
 }
 
 //---------------------------------------------------------------------//
-bool PinballObject::NotifyEvent(int id, int event)
+bool PinballObject::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP

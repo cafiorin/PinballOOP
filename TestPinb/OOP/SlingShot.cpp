@@ -55,7 +55,7 @@ bool SlingShot::Init()
 }
 
 //-------------------------------------------------------//
-bool SlingShot::NotifyEvent(int id, int event)
+bool SlingShot::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

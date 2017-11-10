@@ -11,7 +11,6 @@ http://pinballhomemade.blogspot.com.br
 #include "defines.h"
 #include "Utils.h"
 #include "Port.h"
-#include "Timer.h"
 
 class Input : public Port
 {
@@ -21,20 +20,21 @@ public:
 	virtual ~Input();
 
 	bool GetInput();
-	void SetDebounceDelay(long debounce){m_debounceDelay = debounce;}
+	void SetDebounceRead(int debounce){m_debounceRead = debounce;}
 	int GetPortNumber() { return m_portNumber; }
 
 	virtual bool Init();
-	virtual bool Loop(int value);
 
 	void SetInput(bool value);
 
 private:
-	long m_debounceDelay;    // the debounce time; increase if the output flickers
-	Timer *m_TimerDebounce;
+	int m_debounceRead;    // the debounce time; increase if the output flickers
+	int m_debounceCount;
 	int m_portNumber;
 	bool m_InputValue;
+	bool m_Edge;
 	PinballObject *m_pinballObjectParent;
 
+	void CheckDebounce();
 };
 #endif // !defined(_Input__INCLUDED_)

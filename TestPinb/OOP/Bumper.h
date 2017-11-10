@@ -18,9 +18,7 @@ class Bumper : public PinballObject
 public:
 	Bumper(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex);
 	virtual ~Bumper();
-	virtual bool Init();
-	virtual bool Loop(int value);
-	virtual bool NotifyEvent(int id, int event);
+	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 protected:
 	Input *m_input;

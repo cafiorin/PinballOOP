@@ -19,8 +19,7 @@ public:
 	KickoutHole(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput, Multiplex *multiplex);
 	virtual ~KickoutHole();
 	virtual bool Init();
-	virtual bool Loop(int value);
-	virtual bool NotifyEvent(int id, int event);
+	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 	void LanchBall();
 	bool IsThereBall() { return m_ball; }

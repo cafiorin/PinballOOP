@@ -17,15 +17,16 @@ http://pinballhomemade.blogspot.com.br
 #define ADDRESS_SLAVE  5
 #define INIT_THEME 0
 
-#define MAX_BALLS 5
+#define MAX_BALLS 3
+#define MAX_PLAYERS 8
 
 #define TIME_COIL_ON 20
 
 //Events
 #define EVENT_EDGEPOSITIVE 1
 #define EVENT_EDGENEGATIVE 2
-
 #define EVENT_DROPTARGETDOWN 3
+#define EVENT_TIMEISOVER 4
 
 #define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
@@ -96,6 +97,7 @@ http://pinballhomemade.blogspot.com.br
 #ifdef ARDUINOLIB
 #include "Arduino.h"
 #pragma GCC diagnostic ignored "-Wwrite-strings"
+#define DEBOUNCEREAD 5
 #endif //ARDUINOLIB
 
 #ifdef DOS
@@ -110,6 +112,7 @@ http://pinballhomemade.blogspot.com.br
 #include <Windows.h>
 
 using namespace std;
+#define DEBOUNCEREAD 0
 
 #endif // DOS
 

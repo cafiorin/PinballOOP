@@ -6,9 +6,10 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Timer.h"
+#include "Pinball.h"
 
 //-------------------------------------------------------//
-Timer::Timer(long time, const char *szName, Pinball *pinball) : PinballObject(szName, pinball)
+Timer::Timer(long time, const char *szName, Pinball *pinball, PinballObject *parent, TimerType type) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -17,8 +18,8 @@ Timer::Timer(long time, const char *szName, Pinball *pinball) : PinballObject(sz
 
 	m_time = time;
 	m_enabled = false;
-
-	Init();
+	m_parent = parent;
+	m_type = type;
 }
 
 //-------------------------------------------------------//
@@ -28,17 +29,6 @@ Timer::~Timer()
 	#ifdef DEBUGMESSAGES
 	Debug("Timer Destructor");
 	#endif
-}
-
-//-------------------------------------------------------//
-bool Timer::Init()
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	Debug("Timer::Init");
-	#endif
-	
-	return true;
 }
 
 //-------------------------------------------------------//
@@ -80,10 +70,6 @@ bool Timer::Check(long time /*=0 default*/)
 			ret = (timediff(Millis() , m_lastTime) > time);
 		#endif
 
-
-		if (ret)
-			m_enabled = false;
-
 		return ret;
 	}
 
@@ -101,6 +87,24 @@ bool Timer::Loop(int value)
 		Debug("Timer::Loop");
 		#endif
 
+		if (Check())
+		{
+			m_lastTime = Millis();
+
+			if (m_parent != NULL)
+			{
+				m_parent->NotifyEvent(this, EVENT_TIMEISOVER, 0);
+			}
+			else
+			{
+				m_pinball->NotifyEvent(this, EVENT_TIMEISOVER, 0);
+			}
+
+			if (m_type == TimerType::once)
+			{
+				m_enabled = false;
+			}
+		}
 	}
 
 	return false;

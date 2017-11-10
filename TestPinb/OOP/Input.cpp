@@ -17,9 +17,10 @@ Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject
 	#endif
 
 	m_portNumber = portNumber;
-	m_debounceDelay = 50;
-	m_TimerDebounce = new Timer(m_debounceDelay, "TimerD", pinball);
+	m_debounceRead = DEBOUNCEREAD;
+	m_debounceCount = 0;
 	m_InputValue = false;
+	m_Edge = false;
 	m_pinballObjectParent = pinballObject;
 
 	m_pinball->AddPinballInput(this);
@@ -43,7 +44,7 @@ bool Input::Init()
 	Debug("Input::Init");
 	#endif
 
-	m_TimerDebounce->Start();
+	m_debounceCount = 0;
 
 	return true;
 }
@@ -60,6 +61,38 @@ bool Input::GetInput()
 }
 
 //-------------------------------------------------------//
+void Input::CheckDebounce()
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGESLOOP
+	Debug("Input::CheckDebounce");
+	#endif
+	if (m_debounceCount > m_debounceRead)
+	{
+		m_debounceCount = 0;
+		m_Edge = false;
+
+		if (m_InputValue)
+		{
+			#ifdef DEBUGMESSAGES
+			Debug("Input::Edge Positive");
+			#endif
+
+			m_pinballObjectParent->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
+		}
+		else
+		{
+			#ifdef DEBUGMESSAGES
+			Debug("Input::Edge Negative");
+			#endif
+
+			m_pinballObjectParent->NotifyEvent(this, EVENT_EDGENEGATIVE, m_portNumber);
+		}
+
+	}
+}
+
+//-------------------------------------------------------//
 void Input::SetInput (bool value)
 //-------------------------------------------------------//
 {
@@ -69,44 +102,14 @@ void Input::SetInput (bool value)
 
 	if (m_InputValue != value)
 	{
-		if (m_TimerDebounce->Check())
-		{
-			if (value)
-			{
-				#ifdef DEBUGMESSAGES
-				Debug("Input::Edge Positive");
-				#endif
-
-				m_pinballObjectParent->NotifyEvent(m_portNumber, EVENT_EDGEPOSITIVE);
-			}
-			else
-			{
-				#ifdef DEBUGMESSAGES
-				Debug("Input::Edge Negative");
-				#endif
-
-				m_pinballObjectParent->NotifyEvent(m_portNumber, EVENT_EDGENEGATIVE);
-			}
-
-			m_InputValue = value;
-			m_TimerDebounce->Start();
-		}
-		else
-		{
-			#ifdef DEBUGMESSAGES
-			Debug("Input::Debounce ignore");
-			#endif
-		}
+		m_InputValue = value;
+		m_debounceCount = 0;
+		m_Edge = true;
 	}
-}
-
-//-------------------------------------------------------//
-bool Input::Loop(int value)
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGESLOOP
-	Debug("Input::Loop");
-	#endif
-
-	return false;
+	
+	if(m_Edge)
+	{
+		m_debounceCount++;
+		CheckDebounce();
+	}
 }

@@ -104,30 +104,6 @@ void Pinball::RemovePinballObject(PinballObject *Pinballobj)
 	m_PinballObjs.pop_back(Pinballobj);
 }
 
-
-/*---------------------------------------------------------------------*/
-bool Pinball::Init()
-/*---------------------------------------------------------------------*/
-{
-	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball::Init");
-	#endif
-
-	return true;
-}
-
-
-/*---------------------------------------------------------------------*/
-bool Pinball::Loop(int value)
-/*---------------------------------------------------------------------*/
-{
-	#ifdef DEBUGMESSAGESLOOP
-	LogMessage("Pinball::Loop");
-	#endif
-
-	return true;
-}
-
 //-----------------------------------------------------------------------//
 void Pinball::playSong(char song[], bool priority /*default=true*/)
 //-----------------------------------------------------------------------//

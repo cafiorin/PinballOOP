@@ -131,53 +131,53 @@ bool PinballMaster::Init()
 
 	Input *pInputStartButton = new Input("SB", this, INPUT_START_BUTTON, this);
 	Input *pInputMenu = new Input("BM", this, INPUT_MENU_BUTTON, this);
-	Input *pInputVolumePlus = new Input("VP", this, I40, this);
-	Input *pInputVolumeMinus = new Input("VM", this, I41, this);
+	Input *pInputVolumePlus = new Input("VP", this, INPUT_UP_BUTTON, this);
+	Input *pInputVolumeMinus = new Input("VM", this, INPUT_DOWN_BUTTON, this);
 
 
 	//Create all objects to Arduino Master
 	Output *pTurnFlipperOn = new Output("TFO", this, Out0, m_Multiplex);
 
 	OutBall *pOutBall = new OutBall("OB", this, I1, Out1, I2, Out2, m_Multiplex);
-	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, I3, I37, Out3, m_Multiplex);
-	SlingShot *pSlingShotRight = new SlingShot("SLR", this, I4, I38, Out4, m_Multiplex);
+	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, INPUT_SW_SLINGSHOT_LEFT1, INPUT_SW_SLINGSHOT_LEFT2, Out3, m_Multiplex);
+	SlingShot *pSlingShotRight = new SlingShot("SLR", this, INPUT_SW_SLINGSHOT_RIGHT1, INPUT_SW_SLINGSHOT_RIGHT2, Out4, m_Multiplex);
 
-	Input *pInputOutLaneLeft = new Input("OLL", this, I5, this);
-	Input *pInputReturnBallLeft = new Input("RBL", this, I6, this);
-	Input *pInputReturnBallRight = new Input("RBR", this, I7, this);
-	Input *pInputOutLaneRight = new Input("OLR", this, I8, this);
+	Input *pInputOutLaneLeft = new Input("OLL", this, INPUT_SW_OUTLANE_LEFT, this);
+	Input *pInputReturnBallLeft = new Input("RBL", this, INPUT_SW_RETURNBALL_LEFT, this);
+	Input *pInputReturnBallRight = new Input("RBR", this, INPUT_SW_RETURNBALL_RIGHT, this);
+	Input *pInputOutLaneRight = new Input("OLR", this, INPUT_SW_OUTLANE_RIGHT, this);
 
-	Input *pInputTargetGreen1 = new Input("TG1", this, I9, this);
-	Input *pInputTargetRed1 = new Input("TR1", this, I10, this);
+	Input *pInputTargetGreen1 = new Input("TG1", this, INPUT_SW_TARGET_GREEN1, this);
+	Input *pInputTargetRed1 = new Input("TR1", this, INPUT_SW_TARGET_RED1, this);
 
-	DropTarget *pDropTarget5 = new DropTarget("DT5", this, I11, I12, I13, I14, I15, Out5, m_Multiplex);
-	Input *pInputRolloverStarRed1 = new Input("RSR1", this, I16, this);
-	DropTarget *pDropTarget3 = new DropTarget("DT3", this, I17, I18, I19, Out6, m_Multiplex);
+	DropTarget *pDropTarget5 = new DropTarget("DT5", this, INPUT_SW_DROPTARGET_51, INPUT_SW_DROPTARGET_52, INPUT_SW_DROPTARGET_53, INPUT_SW_DROPTARGET_54, INPUT_SW_DROPTARGET_55, Out5, m_Multiplex);
+	Input *pInputRolloverStarRed1 = new Input("RSR1", this, INPUT_SW_ROLLOVER_STAR_RED1, this);
+	DropTarget *pDropTarget3 = new DropTarget("DT3", this, INPUT_SW_DROPTARGET_31, INPUT_SW_DROPTARGET_32, INPUT_SW_DROPTARGET_33, Out6, m_Multiplex);
 
-	Input *pInputTargetRed2 = new Input("TR2", this, I20, this);
-	Input *pInputTargetYellow2 = new Input("TY2", this, I21, this);
-	Input *pInputTargetGreen2 = new Input("TG2", this, I22, this);
+	Input *pInputTargetRed2 = new Input("TR2", this, INPUT_SW_TARGET_RED2, this);
+	Input *pInputTargetYellow2 = new Input("TY2", this, INPUT_SW_TARGET_YELLOW2, this);
+	Input *pInputTargetGreen2 = new Input("TG2", this, INPUT_SW_TARGET_GREEN2, this);
 
-	Input *pInputTargetYellow1 = new Input("TY1", this, I23, this);
+	Input *pInputTargetYellow1 = new Input("TY1", this, INPUT_SW_TARGET_YELLOW1, this);
 
-	KickoutHole *pHole = new KickoutHole("HOLE", this, I24, Out7, m_Multiplex);
-	Bumper *pBumperLeft = new Bumper("BL", this, I25, Out8, m_Multiplex);
-	Bumper *pBumperCenter = new Bumper("BC", this, I26, Out9, m_Multiplex);
-	Bumper *pBumperRight = new Bumper("BR", this, I27, Out10, m_Multiplex);
+	KickoutHole *pHole = new KickoutHole("HOLE", this, INPUT_SW_HOLE, Out7, m_Multiplex);
+	Bumper *pBumperLeft = new Bumper("BL", this, INPUT_SW_BUMPER_LEFT, Out8, m_Multiplex);
+	Bumper *pBumperCenter = new Bumper("BC", this, INPUT_SW_BUMPER_CENTER, Out9, m_Multiplex);
+	Bumper *pBumperRight = new Bumper("BR", this, INPUT_SW_BUMPER_RIGHT, Out10, m_Multiplex);
 
-	Input *pInputRolloverStarGreen = new Input("RSG", this, I28, this);
+	Input *pInputRolloverStarGreen = new Input("RSG", this, INPUT_SW_ROLLOVER_STAR_GREEN, this);
 
-	Input *pInputRolloverLeft = new Input("RML", this, I29, this);
-	Input *pInputRolloverCenter = new Input("RMC", this, I30, this);
-	Input *pInputRolloverRight = new Input("RMR", this, I31, this);
+	Input *pInputRolloverLeft = new Input("RML", this, INPUT_SW_ROLLOVER_LEFT, this);
+	Input *pInputRolloverCenter = new Input("RMC", this, INPUT_SW_ROLLOVER_CENTER, this);
+	Input *pInputRolloverRight = new Input("RMR", this, INPUT_SW_ROLLOVER_RIGHT, this);
 
-	Input *pInputRolloverStarRed2 = new Input("RSR2", this, I32, this);
-	Input *pInputTargetHigher = new Input("TH", this, I33, this);
-	Input *pInputSpinner = new Input("Spin", this, I37, this);
+	Input *pInputRolloverStarRed2 = new Input("RSR2", this, INPUT_SW_ROLLOVER_STAR_RED2, this);
+	Input *pInputTargetHigher = new Input("TH", this, INPUT_SW_TARGET_HIGHER, this);
+	Input *pInputSpinner = new Input("Spin", this, INPUT_SW_SPINNER, this);
 
-	Input *pInputRampIn = new Input("RampIn", this, I34, this);
-	Input *pInputRampOut1 = new Input("RampO1", this, I35, this);
-	Input *pInputRampOut2 = new Input("RampO2", this, I36, this);
+	Input *pInputRampIn = new Input("RampIn", this, INPUT_SW_RAMP_IN, this);
+	Input *pInputRampOut1 = new Input("RampO1", this, INPUT_SW_RAMP_OUT1, this);
+	Input *pInputRampOut2 = new Input("RampO2", this, INPUT_SW_RAMP_OUT2, this);
 	
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{

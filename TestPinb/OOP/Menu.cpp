@@ -8,10 +8,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Menu.h"
 #include "Pinball.h"
 
-#define MenuBtn 39
-#define KeyUp 40
-#define KeyDown 41
-
 //-------------------------------------------------------//
 Menu::Menu(const char *szName, PinballMaster *pinball) 
 //-------------------------------------------------------//
@@ -44,138 +40,128 @@ bool Menu::Init()
 	#endif
 	
 	m_isShowing = false;
-	m_option = 0;
-	m_subOption = 0;
+
+	//Menu
+	m_pMenu = new MenuString(NULL, -1, "Menu");
+	MenuString *pTest = new MenuString(m_pMenu, -1, "Test");
+	MenuString *pConfig = new MenuString(m_pMenu, -1, "Config");
+
+	//Test
+	MenuString *pLed = new MenuString(pTest, -1, "Led");
+	MenuString *pCoin = new MenuString(pTest, -1, "Bobina");
+	MenuString *pSound = new MenuString(pTest, -1, "Som");
+
+	//Config
+	MenuString *pSfx = new MenuString(pConfig, -1, "SFX");
+	MenuString *pNBalls = new MenuString(pConfig, -1, "Bolas");
+
+	//Led
+	new MenuString(pLed, EVENT_TEST_LED_1BY1, "1 a 1");
+	new MenuString(pLed, EVENT_TEST_LED_AUTO, "Auto");
+
+	//Bobina
+	new MenuString(pCoin, EVENT_TEST_COIN_1BY1, "1 a 1");
+	new MenuString(pCoin, EVENT_TEST_COIN_AUTO, "Auto");
+
+	//Som
+	new MenuString(pSound, EVENT_TEST_SOUND_BOARD1, "Placa 1");
+	new MenuString(pSound, EVENT_TEST_SOUND_BOARD2, "Placa 2");
+
+	//SFX
+	new MenuString(pSfx, EVENT_TEST_SFX_ONOFF, "ON/OFF");
+
+	//Bolas
+	new MenuString(pNBalls, EVENT_TEST_NBALLS3, "3");
+	new MenuString(pNBalls, EVENT_TEST_NBALLS4, "4");
+	new MenuString(pNBalls, EVENT_TEST_NBALLS5, "5");
 
 	return true;
 }
 
 
-void Menu::StartMenu()
+//-------------------------------------------------------//
+void Menu::PressButtonMenu()
+//-------------------------------------------------------//
 {
 	if (!m_isShowing)
 	{
 		m_isShowing = true;
-		m_option = 0;
+		m_menuOptionSelected = m_pMenu;
 		m_subOption = 0;
+		m_subOptionSelected = m_pMenu->GetChildren()[0];
 
 		PrintMenu();
 	}
 	else
 	{
-		//TODO: Select
-		//if(Action)
-		//else
-		//{
-		//	m_option++;
-		//}
+		if (m_subOptionSelected->GetAction() != -1)
+		{
+			m_Pinball->NotifyEvent(NULL, m_subOptionSelected->GetAction(), 0);
+		}
+		else
+		{
+			m_menuOptionSelected = m_subOptionSelected;
+			m_subOption = 0;
+			m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
+
+			PrintMenu();
+		}
 	}
 }
 
-
-int optionQuant[] = { 2,3,3 };
-
-char* Menu::GetMenuLine1()
-{
-	/*
-	switch (m_option)
-	{
-		case 0:
-			return "Menu";
-		case 1:
-			return "Test";
-		case 2:
-			return "Config";
-	}
-	return "";
-	*/
-	return NULL;
-}
-
-char* Menu::GetMenuLine2()
-{
-	/*
-	switch (m_option)
-	{
-	case 0:
-		switch (m_subOption)
-		{
-		case 0:
-			return "Test";
-		case 1:
-			return "Config";
-		}
-	case 1:
-		switch (m_subOption)
-		{
-		case 0:
-			return "Led";
-		case 1:
-			return "Bobina";
-		case 2:
-			return "Som";
-		}
-	case 2:
-		switch (m_subOption)
-		{
-		case 0:
-			return "Volume";
-		case 1:
-			return "SFX";
-		case 2:
-			return "Balls";
-		}
-	}
-	return "";
-	*/
-
-	return NULL;
-}
-
-
+//-------------------------------------------------------//
 void Menu::PrintMenu()
+//-------------------------------------------------------//
 {
-	char *szLine1 = GetMenuLine1();
-	char *szLine2 = GetMenuLine2();
+	MenuString *pMenuString = m_menuOptionSelected;
+	char *szLine1 = pMenuString->GetString();
+
+	Vector<MenuString *> children = pMenuString->GetChildren();
+	if(m_subOption >= children.size())
+	{
+		m_subOption = 0;
+	}
+	
+	char *szLine2 = children[m_subOption]->GetString();
+	m_subOptionSelected = children[m_subOption];
 	m_Pinball->printText(szLine1, szLine2, 0);
 }
 
+//-------------------------------------------------------//
 void Menu::GetNextOption()
+//-------------------------------------------------------//
 {
-	//TODO:
 	m_subOption++;
 }
 
+//-------------------------------------------------------//
 void Menu::GetPrevOption()
+//-------------------------------------------------------//
 {
-	//TODO:
-	m_subOption++;
+	m_subOption--;
 }
 
 //-------------------------------------------------------//
-bool Menu::Loop(int value)
+bool Menu::PressUpDownButton(bool upButton)
 //-------------------------------------------------------//
 {
-		#ifdef DEBUGMESSAGESLOOP
-		m_Pinball->Debug("Menu::Loop");
-		#endif
+	#ifdef DEBUGMESSAGES
+	m_Pinball->Debug("Menu::PressButton");
+	#endif
 
-	if (value == MenuBtn)
-	{
-		//TODO:
-		PrintMenu();
-	}
-	else if (value == KeyUp)
+	if (upButton)
 	{
 		//TODO:
 		GetNextOption();
 		PrintMenu();
+		return true;
 	}
-	else if (value == KeyDown)
+	else 
 	{
 		//TODO:
 		GetPrevOption();
 		PrintMenu();
+		return true;
 	}
 
 	return false;

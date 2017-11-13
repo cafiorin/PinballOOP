@@ -191,8 +191,6 @@ bool PinballMaster::Init()
 
 	delay(200);
 
-	printText("PRESS", "START", 0);
-
 	m_Status = StatusPinball::attractmode;
 	m_AttractMode->Init();
 
@@ -203,82 +201,162 @@ bool PinballMaster::Init()
 bool PinballMaster::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //---------------------------------------------------------------------//
 {
-	if (event == EVENT_EDGEPOSITIVE)
+	if (event > EVENT_TEST_INIT && event < EVENT_TEST_FINISH)
+	{
+		#ifdef DEBUGMESSAGES
+		Debug("PinballMaster::NotifyEvent Test");
+		#endif
+
+		return SetupTest(event);
+	}
+	else if (event == EVENT_EDGEPOSITIVE)
 	{
 		#ifdef DEBUGMESSAGES
 		Debug("PinballMaster::NotifyEvent edge Positive");
 		#endif
 
-		if (m_Status == StatusPinball::attractmode)
+		// -- E D G E  P O S I T I V E --
+		switch(valueToSend)
 		{
-			//Start Button pressed
-			if (valueToSend == INPUT_START_BUTTON)
+		case INPUT_START_BUTTON:
 			{
-				m_TimerToShowPlayers->Start();
-				m_Status = StatusPinball::getplayers;
-				m_nPlayers = 1;
-				m_nSecondsTimerToShowPlayers = 5;
-				ShowChooseNumberOfPlayers();
+				return EventStartButton(sender);
 			}
-			// Menu Button pressed
-			else if (valueToSend == INPUT_MENU_BUTTON)
+			break;
+
+		case INPUT_MENU_BUTTON:
 			{
-				m_Status = StatusPinball::menusetup;
+				return EventMenuButton(sender);
 			}
+			break;
+
+		case INPUT_UP_BUTTON:
+			{
+				return EventUpDownButton(sender,true);
+			}
+			break;
+
+		case INPUT_DOWN_BUTTON:
+			{
+				return EventUpDownButton(sender,false);
+			}
+			break;
 		}
-
-		else if (m_Status == StatusPinball::getplayers)
-		{
-			//Start Button pressed
-			if (valueToSend == INPUT_START_BUTTON)
-			{
-				m_Status = StatusPinball::getplayers;
-				m_nPlayers++;
-				if (m_nPlayers > MAX_PLAYERS)
-				{
-					m_nPlayers = 1;
-				}
-				m_nSecondsTimerToShowPlayers = 5;
-				ShowChooseNumberOfPlayers();
-				m_TimerToShowPlayers->Start();
-			}
-		}
-
-
 		return true;
 	}
+	// -- D R O P  T A R G E T --
 	else if (event == EVENT_DROPTARGETDOWN)
 	{
-		#ifdef DEBUGMESSAGES
-		Debug("PinballMaster::NotifyEvent Droptarget");
-		#endif
-
-		return true;
+		return DropTargetDown(sender);
 	}
+	// -- T I M E R  I S  O V E R --
 	else if (event == EVENT_TIMEISOVER)
 	{
-		#ifdef DEBUGMESSAGES
-		Debug("PinballMaster::Timer is over");
-		#endif
+		return TimerIsOver(sender);
+	}
 
-		if (sender == m_TimerToShowPlayers)
+	return false;
+}
+
+//Start Button pressed
+//---------------------------------------------------------------------//
+bool PinballMaster::EventStartButton(PinballObject *sender)
+//---------------------------------------------------------------------//
+{
+	if (m_Status == StatusPinball::attractmode)
+	{
+		m_TimerToShowPlayers->Start();
+		m_Status = StatusPinball::getplayers;
+		m_nPlayers = 1;
+		m_nSecondsTimerToShowPlayers = 5;
+		ShowChooseNumberOfPlayers();
+		return true;
+	}
+	else if (m_Status == StatusPinball::getplayers)
+	{
+		m_nPlayers++;
+		if (m_nPlayers > MAX_PLAYERS)
 		{
-			#ifdef DEBUGMESSAGES
-			Debug("...Timer is over show players");
-			#endif
-			m_nSecondsTimerToShowPlayers--;
-			ShowChooseNumberOfPlayers();
-			if (m_nSecondsTimerToShowPlayers <= 0)
-			{
-				m_TimerToShowPlayers->Disable();
-				StartGame(m_nPlayers);
-			}
+			m_nPlayers = 1;
 		}
+		m_nSecondsTimerToShowPlayers = 5;
+		ShowChooseNumberOfPlayers();
+		m_TimerToShowPlayers->Start();
+		return true;
+	}
+	return false;
+}
 
+//Menu Button pressed
+//---------------------------------------------------------------------//
+bool PinballMaster::EventMenuButton(PinballObject *sender)
+//---------------------------------------------------------------------//
+{
+	if (m_Status == StatusPinball::attractmode || m_Status == StatusPinball::menusetup)
+	{
+		m_Status = StatusPinball::menusetup;
+		m_Menu->PressButtonMenu();
+		return true;
+	}
+	return false;
+}
+
+//---------------------------------------------------------------------//
+bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
+//---------------------------------------------------------------------//
+{
+	if (m_Status == StatusPinball::menusetup)
+	{
+		m_Menu->PressUpDownButton(upButton);
 		return true;
 	}
 
 	return false;
+}
+
+//---------------------------------------------------------------------//
+bool PinballMaster::DropTargetDown(PinballObject *sender)
+//---------------------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	Debug("PinballMaster::NotifyEvent Droptarget");
+	#endif
+
+	//TODO:
+
+	return true;
+}
+
+//---------------------------------------------------------------------//
+bool PinballMaster::TimerIsOver(PinballObject *sender)
+//---------------------------------------------------------------------//
+{
+	if (sender == m_TimerToShowPlayers)
+	{
+		#ifdef DEBUGMESSAGES
+		Debug("...Timer is over show players");
+		#endif
+		m_nSecondsTimerToShowPlayers--;
+		ShowChooseNumberOfPlayers();
+		if (m_nSecondsTimerToShowPlayers <= 0)
+		{
+			m_TimerToShowPlayers->Disable();
+			StartGame(m_nPlayers);
+		}
+		return true;
+	}
+
+	return false;
+}
+
+//---------------------------------------------------------------------//
+bool PinballMaster::SetupTest(int event)
+//---------------------------------------------------------------------//
+{
+	//TODO:
+	m_Status = StatusPinball::attractmode;
+	m_AttractMode->Init();
+	return true;
 }
 
 //---------------------------------------------------------------------//

@@ -59,6 +59,16 @@ public:
 	void ShowChooseNumberOfPlayers();
 	Timer *m_TimerToShowPlayers;
 	int m_nSecondsTimerToShowPlayers;
+
+//Events
+private :
+	bool EventStartButton(PinballObject *sender);
+	bool EventMenuButton(PinballObject *sender);
+	bool TimerIsOver(PinballObject *sender);
+	bool DropTargetDown(PinballObject *sender);
+	bool EventUpDownButton(PinballObject *sender,bool upButton);
+	bool SetupTest(int event);
+
 };
 
 #endif

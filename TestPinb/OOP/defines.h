@@ -11,6 +11,10 @@ http://pinballhomemade.blogspot.com.br
 //-----------------------
 //#define DOS
 #define ARDUINOLIB
+
+//#define DEBUGMESSAGES
+//#define DEBUGMESSAGESLOOP
+
 //-----------------------
 
 #define ADDRESS_MASTER 4
@@ -28,8 +32,20 @@ http://pinballhomemade.blogspot.com.br
 #define EVENT_DROPTARGETDOWN 3
 #define EVENT_TIMEISOVER 4
 
-#define DEBUGMESSAGES
-//#define DEBUGMESSAGESLOOP
+#define EVENT_TEST_INIT 200
+#define EVENT_TEST_LED_1BY1 201
+#define EVENT_TEST_LED_AUTO 202
+#define EVENT_TEST_COIN_1BY1 203
+#define EVENT_TEST_COIN_AUTO 204
+#define EVENT_TEST_SOUND_BOARD1 205
+#define EVENT_TEST_SOUND_BOARD2 206
+#define EVENT_TEST_SFX_ONOFF 207
+#define EVENT_TEST_NBALLS3 208
+#define EVENT_TEST_NBALLS4 209
+#define EVENT_TEST_NBALLS5 210
+#define EVENT_TEST_FINISH 211
+
+//END - Events
 
 //Inputs
 #define INPUT_START_BUTTON 0

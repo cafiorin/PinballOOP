@@ -10,6 +10,37 @@ http://pinballhomemade.blogspot.com.br
 #include "defines.h"
 #include "Utils.h"
 #include "PinballMaster.h"
+#include "Vector.h"
+
+class MenuString
+{
+public:
+	MenuString(MenuString *parent, int action, char *szMenu)
+	{
+		strcpy(m_szMenu, szMenu);
+		m_action = action;
+		if (parent != NULL)
+		{
+			parent->AddChild(this);
+		}
+	}
+
+	void AddChild(MenuString *menustring)
+	{
+		m_Children.push_back(menustring);
+	}
+
+	char *GetString() { return m_szMenu; }
+	Vector<MenuString *>GetChildren() { return m_Children; }
+	int GetAction() { return m_action; }
+
+private:
+	MenuString *m_parent;
+	int m_action;
+	char m_szMenu[10];
+	Vector<MenuString *> m_Children;
+
+};
 
 class Menu
 {
@@ -17,25 +48,26 @@ public:
 	Menu(const char *szName, PinballMaster *pinball);
 	virtual ~Menu();
 	virtual bool Init();
-	virtual bool Loop(int value);
 
-protected:
 	#ifdef DOS
 	#endif
 	
 	#ifdef ARDUINOLIB
 	#endif
 
-	void StartMenu();
-	char* GetMenuLine1();
-	char* GetMenuLine2();
+	void PressButtonMenu();
+	bool PressUpDownButton(bool upButton);
+
+protected:
+	MenuString *m_pMenu;
 	void PrintMenu();
 	void GetNextOption();
 	void GetPrevOption();
 
 	bool m_isShowing;
-	int m_option;
+	MenuString *m_menuOptionSelected;
 	int m_subOption;
+	MenuString *m_subOptionSelected;
 
 	PinballMaster *m_Pinball;
 };

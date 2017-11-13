@@ -43,7 +43,8 @@ http://pinballhomemade.blogspot.com.br
 #define EVENT_TEST_NBALLS3 208
 #define EVENT_TEST_NBALLS4 209
 #define EVENT_TEST_NBALLS5 210
-#define EVENT_TEST_FINISH 211
+#define EVENT_TEST_EXIT_MENU 211
+#define EVENT_TEST_FINISH 212
 
 //END - Events
 

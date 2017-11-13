@@ -89,56 +89,73 @@ void Menu::PressButtonMenu()
 		m_menuOptionSelected = m_pMenu;
 		m_subOption = 0;
 		m_subOptionSelected = m_pMenu->GetChildren()[0];
+		m_backSelected = false;
 
-		PrintMenu();
+		PrintMenu(ButtonPressed::start);
 	}
 	else
 	{
-		if (m_subOptionSelected->GetAction() != -1)
+		//Exit menu
+		if (m_backSelected && m_menuOptionSelected->GetParent() == NULL)
+		{
+			m_Pinball->NotifyEvent(NULL, EVENT_TEST_EXIT_MENU, 0);
+			m_isShowing = false;
+		}
+		//Action
+		else if (m_subOptionSelected->GetAction() != -1 && !m_backSelected)
 		{
 			m_Pinball->NotifyEvent(NULL, m_subOptionSelected->GetAction(), 0);
+			m_isShowing = false;
 		}
 		else
 		{
-			m_menuOptionSelected = m_subOptionSelected;
-			m_subOption = 0;
-			m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
-
-			PrintMenu();
+			//Option Pressed
+			if (!m_backSelected)
+			{
+				m_menuOptionSelected = m_subOptionSelected;
+				m_subOption = 0;
+				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
+			}
+			else
+			{
+				//Pressed Back
+				m_menuOptionSelected = m_menuOptionSelected->GetParent();
+				m_subOption = 0;
+				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
+				m_backSelected = false;
+			}
+			PrintMenu(ButtonPressed::start);
 		}
 	}
 }
 
 //-------------------------------------------------------//
-void Menu::PrintMenu()
+void Menu::PrintMenu(ButtonPressed button)
 //-------------------------------------------------------//
 {
 	MenuString *pMenuString = m_menuOptionSelected;
 	char *szLine1 = pMenuString->GetString();
 
 	Vector<MenuString *> children = pMenuString->GetChildren();
-	if(m_subOption >= children.size())
+
+	if (m_backSelected)
 	{
-		m_subOption = 0;
+		if (button == ButtonPressed::up)
+			m_subOption = 0;
 	}
-	
+
+	if(m_subOption >= children.size() || m_subOption < 0)
+	{
+		m_subOption = children.size();
+		m_Pinball->printText(szLine1, "Voltar", 0);
+		m_backSelected = true;
+		return;
+	}
+
 	char *szLine2 = children[m_subOption]->GetString();
 	m_subOptionSelected = children[m_subOption];
 	m_Pinball->printText(szLine1, szLine2, 0);
-}
-
-//-------------------------------------------------------//
-void Menu::GetNextOption()
-//-------------------------------------------------------//
-{
-	m_subOption++;
-}
-
-//-------------------------------------------------------//
-void Menu::GetPrevOption()
-//-------------------------------------------------------//
-{
-	m_subOption--;
+	m_backSelected = false;
 }
 
 //-------------------------------------------------------//
@@ -151,16 +168,14 @@ bool Menu::PressUpDownButton(bool upButton)
 
 	if (upButton)
 	{
-		//TODO:
-		GetNextOption();
-		PrintMenu();
+		m_subOption++;
+		PrintMenu(ButtonPressed::up);
 		return true;
 	}
 	else 
 	{
-		//TODO:
-		GetPrevOption();
-		PrintMenu();
+		m_subOption--;
+		PrintMenu(ButtonPressed::down);
 		return true;
 	}
 

@@ -12,6 +12,14 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballMaster.h"
 #include "Vector.h"
 
+enum ButtonPressed
+{
+	start,
+	up,
+	down
+};
+
+
 class MenuString
 {
 public:
@@ -19,6 +27,7 @@ public:
 	{
 		strcpy(m_szMenu, szMenu);
 		m_action = action;
+		m_parent = parent;
 		if (parent != NULL)
 		{
 			parent->AddChild(this);
@@ -33,6 +42,7 @@ public:
 	char *GetString() { return m_szMenu; }
 	Vector<MenuString *>GetChildren() { return m_Children; }
 	int GetAction() { return m_action; }
+	MenuString *GetParent() { return m_parent; }
 
 private:
 	MenuString *m_parent;
@@ -60,14 +70,13 @@ public:
 
 protected:
 	MenuString *m_pMenu;
-	void PrintMenu();
-	void GetNextOption();
-	void GetPrevOption();
+	void PrintMenu(ButtonPressed button);
 
 	bool m_isShowing;
 	MenuString *m_menuOptionSelected;
 	int m_subOption;
 	MenuString *m_subOptionSelected;
+	bool m_backSelected;
 
 	PinballMaster *m_Pinball;
 };

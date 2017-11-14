@@ -34,12 +34,51 @@ LedControl::~LedControl()
 void LedControl::Init()
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGES
+	Debug("LedControl::Init");
+	#endif
+
+
+}
+
+//-----------------------------------------------------------
+void LedControl::TurnOn(int Led)
+//-----------------------------------------------------------
+{
+	#ifdef DEBUGMESSAGES
+	Debug("LedControl::TurnOn");
+	#endif
+
+
+	#ifdef ARDUINOLIB
+	m_leds[Led] = CRGB::White;
+	FastLED.show();
+	#endif
+}
+
+//-----------------------------------------------------------
+void LedControl::TurnOff(int Led)
+//-----------------------------------------------------------
+{
+	#ifdef DEBUGMESSAGES
+	Debug("LedControl::TurnOff");
+	#endif
+
+	#ifdef ARDUINOLIB
+	m_leds[Led] = CRGB::Black;
+	FastLED.show();
+	#endif
+
 }
 
 //-----------------------------------------------------------
 void LedControl::Loop()
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGES
+	Debug("LedControl::Loop");
+	#endif
+
 
 	#ifdef ARDUINOLIB
 	static uint8_t hue;

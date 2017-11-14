@@ -10,7 +10,6 @@
 
 #define NUM_LEDS 66
 
-
 class LedControl : public StageBase
 {
 public:
@@ -20,9 +19,12 @@ public:
 	virtual void Init();
 	virtual void Loop();
 
-#ifdef ARDUINOLIB
+	void TurnOn(int Led);
+	void TurnOff(int Led);
+
+	#ifdef ARDUINOLIB
 	CRGBArray<NUM_LEDS> m_leds;
-#endif
+	#endif
 
 };
 

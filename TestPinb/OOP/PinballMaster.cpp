@@ -310,6 +310,24 @@ bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
 		m_Menu->PressUpDownButton(upButton);
 		return true;
 	}
+	else if (m_Status == StatusPinball::menutest)
+	{
+		if (m_MenuTest == EVENT_TEST_LED_1BY1)
+		{
+			if (upButton)
+				m_startTestValue++;
+			else
+				m_startTestValue--;
+
+			if (m_startTestValue < 0)
+				m_startTestValue = MAX_LEDS;
+
+			if (m_startTestValue >= MAX_LEDS)
+				m_startTestValue = 0;
+
+			LoopTest();
+		}
+	}
 
 	return false;
 }
@@ -353,16 +371,76 @@ bool PinballMaster::TimerIsOver(PinballObject *sender)
 bool PinballMaster::SetupTest(int event)
 //---------------------------------------------------------------------//
 {
-	//TODO:
-	m_Status = StatusPinball::attractmode;
-	m_AttractMode->Init();
+	#ifdef DEBUGMESSAGES
+	Debug("PinballMaster::SetupTest");
+	#endif
+
+	if (event == EVENT_TEST_EXIT_MENU)
+	{
+		m_Status = StatusPinball::attractmode;
+		m_AttractMode->Init();
+	}
+	else if (event > EVENT_TEST_INIT && event < EVENT_TEST_FINISH)
+	{
+		m_Status = StatusPinball::menutest;
+		StartTest(event);
+	}
+
 	return true;
 }
+
+//---------------------------------------------------------------------//
+void PinballMaster::StartTest(int event)
+//---------------------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	Debug("PinballMaster::StartTest");
+	#endif
+
+	m_Status = StatusPinball::menutest;
+	m_MenuTest = event;
+	m_startTestValue = 0;
+	LoopTest();
+}
+
+//---------------------------------------------------------------------//
+void PinballMaster::LoopTest()
+//---------------------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	Debug("PinballMaster::LoopTest");
+	#endif
+
+	if (m_Status == StatusPinball::menutest)
+	{
+		switch (m_MenuTest)
+		{
+		case EVENT_TEST_LED_1BY1:
+			{
+				char szLed[3];
+				sprintf(szLed, "%d", m_startTestValue);
+				printText("Led:", szLed, 0);
+				m_LedControl->TurnOn(m_startTestValue);
+				if (m_startTestValue - 1 > 0)
+				{
+					m_LedControl->TurnOff(m_startTestValue);
+				}
+				m_LedControl->TurnOn(m_startTestValue);
+			}
+			break;
+
+		case EVENT_TEST_LED_AUTO:
+			break;
+		}
+	}
+}
+
 
 //---------------------------------------------------------------------//
 void PinballMaster::StartGame(int Players)
 //---------------------------------------------------------------------//
 {
+
 	//TODO:
 	m_Status = StatusPinball::playingmode;
 	printText("Player 1", "0000", 0);

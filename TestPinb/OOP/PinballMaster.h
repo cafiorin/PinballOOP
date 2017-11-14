@@ -68,6 +68,10 @@ private :
 	bool DropTargetDown(PinballObject *sender);
 	bool EventUpDownButton(PinballObject *sender,bool upButton);
 	bool SetupTest(int event);
+	void StartTest(int event);
+	int m_MenuTest;
+	int m_startTestValue;
+	void LoopTest();
 
 };
 

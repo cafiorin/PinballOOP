@@ -21,6 +21,7 @@ http://pinballhomemade.blogspot.com.br
 #define ADDRESS_SLAVE  5
 #define INIT_THEME 0
 
+#define MAX_LEDS 66
 #define MAX_BALLS 3
 #define MAX_PLAYERS 8
 

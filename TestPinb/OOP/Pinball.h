@@ -22,6 +22,7 @@ enum StatusPinball
 {
 	initializing,
 	menusetup,
+	menutest,
 	attractmode,
 	getplayers,
 	playingmode,

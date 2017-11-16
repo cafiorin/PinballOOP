@@ -18,10 +18,6 @@ PinballObject::PinballObject(const char *szName, Pinball *pinball)
 
 	if (m_pinball != NULL && m_pinball != this)
 	{
-		#ifdef DEBUGMESSAGES
-		Debug("PinballObject Constructor");
-		#endif
-
 		m_pinball->AddPinballObject(this);
 	}
 }
@@ -43,9 +39,9 @@ PinballObject::~PinballObject()
 void PinballObject::LogMessage(const char *szMessage)
 /*---------------------------------------------------------------------*/
 {
-	if (strlen(szMessage) + strlen(m_szName) + 1 < 50)
+	if (strlen(szMessage) + strlen(m_szName) < MAX_SIZE_DEBUG_MESSAGE)
 	{
-		char szMsg[50];
+		char szMsg[MAX_SIZE_DEBUG_MESSAGE];
 		sprintf(szMsg, "[%s]:%s", m_szName, szMessage);
 
 		if (m_pinball != NULL)

@@ -2,16 +2,17 @@
 #define StageBase__INCLUDED_
 
 #include "defines.h"
+#include "pinballobject.h"
 
 class PinballMaster;
 
-class StageBase
+class StageBase : public PinballObject
 {
 public:
 	StageBase(PinballMaster *pinball);
 	virtual ~StageBase();
 
-	virtual void Init() {};
+	virtual bool Init() {return true;}
 	virtual void Loop() {};
 
 protected:

@@ -146,7 +146,7 @@ void Menu::PrintMenu(ButtonPressed button)
 
 	if(m_subOption >= children.size() || m_subOption < 0)
 	{
-		m_subOption = children.size();
+		m_subOption = (int) children.size();
 		m_Pinball->printText(szLine1, "Voltar", 0);
 		m_backSelected = true;
 		return;

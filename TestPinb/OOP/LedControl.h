@@ -16,7 +16,7 @@ public:
 	LedControl(int dataPin, PinballMaster *pinball);
 	virtual ~LedControl();
 
-	virtual void Init();
+	virtual bool Init();
 	virtual void Loop();
 
 	void TurnOn(int Led);

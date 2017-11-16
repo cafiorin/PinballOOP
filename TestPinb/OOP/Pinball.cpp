@@ -23,6 +23,7 @@ Pinball::Pinball() : PinballObject("Pinball", this)
 //---------------------------------------------------------------------//
 {
 	m_Status = StatusPinball::initializing;
+	m_serial = NULL;
 }
 
 

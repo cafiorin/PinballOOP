@@ -31,14 +31,14 @@ LedControl::~LedControl()
 
 
 //-----------------------------------------------------------
-void LedControl::Init()
+bool LedControl::Init()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
 	Debug("LedControl::Init");
 	#endif
 
-
+	return true;
 }
 
 //-----------------------------------------------------------
@@ -75,7 +75,7 @@ void LedControl::TurnOff(int Led)
 void LedControl::Loop()
 //-----------------------------------------------------------
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESLOOP
 	Debug("LedControl::Loop");
 	#endif
 

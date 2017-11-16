@@ -23,11 +23,13 @@ AttractMode::~AttractMode()
 
 
 //-----------------------------------------------------------
-void AttractMode::Init()
+bool AttractMode::Init()
 //-----------------------------------------------------------
 {
 	m_Pinball->sendMessageToAnotherArduino(ADDRESS_SLAVE, INIT_THEME);
 	m_Pinball->printText("PRESS", "START", 0);
+
+	return true;
 }
 
 //-----------------------------------------------------------

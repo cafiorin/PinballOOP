@@ -21,6 +21,7 @@ http://pinballhomemade.blogspot.com.br
 #include "OutBall.h"
 #include "Menu.h"
 #include "Multiplex.h"
+#include "SelfTest.h"
 
 #ifdef ARDUINOLIB
 #include <Wire.h>
@@ -44,23 +45,27 @@ void SetupWireToMaster()
 }
 
 #endif // ARDUINOLIB
+
 /*---------------------------------------------------------------------*/
-
-
 //							C L A S S
-
 
 #ifdef ARDUINOLIB
 /*---------------------------------------------------------------------*/
 PinballMaster::PinballMaster() 
 /*---------------------------------------------------------------------*/
 {
-	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster Constructor");
-	#endif
-
+	m_Status = StatusPinball::initializing;
 	m_PinballMaster = this;
 	SetupWireToMaster();
+
+	m_LedControl = NULL;
+	m_SelfTest = NULL;
+	m_AttractMode = NULL;
+	m_Menu = NULL;
+	m_TimerToShowPlayers = NULL;
+	m_nSecondsTimerToShowPlayers = 5;
+	m_Multiplex = NULL;
+
 }
 
 /*---------------------------------------------------------------------*/
@@ -68,6 +73,10 @@ void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 /*---------------------------------------------------------------------*/
 {
 	m_serial = serial;
+	#ifdef DEBUGMESSAGES
+	LogMessage("Pinball Constructor");
+	#endif
+	
 	m_MP3player = MP3player;
 
 	for (int ch = 0; ch < MAX_INPUTCHANNELS; ch++)
@@ -80,11 +89,7 @@ void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 		m_Outputs[ch] = NULL;
 	}
 
-	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball Constructor");
-	#endif
-
-	Init();
+	CreateObjects();
 }
 
 #endif
@@ -94,6 +99,8 @@ void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinball(szName, serial)
 /*---------------------------------------------------------------------*/
 {
+	m_Status = StatusPinball::initializing;
+
 	#ifdef DEBUGMESSAGES
 	LogMessage("PinballMaster Constructor");
 	#endif
@@ -108,34 +115,31 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 		m_Outputs[ch] = NULL;
 	}
 
-
-	Init();
+	CreateObjects();
 }
 
 #endif
 
 //---------------------------------------------------------------------//
-bool PinballMaster::Init()
+//Create all objects to Arduino Master
+void PinballMaster::CreateObjects()
 //---------------------------------------------------------------------//
 {
-	m_Status = StatusPinball::initializing;
 	printText("Pinball", "init", 0);
 
-	m_LedControl = new LedControl(5,this); //TODO: 5 ?
+	m_LedControl = new LedControl(5, this); //TODO: 5 ?
 	m_AttractMode = new AttractMode(this);
 	m_Menu = new Menu("Menu", this);
-	m_TimerToShowPlayers = new Timer(1000,"TimerSP", this, this, TimerType::continuous);
+	m_SelfTest = new SelfTest(this);
+	m_TimerToShowPlayers = new Timer(1000, "TimerSP", this, this, TimerType::continuous);
 	m_nSecondsTimerToShowPlayers = 5;
 	m_Multiplex = new Multiplex(this, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32);
-
 
 	Input *pInputStartButton = new Input("SB", this, INPUT_START_BUTTON, this);
 	Input *pInputMenu = new Input("BM", this, INPUT_MENU_BUTTON, this);
 	Input *pInputVolumePlus = new Input("VP", this, INPUT_UP_BUTTON, this);
 	Input *pInputVolumeMinus = new Input("VM", this, INPUT_DOWN_BUTTON, this);
 
-
-	//Create all objects to Arduino Master
 	Output *pTurnFlipperOn = new Output("TFO", this, OUTPUT_FLIPPER_ON_5V, m_Multiplex);
 
 	OutBall *pOutBall = new OutBall("OB", this, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL1_48V, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL2_48V, m_Multiplex);
@@ -178,18 +182,26 @@ bool PinballMaster::Init()
 	Input *pInputRampIn = new Input("RampIn", this, INPUT_SW_RAMP_IN, this);
 	Input *pInputRampOut1 = new Input("RampO1", this, INPUT_SW_RAMP_OUT1, this);
 	Input *pInputRampOut2 = new Input("RampO2", this, INPUT_SW_RAMP_OUT2, this);
-	
+
+	printText("Pinball", "OK", 0);
+	delay(200);
+
+	Init();
+}
+
+//---------------------------------------------------------------------//
+bool PinballMaster::Init()
+//---------------------------------------------------------------------//
+{
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
 		if (!m_PinballObjs[i]->Init())
 		{
-			printText("Pinball", "error", 0);
+			#ifdef DEBUGMESSAGES
+			LogMessage("Pinball Error");
+			#endif
 		}
 	}
-
-	printText("Pinball", "OK", 0);
-
-	delay(200);
 
 	m_Status = StatusPinball::attractmode;
 	m_AttractMode->Init();
@@ -298,6 +310,12 @@ bool PinballMaster::EventMenuButton(PinballObject *sender)
 		m_Menu->PressButtonMenu();
 		return true;
 	}
+	else if (m_Status == StatusPinball::menutest)
+	{
+		m_Status = StatusPinball::attractmode;
+		m_AttractMode->Init();
+	}
+
 	return false;
 }
 
@@ -312,21 +330,7 @@ bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
 	}
 	else if (m_Status == StatusPinball::menutest)
 	{
-		if (m_MenuTest == EVENT_TEST_LED_1BY1)
-		{
-			if (upButton)
-				m_startTestValue++;
-			else
-				m_startTestValue--;
-
-			if (m_startTestValue < 0)
-				m_startTestValue = MAX_LEDS;
-
-			if (m_startTestValue >= MAX_LEDS)
-				m_startTestValue = 0;
-
-			LoopTest();
-		}
+		m_SelfTest->EventUpDownButton(sender, upButton);
 	}
 
 	return false;
@@ -382,7 +386,6 @@ bool PinballMaster::SetupTest(int event)
 	}
 	else if (event > EVENT_TEST_INIT && event < EVENT_TEST_FINISH)
 	{
-		m_Status = StatusPinball::menutest;
 		StartTest(event);
 	}
 
@@ -398,43 +401,8 @@ void PinballMaster::StartTest(int event)
 	#endif
 
 	m_Status = StatusPinball::menutest;
-	m_MenuTest = event;
-	m_startTestValue = 0;
-	LoopTest();
+	m_SelfTest->StartTest(event);
 }
-
-//---------------------------------------------------------------------//
-void PinballMaster::LoopTest()
-//---------------------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::LoopTest");
-	#endif
-
-	if (m_Status == StatusPinball::menutest)
-	{
-		switch (m_MenuTest)
-		{
-		case EVENT_TEST_LED_1BY1:
-			{
-				char szLed[3];
-				sprintf(szLed, "%d", m_startTestValue);
-				printText("Led:", szLed, 0);
-				m_LedControl->TurnOn(m_startTestValue);
-				if (m_startTestValue - 1 > 0)
-				{
-					m_LedControl->TurnOff(m_startTestValue);
-				}
-				m_LedControl->TurnOn(m_startTestValue);
-			}
-			break;
-
-		case EVENT_TEST_LED_AUTO:
-			break;
-		}
-	}
-}
-
 
 //---------------------------------------------------------------------//
 void PinballMaster::StartGame(int Players)

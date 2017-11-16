@@ -10,7 +10,7 @@ public:
 	AttractMode(PinballMaster *pinball);
 	virtual ~AttractMode();
 
-	virtual void Init();
+	virtual bool Init();
 	virtual void Loop();
 
 };

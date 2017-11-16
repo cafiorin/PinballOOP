@@ -2,15 +2,16 @@
 #define LedControl__INCLUDED_
 
 #include "defines.h"
-#include "StageBase.h"
+#include "PinballObject.h"
 
 #ifdef ARDUINOLIB
 #include<FastLED.h>
 #endif // ARDUINOLIB
 
 #define NUM_LEDS 66
+class PinballMaster;
 
-class LedControl : public StageBase
+class LedControl : public PinballObject
 {
 public:
 	LedControl(int dataPin, PinballMaster *pinball);

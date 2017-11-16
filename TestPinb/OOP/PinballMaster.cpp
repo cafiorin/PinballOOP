@@ -22,6 +22,8 @@ http://pinballhomemade.blogspot.com.br
 #include "Menu.h"
 #include "Multiplex.h"
 #include "SelfTest.h"
+#include "Stage0.h"
+#include "Player.h"
 
 #ifdef ARDUINOLIB
 #include <Wire.h>
@@ -89,6 +91,11 @@ void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 		m_Outputs[ch] = NULL;
 	}
 
+	for (int i = 0; i < MAX_PLAYERS; i++)
+	{
+		m_Players[i] = new Player(this);
+	}
+
 	CreateObjects();
 }
 
@@ -113,6 +120,11 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	for (int ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
 	{
 		m_Outputs[ch] = NULL;
+	}
+
+	for (int i = 0; i < MAX_PLAYERS; i++)
+	{
+		m_Players[i] = new Player(this);
 	}
 
 	CreateObjects();
@@ -183,10 +195,23 @@ void PinballMaster::CreateObjects()
 	Input *pInputRampOut1 = new Input("RampO1", this, INPUT_SW_RAMP_OUT1, this);
 	Input *pInputRampOut2 = new Input("RampO2", this, INPUT_SW_RAMP_OUT2, this);
 
+	CreateStages();
+
 	printText("Pinball", "OK", 0);
 	delay(200);
 
 	Init();
+}
+
+//---------------------------------------------------------------------//
+void PinballMaster::CreateStages()
+//---------------------------------------------------------------------//
+{
+	
+	m_TotalStages = 1;
+	
+	//TODO:Stages
+	m_Stages[0] = new Stage0(this,0);
 }
 
 //---------------------------------------------------------------------//
@@ -254,12 +279,19 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, int event, int valueToSen
 			}
 			break;
 		}
+
+		// -- P L A Y F I E L D --
+		if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
+		{
+			return PlayfieldEvent(sender, event, valueToSend);
+		}
+
 		return true;
 	}
 	// -- D R O P  T A R G E T --
 	else if (event == EVENT_DROPTARGETDOWN)
 	{
-		return DropTargetDown(sender);
+		return PlayfieldEvent(sender, event, valueToSend);
 	}
 	// -- T I M E R  I S  O V E R --
 	else if (event == EVENT_TIMEISOVER)
@@ -337,7 +369,7 @@ bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::DropTargetDown(PinballObject *sender)
+bool PinballMaster::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -345,6 +377,10 @@ bool PinballMaster::DropTargetDown(PinballObject *sender)
 	#endif
 
 	//TODO:
+	if (m_Status == StatusPinball::playingmode)
+	{
+		m_Players[m_playerPlaying]->NotifyEvent(sender, event, valueToSend);
+	}
 
 	return true;
 }
@@ -386,34 +422,42 @@ bool PinballMaster::SetupTest(int event)
 	}
 	else if (event > EVENT_TEST_INIT && event < EVENT_TEST_FINISH)
 	{
-		StartTest(event);
+		m_Status = StatusPinball::menutest;
+		m_SelfTest->StartTest(event);
 	}
 
 	return true;
 }
 
 //---------------------------------------------------------------------//
-void PinballMaster::StartTest(int event)
-//---------------------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::StartTest");
-	#endif
-
-	m_Status = StatusPinball::menutest;
-	m_SelfTest->StartTest(event);
-}
-
-//---------------------------------------------------------------------//
 void PinballMaster::StartGame(int Players)
 //---------------------------------------------------------------------//
 {
+	m_nPlayers = Players;
 
-	//TODO:
 	m_Status = StatusPinball::playingmode;
-	printText("Player 1", "0000", 0);
+	
+	for (int i = 0; i < MAX_PLAYERS; i++)
+	{
+		m_Players[i]->Init();
+	}
+
+	m_playerPlaying = 0;
+	m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying);
 }
 
+//---------------------------------------------------------------------//
+void PinballMaster::SetStage(StageBase *stage)
+//---------------------------------------------------------------------//
+{
+	if (m_CurrentStage != NULL)
+	{
+		delete m_CurrentStage;
+	}
+
+	m_CurrentStage = stage;
+	m_CurrentStage->Init();
+}
 
 //---------------------------------------------------------------------//
 void PinballMaster::ShowChooseNumberOfPlayers()
@@ -458,8 +502,9 @@ bool PinballMaster::Loop(int value)
 		}
 		break;
 
-		case StatusPinball::getplayers:
+		case StatusPinball::playingmode:
 		{
+			m_Players[m_playerPlaying]->Loop(0);
 		}
 		break;
 	}

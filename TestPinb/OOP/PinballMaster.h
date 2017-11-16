@@ -24,6 +24,8 @@ class Menu;
 class Multiplex;
 class Timer;
 class SelfTest;
+class StageBase;
+class Player;
 
 class PinballMaster : public Pinball
 {
@@ -41,6 +43,8 @@ public:
 	
 	Menu *m_Menu;
 	SelfTest *m_SelfTest;
+	StageBase *m_CurrentStage;
+	void SetStage(StageBase *stage);
 
 	Multiplex *m_Multiplex;
 	LedControl *m_LedControl;
@@ -63,6 +67,13 @@ public:
 	void ShowChooseNumberOfPlayers();
 	Timer *m_TimerToShowPlayers;
 	int m_nSecondsTimerToShowPlayers;
+	Player *m_Players[MAX_PLAYERS];
+	int m_playerPlaying;
+
+	void CreateStages();
+	int m_TotalStages;
+	StageBase *m_Stages[MAX_STAGES];
+	StageBase *GetStage(int number) { return m_Stages[number]; }
 
 //Events
 private :
@@ -70,10 +81,9 @@ private :
 	bool EventStartButton(PinballObject *sender);
 	bool EventMenuButton(PinballObject *sender);
 	bool TimerIsOver(PinballObject *sender);
-	bool DropTargetDown(PinballObject *sender);
+	bool PlayfieldEvent(PinballObject *sender, int event, int valueToSend);
 	bool EventUpDownButton(PinballObject *sender,bool upButton);
 	bool SetupTest(int event);
-	void StartTest(int event);
 };
 
 #endif

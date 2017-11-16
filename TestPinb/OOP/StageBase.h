@@ -9,14 +9,13 @@ class PinballMaster;
 class StageBase : public PinballObject
 {
 public:
-	StageBase(PinballMaster *pinball);
+	StageBase(PinballMaster *pinball, int number);
 	virtual ~StageBase();
-
-	virtual bool Init() {return true;}
-	virtual void Loop() {};
+	int GetNumber() { return m_number; }
 
 protected:
-	PinballMaster *m_Pinball;
+	PinballMaster *m_PinballMaster;
+	int m_number;
 };
 
 #endif

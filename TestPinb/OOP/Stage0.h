@@ -7,8 +7,12 @@
 class Stage0 : public StageBase
 {
 public:
-	Stage0(PinballMaster *pinball);
+	Stage0(PinballMaster *pinball,int number);
 	virtual ~Stage0();
+
+	virtual bool Init();
+	virtual void Loop();
+
 };
 
 #endif

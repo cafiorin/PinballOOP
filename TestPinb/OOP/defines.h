@@ -25,6 +25,7 @@ http://pinballhomemade.blogspot.com.br
 #define MAX_LEDS 66
 #define MAX_BALLS 3
 #define MAX_PLAYERS 8
+#define MAX_STAGES 1
 
 #define TIME_COIL_ON 20
 
@@ -34,7 +35,7 @@ http://pinballhomemade.blogspot.com.br
 #define EVENT_DROPTARGETDOWN 3
 #define EVENT_TIMEISOVER 4
 
-#define EVENT_TEST_INIT 200
+#define EVENT_TEST_INIT 201
 #define EVENT_TEST_LED_1BY1 201
 #define EVENT_TEST_LED_AUTO 202
 #define EVENT_TEST_COIN_1BY1 203
@@ -46,7 +47,7 @@ http://pinballhomemade.blogspot.com.br
 #define EVENT_TEST_NBALLS4 209
 #define EVENT_TEST_NBALLS5 210
 #define EVENT_TEST_EXIT_MENU 211
-#define EVENT_TEST_FINISH 212
+#define EVENT_TEST_FINISH 211
 
 //END - Events
 
@@ -56,6 +57,7 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_UP_BUTTON 2
 #define INPUT_DOWN_BUTTON 3
 
+#define INPUT_PLAYFIELD_INIT 4
 #define INPUT_SW_OUTBALL1 4  
 #define INPUT_SW_OUTBALL2 5
 #define INPUT_SW_LAUNCHBALL 6 
@@ -100,6 +102,7 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_SW_ACCBALL2 43
 #define INPUT_SW_ACCBALL3 44
 #define INPUT_SW_ACCBALL4 45
+#define INPUT_PLAYFIELD_FINISH 45 //<==Last
 
 //Outputs high energy
 #define OUTPUT_OUTBALL1_48V 16

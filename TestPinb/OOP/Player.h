@@ -3,6 +3,7 @@
 
 #include "defines.h"
 #include "StageBase.h"
+#include "PinballObject.h"
 
 enum StatusPlayer 
 {
@@ -11,12 +12,20 @@ enum StatusPlayer
 	gameover
 };
 
-class Player
+class PinballMaster;
+
+class Player : public PinballObject
 {
 public:
-	Player();
+	Player(PinballMaster *pinball);
 	virtual ~Player();
-	void Init(StageBase *stage);
+	virtual bool Init();
+	virtual bool Loop(int value);
+	void SetCurrentPlayer(int indexPlayer);
+	void DisplayScore();
+	bool  NotifyEvent(PinballObject *sender, int event, int valueToSend);
+
+	static int m_indexPlayerCurrent;
 
 protected:
 	int m_nBalls;
@@ -24,6 +33,7 @@ protected:
 	bool m_ExtraBall;
 	StageBase *m_Stage;
 	StatusPlayer m_Status;
+	PinballMaster *m_PinballMaster;
 };
 
 #endif

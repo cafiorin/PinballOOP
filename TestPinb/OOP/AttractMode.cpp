@@ -10,7 +10,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballMaster.h"
 
 //-----------------------------------------------------------
-AttractMode::AttractMode(PinballMaster *pinball):StageBase(pinball)
+AttractMode::AttractMode(PinballMaster *pinball):StageBase(pinball,-1)
 //-----------------------------------------------------------
 {
 }
@@ -26,8 +26,8 @@ AttractMode::~AttractMode()
 bool AttractMode::Init()
 //-----------------------------------------------------------
 {
-	m_Pinball->sendMessageToAnotherArduino(ADDRESS_SLAVE, INIT_THEME);
-	m_Pinball->printText("PRESS", "START", 0);
+	m_PinballMaster->sendMessageToAnotherArduino(ADDRESS_SLAVE, INIT_THEME);
+	m_PinballMaster->printText("PRESS", "START", 0);
 
 	return true;
 }
@@ -36,6 +36,6 @@ bool AttractMode::Init()
 void AttractMode::Loop()
 //-----------------------------------------------------------
 {
-	m_Pinball->m_LedControl->Loop();
+	m_PinballMaster->m_LedControl->Loop();
 }
 

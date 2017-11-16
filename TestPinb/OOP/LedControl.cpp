@@ -7,7 +7,8 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 #include "LedControl.h"
-#include "pinball.h"
+#include "PinballMaster.h"
+#include "PinballObject.h"
 
 #ifdef ARDUINOLIB
 #include<FastLED.h>
@@ -15,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 
 
 //-----------------------------------------------------------
-LedControl::LedControl(int dataPin, PinballMaster *pinball):StageBase(pinball)
+LedControl::LedControl(int dataPin, PinballMaster *pinball):PinballObject("LedControl",pinball)
 //-----------------------------------------------------------
 {
 	#ifdef ARDUINOLIB

@@ -12,6 +12,7 @@ http://pinballhomemade.blogspot.com.br
 
 
 #include "OutBall.h"
+#include "Pinball.h"
 
 //-------------------------------------------------------//
 OutBall::OutBall(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberOutput1, int portNumberInput2, int portNumberOutput2, Multiplex *multiplex) : PinballObject(szName, pinball)
@@ -91,7 +92,9 @@ bool OutBall::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 
 	if (event == EVENT_EDGEPOSITIVE)
 	{
-		IncBalls();
+		AddBall();
+
+		m_pinball->NotifyEvent(this, EVENT_LOST_BALL, 0);
 		if (m_input1->GetInput() && !m_input2->GetInput())
 		{
 			m_output1->TurnOnByTimer();
@@ -123,7 +126,7 @@ void OutBall::LanchBall()
 
 	if (m_nBalls > 0)
 	{
-		DecBalls();
+		RemoveBall();
 		m_output2->TurnOnByTimer();
 
 		if (m_input1->GetInput() && !m_input2->GetInput())

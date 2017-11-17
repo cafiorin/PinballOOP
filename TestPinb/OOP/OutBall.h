@@ -13,6 +13,8 @@ http://pinballhomemade.blogspot.com.br
 #include "Input.h"
 #include "Output.h"
 
+#define MAX_PINBALLBALL 4
+
 class OutBall : public PinballObject
 {
 public:
@@ -24,6 +26,7 @@ public:
 
 	void LanchBall();
 	int GetBalls() { return m_nBalls; }
+	bool IsThereAnyBallInGame() { return (m_nBalls < MAX_PINBALLBALL); }
 
 protected:
 	Input *m_input1;
@@ -32,9 +35,8 @@ protected:
 	Output *m_output2;
 	int m_nBalls;
 
-	void IncBalls() { (m_nBalls + 1) > 4 ? m_nBalls = 4 : m_nBalls++; }
-	void DecBalls() { (m_nBalls - 1) < 0 ? m_nBalls = 0 : m_nBalls--; }
-
+	void AddBall() { (m_nBalls + 1) > MAX_PINBALLBALL ? m_nBalls = MAX_PINBALLBALL : m_nBalls++; }
+	void RemoveBall() { (m_nBalls - 1) <= 0 ? m_nBalls = 0 : m_nBalls--; }
 
 };
 #endif // !defined(OutBall__INCLUDED_)

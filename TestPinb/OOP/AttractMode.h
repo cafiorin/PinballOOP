@@ -4,6 +4,8 @@
 #include "defines.h"
 #include "StageBase.h"
 
+class Timer;
+
 class AttractMode : public StageBase
 {
 public:
@@ -12,6 +14,14 @@ public:
 
 	virtual bool Init();
 	virtual void Loop();
+
+	void InitGameOver();
+
+private:
+	Timer *m_timerGameOver;
+	bool TimerIsOver(PinballObject *sender);
+	bool m_showGameOver;
+	bool m_showAlternate;
 
 };
 

@@ -88,7 +88,18 @@ int main()
 	inputs->println("Up Button    - 02");
 	inputs->println("Down Button  - 03");
 	
-	inputs->println("Inputs - 01 - 37");
+	inputs->println("OUTBALL1     - 04");
+	inputs->println("OUTBALL2     - 05");
+	inputs->println("LAUNCHBALL   - 06");
+	inputs->println("SLINGSHOT_LEFT1 - 07");
+	inputs->println("SLINGSHOT_LEFT2 - 08");
+	inputs->println("SLINGSHOT_RIGHT1- 09");
+	inputs->println("SLINGSHOT_RIGHT2- 10");
+	inputs->println("OUTLANE_LEFT    - 11");
+	inputs->println("OUTLANE_RIGHT   - 12");
+	inputs->println("RETURNBALL_LEFT - 13");
+	inputs->println("RETURNBALL_RIGHT- 14");
+
 
 	PrintReadKey();
 

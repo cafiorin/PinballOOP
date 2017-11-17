@@ -21,10 +21,10 @@ public:
 	virtual ~Player();
 	virtual bool Init();
 	virtual bool Loop(int value);
-	void SetCurrentPlayer(int indexPlayer);
+	bool SetCurrentPlayer(int indexPlayer);
 	void DisplayScore();
 	bool  NotifyEvent(PinballObject *sender, int event, int valueToSend);
-
+	void LostBall();
 	static int m_indexPlayerCurrent;
 
 protected:

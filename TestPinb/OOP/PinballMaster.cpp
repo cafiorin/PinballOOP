@@ -158,9 +158,10 @@ void PinballMaster::CreateObjects()
 	Input *pInputVolumePlus = new Input("VP", this, INPUT_UP_BUTTON, this);
 	Input *pInputVolumeMinus = new Input("VM", this, INPUT_DOWN_BUTTON, this);
 
-	Output *pTurnFlipperOn = new Output("TFO", this, OUTPUT_FLIPPER_ON_5V, m_Multiplex);
+	m_TurnFlipperOn = new Output("TFO", this, OUTPUT_FLIPPER_ON_5V, m_Multiplex);
+	m_OutBall = new OutBall("OB", this, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL1_48V, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL2_48V, m_Multiplex);
+	m_Hole = new KickoutHole("HOLE", this, INPUT_SW_HOLE, OUTPUT_HOLE_48V, m_Multiplex);
 
-	OutBall *pOutBall = new OutBall("OB", this, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL1_48V, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL2_48V, m_Multiplex);
 	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, INPUT_SW_SLINGSHOT_LEFT1, INPUT_SW_SLINGSHOT_LEFT2, OUTPUT_SLINGSHOTLEFT_48V, m_Multiplex);
 	SlingShot *pSlingShotRight = new SlingShot("SLR", this, INPUT_SW_SLINGSHOT_RIGHT1, INPUT_SW_SLINGSHOT_RIGHT2, OUTPUT_SLINGSHOTRIGHT_48V, m_Multiplex);
 
@@ -182,7 +183,6 @@ void PinballMaster::CreateObjects()
 
 	Input *pInputTargetYellow1 = new Input("TY1", this, INPUT_SW_TARGET_YELLOW1, this);
 
-	KickoutHole *pHole = new KickoutHole("HOLE", this, INPUT_SW_HOLE, OUTPUT_HOLE_48V, m_Multiplex);
 	Bumper *pBumperLeft = new Bumper("BL", this, INPUT_SW_BUMPER_LEFT, OUTPUT_BUMPER_LEFT_48V, m_Multiplex);
 	Bumper *pBumperCenter = new Bumper("BC", this, INPUT_SW_BUMPER_CENTER, OUTPUT_BUMPER_CENTER_48V, m_Multiplex);
 	Bumper *pBumperRight = new Bumper("BR", this, INPUT_SW_BUMPER_RIGHT, OUTPUT_BUMPER_RIGHT_48V, m_Multiplex);
@@ -314,6 +314,10 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, int event, int valueToSen
 	else if (event == EVENT_TIMEISOVER)
 	{
 		return TimerIsOver(sender);
+	}
+	else if (event == EVENT_LOST_BALL)
+	{
+		PlayerLostBall();
 	}
 
 	return false;
@@ -470,13 +474,70 @@ void PinballMaster::StartGame(int Players)
 
 	m_Status = StatusPinball::playingmode;
 	
-	for (int i = 0; i < MAX_PLAYERS; i++)
+	for (int i = 0; i < m_nPlayers; i++)
 	{
 		m_Players[i]->Init();
 	}
 
 	m_playerPlaying = 0;
 	m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying);
+	m_TurnFlipperOn->TurnOn();
+}
+
+//---------------------------------------------------------------------//
+void PinballMaster::PlayerLostBall()
+//---------------------------------------------------------------------//
+{
+	if (m_Status == StatusPinball::playingmode)
+	{
+		if (!m_OutBall->IsThereAnyBallInGame())
+		{
+			m_TurnFlipperOn->TurnOff();
+
+			m_Players[m_playerPlaying]->LostBall();
+			NextPlayer();
+		}
+		else
+		{
+			//Ball in hole ?
+			if (m_Hole->IsThereBall())
+			{
+				m_Hole->LanchBall();
+			}
+		}
+
+	}
+}
+
+//---------------------------------------------------------------------//
+void PinballMaster::NextPlayer()
+//---------------------------------------------------------------------//
+{
+	m_playerPlaying++;
+	if (m_playerPlaying >= m_nPlayers)
+		m_playerPlaying = 0;
+
+	if (m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying))
+	{
+		m_TurnFlipperOn->TurnOn();
+	}
+	else
+	{
+		//GameOver
+		m_Status = StatusPinball::attractmode;
+		m_AttractMode->InitGameOver();
+	}
+}
+
+
+//---------------------------------------------------------------------//
+void PinballMaster::GetNewBall()
+//---------------------------------------------------------------------//
+{
+	if (m_Status == StatusPinball::playingmode)
+	{
+		m_OutBall->LanchBall();
+	}
 }
 
 //---------------------------------------------------------------------//

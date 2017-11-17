@@ -26,6 +26,9 @@ class Timer;
 class SelfTest;
 class StageBase;
 class Player;
+class OutBall;
+class Output;
+class KickoutHole;
 
 class PinballMaster : public Pinball
 {
@@ -43,6 +46,9 @@ public:
 	
 	Menu *m_Menu;
 	SelfTest *m_SelfTest;
+	OutBall *m_OutBall;
+	Output *m_TurnFlipperOn;
+	KickoutHole *m_Hole;
 
 	Multiplex *m_Multiplex;
 	LedControl *m_LedControl;
@@ -67,6 +73,9 @@ public:
 	int m_nSecondsTimerToShowPlayers;
 	Player *m_Players[MAX_PLAYERS];
 	int m_playerPlaying;
+	void GetNewBall();
+	void PlayerLostBall();
+	void NextPlayer();
 
 	void CreateStages();
 	int m_TotalStages;

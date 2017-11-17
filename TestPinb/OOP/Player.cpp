@@ -35,11 +35,11 @@ bool Player::Init()
 	LogMessage("Player::Init");
 	#endif
 
+	m_Status = StatusPlayer::waiting;
 	this->m_Stage = m_PinballMaster->GetStage(0);
 	this->m_nBalls = MAX_BALLS;
 	m_Score = 0;
 	m_ExtraBall = false;
-	m_Status = StatusPlayer::waiting;
 
 	return true;
 }
@@ -63,17 +63,38 @@ bool Player::Loop(int value)
 }
 
 //-------------------------------------------------------//
-void Player::SetCurrentPlayer(int indexPlayer)
+bool Player::SetCurrentPlayer(int indexPlayer)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage("Player::SetCurrentPlayer");
 	#endif
 
-	Player::m_indexPlayerCurrent = indexPlayer;
-	m_Status = StatusPlayer::playing;
+	if (m_Status == StatusPlayer::waiting)
+	{
+		Player::m_indexPlayerCurrent = indexPlayer;
+		m_Status = StatusPlayer::playing;
 
-	DisplayScore();
+		m_PinballMaster->GetNewBall();
+
+		DisplayScore();
+		return true;
+	}
+
+	return false;
+}
+
+//-------------------------------------------------------//
+void Player::LostBall()
+//-------------------------------------------------------//
+{
+	m_Status = StatusPlayer::waiting;
+	m_nBalls--;
+	if (m_nBalls <= 0)
+	{
+		//Game Over to this player
+		m_Status = StatusPlayer::gameover;
+	}
 }
 
 //-------------------------------------------------------//

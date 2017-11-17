@@ -34,6 +34,7 @@ http://pinballhomemade.blogspot.com.br
 #define EVENT_EDGENEGATIVE 2
 #define EVENT_DROPTARGETDOWN 3
 #define EVENT_TIMEISOVER 4
+#define EVENT_LOST_BALL 5
 
 #define EVENT_TEST_INIT 201
 #define EVENT_TEST_LED_1BY1 201

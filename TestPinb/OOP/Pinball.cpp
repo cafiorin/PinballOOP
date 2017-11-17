@@ -64,9 +64,25 @@ void Pinball::LogMessage(const char *szMessage)
 }
 
 /*---------------------------------------------------------------------*/
+void Pinball::LogMessageValue(const char *szMessage, int value)
+/*---------------------------------------------------------------------*/
+{
+	#ifdef DEBUGMESSAGES
+	char szDebug[MAX_SIZE_DEBUG_MESSAGE];
+	sprintf(szDebug, "%s-val:%d", szMessage, value);
+	m_serial->println(szDebug);
+	#endif
+}
+
+
+/*---------------------------------------------------------------------*/
 void Pinball::AddPinballInput(Input *input)
 /*---------------------------------------------------------------------*/
 {
+	#ifdef DEBUGMESSAGES
+	LogMessageValue("Pinball::AddPinballInput", input->GetPortNumber());
+	#endif
+
 	if (input != NULL)
 	{
 		m_Inputs[input->GetPortNumber()] = input;
@@ -77,6 +93,10 @@ void Pinball::AddPinballInput(Input *input)
 void Pinball::AddPinballOutput(Output *output)
 /*---------------------------------------------------------------------*/
 {
+	#ifdef DEBUGMESSAGES
+	LogMessageValue("Pinball::AddPinballOutput", output->GetPortNumber());
+	#endif
+
 	if (output != NULL)
 	{
 		m_Outputs[output->GetPortNumber()] = output;
@@ -109,11 +129,9 @@ void Pinball::RemovePinballObject(PinballObject *Pinballobj)
 void Pinball::playSong(char song[], bool priority /*default=true*/)
 //-----------------------------------------------------------------------//
 {
-	#ifdef DOS
 	char szMsg[50];
 	sprintf(szMsg, "Play song: %s", song);
 	LogMessage(szMsg);
-	#endif // DOS
 
 
 	#ifdef ARDUINOLIB

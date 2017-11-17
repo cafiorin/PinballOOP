@@ -50,6 +50,8 @@ public:
 #endif
 	virtual ~Pinball();
 	void LogMessage(const char *szMessage);
+	void LogMessageValue(const char *szMessage, int value);
+
 	void AddPinballObject(PinballObject *Pinballobj);
 	void RemovePinballObject(PinballObject *Pinballobj);
 	void playSong(char song[], bool priority=true);

@@ -22,6 +22,7 @@ public:
 	void Enable() { m_enabled = true; }
 	void Disable() { m_enabled = false; }
 	void LogMessage(const char *szMessage);
+	void LogMessageValue(const char *szMessage, int value);
 	void Debug(const char *szMessage);
 	Pinball *GetPinball() { return m_pinball; }
 

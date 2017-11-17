@@ -43,8 +43,6 @@ public:
 	
 	Menu *m_Menu;
 	SelfTest *m_SelfTest;
-	StageBase *m_CurrentStage;
-	void SetStage(StageBase *stage);
 
 	Multiplex *m_Multiplex;
 	LedControl *m_LedControl;

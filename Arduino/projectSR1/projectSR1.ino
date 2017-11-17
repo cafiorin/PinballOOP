@@ -16,6 +16,7 @@ PinballMaster m_pinball;
 void setup()  
 {
 	Serial.begin(115200);
+  Serial.print(F("########################")); 
 	Serial.print(F("Iniciando...")); 
 
 	Wire.begin();

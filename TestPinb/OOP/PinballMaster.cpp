@@ -74,6 +74,7 @@ PinballMaster::PinballMaster()
 void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 /*---------------------------------------------------------------------*/
 {
+  ht1632_setup();
 	m_serial = serial;
 	#ifdef DEBUGMESSAGES
 	LogMessage("Pinball Constructor");

@@ -34,7 +34,7 @@ Multiplex::Multiplex(Pinball *pinball, const int S0,const int S1,const int S2,co
 	_adrsPin[1] = S1;
 	_adrsPin[2] = S2;
 	_adrsPin[3] = S3;
-	
+
 	_sig = SIG;
 	_outsig = OUTSIG;
 
@@ -69,7 +69,7 @@ void Multiplex::setup()
 
 	for (i = 0; i < 4; i++)
 	{
-		pinMode(_adrsPin[i], OUTPUT); 
+		pinMode(_adrsPin[i], OUTPUT);
 		digitalWrite(_adrsPin[i],LOW);
 	}
 
@@ -147,6 +147,10 @@ int Multiplex::readChannel(int ch)
 
 bool Multiplex::Loop(int value)
 {
+	#ifdef DEBUGMESSAGESLOOP
+	LogMessage("Multiplex::Loop");
+	#endif
+
 	digitalWrite(_chipSelect1, HIGH);
 	digitalWrite(_chipSelect2, HIGH);
 	digitalWrite(_chipSelect3, HIGH);

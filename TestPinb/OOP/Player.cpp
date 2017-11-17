@@ -34,7 +34,7 @@ bool Player::Init()
 	m_Score = 0;
 	m_ExtraBall = false;
 	m_Status = StatusPlayer::waiting;
-	
+
 	return true;
 }
 
@@ -42,6 +42,10 @@ bool Player::Init()
 bool Player::Loop(int value)
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGESLOOP
+	LogMessage("Player::Loop");
+	#endif
+
 	if (m_Status == StatusPlayer::playing)
 	{
 		m_Stage->Loop(value);
@@ -69,7 +73,7 @@ void Player::DisplayScore()
 	char szPlayerScore[10];
 	sprintf(szPlayerScore, "%05d", m_Score);
 
-	m_PinballMaster->printText(szPlayer, szPlayerScore, 0);
+	m_PinballMaster->printText(szPlayer, szPlayerScore, 1);
 }
 
 //---------------------------------------------------------------------//

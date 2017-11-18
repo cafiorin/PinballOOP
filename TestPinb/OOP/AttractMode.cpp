@@ -9,6 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #include "StageBase.h"
 #include "Timer.h"
 #include "PinballMaster.h"
+#include "DefinesMp3.h"
 
 //-----------------------------------------------------------
 AttractMode::AttractMode(PinballMaster *pinball):StageBase(pinball,-1)
@@ -32,7 +33,7 @@ bool AttractMode::Init()
 	m_PinballMaster->sendMessageToAnotherArduino(ADDRESS_SLAVE, INIT_THEME);
 	m_PinballMaster->printText("PRESS", "START", 0);
 	m_showGameOver = false;
-
+    m_PinballMaster->playSong(MP3_THEME00);
 	return true;
 }
 

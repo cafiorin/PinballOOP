@@ -16,7 +16,6 @@ Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject
 	Debug("Input Constructor");
 	#endif
 
-	m_portNumber = portNumber;
 	m_debounceRead = DEBOUNCEREAD;
 	m_debounceCount = 0;
 	m_InputValue = false;
@@ -24,7 +23,7 @@ Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject
 	m_pinballObjectParent = pinballObject;
 
 	m_pinball->AddPinballInput(this);
-	Init();
+	//Init();
 }
 
 //-------------------------------------------------------//
@@ -106,7 +105,7 @@ void Input::SetInput (bool value)
 		m_debounceCount = 0;
 		m_Edge = true;
 	}
-	
+
 	if(m_Edge)
 	{
 		m_debounceCount++;

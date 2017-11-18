@@ -9,10 +9,10 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
-#define DOS
-//#define ARDUINOLIB
+//#define DOS
+#define ARDUINOLIB
 
-#define DEBUGMESSAGES
+//#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 
 //-----------------------
@@ -21,7 +21,8 @@ http://pinballhomemade.blogspot.com.br
 #define ADDRESS_SLAVE  5
 #define INIT_THEME 0
 
-#define MAX_SIZE_DEBUG_MESSAGE 80
+#define MAX_SIZE_DEBUG_MESSAGE 120
+#define MAX_NAME 25
 #define MAX_LEDS 66
 #define MAX_BALLS 3
 #define MAX_PLAYERS 8

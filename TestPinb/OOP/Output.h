@@ -21,21 +21,19 @@ public:
 	Output(const char *szName, Pinball *pinball, int portNumber, Multiplex *multiplex);
 	virtual ~Output();
 
-	int GetPortNumber() { return m_portNumber; }
 	bool IsTurnOn(){return m_turnOn;}
 	void TurnOn();
 	void TurnOnByTimer(long time=TIME_COIL_ON);
 	void TurnOff();
 	virtual bool Init();
-	virtual bool Loop(int value);
+	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 protected:
 	bool m_turnOn;
 	long m_timerDelay;
-	int m_portNumber;
 	Multiplex *m_Multiplex;
 
-private:	
+private:
 	Timer *m_TimerOn;
 };
 #endif // !defined(EA_A5DC726B_BD74_4c6c_8409_19F521E789F5__INCLUDED_)

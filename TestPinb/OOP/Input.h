@@ -21,7 +21,6 @@ public:
 
 	bool GetInput();
 	void SetDebounceRead(int debounce){m_debounceRead = debounce;}
-	int GetPortNumber() { return m_portNumber; }
 
 	virtual bool Init();
 
@@ -30,7 +29,6 @@ public:
 private:
 	int m_debounceRead;    // the debounce time; increase if the output flickers
 	int m_debounceCount;
-	int m_portNumber;
 	bool m_InputValue;
 	bool m_Edge;
 	PinballObject *m_pinballObjectParent;

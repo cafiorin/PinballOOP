@@ -11,12 +11,12 @@ http://pinballhomemade.blogspot.com.br
 Port::Port(Pinball *pinball, const char *szName, int portNumber):PinballObject(szName,pinball)
 //-------------------------------------------------------//
 {
-    m_enabled = true;
-	m_portNumber = portNumber;
-	
 	#ifdef DEBUGMESSAGES
 	Debug("Port Constructor");
 	#endif
+
+	m_portNumber = portNumber;
+    m_enabled = true;
 }
 
 //-------------------------------------------------------//

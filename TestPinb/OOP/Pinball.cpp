@@ -60,6 +60,7 @@ void Pinball::LogMessage(const char *szMessage)
 {
 	#ifdef DEBUGMESSAGES
 	m_serial->println(szMessage);
+	m_serial->flush();
 	#endif
 }
 
@@ -71,6 +72,7 @@ void Pinball::LogMessageValue(const char *szMessage, int value)
 	char szDebug[MAX_SIZE_DEBUG_MESSAGE];
 	sprintf(szDebug, "%s-val:%d", szMessage, value);
 	m_serial->println(szDebug);
+    m_serial->flush();
 	#endif
 }
 
@@ -125,7 +127,7 @@ void Pinball::RemovePinballObject(PinballObject *Pinballobj)
 	m_PinballObjs.pop_back(Pinballobj);
 }
 
-//-----------------------------------------------------------------------//
+//----------------------------------------------------//
 void Pinball::playSong(char song[], bool priority /*default=true*/)
 //-----------------------------------------------------------------------//
 {

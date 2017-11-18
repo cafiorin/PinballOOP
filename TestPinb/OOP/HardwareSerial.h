@@ -24,7 +24,8 @@ public:
 	HardwareSerial(int xlog=1,int ylog=1);
 	~HardwareSerial();
 	void println(const char *szLog);
-	
+	void flush(){};
+
 	int m_line;
 	char m_strings[MAX_STRINGS][50];
 	int m_XInit;

@@ -53,7 +53,7 @@ void SetupWireToMaster()
 
 #ifdef ARDUINOLIB
 /*---------------------------------------------------------------------*/
-PinballMaster::PinballMaster() 
+PinballMaster::PinballMaster()
 /*---------------------------------------------------------------------*/
 {
 	m_Status = StatusPinball::initializing;
@@ -80,7 +80,7 @@ void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 	#ifdef DEBUGMESSAGES
 	LogMessage("Pinball Constructor");
 	#endif
-	
+
 	m_MP3player = MP3player;
 
 	for (int ch = 0; ch < MAX_INPUTCHANNELS; ch++)
@@ -151,7 +151,7 @@ void PinballMaster::CreateObjects()
 	m_SelfTest = new SelfTest(this);
 	m_TimerToShowPlayers = new Timer(1000, "TimerSP", this, this, TimerType::continuous);
 	m_nSecondsTimerToShowPlayers = 5;
-	m_Multiplex = new Multiplex(this, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32);//TODO:Fix numbers
+	m_Multiplex = new Multiplex(this, 23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
 
 	Input *pInputStartButton = new Input("SB", this, INPUT_START_BUTTON, this);
 	Input *pInputMenu = new Input("BM", this, INPUT_MENU_BUTTON, this);
@@ -218,7 +218,7 @@ void PinballMaster::CreateStages()
 	#endif
 
 	m_TotalStages = 1;
-	
+
 	//TODO:Stages
 	m_Stages[0] = new Stage0(this,0);
 }
@@ -473,7 +473,7 @@ void PinballMaster::StartGame(int Players)
 	m_nPlayers = Players;
 
 	m_Status = StatusPinball::playingmode;
-	
+
 	for (int i = 0; i < m_nPlayers; i++)
 	{
 		m_Players[i]->Init();
@@ -552,7 +552,7 @@ void PinballMaster::ShowChooseNumberOfPlayers()
 	{
 		char szPlayers[10];
 		sprintf(szPlayers, "%d  %ds", m_nPlayers, m_nSecondsTimerToShowPlayers);
-		printText("Players", szPlayers, 1);
+		printText("Players", szPlayers, 0);
 	}
 }
 

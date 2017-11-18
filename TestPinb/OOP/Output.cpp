@@ -16,19 +16,12 @@ Output::Output(const char *szName, Pinball *pinball, int port, Multiplex *multip
 	#ifdef DEBUGMESSAGES
 	Debug("Output Constructor");
 	#endif
-	
-	m_portNumber = port;
-	
-	#ifdef ARDUINOLIB
-	pinMode(m_portNumber, OUTPUT);
-	#endif
 
-	m_TimerOn = new Timer(100, "TOon", pinball);
 	m_Multiplex = multiplex;
-
+	m_TimerOn = new Timer(100, "TOon", pinball,this,TimerType::once);
 	pinball->AddPinballOutput(this);
 
-	Init();
+	//Init();
 }
 
 //-------------------------------------------------------//
@@ -63,7 +56,6 @@ void Output::TurnOn()
 		#endif
 
 		m_turnOn = true;
-
 		m_Multiplex->writeChannel(m_portNumber, HIGH);
 	}
 }
@@ -85,33 +77,21 @@ void Output::TurnOnByTimer(long time)
 }
 
 //-------------------------------------------------------//
-bool Output::Loop(int value)
+bool Output::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGESLOOP
-	Debug("Output::Loop");
-	#endif
+    #ifdef DEBUGMESSAGES
+    Debug("Output::NotifyEvent");
+    #endif
 
-	if (m_enabled && m_timerDelay > 0)
-	{
-		if (m_TimerOn->Check(m_timerDelay))
-		{
-			#ifdef DEBUGMESSAGES
-			Debug("Output::Timeout !");
-			#endif
-
-			TurnOff();
-			return true;
-		}
-	}
-	return false;
+    TurnOff();
+    return true;
 }
 
 //-------------------------------------------------------//
 void Output::TurnOff()
 //-------------------------------------------------------//
 {
-
 	if(m_enabled)
 	{
 		#ifdef DEBUGMESSAGES

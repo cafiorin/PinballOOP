@@ -26,13 +26,13 @@ public:
 	void Debug(const char *szMessage);
 	Pinball *GetPinball() { return m_pinball; }
 
-//virtual methods	
+//virtual methods
 	virtual bool Init();
 	virtual bool Loop(int value);
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 protected:
-	char m_szName[10];
+	char m_szName[MAX_NAME];
 	bool m_enabled;
 	Pinball *m_pinball;
 };

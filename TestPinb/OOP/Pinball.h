@@ -56,7 +56,7 @@ public:
 	void RemovePinballObject(PinballObject *Pinballobj);
 	void playSong(char song[], bool priority=true);
 	void ChangeVolume(bool plus, uint8_t delta = 5);
-	
+
 	void sendMessageToAnotherArduino(int address, char msg);
 	char receiveMessageFromAnotherArduino(int howMany);
 	virtual void DataReceived(char c) {};
@@ -74,8 +74,8 @@ protected:
 
 	HardwareSerial *m_serial;
 	Vector<PinballObject *> m_PinballObjs;
-	Input *m_Inputs[48];
-	Output *m_Outputs[32];
+	Input *m_Inputs[MAX_INPUTCHANNELS];
+	Output *m_Outputs[MAX_OUTPUTCHANNELS];
 
 	StatusPinball m_Status;
 	AttractMode *m_AttractMode;

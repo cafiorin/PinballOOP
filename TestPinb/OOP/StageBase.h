@@ -5,6 +5,7 @@
 #include "pinballobject.h"
 
 class PinballMaster;
+class Player;
 
 class StageBase : public PinballObject
 {
@@ -12,10 +13,19 @@ public:
 	StageBase(PinballMaster *pinball, int number);
 	virtual ~StageBase();
 	int GetNumber() { return m_number; }
+	void SetCurrentPlayer(Player *player);
+
+	virtual void RestartPlayer();
+	virtual int PlayfieldEvent(PinballObject *sender, int event, int valueToSend);
+	
+	void SetMultiply();
+	bool CheckRolloversMultiply();
+	void TurnOffRolloversMultiply();
 
 protected:
 	PinballMaster *m_PinballMaster;
 	int m_number;
+	Player *m_currentPlayer;
 };
 
 #endif

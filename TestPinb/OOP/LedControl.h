@@ -14,7 +14,7 @@ class PinballMaster;
 class LedControl : public PinballObject
 {
 public:
-	LedControl(int dataPin, PinballMaster *pinball);
+	LedControl(PinballMaster *pinball);
 	virtual ~LedControl();
 
 	virtual bool Init();
@@ -22,11 +22,11 @@ public:
 
 	void TurnOn(int Led);
 	void TurnOff(int Led);
-
+	bool IsTurn(int Led) { return m_ledsValue[Led]; }
 	#ifdef ARDUINOLIB
 	CRGBArray<NUM_LEDS> m_leds;
 	#endif
-
+	bool m_ledsValue[NUM_LEDS];
 };
 
 #endif

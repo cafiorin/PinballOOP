@@ -167,6 +167,7 @@
     <ClInclude Include="OOP\Player.h" />
     <ClInclude Include="OOP\Port.h" />
     <ClInclude Include="OOP\SelfTest.h" />
+    <ClInclude Include="OOP\SequencerLeds.h" />
     <ClInclude Include="OOP\SlingShot.h" />
     <ClInclude Include="OOP\Stage0.h" />
     <ClInclude Include="OOP\StageBase.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="OOP\Player.cpp" />
     <ClCompile Include="OOP\Port.cpp" />
     <ClCompile Include="OOP\SelfTest.cpp" />
+    <ClCompile Include="OOP\SequencerLeds.cpp" />
     <ClCompile Include="OOP\SlingShot.cpp" />
     <ClCompile Include="OOP\Stage0.cpp" />
     <ClCompile Include="OOP\StageBase.cpp" />

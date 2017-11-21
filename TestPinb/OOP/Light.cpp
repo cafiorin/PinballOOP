@@ -25,18 +25,20 @@ Light::Light(const char *szName, Pinball *pinball, int port, Multiplex *multiple
 Light::~Light()
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	Debug("Light Destructor");
-#endif
+	#endif
+
+	delete m_timerBlinking;
 }
 
 //-------------------------------------------------------//
 bool Light::Init()
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	Debug("Light::Init");
-#endif
+	#endif
 
 	return Output::Init();
 }
@@ -45,9 +47,9 @@ bool Light::Init()
 bool Light::Loop(int value)
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGESLOOP
+	#ifdef DEBUGMESSAGESLOOP
 	Debug("Output::Loop");
-#endif
+	#endif
 
 	if (m_timerBlinking->Check())
 	{
@@ -62,12 +64,16 @@ bool Light::Loop(int value)
 	return Output::Loop(value);
 }
 
+//-----------------------------------------------------//
 void Light::StartBlink(long value)
+//-----------------------------------------------------//
 {
 	m_timerBlinking->ChangeValue(value);
 }
 
+//-----------------------------------------------------//
 void Light::EndBlink()
+//-----------------------------------------------------//
 {
 	m_timerBlinking->Disable();
 }

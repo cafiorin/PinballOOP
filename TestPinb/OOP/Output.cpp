@@ -31,6 +31,8 @@ Output::~Output()
 	#ifdef DEBUGMESSAGES
 	Debug("Output Destructor");
 	#endif
+
+	delete m_TimerOn;
 }
 
 //-------------------------------------------------------//

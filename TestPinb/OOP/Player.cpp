@@ -40,8 +40,17 @@ bool Player::Init()
 	this->m_nBalls = MAX_BALLS;
 	m_Score = 0;
 	m_ExtraBall = false;
+	m_Multiply = 1;
 
 	return true;
+}
+
+//-------------------------------------------------------//
+void Player::SetNextStage()
+//-------------------------------------------------------//
+{
+	this->m_Stage = m_PinballMaster->GetStage(0);
+	this->m_Stage->SetCurrentPlayer(this);
 }
 
 //-------------------------------------------------------//
@@ -74,6 +83,11 @@ bool Player::SetCurrentPlayer(int indexPlayer)
 	{
 		Player::m_indexPlayerCurrent = indexPlayer;
 		m_Status = StatusPlayer::playing;
+		
+		if (m_Stage != NULL)
+		{
+			m_Stage->SetCurrentPlayer(this);
+		}
 
 		m_PinballMaster->GetNewBall();
 
@@ -115,6 +129,31 @@ void Player::DisplayScore()
 }
 
 //---------------------------------------------------------------------//
+bool Player::SetNextMultiply()
+//---------------------------------------------------------------------//
+{
+	if (m_Multiply < MAX_MULTIPLY)
+	{
+		m_Multiply++;
+		return true;
+	}
+	return false;
+}
+
+//---------------------------------------------------------------------//
+bool Player::SetExtraBall()
+//---------------------------------------------------------------------//
+{
+	if (!m_ExtraBall)
+	{
+		m_ExtraBall = true;
+		return true;
+	}
+	return false;
+}
+
+
+//---------------------------------------------------------------------//
 bool Player::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //---------------------------------------------------------------------//
 {
@@ -122,22 +161,17 @@ bool Player::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 	Debug("Player::NotifyEvent");
 	#endif
 
-	if (event == EVENT_DROPTARGETDOWN)
+	if (m_Status == StatusPlayer::playing)
 	{
-		//TODO:
-		m_Score += 100;
-		DisplayScore();
-		return true;
-	}
-	else
-	{
-		// -- P L A Y F I E L D --
-		if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
+		if (m_Stage != NULL)
 		{
-			//TODO:
-			m_Score += 1;
-			DisplayScore();
-			return true;
+			if (event == EVENT_DROPTARGETDOWN || (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH))
+			{
+				int score = m_Stage->PlayfieldEvent(sender, event, valueToSend);
+				m_Score += (score * m_Multiply);
+				DisplayScore();
+				return true;
+			}
 		}
 	}
 

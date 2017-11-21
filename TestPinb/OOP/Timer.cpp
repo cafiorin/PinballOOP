@@ -89,8 +89,6 @@ bool Timer::Loop(int value)
 
 		if (Check())
 		{
-			m_lastTime = Millis();
-
 			if (m_parent != NULL)
 			{
 				m_parent->NotifyEvent(this, EVENT_TIMEISOVER, 0);
@@ -104,6 +102,8 @@ bool Timer::Loop(int value)
 			{
 				m_enabled = false;
 			}
+
+			m_lastTime = Millis();
 		}
 	}
 

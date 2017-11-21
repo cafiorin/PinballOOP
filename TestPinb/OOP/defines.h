@@ -9,10 +9,10 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
-//#define DOS
-#define ARDUINOLIB
+#define DOS
+//#define ARDUINOLIB
 
-//#define DEBUGMESSAGES
+#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 
 //-----------------------
@@ -20,6 +20,7 @@ http://pinballhomemade.blogspot.com.br
 #define ADDRESS_MASTER 4
 #define ADDRESS_SLAVE  5
 #define INIT_THEME 0
+#define DATA_STRIP_LED 5
 
 #define MAX_SIZE_DEBUG_MESSAGE 120
 #define MAX_NAME 25
@@ -27,6 +28,7 @@ http://pinballhomemade.blogspot.com.br
 #define MAX_BALLS 3
 #define MAX_PLAYERS 8
 #define MAX_STAGES 1
+#define MAX_MULTIPLY 6
 
 #define TIME_COIL_ON 20
 
@@ -119,6 +121,37 @@ http://pinballhomemade.blogspot.com.br
 #define OUTPUT_DROPTARGET5_48V 25
 #define OUTPUT_RETURNBALL_48V 26
 #define OUTPUT_ACCBALL_48V 27
+
+//LEDS
+#define LED_MULTIPLY_2X 27
+#define LED_MULTIPLY_3X 28
+#define LED_MULTIPLY_4X 29
+#define LED_MULTIPLY_5X 30
+#define LED_MULTIPLY_6X 31
+#define LED_ROLLOVER_CENTER 32
+#define LED_ROLLOVER_LEFT 33
+#define LED_ROLLOVER_RIGHT 34
+#define LED_STAGE11 35
+#define LED_STAGE12 36
+#define LED_STAGE21 37
+#define LED_STAGE22 38
+#define LED_STAGE31 39
+#define LED_STAGE32 40
+#define LED_STAGE41 41
+#define LED_STAGE42 42
+#define LED_STAGE51 43
+#define LED_STAGE52 44
+
+#define LED_HOLE_CIRCLE1 45
+#define LED_HOLE_CIRCLE2 46
+#define LED_HOLE_ARROW11 47
+#define LED_HOLE_ARROW12 48
+
+//POINTS - SCORE
+#define SCORE_DEFAULT 1
+#define SCORE_ALL_TARGETS 100
+#define SCORE_DROPTARGETDOWN 50
+#define SCORE_TARGET_STAGE 1000
 
 //Outputs Low Energy
 #define OUTPUT_FLIPPER_ON_5V 0

@@ -23,6 +23,7 @@ AttractMode::AttractMode(PinballMaster *pinball):StageBase(pinball,-1)
 AttractMode::~AttractMode()
 //-----------------------------------------------------------
 {
+	delete m_timerGameOver;
 }
 
 
@@ -53,6 +54,20 @@ void AttractMode::Loop()
 {
 	m_PinballMaster->m_LedControl->Loop();
 }
+
+//---------------------------------------------------------------------//
+bool AttractMode::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+//---------------------------------------------------------------------//
+{
+	// -- T I M E R  I S  O V E R --
+	if (event == EVENT_TIMEISOVER)
+	{
+		return TimerIsOver(sender);
+	}
+
+	return false;
+}
+
 
 //---------------------------------------------------------------------//
 bool AttractMode::TimerIsOver(PinballObject *sender)

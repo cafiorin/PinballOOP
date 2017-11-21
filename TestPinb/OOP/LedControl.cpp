@@ -16,12 +16,17 @@ http://pinballhomemade.blogspot.com.br
 
 
 //-----------------------------------------------------------
-LedControl::LedControl(int dataPin, PinballMaster *pinball):PinballObject("LedControl",pinball)
+LedControl::LedControl(PinballMaster *pinball):PinballObject("LedControl",pinball)
 //-----------------------------------------------------------
 {
 	#ifdef ARDUINOLIB
-	FastLED.addLeds<WS2812B, 5, GRB>(m_leds, NUM_LEDS);
+	FastLED.addLeds<WS2812B, DATA_STRIP_LED, GRB>(m_leds, NUM_LEDS);
 	#endif // ARDUINOLIB
+
+	for (int i = 0; i < NUM_LEDS; i++)
+	{
+		TurnOff(i);
+	}
 }
 
 //-----------------------------------------------------------
@@ -39,6 +44,11 @@ bool LedControl::Init()
 	Debug("LedControl::Init");
 	#endif
 
+	for (int i = 0; i < NUM_LEDS; i++)
+	{
+		TurnOff(i);
+	}
+
 	return true;
 }
 
@@ -50,6 +60,7 @@ void LedControl::TurnOn(int Led)
 	Debug("LedControl::TurnOn");
 	#endif
 
+	m_ledsValue[Led] = true;
 
 	#ifdef ARDUINOLIB
 	m_leds[Led] = CRGB::White;
@@ -64,6 +75,8 @@ void LedControl::TurnOff(int Led)
 	#ifdef DEBUGMESSAGES
 	Debug("LedControl::TurnOff");
 	#endif
+
+	m_ledsValue[Led] = false;
 
 	#ifdef ARDUINOLIB
 	m_leds[Led] = CRGB::Black;

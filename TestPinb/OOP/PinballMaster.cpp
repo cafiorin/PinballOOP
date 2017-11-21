@@ -134,6 +134,15 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 
 #endif
 
+/*---------------------------------------------------------------------*/
+PinballMaster::~PinballMaster()
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGES
+	LogMessage("PinballMaster Destructor");
+#endif
+}
+
 //---------------------------------------------------------------------//
 //Create all objects to Arduino Master
 void PinballMaster::CreateObjects()
@@ -145,8 +154,7 @@ void PinballMaster::CreateObjects()
 
 	printText("Pinball", "init", 0);
 
-	m_LedControl = new LedControl(5, this); //TODO: 5 ?
-	m_AttractMode = new AttractMode(this);
+	m_LedControl = new LedControl(this);
 	m_Menu = new Menu("Menu", this);
 	m_SelfTest = new SelfTest(this);
 	m_TimerToShowPlayers = new Timer(1000, "TimerSP", this, this, TimerType::continuous);
@@ -203,6 +211,9 @@ void PinballMaster::CreateObjects()
 
 	CreateStages();
 
+	//Last 
+	m_AttractMode = new AttractMode(this);
+
 	printText("Pinball", "OK", 0);
 	delay(200);
 
@@ -233,7 +244,8 @@ bool PinballMaster::Init()
 
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
-		if (!m_PinballObjs[i]->Init())
+		PinballObject *pObject = m_PinballObjs[i];
+		if (!pObject->Init())
 		{
 			#ifdef DEBUGMESSAGES
 			LogMessage("Pinball Error");
@@ -242,7 +254,6 @@ bool PinballMaster::Init()
 	}
 
 	m_Status = StatusPinball::attractmode;
-	m_AttractMode->Init();
 
 	return true;
 }
@@ -554,16 +565,6 @@ void PinballMaster::ShowChooseNumberOfPlayers()
 		sprintf(szPlayers, "%d  %ds", m_nPlayers, m_nSecondsTimerToShowPlayers);
 		printText("Players", szPlayers, 0);
 	}
-}
-
-
-/*---------------------------------------------------------------------*/
-PinballMaster::~PinballMaster()
-/*---------------------------------------------------------------------*/
-{
-	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster Destructor");
-	#endif
 }
 
 /*---------------------------------------------------------------------*/

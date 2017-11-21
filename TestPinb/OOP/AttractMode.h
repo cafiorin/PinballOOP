@@ -14,6 +14,7 @@ public:
 
 	virtual bool Init();
 	virtual void Loop();
+	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 	void InitGameOver();
 

@@ -7,6 +7,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "Bumper.h"
 #include "PinballObject.h"
+#include "Pinball.h"
 
 //-------------------------------------------------------//
 Bumper::Bumper(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
@@ -45,6 +46,7 @@ bool Bumper::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
+		m_pinball->NotifyEvent(this, event, valueToSend);
 		return true;
 	}
 	return false;

@@ -6,6 +6,8 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "KickoutHole.h"
+#include "Pinball.h"
+#include "PinballObject.h"
 
 //-------------------------------------------------------//
 KickoutHole::KickoutHole(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
@@ -61,6 +63,7 @@ bool KickoutHole::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_ball = true;
+		m_pinball->NotifyEvent(this, event, valueToSend);
 		return true;
 	}
 	return false;

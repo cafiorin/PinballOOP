@@ -24,7 +24,11 @@ public:
 	HardwareSerial(int xlog=1,int ylog=1);
 	~HardwareSerial();
 	void println(const char *szLog);
+	void jumpline();
 	void flush(){};
+	void ResetLine() { m_line = 0; }
+	void printone(const char *szLog);
+	void printbox(int width, int height, char *szTitle);
 
 	int m_line;
 	char m_strings[MAX_STRINGS][50];

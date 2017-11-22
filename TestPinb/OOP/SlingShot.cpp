@@ -7,6 +7,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 #include "SlingShot.h"
+#include "Pinball.h"
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
@@ -65,6 +66,7 @@ bool SlingShot::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
+		m_pinball->NotifyEvent(this, event, valueToSend);
 		return true;
 	}
 	return false;

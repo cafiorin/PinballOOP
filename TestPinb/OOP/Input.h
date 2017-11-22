@@ -24,7 +24,7 @@ public:
 
 	virtual bool Init();
 
-	void SetInput(bool value);
+	bool SetInput(bool value);
 
 private:
 	int m_debounceRead;    // the debounce time; increase if the output flickers

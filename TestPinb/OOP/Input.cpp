@@ -92,14 +92,15 @@ void Input::CheckDebounce()
 }
 
 //-------------------------------------------------------//
-void Input::SetInput (bool value)
+bool Input::SetInput (bool value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP
 	Debug("Input::SetInput");
 	#endif
 
-	if (m_InputValue != value)
+	bool newValue = (m_InputValue != value);
+	if (newValue)
 	{
 		m_InputValue = value;
 		m_debounceCount = 0;
@@ -111,4 +112,6 @@ void Input::SetInput (bool value)
 		m_debounceCount++;
 		CheckDebounce();
 	}
+
+	return newValue;
 }

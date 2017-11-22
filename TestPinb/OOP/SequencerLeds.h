@@ -31,7 +31,7 @@ public:
 	void Start();
 	void End();
 
-	char m_Leds[MAXLIGHTS];
+	int m_Leds[MAXLIGHTS];
 	bool m_LedsTurnOnWithNext[MAXLIGHTS];
 	char m_count;
 	char m_pos;

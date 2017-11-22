@@ -72,13 +72,45 @@ int ReadKey()
 	return -1;
 }
 
+void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
+{
+	ledPrint->printbox(30, (NUM_LEDS/2)+2, "Led");
+	ledPrint->m_YInit = 1;
+	ledPrint->m_XInit = 100;
+
+	int i = 0;
+	for (; i < NUM_LEDS/2; i++)
+	{
+		char szMsg[30];
+		sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->m_LedControl->IsTurn(i) ? 1 : 0));
+		ledPrint->printone(szMsg);
+	}
+
+	ledPrint->ResetLine();
+	ledPrint->m_YInit = 1;
+	ledPrint->m_XInit = 115;
+
+	for (; i < NUM_LEDS; i++)
+	{
+		char szMsg[30];
+		sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->m_LedControl->IsTurn(i)?1:0));
+		ledPrint->printone(szMsg);
+	}
+}
+
+
 int main()
 {
+	bool firstPrint = true;
+	bool Leds[NUM_LEDS];
+
 	HardwareSerial *serial = new HardwareSerial();
 	PinballMaster *pPinballMaster = new PinballMaster("Master", serial);
 
 	HardwareSerial *serial2 = new HardwareSerial(100);
 	PinballSlave *pPinballSlave = new PinballSlave("Slave", serial2);
+
+	HardwareSerial *ledPrint = new HardwareSerial(100, 1);
 
 	pPinballSlave->SetPinballMaster(pPinballMaster);
 
@@ -100,6 +132,10 @@ int main()
 	inputs->println("RETURNBALL_LEFT - 13");
 	inputs->println("RETURNBALL_RIGHT- 14");
 
+	for (int i = 0; i < NUM_LEDS; i++)
+	{
+		Leds[i] = pPinballMaster->m_LedControl->IsTurn(i);
+	}
 
 	PrintReadKey();
 
@@ -119,6 +155,23 @@ int main()
 			}
 		}
 		
+		if (firstPrint)
+		{
+			printLeds(pPinballMaster, ledPrint);
+			firstPrint = false;
+		}
+		else
+		{
+			for (int i = 0; i < NUM_LEDS; i++)
+			{
+				if (Leds[i] != pPinballMaster->m_LedControl->IsTurn(i))
+				{
+					printLeds(pPinballMaster, ledPrint);
+					break;
+				}
+			}
+		}
+
 		pPinballMaster->Loop(0);
 		pPinballSlave->Loop(0);
 
@@ -126,7 +179,6 @@ int main()
 
 	delete  pPinballMaster;
 	delete  pPinballSlave;
-
+	delete ledPrint;
     return 0;
 }
-

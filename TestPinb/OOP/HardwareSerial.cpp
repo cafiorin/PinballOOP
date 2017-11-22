@@ -30,6 +30,33 @@ HardwareSerial::~HardwareSerial()
 }
 
 /*---------------------------------------------------------------------*/
+void HardwareSerial::printbox(int width,int height,char *szTitle)
+/*---------------------------------------------------------------------*/
+{
+	int x = m_XInit;
+	int y = m_YInit;
+	setcolor(WHITE);
+	box(x, y, x + width, y + height + 1, y + 6, y + 6, szTitle);
+
+	m_line=0;
+}
+
+
+/*---------------------------------------------------------------------*/
+void HardwareSerial::printone(const char *szLog)
+/*---------------------------------------------------------------------*/
+{
+	int x = m_XInit;
+	int y = m_YInit;
+	setcolor(WHITE);
+
+	m_line++;
+	gotoxy(x + 2, y + m_line);
+	printf("%-10s", szLog);
+}
+
+
+/*---------------------------------------------------------------------*/
 void HardwareSerial::println(const char *szLog)
 /*---------------------------------------------------------------------*/
 {
@@ -54,5 +81,17 @@ void HardwareSerial::println(const char *szLog)
 	gotoxy(x + 2, y + 1 + m_line);
 	printf("%-50s",m_strings[m_line]);
 }
+
+/*---------------------------------------------------------------------*/
+void HardwareSerial::jumpline()
+/*---------------------------------------------------------------------*/
+{
+	m_line++;
+	if (m_line >= MAX_STRINGS)
+	{
+		m_line = MAX_STRINGS - 1;
+	}
+}
+
 
 #endif

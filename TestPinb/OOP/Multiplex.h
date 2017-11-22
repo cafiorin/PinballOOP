@@ -26,6 +26,8 @@
 #ifndef _MULTIPLEX_H_
 #define _MULTIPLEX_H_
 
+#include "defines.h"
+
 #ifdef ARDUINOLIB
 #include "Arduino.h"
 #endif
@@ -57,7 +59,6 @@ class Multiplex : public PinballObject
 	 int 	_chipSelect5;
 
 	 void 		_addressing(int ch);
-
 };
 #endif
 

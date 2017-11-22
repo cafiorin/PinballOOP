@@ -1,13 +1,17 @@
-#ifdef ARDUINOLIB
-#include <Arduino.h>
-#endif
-
 #include "Utils.h"
 #include "Pinball.h"
 #include "Input.h"
 #include "Output.h"
 #include "PinballObject.h"
 #include "Multiplex.h"
+
+#ifdef ARDUINOLIB
+#include <Arduino.h>
+#endif
+
+#ifdef DOS
+#include "HardwareSerial.h"
+#endif // DOS
 
 static const int _muxChAddress[16][4] = {
     {0,0,0,0}, //channel 0
@@ -155,6 +159,8 @@ bool Multiplex::Loop(int value)
 	digitalWrite(_chipSelect2, HIGH);
 	digitalWrite(_chipSelect3, HIGH);
 
+	bool someInputChanged = false;
+
 	for (int ch = 0; ch < 16; ch++)
 	{
 		_addressing(ch);
@@ -166,28 +172,29 @@ bool Multiplex::Loop(int value)
 		Input *input = m_pinball->GetInput(ch);
 		if (input != NULL)
 		{
-			input->SetInput(read);
+			someInputChanged = input->SetInput(read);
 		}
 
 		digitalWrite(_chipSelect2, LOW);
 		read = digitalRead(_sig);
 		digitalWrite(_chipSelect2, HIGH);
-		input = m_pinball->GetInput(ch+16);
+		input = m_pinball->GetInput(ch + 16);
 		if (input != NULL)
 		{
-			input->SetInput(read);
+			someInputChanged = input->SetInput(read);
 		}
 
 		digitalWrite(_chipSelect3, LOW);
 		read = digitalRead(_sig);
 		digitalWrite(_chipSelect3, HIGH);
-		input = m_pinball->GetInput(ch+32);
+		input = m_pinball->GetInput(ch + 32);
 		if (input != NULL)
 		{
-			input->SetInput(read);
+			someInputChanged = input->SetInput(read);
 		}
 	}
-	return 0;
+
+	return someInputChanged;
 }
 
 

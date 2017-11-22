@@ -12,7 +12,7 @@ http://pinballhomemade.blogspot.com.br
 #define DOS
 //#define ARDUINOLIB
 
-#define DEBUGMESSAGES
+//#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 
 //-----------------------

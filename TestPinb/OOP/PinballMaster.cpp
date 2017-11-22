@@ -266,7 +266,7 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, int event, int valueToSen
 	LogMessageValue("PinballMaster::NotifyEvent",event);
 	#endif
 
-	if (event > EVENT_TEST_INIT && event < EVENT_TEST_FINISH)
+	if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
 		#ifdef DEBUGMESSAGES
 		Debug("PinballMaster::NotifyEvent Test");
@@ -385,8 +385,7 @@ bool PinballMaster::EventMenuButton(PinballObject *sender)
 	}
 	else if (m_Status == StatusPinball::menutest)
 	{
-		m_Status = StatusPinball::attractmode;
-		m_AttractMode->Init();
+		SetupTest(EVENT_TEST_EXIT_MENU);
 	}
 
 	return false;
@@ -461,10 +460,11 @@ bool PinballMaster::SetupTest(int event)
 
 	if (event == EVENT_TEST_EXIT_MENU)
 	{
+		m_SelfTest->FinishTest();
 		m_Status = StatusPinball::attractmode;
 		m_AttractMode->Init();
 	}
-	else if (event > EVENT_TEST_INIT && event < EVENT_TEST_FINISH)
+	else if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
 		m_Status = StatusPinball::menutest;
 		m_SelfTest->StartTest(event);

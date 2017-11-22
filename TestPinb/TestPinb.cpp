@@ -162,13 +162,18 @@ int main()
 		}
 		else
 		{
+			bool someChange = false;
 			for (int i = 0; i < NUM_LEDS; i++)
 			{
 				if (Leds[i] != pPinballMaster->m_LedControl->IsTurn(i))
 				{
-					printLeds(pPinballMaster, ledPrint);
-					break;
+					Leds[i] = pPinballMaster->m_LedControl->IsTurn(i);
+					someChange = true;
 				}
+			}
+			if (someChange)
+			{
+				printLeds(pPinballMaster, ledPrint);
 			}
 		}
 

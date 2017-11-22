@@ -5,6 +5,7 @@
 #include "pinballobject.h"
 
 class PinballMaster;
+class Timer;
 
 class SelfTest : public PinballObject
 {
@@ -14,16 +15,23 @@ public:
 
 	virtual bool Init() {return true;}
 	virtual void Loop() {};
+	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	bool TimerIsOver(PinballObject *sender);
+
+	void IncrementTestValue();
+	void DecrementTestValue();
 
 	bool EventUpDownButton(PinballObject *sender, bool upButton);
 	void StartTest(int event);
-	void LoopTest();
+	void DoTest();
+	void FinishTest();
 
 protected:
 	PinballMaster *m_Pinball;
 
 	int m_MenuTest;
 	int m_startTestValue;
+	Timer *m_timerAuto;
 
 };
 

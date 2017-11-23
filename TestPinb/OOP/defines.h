@@ -50,8 +50,10 @@ http://pinballhomemade.blogspot.com.br
 #define EVENT_TEST_NBALLS3 208
 #define EVENT_TEST_NBALLS4 209
 #define EVENT_TEST_NBALLS5 210
-#define EVENT_TEST_EXIT_MENU 211
-#define EVENT_TEST_FINISH 211
+#define EVENT_TEST_OUTPUTS_1BY1 211 
+#define EVENT_TEST_OUTPUTS_AUTO 212 
+#define EVENT_TEST_EXIT_MENU 213
+#define EVENT_TEST_FINISH 213
 
 //END - Events
 
@@ -108,7 +110,28 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_SW_ACCBALL4 45
 #define INPUT_PLAYFIELD_FINISH 45 //<==Last
 
+//Outputs Low Energy
+#define OUTPUT_LOW_INIT 0
+#define OUTPUT_FLIPPER_ON_5V 0
+#define OUTPUT_LOW_1 1
+#define OUTPUT_LOW_2 2
+#define OUTPUT_LOW_3 3
+#define OUTPUT_LOW_4 4
+#define OUTPUT_LOW_5 5
+#define OUTPUT_LOW_6 6
+#define OUTPUT_LOW_7 7
+#define OUTPUT_LOW_8 8 //12V
+#define OUTPUT_LOW_9 9
+#define OUTPUT_LOW_10 10
+#define OUTPUT_LOW_11 11
+#define OUTPUT_LOW_12 12
+#define OUTPUT_LOW_13 13
+#define OUTPUT_LOW_14 14
+#define OUTPUT_LOW_15 15
+#define OUTPUT_LOW_FINISH 15
+
 //Outputs high energy
+#define OUTPUT_COINS_INIT 16
 #define OUTPUT_OUTBALL1_48V 16
 #define OUTPUT_OUTBALL2_48V 17
 #define OUTPUT_BUMPER_LEFT_48V 18
@@ -121,6 +144,7 @@ http://pinballhomemade.blogspot.com.br
 #define OUTPUT_DROPTARGET5_48V 25
 #define OUTPUT_RETURNBALL_48V 26
 #define OUTPUT_ACCBALL_48V 27
+#define OUTPUT_COINS_FINISH 27
 
 //LEDS
 #define LED_MULTIPLY_2X 27
@@ -152,9 +176,6 @@ http://pinballhomemade.blogspot.com.br
 #define SCORE_ALL_TARGETS 100
 #define SCORE_DROPTARGETDOWN 50
 #define SCORE_TARGET_STAGE 1000
-
-//Outputs Low Energy
-#define OUTPUT_FLIPPER_ON_5V 0
 
 #ifdef ARDUINOLIB
 #include "Arduino.h"

@@ -16,7 +16,6 @@ public:
 	virtual bool Init() {return true;}
 	virtual void Loop() {};
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
-	bool TimerIsOver(PinballObject *sender);
 
 	void IncrementTestValue();
 	void DecrementTestValue();
@@ -24,6 +23,12 @@ public:
 	bool EventUpDownButton(PinballObject *sender, bool upButton);
 	void StartTest(int event);
 	void DoTest();
+	void DoTestLed();
+	void DoTestCoin();
+	void DoTestOutput();
+	void DoPlaySound(bool board);
+	void DoSfxOnOff();
+
 	void FinishTest();
 
 protected:

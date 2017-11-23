@@ -86,8 +86,13 @@ bool Output::NotifyEvent(PinballObject *sender, int event, int valueToSend)
     Debug("Output::NotifyEvent");
     #endif
 
-    TurnOff();
-    return true;
+	if (event == EVENT_TIMEISOVER)
+	{
+		TurnOff();
+		return true;
+	}
+
+	return false;
 }
 
 //-------------------------------------------------------//

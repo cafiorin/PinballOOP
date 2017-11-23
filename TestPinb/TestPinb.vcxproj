@@ -148,6 +148,7 @@
     <ClInclude Include="OOP\AttractMode.h" />
     <ClInclude Include="OOP\Bumper.h" />
     <ClInclude Include="OOP\defines.h" />
+    <ClInclude Include="OOP\DefinesMp3.h" />
     <ClInclude Include="OOP\DropTarget.h" />
     <ClInclude Include="OOP\Game.h" />
     <ClInclude Include="OOP\HardwareSerial.h" />

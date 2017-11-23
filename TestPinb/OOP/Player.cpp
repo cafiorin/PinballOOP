@@ -37,7 +37,7 @@ bool Player::Init()
 
 	m_Status = StatusPlayer::waiting;
 	this->m_Stage = m_PinballMaster->GetStage(0);
-	this->m_nBalls = MAX_BALLS;
+	this->m_nBalls = m_PinballMaster->GetBallsByPlayer();
 	m_Score = 0;
 	m_ExtraBall = false;
 	m_Multiply = 1;

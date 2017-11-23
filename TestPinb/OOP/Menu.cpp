@@ -48,29 +48,34 @@ bool Menu::Init()
 
 	//Test
 	MenuString *pLed = new MenuString(pTest, -1, "Led");
-	MenuString *pCoin = new MenuString(pTest, -1, "Bobina");
-	MenuString *pSound = new MenuString(pTest, -1, "Som");
+	MenuString *pCoin = new MenuString(pTest, -1, "Coin");
+	MenuString *pOutput = new MenuString(pTest, -1, "Output");
+	MenuString *pSound = new MenuString(pTest, -1, "Sound");
 
 	//Config
 	MenuString *pSfx = new MenuString(pConfig, -1, "SFX");
-	MenuString *pNBalls = new MenuString(pConfig, -1, "Bolas");
+	MenuString *pNBalls = new MenuString(pConfig, -1, "Balls");
 
 	//Led
 	new MenuString(pLed, EVENT_TEST_LED_1BY1, "1 a 1");
 	new MenuString(pLed, EVENT_TEST_LED_AUTO, "Auto");
 
-	//Bobina
+	//Coin
 	new MenuString(pCoin, EVENT_TEST_COIN_1BY1, "1 a 1");
 	new MenuString(pCoin, EVENT_TEST_COIN_AUTO, "Auto");
 
-	//Som
+	//Output
+	new MenuString(pOutput, EVENT_TEST_OUTPUTS_1BY1, "1 a 1");
+	new MenuString(pOutput, EVENT_TEST_OUTPUTS_AUTO, "Auto");
+
+	//Sound
 	new MenuString(pSound, EVENT_TEST_SOUND_BOARD1, "Placa 1");
 	new MenuString(pSound, EVENT_TEST_SOUND_BOARD2, "Placa 2");
 
 	//SFX
 	new MenuString(pSfx, EVENT_TEST_SFX_ONOFF, "ON/OFF");
 
-	//Bolas
+	//Balls
 	new MenuString(pNBalls, EVENT_TEST_NBALLS3, "3");
 	new MenuString(pNBalls, EVENT_TEST_NBALLS4, "4");
 	new MenuString(pNBalls, EVENT_TEST_NBALLS5, "5");

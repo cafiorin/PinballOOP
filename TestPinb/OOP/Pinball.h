@@ -67,6 +67,10 @@ public:
 	void AddPinballInput(Input *input);
 	void AddPinballOutput(Output *output);
 
+	void EnableSFX(bool enable) { m_enableSfx = enable; }
+	bool IsEnabledSFX() { return m_enableSfx; }
+	bool m_enableSfx;
+
 protected:
 #ifdef ARDUINOLIB
 	SFEMP3Shield *m_MP3player;

@@ -53,7 +53,9 @@ public:
 	Multiplex *m_Multiplex;
 	LedControl *m_LedControl;
 	LedControl *GetLedControl() {return m_LedControl;}
-	void clearDisplay(int line);
+	Multiplex *GetMultiplex() { return m_Multiplex; }
+
+	void clearDisplay(int line=0);
 	void printText(char *text1, char *text2, char font);
 
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
@@ -81,6 +83,7 @@ public:
 	int m_TotalStages;
 	StageBase *m_Stages[MAX_STAGES];
 	StageBase *GetStage(int number) { return m_Stages[number]; }
+	int GetBallsByPlayer() { return m_nBallByPlayer; }
 
 //Events
 private :
@@ -91,6 +94,8 @@ private :
 	bool PlayfieldEvent(PinballObject *sender, int event, int valueToSend);
 	bool EventUpDownButton(PinballObject *sender,bool upButton);
 	bool SetupTest(int event);
+	int m_nBallByPlayer;
+	void SetBallsByPlayer(int balls) { m_nBallByPlayer = balls; }
 };
 
 #endif

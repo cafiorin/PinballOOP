@@ -57,6 +57,8 @@ PinballMaster::PinballMaster()
 /*---------------------------------------------------------------------*/
 {
 	m_Status = StatusPinball::initializing;
+	m_nBallByPlayer = MAX_BALLS;
+	m_enableSfx = true;
 	m_PinballMaster = this;
 	SetupWireToMaster();
 
@@ -109,6 +111,8 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 /*---------------------------------------------------------------------*/
 {
 	m_Status = StatusPinball::initializing;
+	m_nBallByPlayer = MAX_BALLS;
+	m_enableSfx = true;
 
 	#ifdef DEBUGMESSAGES
 	LogMessage("PinballMaster Constructor");
@@ -466,8 +470,20 @@ bool PinballMaster::SetupTest(int event)
 	}
 	else if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
-		m_Status = StatusPinball::menutest;
-		m_SelfTest->StartTest(event);
+		if (event == EVENT_TEST_NBALLS3 || event == EVENT_TEST_NBALLS4 || event == EVENT_TEST_NBALLS5)
+		{
+			this->SetBallsByPlayer(3 + (event - EVENT_TEST_NBALLS3));
+			printText("Set", "Ball", 1);
+			delay(300);
+			m_Status = StatusPinball::attractmode;
+			m_AttractMode->Init();
+			return true;
+		}
+		else
+		{
+			m_Status = StatusPinball::menutest;
+			m_SelfTest->StartTest(event);
+		}
 	}
 
 	return true;

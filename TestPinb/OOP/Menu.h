@@ -49,7 +49,6 @@ private:
 	int m_action;
 	char m_szMenu[10];
 	Vector<MenuString *> m_Children;
-
 };
 
 class Menu
@@ -58,12 +57,6 @@ public:
 	Menu(const char *szName, PinballMaster *pinball);
 	virtual ~Menu();
 	virtual bool Init();
-
-	#ifdef DOS
-	#endif
-	
-	#ifdef ARDUINOLIB
-	#endif
 
 	void PressButtonMenu();
 	bool PressUpDownButton(bool upButton);
@@ -78,6 +71,6 @@ protected:
 	MenuString *m_subOptionSelected;
 	bool m_backSelected;
 
-	PinballMaster *m_Pinball;
+	PinballMaster *m_PinballMaster;
 };
 #endif // !defined(Menu__INCLUDED_)

@@ -13,7 +13,7 @@ http://pinballhomemade.blogspot.com.br
 Bumper::Bumper(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Bumper Constructor");
 	#endif
 
@@ -27,7 +27,7 @@ Bumper::Bumper(const char *szName, Pinball *pinball, int portNumberInput, int po
 Bumper::~Bumper()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Bumper Destructor");
 	#endif
 

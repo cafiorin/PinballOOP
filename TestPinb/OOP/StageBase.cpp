@@ -1,3 +1,10 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* BSD 3-Clause License
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Code by Cassius Fiorin - cafiorin@gmail.com
+http://pinballhomemade.blogspot.com.br
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #include "StageBase.h"
 #include "PinballMaster.h"
 #include "Player.h"
@@ -6,6 +13,10 @@
 StageBase::StageBase(PinballMaster *pinball, int number) : PinballObject("STAGE",pinball)
 //---------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("StageBase Constructor");
+	#endif
+
 	m_PinballMaster = pinball;
 	m_number = number;
 	m_currentPlayer = NULL;
@@ -15,6 +26,9 @@ StageBase::StageBase(PinballMaster *pinball, int number) : PinballObject("STAGE"
 StageBase::~StageBase()
 //---------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("StageBase Destructor");
+	#endif
 }
 
 //---------------------------------------------------
@@ -37,9 +51,13 @@ void StageBase::RestartPlayer()
 	Debug("StageBase::RestartPlayer");
 	#endif
 
-	m_PinballMaster->m_LedControl->TurnOff(LED_ROLLOVER_CENTER);
-	m_PinballMaster->m_LedControl->TurnOff(LED_ROLLOVER_LEFT);
-	m_PinballMaster->m_LedControl->TurnOff(LED_ROLLOVER_RIGHT);
+	LedControl *pLedControl = m_PinballMaster->GetLedControl();
+	if (pLedControl != NULL)
+	{
+		pLedControl->TurnOff(LED_ROLLOVER_CENTER);
+		pLedControl->TurnOff(LED_ROLLOVER_LEFT);
+		pLedControl->TurnOff(LED_ROLLOVER_RIGHT);
+	}
 
 	SetMultiply();
 }
@@ -59,20 +77,21 @@ int StageBase::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 	else if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
 	{
 		bool allTargets = false;
+		LedControl *pLedControl = m_PinballMaster->GetLedControl();
 		switch (valueToSend)
 		{
 		case INPUT_SW_ROLLOVER_CENTER:
-			m_PinballMaster->m_LedControl->TurnOn(LED_ROLLOVER_CENTER);
+			pLedControl->TurnOn(LED_ROLLOVER_CENTER);
 			allTargets = CheckRolloversMultiply();
 			break;
 
 		case INPUT_SW_ROLLOVER_LEFT:
-			m_PinballMaster->m_LedControl->TurnOn(LED_ROLLOVER_LEFT);
+			pLedControl->TurnOn(LED_ROLLOVER_LEFT);
 			allTargets = CheckRolloversMultiply();
 			break;
 
 		case INPUT_SW_ROLLOVER_RIGHT:
-			m_PinballMaster->m_LedControl->TurnOn(LED_ROLLOVER_RIGHT);
+			pLedControl->TurnOn(LED_ROLLOVER_RIGHT);
 			allTargets = CheckRolloversMultiply();
 			break;
 		}
@@ -91,9 +110,13 @@ void StageBase::TurnOffRolloversMultiply()
 	Debug("StageBase::TurnOffRolloversMultiply");
 	#endif
 
-	m_PinballMaster->m_LedControl->TurnOff(LED_ROLLOVER_CENTER);
-	m_PinballMaster->m_LedControl->TurnOff(LED_ROLLOVER_LEFT);
-	m_PinballMaster->m_LedControl->TurnOff(LED_ROLLOVER_RIGHT);
+	LedControl *pLedControl = m_PinballMaster->GetLedControl();
+	if (pLedControl != NULL)
+	{
+		pLedControl->TurnOff(LED_ROLLOVER_CENTER);
+		pLedControl->TurnOff(LED_ROLLOVER_LEFT);
+		pLedControl->TurnOff(LED_ROLLOVER_RIGHT);
+	}
 }
 
 
@@ -105,9 +128,11 @@ bool StageBase::CheckRolloversMultiply()
 	Debug("StageBase::CheckRolloversMultiply");
 	#endif
 
-	if (m_PinballMaster->m_LedControl->IsTurn(LED_ROLLOVER_CENTER) &&
-		m_PinballMaster->m_LedControl->IsTurn(LED_ROLLOVER_LEFT) &&
-		m_PinballMaster->m_LedControl->IsTurn(LED_ROLLOVER_RIGHT))
+	LedControl *pLedControl = m_PinballMaster->GetLedControl();
+
+	if (pLedControl->IsTurn(LED_ROLLOVER_CENTER) &&
+		pLedControl->IsTurn(LED_ROLLOVER_LEFT) &&
+		pLedControl->IsTurn(LED_ROLLOVER_RIGHT))
 	{
 		if (m_currentPlayer != NULL)
 		{
@@ -130,15 +155,17 @@ void StageBase::SetMultiply()
 	Debug("StageBase::SetMultiply");
 	#endif
 
-	m_PinballMaster->m_LedControl->TurnOff(LED_MULTIPLY_2X);
-	m_PinballMaster->m_LedControl->TurnOff(LED_MULTIPLY_3X);
-	m_PinballMaster->m_LedControl->TurnOff(LED_MULTIPLY_4X);
-	m_PinballMaster->m_LedControl->TurnOff(LED_MULTIPLY_5X);
-	m_PinballMaster->m_LedControl->TurnOff(LED_MULTIPLY_6X);
+	LedControl *pLedControl = m_PinballMaster->GetLedControl();
+
+	pLedControl->TurnOff(LED_MULTIPLY_2X);
+	pLedControl->TurnOff(LED_MULTIPLY_3X);
+	pLedControl->TurnOff(LED_MULTIPLY_4X);
+	pLedControl->TurnOff(LED_MULTIPLY_5X);
+	pLedControl->TurnOff(LED_MULTIPLY_6X);
 
 	int multiply = m_currentPlayer->GetMultiply();
 	if (multiply > 1)
 	{
-		m_PinballMaster->m_LedControl->TurnOn(LED_MULTIPLY_2X + multiply - 1);
+		pLedControl->TurnOn(LED_MULTIPLY_2X + multiply - 1);
 	}
 }

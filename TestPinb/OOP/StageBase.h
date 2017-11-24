@@ -1,3 +1,10 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* BSD 3-Clause License
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Code by Cassius Fiorin - cafiorin@gmail.com
+http://pinballhomemade.blogspot.com.br
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #ifndef StageBase__INCLUDED_
 #define StageBase__INCLUDED_
 

@@ -26,7 +26,7 @@ PinballObject::PinballObject(const char *szName, Pinball *pinball)
 PinballObject::~PinballObject()
 /*---------------------------------------------------------------------*/
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("PinballObject Destructor");
 	#endif
 

@@ -14,7 +14,7 @@ http://pinballhomemade.blogspot.com.br
 SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput, Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("SlingShot Constructor");
 	#endif
 
@@ -30,7 +30,7 @@ SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1,
 SlingShot::~SlingShot()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("SlingShot Destructor");
 	#endif
 
@@ -69,20 +69,5 @@ bool SlingShot::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 		m_pinball->NotifyEvent(this, event, valueToSend);
 		return true;
 	}
-	return false;
-}
-
-
-//-------------------------------------------------------//
-bool SlingShot::Loop(int value)
-//-------------------------------------------------------//
-{
-	if (m_enabled)
-	{
-		#ifdef DEBUGMESSAGESLOOP
-		Debug("SlingShot Loop");
-		#endif
-	}
-
 	return false;
 }

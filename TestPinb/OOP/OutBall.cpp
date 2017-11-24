@@ -18,7 +18,7 @@ http://pinballhomemade.blogspot.com.br
 OutBall::OutBall(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberOutput1, int portNumberInput2, int portNumberOutput2, Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("OutBall Constructor");
 	#endif
 
@@ -35,7 +35,7 @@ OutBall::OutBall(const char *szName, Pinball *pinball, int portNumberInput1, int
 OutBall::~OutBall()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("OutBall Destructor");
 	#endif
 	
@@ -101,18 +101,6 @@ bool OutBall::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 		}
 		return true;
 	}
-	return false;
-}
-
-
-//-------------------------------------------------------//
-bool OutBall::Loop(int value)
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGESLOOP
-	Debug("OutBall::Loop");
-	#endif
-
 	return false;
 }
 

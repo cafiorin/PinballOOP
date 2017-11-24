@@ -15,6 +15,10 @@ http://pinballhomemade.blogspot.com.br
 AttractMode::AttractMode(PinballMaster *pinball):StageBase(pinball,-1)
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("AttractMode Construct");
+	#endif
+
 	m_timerGameOver = new Timer(1000, "TimerGO", pinball, this, TimerType::continuous);
 	m_showGameOver = false;
 }
@@ -23,6 +27,10 @@ AttractMode::AttractMode(PinballMaster *pinball):StageBase(pinball,-1)
 AttractMode::~AttractMode()
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("AttractMode Destruct");
+	#endif
+
 	delete m_timerGameOver;
 }
 
@@ -31,6 +39,10 @@ AttractMode::~AttractMode()
 bool AttractMode::Init()
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGES
+	Debug("AttractMode::Init");
+	#endif
+
 	m_PinballMaster->sendMessageToAnotherArduino(ADDRESS_SLAVE, INIT_THEME);
 	m_PinballMaster->printText("PRESS", "START", 0);
 	m_showGameOver = false;
@@ -42,23 +54,24 @@ bool AttractMode::Init()
 void AttractMode::InitGameOver()
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGES
+	Debug("AttractMode::InitGameOver");
+	#endif
+
 	m_PinballMaster->printText("GAME", "OVER", 0);
 	m_timerGameOver->Enable();
 	m_showGameOver = true;
 	m_showAlternate = true;
 }
 
-//-----------------------------------------------------------
-void AttractMode::Loop()
-//-----------------------------------------------------------
-{
-	m_PinballMaster->m_LedControl->Loop();
-}
-
 //---------------------------------------------------------------------//
 bool AttractMode::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("AttractMode::NotifyEvent");
+	#endif
+
 	// -- T I M E R  I S  O V E R --
 	if (event == EVENT_TIMEISOVER)
 	{
@@ -76,8 +89,9 @@ bool AttractMode::TimerIsOver(PinballObject *sender)
 	if (sender == m_timerGameOver && m_showGameOver)
 	{
 		#ifdef DEBUGMESSAGES
-		Debug("...Timer is over game over");
+		Debug("AttractMode::TimerIsOver");
 		#endif
+
 		if (m_showAlternate)
 		{
 			m_PinballMaster->printText("PRESS", "START", 0);

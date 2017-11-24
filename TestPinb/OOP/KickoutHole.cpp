@@ -13,7 +13,7 @@ http://pinballhomemade.blogspot.com.br
 KickoutHole::KickoutHole(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("KickoutHole Constructor");
 	#endif
 
@@ -27,7 +27,7 @@ KickoutHole::KickoutHole(const char *szName, Pinball *pinball, int portNumberInp
 KickoutHole::~KickoutHole()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("KickoutHole Destructor");
 	#endif
 	

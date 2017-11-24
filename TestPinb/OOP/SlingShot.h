@@ -19,7 +19,6 @@ public:
 	SlingShot(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput, Multiplex *multiplex);
 	virtual ~SlingShot();
 	virtual bool Init();
-	virtual bool Loop(int value);
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 protected:

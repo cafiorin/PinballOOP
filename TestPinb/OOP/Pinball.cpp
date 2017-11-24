@@ -45,7 +45,7 @@ Pinball::Pinball(const char *szName, HardwareSerial *serial) : PinballObject (sz
 Pinball::~Pinball()
 /*---------------------------------------------------------------------*/
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	LogMessage("Pinball Destructor");
 	#endif
 

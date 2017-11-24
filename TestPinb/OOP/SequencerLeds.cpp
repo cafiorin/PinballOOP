@@ -18,6 +18,10 @@ http://pinballhomemade.blogspot.com.br
 SequencerLeds::SequencerLeds(PinballMaster *pinball, SequencerType type,long time):PinballObject("SequencerLeds",pinball)
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("SequencerLeds Constructor");
+	#endif
+
 	m_PinballMaster = pinball;
 	m_timerSeq = new Timer(time, "TimerSeq", pinball, this, TimerType::continuous);
 	m_type = type;
@@ -30,31 +34,13 @@ SequencerLeds::SequencerLeds(PinballMaster *pinball, SequencerType type,long tim
 SequencerLeds::~SequencerLeds()
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("SequencerLeds Destructor");
+	#endif
+
 	delete m_timerSeq;
 }
 
-
-//-----------------------------------------------------------
-bool SequencerLeds::Init()
-//-----------------------------------------------------------
-{
-	#ifdef DEBUGMESSAGES
-	Debug("SequencerLeds::Init");
-	#endif
-
-	return true;
-}
-
-//-----------------------------------------------------------
-bool SequencerLeds::Loop(int value)
-//-----------------------------------------------------------
-{
-	#ifdef DEBUGMESSAGESLOOP
-	Debug("SequencerLeds::Loop");
-	#endif
-	
-	return false;
-}
 
 //-----------------------------------------------------------
 void SequencerLeds::AddLed(int led, bool turnOnWithNext)
@@ -86,11 +72,11 @@ void SequencerLeds::Start()
 	{
 		End();
 		m_pos = 0;
-		m_PinballMaster->m_LedControl->TurnOn(m_Leds[m_pos]);
+		m_PinballMaster->GetLedControl()->TurnOn(m_Leds[m_pos]);
 		if (m_LedsTurnOnWithNext[m_pos])
 		{
 			m_pos = GetNext(m_pos);
-			m_PinballMaster->m_LedControl->TurnOn(m_Leds[m_pos]);
+			m_PinballMaster->GetLedControl()->TurnOn(m_Leds[m_pos]);
 		}
 
 		m_timerSeq->Start();
@@ -108,7 +94,7 @@ void SequencerLeds::End()
 	m_pos = 0;
 	for (char i = 0; i < m_count; i++)
 	{
-		m_PinballMaster->m_LedControl->TurnOff(m_Leds[i]);
+		m_PinballMaster->GetLedControl()->TurnOff(m_Leds[i]);
 	}
 
 }
@@ -135,27 +121,33 @@ bool SequencerLeds::NotifyEvent(PinballObject *sender, int event, int valueToSen
 bool SequencerLeds::TimerIsOver(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("SequencerLeds::TimerIsOver");
+	#endif
+
 	if (sender == m_timerSeq && m_enabled)
 	{
 		#ifdef DEBUGMESSAGES
 		Debug("...Timer is over to seq");
 		#endif
 
+		LedControl *pLedControl = m_PinballMaster->GetLedControl();
+
 		if (m_type == SequencerType::turnOn1by1)
 		{
-			m_PinballMaster->m_LedControl->TurnOff(m_Leds[m_pos]);
+			pLedControl->TurnOff(m_Leds[m_pos]);
 			int posPrev = GetPrev(m_pos);
 			if (m_LedsTurnOnWithNext[posPrev])
 			{
-				m_PinballMaster->m_LedControl->TurnOff(m_Leds[posPrev]);
+				pLedControl->TurnOff(m_Leds[posPrev]);
 			}
 
 			m_pos = GetNext(m_pos);
-			m_PinballMaster->m_LedControl->TurnOn(m_Leds[m_pos]);
+			pLedControl->TurnOn(m_Leds[m_pos]);
 			if (m_LedsTurnOnWithNext[m_pos])
 			{
 				m_pos = GetNext(m_pos);
-				m_PinballMaster->m_LedControl->TurnOn(m_Leds[m_pos]);
+				pLedControl->TurnOn(m_Leds[m_pos]);
 			}
 		}
 		else if (m_type == SequencerType::all)
@@ -167,11 +159,11 @@ bool SequencerLeds::TimerIsOver(PinballObject *sender)
 			}
 			else
 			{
-				m_PinballMaster->m_LedControl->TurnOn(m_Leds[m_pos]);
+				pLedControl->TurnOn(m_Leds[m_pos]);
 				if (m_LedsTurnOnWithNext[m_pos])
 				{
 					m_pos = GetNext(m_pos);
-					m_PinballMaster->m_LedControl->TurnOn(m_Leds[m_pos]);
+					pLedControl->TurnOn(m_Leds[m_pos]);
 				}
 			}
 		}

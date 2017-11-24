@@ -1,3 +1,10 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* BSD 3-Clause License
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Code by Cassius Fiorin - cafiorin@gmail.com
+http://pinballhomemade.blogspot.com.br
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #include "SelfTest.h"
 #include "PinballMaster.h"
 #include "LedControl.h"
@@ -9,7 +16,11 @@
 SelfTest::SelfTest(PinballMaster *pinball) : PinballObject("TEST",pinball)
 //---------------------------------------------------------------------//
 {
-	m_Pinball = pinball;
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("SelfTest Constructor");
+	#endif
+
+	m_PinballMaster = pinball;
 	m_timerAuto = new Timer(100, "TimerAuto", pinball, this, TimerType::continuous);
 }
 
@@ -17,6 +28,10 @@ SelfTest::SelfTest(PinballMaster *pinball) : PinballObject("TEST",pinball)
 SelfTest::~SelfTest()
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("SelfTest Destructor");
+	#endif
+
 	delete m_timerAuto;
 }
 
@@ -24,6 +39,10 @@ SelfTest::~SelfTest()
 void SelfTest::IncrementTestValue()
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("SelfTest IncrementTestValue");
+	#endif
+
 	m_startTestValue++;
 
 	switch (m_MenuTest)
@@ -56,6 +75,10 @@ void SelfTest::IncrementTestValue()
 void SelfTest::DecrementTestValue()
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("SelfTest DecrementTestValue");
+	#endif
+
 	m_startTestValue--;
 
 	switch (m_MenuTest)
@@ -92,6 +115,11 @@ void SelfTest::DecrementTestValue()
 bool SelfTest::EventUpDownButton(PinballObject *sender, bool upButton)
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("SelfTest EventUpDownButton");
+	#endif
+
+
 	if (m_MenuTest == EVENT_TEST_LED_1BY1 || 
 		m_MenuTest == EVENT_TEST_COIN_1BY1 ||
 		m_MenuTest == EVENT_TEST_OUTPUTS_1BY1)
@@ -192,15 +220,20 @@ void SelfTest::DoTest()
 void SelfTest::DoSfxOnOff()
 //---------------------------------------------------------------------//
 {
-	if (m_Pinball->IsEnabledSFX())
+	#ifdef DEBUGMESSAGES
+	Debug("SelfTest DoSfxOnOff");
+	#endif
+
+
+	if (m_PinballMaster->IsEnabledSFX())
 	{
-		m_Pinball->EnableSFX(false);
-		m_Pinball->printText("SFX", "Disable", 0);
+		m_PinballMaster->EnableSFX(false);
+		m_PinballMaster->printText("SFX", "Disable", 0);
 	}
 	else
 	{
-		m_Pinball->EnableSFX(true);
-		m_Pinball->printText("SFX", "Enable", 0);
+		m_PinballMaster->EnableSFX(true);
+		m_PinballMaster->printText("SFX", "Enable", 0);
 	}
 }
 
@@ -213,11 +246,11 @@ void SelfTest::DoTestLed()
 	Debug("SelfTest::DoTestLed");
 	#endif
 
-	LedControl *ledControl = m_Pinball->GetLedControl();
+	LedControl *ledControl = m_PinballMaster->GetLedControl();
 
 	char szLed[5];
 	sprintf(szLed, "%d", m_startTestValue);
-	m_Pinball->printText("Led:", szLed, 0);
+	m_PinballMaster->printText("Led:", szLed, 0);
 
 	if (ledControl->IsTurn(m_startTestValue))
 	{
@@ -240,9 +273,9 @@ void SelfTest::DoTestCoin()
 
 	char szCoin[5];
 	sprintf(szCoin, "%d", m_startTestValue);
-	m_Pinball->printText("Coin:", szCoin, 0);
+	m_PinballMaster->printText("Coin:", szCoin, 0);
 
-	Output *pOutput = m_pinball->GetOutput(m_startTestValue + OUTPUT_COINS_INIT);
+	Output *pOutput = m_PinballMaster->GetOutput(m_startTestValue + OUTPUT_COINS_INIT);
 	if (pOutput != NULL)
 	{
 		pOutput->TurnOnByTimer(200);
@@ -259,9 +292,9 @@ void SelfTest::DoTestOutput()
 
 	char szOut[5];
 	sprintf(szOut, "%d", m_startTestValue);
-	m_Pinball->printText("Output", szOut, 0);
+	m_PinballMaster->printText("Output", szOut, 0);
 
-	Output *pOutput = m_pinball->GetOutput(m_startTestValue + OUTPUT_LOW_INIT);
+	Output *pOutput = m_PinballMaster->GetOutput(m_startTestValue + OUTPUT_LOW_INIT);
 	if (pOutput != NULL)
 	{
 		pOutput->TurnOnByTimer(1000);
@@ -276,15 +309,16 @@ void SelfTest::DoPlaySound(bool board)
 	#ifdef DEBUGMESSAGES
 	Debug("SelfTest::DoPlaySound");
 	#endif
+
 	if (board)
 	{
-		m_Pinball->playSong(MP3_EXTRABALL, true);
-		m_Pinball->printText("Play", "board1", 0);
+		m_PinballMaster->playSong(MP3_EXTRABALL, true);
+		m_PinballMaster->printText("Play", "board1", 0);
 	}
 	else
 	{
-		m_Pinball->sendMessageToAnotherArduino(ADDRESS_SLAVE, INIT_THEME);
-		m_Pinball->printText("Play", "board2", 0);
+		m_PinballMaster->sendMessageToAnotherArduino(ADDRESS_SLAVE, INIT_THEME);
+		m_PinballMaster->printText("Play", "board2", 0);
 	}
 }
 
@@ -297,14 +331,14 @@ void SelfTest::FinishTest()
 	Debug("SelfTest::FinishTest");
 	#endif
 
-	m_Pinball->clearDisplay();
+	m_PinballMaster->clearDisplay();
 
 	switch (m_MenuTest)
 	{
 		case EVENT_TEST_LED_1BY1:
 		case EVENT_TEST_LED_AUTO:
 		{
-			LedControl *ledControl = m_Pinball->GetLedControl();
+			LedControl *ledControl = m_PinballMaster->GetLedControl();
 			for (int i = 0; i < MAX_LEDS; i++)
 			{
 				ledControl->TurnOff(i);
@@ -320,6 +354,10 @@ void SelfTest::FinishTest()
 bool SelfTest::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("SelfTest::NotifyEvent");
+	#endif
+
 	// -- T I M E R  I S  O V E R --
 	if (event == EVENT_TIMEISOVER)
 	{

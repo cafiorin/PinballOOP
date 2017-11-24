@@ -12,10 +12,10 @@ http://pinballhomemade.blogspot.com.br
 Menu::Menu(const char *szName, PinballMaster *pinball) 
 //-------------------------------------------------------//
 {
-	m_Pinball = pinball;
+	m_PinballMaster = pinball;
 	
 	#ifdef DEBUGMESSAGES
-	m_Pinball->Debug("Menu Constructor");
+	m_PinballMaster->Debug("Menu Constructor");
 	#endif
 
 
@@ -27,7 +27,7 @@ Menu::~Menu()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_Pinball->Debug("Menu Destructor");
+	m_PinballMaster->Debug("Menu Destructor");
 	#endif
 }
 
@@ -36,7 +36,7 @@ bool Menu::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_Pinball->Debug("Menu::Init");
+	m_PinballMaster->Debug("Menu::Init");
 	#endif
 	
 	m_isShowing = false;
@@ -103,13 +103,13 @@ void Menu::PressButtonMenu()
 		//Exit menu
 		if (m_backSelected && m_menuOptionSelected->GetParent() == NULL)
 		{
-			m_Pinball->NotifyEvent(NULL, EVENT_TEST_EXIT_MENU, 0);
+			m_PinballMaster->NotifyEvent(NULL, EVENT_TEST_EXIT_MENU, 0);
 			m_isShowing = false;
 		}
 		//Action
 		else if (m_subOptionSelected->GetAction() != -1 && !m_backSelected)
 		{
-			m_Pinball->NotifyEvent(NULL, m_subOptionSelected->GetAction(), 0);
+			m_PinballMaster->NotifyEvent(NULL, m_subOptionSelected->GetAction(), 0);
 			m_isShowing = false;
 		}
 		else
@@ -152,14 +152,14 @@ void Menu::PrintMenu(ButtonPressed button)
 	if(m_subOption >= children.size() || m_subOption < 0)
 	{
 		m_subOption = (int) children.size();
-		m_Pinball->printText(szLine1, "Voltar", 0);
+		m_PinballMaster->printText(szLine1, "Voltar", 0);
 		m_backSelected = true;
 		return;
 	}
 
 	char *szLine2 = children[m_subOption]->GetString();
 	m_subOptionSelected = children[m_subOption];
-	m_Pinball->printText(szLine1, szLine2, 0);
+	m_PinballMaster->printText(szLine1, szLine2, 0);
 	m_backSelected = false;
 }
 
@@ -168,7 +168,7 @@ bool Menu::PressUpDownButton(bool upButton)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_Pinball->Debug("Menu::PressButton");
+	m_PinballMaster->Debug("Menu::PressButton");
 	#endif
 
 	if (upButton)

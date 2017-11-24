@@ -1,3 +1,10 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* BSD 3-Clause License
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Code by Cassius Fiorin - cafiorin@gmail.com
+http://pinballhomemade.blogspot.com.br
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #ifndef AttractMode__INCLUDED_
 #define AttractMode__INCLUDED_
 
@@ -13,7 +20,6 @@ public:
 	virtual ~AttractMode();
 
 	virtual bool Init();
-	virtual void Loop();
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 	void InitGameOver();

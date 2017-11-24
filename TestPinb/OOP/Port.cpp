@@ -11,7 +11,7 @@ http://pinballhomemade.blogspot.com.br
 Port::Port(Pinball *pinball, const char *szName, int portNumber):PinballObject(szName,pinball)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Port Constructor");
 	#endif
 
@@ -23,7 +23,7 @@ Port::Port(Pinball *pinball, const char *szName, int portNumber):PinballObject(s
 Port::~Port()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Port Destructor");
 	#endif
 }

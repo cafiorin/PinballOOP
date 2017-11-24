@@ -79,7 +79,7 @@ void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 	ht1632_setup();
 	m_serial = serial;
 
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	LogMessage("Pinball Constructor");
 	#endif
 
@@ -114,7 +114,7 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	m_nBallByPlayer = MAX_BALLS;
 	m_enableSfx = true;
 
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	LogMessage("PinballMaster Constructor");
 	#endif
 
@@ -142,7 +142,7 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 PinballMaster::~PinballMaster()
 /*---------------------------------------------------------------------*/
 {
-#ifdef DEBUGMESSAGES
+#ifdef DEBUGMESSAGESCREATION
 	LogMessage("PinballMaster Destructor");
 #endif
 }
@@ -152,7 +152,7 @@ PinballMaster::~PinballMaster()
 void PinballMaster::CreateObjects()
 //---------------------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("PinballMaster::CreateObjects");
 	#endif
 
@@ -253,6 +253,7 @@ bool PinballMaster::Init()
 		{
 			#ifdef DEBUGMESSAGES
 			LogMessage("Pinball Error");
+			delay(500);
 			#endif
 		}
 	}
@@ -436,11 +437,12 @@ bool PinballMaster::PlayfieldEvent(PinballObject *sender, int event, int valueTo
 bool PinballMaster::TimerIsOver(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("PinballMaster::TimerIsOver");
+	#endif
+
 	if (sender == m_TimerToShowPlayers)
 	{
-		#ifdef DEBUGMESSAGES
-		Debug("...Timer is over show players");
-		#endif
 		m_nSecondsTimerToShowPlayers--;
 		ShowChooseNumberOfPlayers();
 		if (m_nSecondsTimerToShowPlayers <= 0)
@@ -600,7 +602,7 @@ bool PinballMaster::Loop(int value)
 	{
 		case StatusPinball::attractmode:
 		{
-			m_AttractMode->Loop();
+			m_LedControl->AttractModeLoop();
 		}
 		break;
 

@@ -87,9 +87,6 @@
     <ClInclude Include="OOP\Multiplex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OOP\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OOP\Stage0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -105,13 +102,13 @@
     <ClInclude Include="OOP\LedControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OOP\DefinesMp3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="OOP\SelfTest.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OOP\SequencerLeds.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\DefinesMp3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -174,9 +171,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\Multiplex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\Stage0.cpp">

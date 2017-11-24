@@ -18,8 +18,7 @@ class Light : public Output
 public:
 	Light(const char *szName, Pinball *pinball, int portNumber, Multiplex *multiplex);
 	virtual ~Light();
-	virtual bool Init();
-	virtual bool Loop(int value);
+	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 	void StartBlink(long value=700);
 	void EndBlink();

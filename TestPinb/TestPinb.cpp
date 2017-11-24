@@ -5,9 +5,8 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
 // TestPinb.cpp : Defines the entry point for the console application.
-//
+// use with #define DOS and comment define ARDUINOLIB
 
 #include "stdafx.h"
 #include "OOP\PinballMaster.h"
@@ -82,7 +81,7 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 	for (; i < NUM_LEDS/2; i++)
 	{
 		char szMsg[30];
-		sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->m_LedControl->IsTurn(i) ? 1 : 0));
+		sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->GetLedControl()->IsTurn(i) ? 1 : 0));
 		ledPrint->printone(szMsg);
 	}
 
@@ -93,7 +92,7 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 	for (; i < NUM_LEDS; i++)
 	{
 		char szMsg[30];
-		sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->m_LedControl->IsTurn(i)?1:0));
+		sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->GetLedControl()->IsTurn(i)?1:0));
 		ledPrint->printone(szMsg);
 	}
 }
@@ -134,7 +133,7 @@ int main()
 
 	for (int i = 0; i < NUM_LEDS; i++)
 	{
-		Leds[i] = pPinballMaster->m_LedControl->IsTurn(i);
+		Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
 	}
 
 	PrintReadKey();
@@ -165,9 +164,9 @@ int main()
 			bool someChange = false;
 			for (int i = 0; i < NUM_LEDS; i++)
 			{
-				if (Leds[i] != pPinballMaster->m_LedControl->IsTurn(i))
+				if (Leds[i] != pPinballMaster->GetLedControl()->IsTurn(i))
 				{
-					Leds[i] = pPinballMaster->m_LedControl->IsTurn(i);
+					Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
 					someChange = true;
 				}
 			}

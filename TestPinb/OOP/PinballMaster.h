@@ -50,8 +50,6 @@ public:
 	Output *m_TurnFlipperOn;
 	KickoutHole *m_Hole;
 
-	Multiplex *m_Multiplex;
-	LedControl *m_LedControl;
 	LedControl *GetLedControl() {return m_LedControl;}
 	Multiplex *GetMultiplex() { return m_Multiplex; }
 
@@ -96,6 +94,11 @@ private :
 	bool SetupTest(int event);
 	int m_nBallByPlayer;
 	void SetBallsByPlayer(int balls) { m_nBallByPlayer = balls; }
+
+protected:
+	Multiplex *m_Multiplex;
+	LedControl *m_LedControl;
+
 };
 
 #endif

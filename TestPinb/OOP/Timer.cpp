@@ -12,7 +12,7 @@ http://pinballhomemade.blogspot.com.br
 Timer::Timer(long time, const char *szName, Pinball *pinball, PinballObject *parent, TimerType type) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Timer Constructor");
 	#endif
 
@@ -26,7 +26,7 @@ Timer::Timer(long time, const char *szName, Pinball *pinball, PinballObject *par
 Timer::~Timer()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Timer Destructor");
 	#endif
 }

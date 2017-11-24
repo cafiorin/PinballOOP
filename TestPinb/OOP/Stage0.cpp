@@ -1,3 +1,10 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* BSD 3-Clause License
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Code by Cassius Fiorin - cafiorin@gmail.com
+http://pinballhomemade.blogspot.com.br
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #include "defines.h"
 #include "Stage0.h"
 #include "Player.h"
@@ -10,6 +17,10 @@
 Stage0::Stage0(PinballMaster *pinball,int number):StageBase(pinball,number)
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("Stage0 Constructor");
+	#endif
+
 	m_LedsStage = new SequencerLeds(pinball, SequencerType::turnOn1by1, 300);
 	m_LedsStage->AddLed(LED_STAGE11, true);
 	m_LedsStage->AddLed(LED_STAGE12);
@@ -38,29 +49,12 @@ Stage0::Stage0(PinballMaster *pinball,int number):StageBase(pinball,number)
 Stage0::~Stage0()
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("Stage0 Destructor");
+	#endif
+
 	delete m_LedsStage;
 	delete m_LedsTarget;
-}
-
-//-----------------------------------------------------------
-bool Stage0::Init()
-//-----------------------------------------------------------
-{
-	#ifdef DEBUGMESSAGES
-	Debug("Stage0::Init");
-	#endif
-
-	return true;
-}
-
-//-----------------------------------------------------------
-bool Stage0::Loop(int value)
-//-----------------------------------------------------------
-{
-	#ifdef DEBUGMESSAGESLOOP
-	LogMessage("Stage0::Loop");
-	#endif
-	return false;
 }
 
 //-----------------------------------------------------------

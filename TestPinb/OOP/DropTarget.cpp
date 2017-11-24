@@ -18,9 +18,9 @@ DropTarget::DropTarget(const char *szName, Pinball *pinball,
 						Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("DropTarget Constructor");
-#endif
+	#endif
 
 	m_sizeInputs = 3;
 	m_input[0] = new Input("DT31In", pinball, portNumberInput1,this);
@@ -43,9 +43,9 @@ DropTarget::DropTarget(const char *szName, Pinball *pinball,
 	Multiplex *multiplex) : PinballObject(szName, pinball)
 	//-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("DropTarget Constructor");
-#endif
+	#endif
 
 	m_sizeInputs = 5;
 	m_input[0] = new Input("DT51In", pinball, portNumberInput1, this);
@@ -64,9 +64,9 @@ DropTarget::DropTarget(const char *szName, Pinball *pinball,
 DropTarget::~DropTarget()
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("DropTarget Destructor");
-#endif
+	#endif
 
 	for (int i = 0; i < m_sizeInputs; i++)
 	{
@@ -128,9 +128,9 @@ bool DropTarget::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 void DropTarget::Reset()
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	Debug("DropTarget::Reset");
-#endif
+	#endif
 
 	m_AllTargets = false;
 	m_output->TurnOnByTimer(TIME_COIL_ON);

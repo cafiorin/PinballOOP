@@ -1,3 +1,10 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* BSD 3-Clause License
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Code by Cassius Fiorin - cafiorin@gmail.com
+http://pinballhomemade.blogspot.com.br
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #ifndef LedControl__INCLUDED_
 #define LedControl__INCLUDED_
 
@@ -18,11 +25,12 @@ public:
 	virtual ~LedControl();
 
 	virtual bool Init();
-	virtual void Loop();
 
 	void TurnOn(int Led);
 	void TurnOff(int Led);
 	bool IsTurn(int Led) { return m_ledsValue[Led]; }
+	void AttractModeLoop();
+
 	#ifdef ARDUINOLIB
 	CRGBArray<NUM_LEDS> m_leds;
 	#endif

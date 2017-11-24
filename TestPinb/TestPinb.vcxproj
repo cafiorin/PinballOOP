@@ -150,7 +150,6 @@
     <ClInclude Include="OOP\defines.h" />
     <ClInclude Include="OOP\DefinesMp3.h" />
     <ClInclude Include="OOP\DropTarget.h" />
-    <ClInclude Include="OOP\Game.h" />
     <ClInclude Include="OOP\HardwareSerial.h" />
     <ClInclude Include="OOP\ht1632pinball.h" />
     <ClInclude Include="OOP\Input.h" />
@@ -182,7 +181,6 @@
     <ClCompile Include="OOP\AttractMode.cpp" />
     <ClCompile Include="OOP\Bumper.cpp" />
     <ClCompile Include="OOP\DropTarget.cpp" />
-    <ClCompile Include="OOP\Game.cpp" />
     <ClCompile Include="OOP\HardwareSerial.cpp" />
     <ClCompile Include="OOP\Input.cpp" />
     <ClCompile Include="OOP\KickoutHole.cpp" />

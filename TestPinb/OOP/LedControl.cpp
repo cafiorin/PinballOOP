@@ -19,6 +19,10 @@ http://pinballhomemade.blogspot.com.br
 LedControl::LedControl(PinballMaster *pinball):PinballObject("LedControl",pinball)
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("LedControl Constructor");
+	#endif
+
 	#ifdef ARDUINOLIB
 	FastLED.addLeds<WS2812B, DATA_STRIP_LED, GRB>(m_leds, NUM_LEDS);
 	#endif // ARDUINOLIB
@@ -33,6 +37,10 @@ LedControl::LedControl(PinballMaster *pinball):PinballObject("LedControl",pinbal
 LedControl::~LedControl()
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("LedControl Destructor");
+	#endif
+
 }
 
 
@@ -86,13 +94,12 @@ void LedControl::TurnOff(int Led)
 }
 
 //-----------------------------------------------------------
-void LedControl::Loop()
+void LedControl::AttractModeLoop()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESLOOP
-	Debug("LedControl::Loop");
+	Debug("LedControl::AttractModeLoop");
 	#endif
-
 
 	#ifdef ARDUINOLIB
 	static uint8_t hue;
@@ -109,6 +116,4 @@ void LedControl::Loop()
 		FastLED.delay(33);
 	}
 	#endif
-
 }
-

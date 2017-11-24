@@ -1,3 +1,10 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* BSD 3-Clause License
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Code by Cassius Fiorin - cafiorin@gmail.com
+http://pinballhomemade.blogspot.com.br
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #ifndef DefinesMp3_h
 #define DefinesMp3_h
 
@@ -38,5 +45,9 @@
 #define MP3_GOD "god.mp3"
 #define MP3_DOG "whold.mp3"
 #define MP3_YAHOO "yahoo2.mp3"
+
+#define MP3_MENUBUTTON "b1.mp3"
+#define MP3_UPBUTTON "b2.mp3"
+#define MP3_DOWNBUTTON "b3.mp3"
 
 #endif

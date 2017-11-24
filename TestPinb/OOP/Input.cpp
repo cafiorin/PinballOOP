@@ -12,7 +12,7 @@ http://pinballhomemade.blogspot.com.br
 Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject *pinballObject):Port(pinball,szName,portNumber)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Input Constructor");
 	#endif
 
@@ -23,29 +23,15 @@ Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject
 	m_pinballObjectParent = pinballObject;
 
 	m_pinball->AddPinballInput(this);
-	//Init();
 }
 
 //-------------------------------------------------------//
 Input::~Input()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Input Destructor");
 	#endif
-}
-
-//-------------------------------------------------------//
-bool Input::Init()
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	Debug("Input::Init");
-	#endif
-
-	m_debounceCount = 0;
-
-	return true;
 }
 
 //-------------------------------------------------------//

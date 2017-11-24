@@ -21,9 +21,6 @@ public:
 
 	bool GetInput();
 	void SetDebounceRead(int debounce){m_debounceRead = debounce;}
-
-	virtual bool Init();
-
 	bool SetInput(bool value);
 
 private:

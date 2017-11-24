@@ -15,6 +15,10 @@ int Player::m_indexPlayerCurrent = 0;
 Player::Player(PinballMaster *pinball):PinballObject("Player",pinball)
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGESCREATION
+	LogMessage("Player Constructor");
+	#endif
+
 	m_PinballMaster = pinball;
 	m_Stage = NULL;
 	m_Status = StatusPlayer::waiting;
@@ -24,6 +28,9 @@ Player::Player(PinballMaster *pinball):PinballObject("Player",pinball)
 Player::~Player()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGESCREATION
+	LogMessage("Player Destructor");
+	#endif
 }
 
 
@@ -49,6 +56,10 @@ bool Player::Init()
 void Player::SetNextStage()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Player::SetNextStage");
+	#endif
+
 	this->m_Stage = m_PinballMaster->GetStage(0);
 	this->m_Stage->SetCurrentPlayer(this);
 }
@@ -102,6 +113,10 @@ bool Player::SetCurrentPlayer(int indexPlayer)
 void Player::LostBall()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Player::LostBall");
+	#endif
+
 	m_Status = StatusPlayer::waiting;
 	m_nBalls--;
 	if (m_nBalls <= 0)
@@ -132,6 +147,10 @@ void Player::DisplayScore()
 bool Player::SetNextMultiply()
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Player::SetNextMultiply");
+	#endif
+
 	if (m_Multiply < MAX_MULTIPLY)
 	{
 		m_Multiply++;
@@ -144,6 +163,10 @@ bool Player::SetNextMultiply()
 bool Player::SetExtraBall()
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Player::SetExtraBall");
+	#endif
+
 	if (!m_ExtraBall)
 	{
 		m_ExtraBall = true;

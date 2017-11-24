@@ -12,9 +12,10 @@ http://pinballhomemade.blogspot.com.br
 #define DOS
 //#define ARDUINOLIB
 
-//#define DEBUGMESSAGES
+// To DEBUGMESSAGES
+#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
-
+//#define DEBUGMESSAGESCREATION
 //-----------------------
 
 #define ADDRESS_MASTER 4

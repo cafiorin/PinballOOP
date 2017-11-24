@@ -17,6 +17,8 @@ http://pinballhomemade.blogspot.com.br
 #include "SlingShot.h"
 #include "Bumper.h"
 #include "KickoutHole.h"
+#include "ReturnKickBall.h"
+#include "AccumulatorBall.h"
 #include "DropTarget.h"
 #include "OutBall.h"
 #include "Menu.h"
@@ -213,6 +215,9 @@ void PinballMaster::CreateObjects()
 	Input *pInputRampIn = new Input("RampIn", this, INPUT_SW_RAMP_IN, this);
 	Input *pInputRampOut1 = new Input("RampO1", this, INPUT_SW_RAMP_OUT1, this);
 	Input *pInputRampOut2 = new Input("RampO2", this, INPUT_SW_RAMP_OUT2, this);
+
+	ReturnKickBall *returnKB = new ReturnKickBall("RKB", this, INPUT_SW_RETURNBALL_LEFT, OUTPUT_RETURNBALL_48V, m_Multiplex);
+	AccumulatorBall *accBall = new AccumulatorBall("RKB", this, INPUT_SW_ACCBALL1, INPUT_SW_ACCBALL2, INPUT_SW_ACCBALL3, INPUT_SW_ACCBALL4, OUTPUT_ACCBALL_48V, m_Multiplex);
 
 	CreateStages();
 
@@ -547,9 +552,29 @@ void PinballMaster::NextPlayer()
 	if (m_playerPlaying >= m_nPlayers)
 		m_playerPlaying = 0;
 
-	if (m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying))
+	bool isAnyPlayerWaiting = false;
+	int player = m_playerPlaying;
+	do
 	{
-		m_TurnFlipperOn->TurnOn();
+		player++;
+	
+		if (player >= m_nPlayers)
+			player = 0;
+
+		if (m_Players[player]->GetStatus() == StatusPlayer::waiting)
+		{
+			isAnyPlayerWaiting = true;
+			m_playerPlaying = player;
+			break;
+		}
+	} while(player == m_playerPlaying);
+
+	if (isAnyPlayerWaiting)
+	{
+		if (m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying))
+		{
+			m_TurnFlipperOn->TurnOn();
+		}
 	}
 	else
 	{

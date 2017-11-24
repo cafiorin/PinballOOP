@@ -111,6 +111,12 @@
     <ClInclude Include="OOP\SequencerLeds.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OOP\ReturnKickBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OOP\AccumulatorBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -192,6 +198,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\SequencerLeds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\ReturnKickBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\AccumulatorBall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

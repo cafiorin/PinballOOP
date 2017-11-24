@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OOP\AccumulatorBall.h" />
     <ClInclude Include="OOP\AttractMode.h" />
     <ClInclude Include="OOP\Bumper.h" />
     <ClInclude Include="OOP\defines.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="OOP\PinballSlave.h" />
     <ClInclude Include="OOP\Player.h" />
     <ClInclude Include="OOP\Port.h" />
+    <ClInclude Include="OOP\ReturnKickBall.h" />
     <ClInclude Include="OOP\SelfTest.h" />
     <ClInclude Include="OOP\SequencerLeds.h" />
     <ClInclude Include="OOP\SlingShot.h" />
@@ -178,6 +180,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="OOP\AccumulatorBall.cpp" />
     <ClCompile Include="OOP\AttractMode.cpp" />
     <ClCompile Include="OOP\Bumper.cpp" />
     <ClCompile Include="OOP\DropTarget.cpp" />
@@ -196,6 +199,7 @@
     <ClCompile Include="OOP\PinballSlave.cpp" />
     <ClCompile Include="OOP\Player.cpp" />
     <ClCompile Include="OOP\Port.cpp" />
+    <ClCompile Include="OOP\ReturnKickBall.cpp" />
     <ClCompile Include="OOP\SelfTest.cpp" />
     <ClCompile Include="OOP\SequencerLeds.cpp" />
     <ClCompile Include="OOP\SlingShot.cpp" />

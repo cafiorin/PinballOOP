@@ -13,6 +13,7 @@ http://pinballhomemade.blogspot.com.br
 
 class PinballMaster;
 class Player;
+class SequencerLeds;
 
 class StageBase : public PinballObject
 {
@@ -33,6 +34,7 @@ protected:
 	PinballMaster *m_PinballMaster;
 	int m_number;
 	Player *m_currentPlayer;
+	SequencerLeds *m_LedsLoop;
 };
 
 #endif

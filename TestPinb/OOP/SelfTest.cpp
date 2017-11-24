@@ -312,7 +312,7 @@ void SelfTest::DoPlaySound(bool board)
 
 	if (board)
 	{
-		m_PinballMaster->playSong(MP3_EXTRABALL, true);
+		m_PinballMaster->playSong(MP3_TESTSOUND);
 		m_PinballMaster->printText("Play", "board1", 0);
 	}
 	else

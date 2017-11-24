@@ -14,6 +14,8 @@ http://pinballhomemade.blogspot.com.br
 #define MP3_EXTRAPOINT "yahoo.mp3"
 #define MP3_THEME "theme.mp3"
 #define MP3_THEME00 "theme00.mp3"
+#define MP3_TESTSOUND "yahoo.mp3"
+
 
 #define MP3_HAHAHA1 "hahaha.mp3"
 #define MP3_HAHAHA2 "hahaha2.mp3"

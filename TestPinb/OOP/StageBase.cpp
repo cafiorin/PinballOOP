@@ -7,6 +7,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "StageBase.h"
 #include "PinballMaster.h"
+#include "SequencerLeds.h"
 #include "Player.h"
 #include "DefinesMp3.h"
 
@@ -21,6 +22,14 @@ StageBase::StageBase(PinballMaster *pinball, int number) : PinballObject("STAGE"
 	m_PinballMaster = pinball;
 	m_number = number;
 	m_currentPlayer = NULL;
+
+	// Loop Leds
+	m_LedsLoop = new SequencerLeds(pinball, SequencerType::turnOn1by1, 300);
+	m_LedsLoop->AddLed(LED_LOOP_B1);
+	m_LedsLoop->AddLed(LED_LOOP_B2);
+	m_LedsLoop->AddLed(LED_LOOP_A1, true);
+	m_LedsLoop->AddLed(LED_LOOP_A2);
+
 }
 
 //---------------------------------------------------
@@ -30,6 +39,8 @@ StageBase::~StageBase()
 	#ifdef DEBUGMESSAGESCREATION
 	Debug("StageBase Destructor");
 	#endif
+
+	delete m_LedsLoop;
 }
 
 //---------------------------------------------------
@@ -51,6 +62,8 @@ void StageBase::RestartPlayer()
 	#ifdef DEBUGMESSAGES
 	Debug("StageBase::RestartPlayer");
 	#endif
+	
+	m_LedsLoop->Start();
 
 	LedControl *pLedControl = m_PinballMaster->GetLedControl();
 	if (pLedControl != NULL)
@@ -84,19 +97,16 @@ int StageBase::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 		case INPUT_SW_ROLLOVER_CENTER:
 			pLedControl->TurnOn(LED_ROLLOVER_CENTER);
 			allRollovers = CheckRolloversMultiply();
-			m_PinballMaster->playSong(MP3_ROLLOVER_CENTER);
 			break;
 
 		case INPUT_SW_ROLLOVER_LEFT:
 			pLedControl->TurnOn(LED_ROLLOVER_LEFT);
 			allRollovers = CheckRolloversMultiply();
-			m_PinballMaster->playSong(MP3_ROLLOVER_LEFT);
 			break;
 
 		case INPUT_SW_ROLLOVER_RIGHT:
 			pLedControl->TurnOn(LED_ROLLOVER_RIGHT);
 			allRollovers = CheckRolloversMultiply();
-			m_PinballMaster->playSong(MP3_ROLLOVER_RIGHT);
 			break;
 		}
 

@@ -39,10 +39,10 @@ Stage0::Stage0(PinballMaster *pinball,int number):StageBase(pinball,number)
 
 	// Target
 	m_LedsTarget = new SequencerLeds(pinball, SequencerType::turnOn1by1, 300);
-	m_LedsTarget->AddLed(LED_HOLE_CIRCLE1);
-	m_LedsTarget->AddLed(LED_HOLE_CIRCLE2);
-	m_LedsTarget->AddLed(LED_HOLE_ARROW11,true);
-	m_LedsTarget->AddLed(LED_HOLE_ARROW12);
+	m_LedsTarget->AddLed(LED_HOLE_B1);
+	m_LedsTarget->AddLed(LED_HOLE_B2);
+	m_LedsTarget->AddLed(LED_HOLE_A1,true);
+	m_LedsTarget->AddLed(LED_HOLE_A2);
 }
 
 //-----------------------------------------------------------
@@ -73,7 +73,6 @@ int Stage0::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 		{
 			score += SCORE_TARGET_STAGE;
 			Finished();
-
 		}
 		else
 		{
@@ -91,7 +90,6 @@ void Stage0::RestartPlayer()
 	#ifdef DEBUGMESSAGES
 	LogMessage("Stage0::RestartPlayer");
 	#endif
-
 
 	StageBase::RestartPlayer();
 	m_LedsStage->Start();

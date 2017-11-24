@@ -90,6 +90,11 @@ bool Player::SetCurrentPlayer(int indexPlayer)
 	LogMessage("Player::SetCurrentPlayer");
 	#endif
 
+	if (this->m_nBalls <= 0 || m_Status == StatusPlayer::gameover)
+	{
+		return false;
+	}
+
 	if (m_Status == StatusPlayer::waiting)
 	{
 		Player::m_indexPlayerCurrent = indexPlayer;

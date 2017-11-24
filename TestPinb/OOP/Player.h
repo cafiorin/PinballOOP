@@ -44,6 +44,8 @@ public:
 
 	void SetNextStage();
 
+	StatusPlayer GetStatus(){ return m_Status; }
+
 protected:
 	int m_nBalls;
 	int m_Score;

@@ -60,6 +60,7 @@ public:
 	virtual bool Init();
 	virtual bool Loop(int value);
 	virtual void DataReceived(char c);
+	virtual void PlaySongToInput(int portNumber);
 
 	#ifdef ARDUINOLIB
 	PinballMaster *m_PinballMaster;

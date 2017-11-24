@@ -24,6 +24,7 @@ http://pinballhomemade.blogspot.com.br
 #include "SelfTest.h"
 #include "Stage0.h"
 #include "Player.h"
+#include "DefinesMp3.h"
 
 #ifdef ARDUINOLIB
 #include <Wire.h>
@@ -680,11 +681,209 @@ void PinballMaster::printText(char *text1, char *text2, char font)
 	#endif
 }
 
-/*---------------------------------------------------------------------*/
+//---------------------------------------------------------------------//
 void PinballMaster::DataReceived(char c)
-/*---------------------------------------------------------------------*/
+//---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage("PinballMaster::DataReceived");
 	#endif
 }
+
+//---------------------------------------------------------------------//
+void PinballMaster::PlaySongToInput(int portNumber)
+//---------------------------------------------------------------------//
+{
+	if(m_Status == StatusPinball::playingmode)
+	{
+		switch (portNumber)
+		{
+		case INPUT_SW_OUTBALL1:
+			playSong(MP3_OUTBALL);
+			break;
+		//case INPUT_SW_OUTBALL2:
+
+		case INPUT_SW_SLINGSHOT_LEFT1:
+		case INPUT_SW_SLINGSHOT_LEFT2:
+			playSong(MP3_SLINGSHOT_LEFT);
+			break;
+
+		case INPUT_SW_SLINGSHOT_RIGHT1:
+		case INPUT_SW_SLINGSHOT_RIGHT2:
+			playSong(MP3_SLINGSHOT_RIGHT);
+			break;
+
+		case INPUT_SW_BUMPER_CENTER:
+			playSong(MP3_BUMPER_CENTER);
+			break;
+
+		case INPUT_SW_BUMPER_LEFT:
+			playSong(MP3_BUMPER_LEFT);
+			break;
+
+		case INPUT_SW_BUMPER_RIGHT:
+			playSong(MP3_BUMPER_RIGHT);
+			break;
+
+		case INPUT_SW_LAUNCHBALL:
+			playSong(MP3_LAUNCHBALL);
+			break;
+
+		case INPUT_SW_OUTLANE_LEFT:
+			playSong(MP3_OUTLANE_LEFT);
+			break;
+
+		case INPUT_SW_OUTLANE_RIGHT:
+			playSong(MP3_OUTLANE_RIGHT);
+			break;
+
+		case INPUT_SW_RETURNBALL_LEFT:
+			playSong(MP3_RETURNBALL_LEFT);
+			break;
+
+		case INPUT_SW_RETURNBALL_RIGHT:
+			playSong(MP3_RETURNBALL_RIGHT);
+			break;
+
+		case INPUT_SW_TARGET_RED1:
+			playSong(MP3_TARGET_RED1);
+			break;
+
+		case INPUT_SW_TARGET_GREEN1:
+			playSong(MP3_TARGET_GREEN1);
+			break;
+
+		case INPUT_SW_TARGET_YELLOW1:
+			playSong(MP3_TARGET_YELLOW1);
+			break;
+
+		case INPUT_SW_TARGET_RED2:
+			playSong(MP3_TARGET_RED2);
+			break;
+
+		case INPUT_SW_TARGET_GREEN2:
+			playSong(MP3_TARGET_GREEN2);
+			break;
+
+		case INPUT_SW_TARGET_YELLOW2:
+			playSong(MP3_TARGET_YELLOW2);
+			break;
+
+		case INPUT_SW_DROPTARGET_51:
+			playSong(MP3_DROPTARGET_51);
+			break;
+
+		case INPUT_SW_DROPTARGET_52:
+			playSong(MP3_DROPTARGET_52);
+			break;
+
+		case INPUT_SW_DROPTARGET_53:
+			playSong(MP3_DROPTARGET_53);
+			break;
+
+		case INPUT_SW_DROPTARGET_54:
+			playSong(MP3_DROPTARGET_54);
+			break;
+
+		case INPUT_SW_DROPTARGET_55:
+			playSong(MP3_DROPTARGET_55);
+			break;
+
+		case INPUT_SW_DROPTARGET_31:
+			playSong(MP3_DROPTARGET_31);
+			break;
+
+		case INPUT_SW_DROPTARGET_32:
+			playSong(MP3_DROPTARGET_32);
+			break;
+
+		case INPUT_SW_DROPTARGET_33:
+			playSong(MP3_DROPTARGET_33);
+			break;
+
+		case INPUT_SW_ROLLOVER_STAR_GREEN:
+			playSong(MP3_ROLLOVER_STAR_GREEN);
+			break;
+
+		case INPUT_SW_ROLLOVER_STAR_RED1:
+			playSong(MP3_ROLLOVER_STAR_RED1);
+			break;
+
+		case INPUT_SW_ROLLOVER_STAR_RED2:
+			playSong(MP3_ROLLOVER_STAR_RED2);
+			break;
+
+		case INPUT_SW_ROLLOVER_LEFT:
+			playSong(MP3_ROLLOVER_LEFT);
+			break;
+
+		case INPUT_SW_ROLLOVER_CENTER:
+			playSong(MP3_ROLLOVER_CENTER);
+			break;
+
+		case INPUT_SW_ROLLOVER_RIGHT:
+			playSong(MP3_ROLLOVER_RIGHT);
+			break;
+
+		case INPUT_SW_TARGET_HIGHER:
+			playSong(MP3_TARGET_HIGHER);
+			break;
+
+		case INPUT_SW_RAMP_IN:
+			playSong(MP3_RAMP_IN);
+			break;
+
+		case INPUT_SW_RAMP_OUT1:
+			playSong(MP3_RAMP_OUT1);
+			break;
+
+		case INPUT_SW_RAMP_OUT2:
+			playSong(MP3_RAMP_OUT2);
+			break;
+
+		case INPUT_SW_SPINNER:
+			playSong(MP3_SPINNER);
+			break;
+
+		case INPUT_SW_HOLE:
+			playSong(MP3_HOLE);
+			break;
+
+		case INPUT_SW_ACCBALL1:
+			playSong(MP3_ACCBALL1);
+			break;
+
+		case INPUT_SW_ACCBALL2:
+			playSong(MP3_ACCBALL2);
+			break;
+
+		case INPUT_SW_ACCBALL3:
+			playSong(MP3_ACCBALL3);
+			break;
+
+		case INPUT_SW_ACCBALL4:
+			playSong(MP3_ACCBALL4);
+			break;
+
+		default:
+			playSong(MP3_STARTBUTTONPORT);
+			break;
+		}
+	}
+	else
+	{
+		switch (portNumber)
+		{
+		case INPUT_MENU_BUTTON:
+			playSong(MP3_MENU_BUTTON);
+			break;
+		case INPUT_UP_BUTTON:
+			playSong(MP3_UP_BUTTON);
+			break;
+		case INPUT_DOWN_BUTTON:
+			playSong(MP3_DOWN_BUTTON);
+			break;
+		}
+	}
+}
+

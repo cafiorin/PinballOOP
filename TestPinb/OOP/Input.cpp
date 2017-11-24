@@ -64,6 +64,7 @@ void Input::CheckDebounce()
 			#endif
 
 			m_pinballObjectParent->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
+			m_pinball->PlaySongToInput(this->m_portNumber);
 		}
 		else
 		{

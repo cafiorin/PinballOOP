@@ -9,6 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #include "SlingShot.h"
 #include "Pinball.h"
 #include "PinballObject.h"
+#include "DefinesMp3.h"
 
 //-------------------------------------------------------//
 SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput, Multiplex *multiplex) : PinballObject(szName, pinball)

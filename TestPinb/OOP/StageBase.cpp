@@ -8,6 +8,7 @@ http://pinballhomemade.blogspot.com.br
 #include "StageBase.h"
 #include "PinballMaster.h"
 #include "Player.h"
+#include "DefinesMp3.h"
 
 //---------------------------------------------------
 StageBase::StageBase(PinballMaster *pinball, int number) : PinballObject("STAGE",pinball)
@@ -76,28 +77,34 @@ int StageBase::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 	}
 	else if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
 	{
-		bool allTargets = false;
+		bool allRollovers = false;
 		LedControl *pLedControl = m_PinballMaster->GetLedControl();
 		switch (valueToSend)
 		{
 		case INPUT_SW_ROLLOVER_CENTER:
 			pLedControl->TurnOn(LED_ROLLOVER_CENTER);
-			allTargets = CheckRolloversMultiply();
+			allRollovers = CheckRolloversMultiply();
+			m_PinballMaster->playSong(MP3_ROLLOVER_CENTER);
 			break;
 
 		case INPUT_SW_ROLLOVER_LEFT:
 			pLedControl->TurnOn(LED_ROLLOVER_LEFT);
-			allTargets = CheckRolloversMultiply();
+			allRollovers = CheckRolloversMultiply();
+			m_PinballMaster->playSong(MP3_ROLLOVER_LEFT);
 			break;
 
 		case INPUT_SW_ROLLOVER_RIGHT:
 			pLedControl->TurnOn(LED_ROLLOVER_RIGHT);
-			allTargets = CheckRolloversMultiply();
+			allRollovers = CheckRolloversMultiply();
+			m_PinballMaster->playSong(MP3_ROLLOVER_RIGHT);
 			break;
 		}
 
-		if(allTargets)
+		if (allRollovers)
+		{
+			m_PinballMaster->playSong(MP3_ALL_ROLLOVERS);
 			return SCORE_ALL_TARGETS;
+		}
 	}
 	return 0;
 }

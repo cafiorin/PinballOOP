@@ -60,7 +60,7 @@ public:
 	void sendMessageToAnotherArduino(int address, char msg);
 	char receiveMessageFromAnotherArduino(int howMany);
 	virtual void DataReceived(char c) {};
-
+	virtual void PlaySongToInput(int portNumber) {}
 	Input *GetInput(int channel) { return m_Inputs[channel]; }
 	Output *GetOutput(int channel) { return m_Outputs[channel]; }
 

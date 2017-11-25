@@ -5,14 +5,14 @@
 #include <SdFat.h>
 #include <SdFatUtil.h>
 #include <SFEMP3Shield.h>
-#include <PinballSR2.h>
+#include <PinballSlave.h>
 #include <ctype.h>
 #include <Wire.h>
 
 SdFat sd;
 SdFile myFile;
 SFEMP3Shield MP3player;
-PinballSR2 m_pinball;
+PinballSlave m_pinball;
 
 void setup()  
 {
@@ -51,6 +51,6 @@ void loop()
 		  MP3player.available();
 	#endif
   
-  m_pinball.loop();
+  m_pinball.Loop(0);
 }
 

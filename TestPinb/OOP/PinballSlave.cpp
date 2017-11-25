@@ -12,6 +12,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Vector.h"
 #include "Utils.h"
 #include "Input.h"
+#include "DefinesMp3.h"
 
 #ifdef DOS
 #include "PinballMaster.h"
@@ -59,6 +60,8 @@ void PinballSlave::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 {
 	m_serial = serial;
 	m_MP3player = MP3player;
+	playSong(MP3_STARTBUTTONPORT);
+	Init();
 }
 
 #endif
@@ -70,7 +73,7 @@ PinballSlave::PinballSlave(const char *szName, HardwareSerial *serial) : Pinball
 {
 	m_PinballMaster = NULL;
 	m_Status = StatusPinball::initializing;
-	
+
 	#ifdef DEBUGMESSAGES
 	LogMessage("PinballSlave Constructor");
 	#endif
@@ -93,7 +96,7 @@ bool PinballSlave::Init()
 	#ifdef DEBUGMESSAGES
 	LogMessage("PinballSlave Init");
 	#endif
-	
+
 	m_Status = StatusPinball::waitingmessages;
 	return true;
 }
@@ -123,7 +126,7 @@ void PinballSlave::DataReceived(char c)
 	{
 		case INIT_THEME:
 		{
-			playSong("Theme.mp3"); //TODO:
+			playSong(MP3_THEME); //TODO:
 		}
 		break;
 	}

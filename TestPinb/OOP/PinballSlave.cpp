@@ -73,13 +73,8 @@ PinballSlave::PinballSlave(const char *szName, HardwareSerial *serial) : Pinball
 {
 	m_PinballMaster = NULL;
 	m_Status = StatusPinball::initializing;
-<<<<<<< HEAD
 
-	#ifdef DEBUGMESSAGES
-=======
-	
 	#ifdef DEBUGMESSAGESCREATION
->>>>>>> 100661e6dee3b3d54eb7cb80f222eb79a8c56a8b
 	LogMessage("PinballSlave Constructor");
 	#endif
 }

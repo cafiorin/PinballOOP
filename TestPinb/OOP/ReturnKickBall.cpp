@@ -5,50 +5,48 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "Bumper.h"
-#include "PinballObject.h"
+#include "ReturnKickBall.h"
 #include "Pinball.h"
+#include "PinballObject.h"
 
 //-------------------------------------------------------//
-Bumper::Bumper(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
+ReturnKickBall::ReturnKickBall(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Bumper Constructor");
+	Debug("ReturnKickBall Constructor");
 	#endif
 
-	m_input = new Input("BperIn", pinball, portNumberInput,this);
-	m_output = new Output("BperOut", pinball, portNumberOutput, multiplex);
+	m_input1 = new Input("ReIn", pinball, portNumberInput,this);
+	m_output = new Output("ReOut", pinball, portNumberOutput,multiplex);
 
 	Init();
 }
 
 //-------------------------------------------------------//
-Bumper::~Bumper()
+ReturnKickBall::~ReturnKickBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Bumper Destructor");
+	Debug("ReturnKickBall Destructor");
 	#endif
-
-	delete m_input;
+	
+	delete m_input1;
 	delete m_output;
 }
 
 //-------------------------------------------------------//
-bool Bumper::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool ReturnKickBall::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Bumper::NotifyEvent");
+	Debug("ReturnKickBall::NotifyEvent");
 	#endif
 
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
-		m_pinball->NotifyEvent(this, event, valueToSend);
 		return true;
 	}
 	return false;
 }
-

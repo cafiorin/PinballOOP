@@ -17,6 +17,8 @@ http://pinballhomemade.blogspot.com.br
 #include "SlingShot.h"
 #include "Bumper.h"
 #include "KickoutHole.h"
+#include "ReturnKickBall.h"
+#include "AccumulatorBall.h"
 #include "DropTarget.h"
 #include "OutBall.h"
 #include "Menu.h"
@@ -24,6 +26,7 @@ http://pinballhomemade.blogspot.com.br
 #include "SelfTest.h"
 #include "Stage0.h"
 #include "Player.h"
+#include "DefinesMp3.h"
 
 #ifdef ARDUINOLIB
 #include <Wire.h>
@@ -57,6 +60,8 @@ PinballMaster::PinballMaster()
 /*---------------------------------------------------------------------*/
 {
 	m_Status = StatusPinball::initializing;
+	m_nBallByPlayer = MAX_BALLS;
+	m_enableSfx = true;
 	m_PinballMaster = this;
 	SetupWireToMaster();
 
@@ -77,7 +82,7 @@ void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 	ht1632_setup();
 	m_serial = serial;
 
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	LogMessage("Pinball Constructor");
 	#endif
 
@@ -109,8 +114,10 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 /*---------------------------------------------------------------------*/
 {
 	m_Status = StatusPinball::initializing;
+	m_nBallByPlayer = MAX_BALLS;
+	m_enableSfx = true;
 
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	LogMessage("PinballMaster Constructor");
 	#endif
 
@@ -134,19 +141,27 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 
 #endif
 
+/*---------------------------------------------------------------------*/
+PinballMaster::~PinballMaster()
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGESCREATION
+	LogMessage("PinballMaster Destructor");
+#endif
+}
+
 //---------------------------------------------------------------------//
 //Create all objects to Arduino Master
 void PinballMaster::CreateObjects()
 //---------------------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("PinballMaster::CreateObjects");
 	#endif
 
 	printText("Pinball", "init", 0);
 
-	m_LedControl = new LedControl(5, this); //TODO: 5 ?
-	m_AttractMode = new AttractMode(this);
+	m_LedControl = new LedControl(this);
 	m_Menu = new Menu("Menu", this);
 	m_SelfTest = new SelfTest(this);
 	m_TimerToShowPlayers = new Timer(1000, "TimerSP", this, this, TimerType::continuous);
@@ -201,7 +216,13 @@ void PinballMaster::CreateObjects()
 	Input *pInputRampOut1 = new Input("RampO1", this, INPUT_SW_RAMP_OUT1, this);
 	Input *pInputRampOut2 = new Input("RampO2", this, INPUT_SW_RAMP_OUT2, this);
 
+	ReturnKickBall *returnKB = new ReturnKickBall("RKB", this, INPUT_SW_RETURNBALL_LEFT, OUTPUT_RETURNBALL_48V, m_Multiplex);
+	AccumulatorBall *accBall = new AccumulatorBall("RKB", this, INPUT_SW_ACCBALL1, INPUT_SW_ACCBALL2, INPUT_SW_ACCBALL3, INPUT_SW_ACCBALL4, OUTPUT_ACCBALL_48V, m_Multiplex);
+
 	CreateStages();
+
+	//Last 
+	m_AttractMode = new AttractMode(this);
 
 	printText("Pinball", "OK", 0);
 	delay(200);
@@ -233,16 +254,17 @@ bool PinballMaster::Init()
 
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
-		if (!m_PinballObjs[i]->Init())
+		PinballObject *pObject = m_PinballObjs[i];
+		if (!pObject->Init())
 		{
 			#ifdef DEBUGMESSAGES
 			LogMessage("Pinball Error");
+			delay(500);
 			#endif
 		}
 	}
 
 	m_Status = StatusPinball::attractmode;
-	m_AttractMode->Init();
 
 	return true;
 }
@@ -255,7 +277,7 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, int event, int valueToSen
 	LogMessageValue("PinballMaster::NotifyEvent",event);
 	#endif
 
-	if (event > EVENT_TEST_INIT && event < EVENT_TEST_FINISH)
+	if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
 		#ifdef DEBUGMESSAGES
 		Debug("PinballMaster::NotifyEvent Test");
@@ -374,8 +396,7 @@ bool PinballMaster::EventMenuButton(PinballObject *sender)
 	}
 	else if (m_Status == StatusPinball::menutest)
 	{
-		m_Status = StatusPinball::attractmode;
-		m_AttractMode->Init();
+		SetupTest(EVENT_TEST_EXIT_MENU);
 	}
 
 	return false;
@@ -422,11 +443,12 @@ bool PinballMaster::PlayfieldEvent(PinballObject *sender, int event, int valueTo
 bool PinballMaster::TimerIsOver(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("PinballMaster::TimerIsOver");
+	#endif
+
 	if (sender == m_TimerToShowPlayers)
 	{
-		#ifdef DEBUGMESSAGES
-		Debug("...Timer is over show players");
-		#endif
 		m_nSecondsTimerToShowPlayers--;
 		ShowChooseNumberOfPlayers();
 		if (m_nSecondsTimerToShowPlayers <= 0)
@@ -450,13 +472,26 @@ bool PinballMaster::SetupTest(int event)
 
 	if (event == EVENT_TEST_EXIT_MENU)
 	{
+		m_SelfTest->FinishTest();
 		m_Status = StatusPinball::attractmode;
 		m_AttractMode->Init();
 	}
-	else if (event > EVENT_TEST_INIT && event < EVENT_TEST_FINISH)
+	else if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
-		m_Status = StatusPinball::menutest;
-		m_SelfTest->StartTest(event);
+		if (event == EVENT_TEST_NBALLS3 || event == EVENT_TEST_NBALLS4 || event == EVENT_TEST_NBALLS5)
+		{
+			this->SetBallsByPlayer(3 + (event - EVENT_TEST_NBALLS3));
+			printText("Set", "Ball", 1);
+			delay(300);
+			m_Status = StatusPinball::attractmode;
+			m_AttractMode->Init();
+			return true;
+		}
+		else
+		{
+			m_Status = StatusPinball::menutest;
+			m_SelfTest->StartTest(event);
+		}
 	}
 
 	return true;
@@ -517,9 +552,29 @@ void PinballMaster::NextPlayer()
 	if (m_playerPlaying >= m_nPlayers)
 		m_playerPlaying = 0;
 
-	if (m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying))
+	bool isAnyPlayerWaiting = false;
+	int player = m_playerPlaying;
+	do
 	{
-		m_TurnFlipperOn->TurnOn();
+		player++;
+	
+		if (player >= m_nPlayers)
+			player = 0;
+
+		if (m_Players[player]->GetStatus() == StatusPlayer::waiting)
+		{
+			isAnyPlayerWaiting = true;
+			m_playerPlaying = player;
+			break;
+		}
+	} while(player == m_playerPlaying);
+
+	if (isAnyPlayerWaiting)
+	{
+		if (m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying))
+		{
+			m_TurnFlipperOn->TurnOn();
+		}
 	}
 	else
 	{
@@ -556,16 +611,6 @@ void PinballMaster::ShowChooseNumberOfPlayers()
 	}
 }
 
-
-/*---------------------------------------------------------------------*/
-PinballMaster::~PinballMaster()
-/*---------------------------------------------------------------------*/
-{
-	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster Destructor");
-	#endif
-}
-
 /*---------------------------------------------------------------------*/
 bool PinballMaster::Loop(int value)
 /*---------------------------------------------------------------------*/
@@ -583,7 +628,7 @@ bool PinballMaster::Loop(int value)
 	{
 		case StatusPinball::attractmode:
 		{
-			m_AttractMode->Loop();
+			m_LedControl->AttractModeLoop();
 		}
 		break;
 
@@ -661,11 +706,209 @@ void PinballMaster::printText(char *text1, char *text2, char font)
 	#endif
 }
 
-/*---------------------------------------------------------------------*/
+//---------------------------------------------------------------------//
 void PinballMaster::DataReceived(char c)
-/*---------------------------------------------------------------------*/
+//---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage("PinballMaster::DataReceived");
 	#endif
 }
+
+//---------------------------------------------------------------------//
+void PinballMaster::PlaySongToInput(int portNumber)
+//---------------------------------------------------------------------//
+{
+	if(m_Status == StatusPinball::playingmode)
+	{
+		switch (portNumber)
+		{
+		case INPUT_SW_OUTBALL1:
+			playSong(MP3_OUTBALL);
+			break;
+		//case INPUT_SW_OUTBALL2:
+
+		case INPUT_SW_SLINGSHOT_LEFT1:
+		case INPUT_SW_SLINGSHOT_LEFT2:
+			playSong(MP3_SLINGSHOT_LEFT);
+			break;
+
+		case INPUT_SW_SLINGSHOT_RIGHT1:
+		case INPUT_SW_SLINGSHOT_RIGHT2:
+			playSong(MP3_SLINGSHOT_RIGHT);
+			break;
+
+		case INPUT_SW_BUMPER_CENTER:
+			playSong(MP3_BUMPER_CENTER);
+			break;
+
+		case INPUT_SW_BUMPER_LEFT:
+			playSong(MP3_BUMPER_LEFT);
+			break;
+
+		case INPUT_SW_BUMPER_RIGHT:
+			playSong(MP3_BUMPER_RIGHT);
+			break;
+
+		case INPUT_SW_LAUNCHBALL:
+			playSong(MP3_LAUNCHBALL);
+			break;
+
+		case INPUT_SW_OUTLANE_LEFT:
+			playSong(MP3_OUTLANE_LEFT);
+			break;
+
+		case INPUT_SW_OUTLANE_RIGHT:
+			playSong(MP3_OUTLANE_RIGHT);
+			break;
+
+		case INPUT_SW_RETURNBALL_LEFT:
+			playSong(MP3_RETURNBALL_LEFT);
+			break;
+
+		case INPUT_SW_RETURNBALL_RIGHT:
+			playSong(MP3_RETURNBALL_RIGHT);
+			break;
+
+		case INPUT_SW_TARGET_RED1:
+			playSong(MP3_TARGET_RED1);
+			break;
+
+		case INPUT_SW_TARGET_GREEN1:
+			playSong(MP3_TARGET_GREEN1);
+			break;
+
+		case INPUT_SW_TARGET_YELLOW1:
+			playSong(MP3_TARGET_YELLOW1);
+			break;
+
+		case INPUT_SW_TARGET_RED2:
+			playSong(MP3_TARGET_RED2);
+			break;
+
+		case INPUT_SW_TARGET_GREEN2:
+			playSong(MP3_TARGET_GREEN2);
+			break;
+
+		case INPUT_SW_TARGET_YELLOW2:
+			playSong(MP3_TARGET_YELLOW2);
+			break;
+
+		case INPUT_SW_DROPTARGET_51:
+			playSong(MP3_DROPTARGET_51);
+			break;
+
+		case INPUT_SW_DROPTARGET_52:
+			playSong(MP3_DROPTARGET_52);
+			break;
+
+		case INPUT_SW_DROPTARGET_53:
+			playSong(MP3_DROPTARGET_53);
+			break;
+
+		case INPUT_SW_DROPTARGET_54:
+			playSong(MP3_DROPTARGET_54);
+			break;
+
+		case INPUT_SW_DROPTARGET_55:
+			playSong(MP3_DROPTARGET_55);
+			break;
+
+		case INPUT_SW_DROPTARGET_31:
+			playSong(MP3_DROPTARGET_31);
+			break;
+
+		case INPUT_SW_DROPTARGET_32:
+			playSong(MP3_DROPTARGET_32);
+			break;
+
+		case INPUT_SW_DROPTARGET_33:
+			playSong(MP3_DROPTARGET_33);
+			break;
+
+		case INPUT_SW_ROLLOVER_STAR_GREEN:
+			playSong(MP3_ROLLOVER_STAR_GREEN);
+			break;
+
+		case INPUT_SW_ROLLOVER_STAR_RED1:
+			playSong(MP3_ROLLOVER_STAR_RED1);
+			break;
+
+		case INPUT_SW_ROLLOVER_STAR_RED2:
+			playSong(MP3_ROLLOVER_STAR_RED2);
+			break;
+
+		case INPUT_SW_ROLLOVER_LEFT:
+			playSong(MP3_ROLLOVER_LEFT);
+			break;
+
+		case INPUT_SW_ROLLOVER_CENTER:
+			playSong(MP3_ROLLOVER_CENTER);
+			break;
+
+		case INPUT_SW_ROLLOVER_RIGHT:
+			playSong(MP3_ROLLOVER_RIGHT);
+			break;
+
+		case INPUT_SW_TARGET_HIGHER:
+			playSong(MP3_TARGET_HIGHER);
+			break;
+
+		case INPUT_SW_RAMP_IN:
+			playSong(MP3_RAMP_IN);
+			break;
+
+		case INPUT_SW_RAMP_OUT1:
+			playSong(MP3_RAMP_OUT1);
+			break;
+
+		case INPUT_SW_RAMP_OUT2:
+			playSong(MP3_RAMP_OUT2);
+			break;
+
+		case INPUT_SW_SPINNER:
+			playSong(MP3_SPINNER);
+			break;
+
+		case INPUT_SW_HOLE:
+			playSong(MP3_HOLE);
+			break;
+
+		case INPUT_SW_ACCBALL1:
+			playSong(MP3_ACCBALL1);
+			break;
+
+		case INPUT_SW_ACCBALL2:
+			playSong(MP3_ACCBALL2);
+			break;
+
+		case INPUT_SW_ACCBALL3:
+			playSong(MP3_ACCBALL3);
+			break;
+
+		case INPUT_SW_ACCBALL4:
+			playSong(MP3_ACCBALL4);
+			break;
+
+		default:
+			playSong(MP3_STARTBUTTONPORT);
+			break;
+		}
+	}
+	else
+	{
+		switch (portNumber)
+		{
+		case INPUT_MENU_BUTTON:
+			playSong(MP3_MENU_BUTTON);
+			break;
+		case INPUT_UP_BUTTON:
+			playSong(MP3_UP_BUTTON);
+			break;
+		case INPUT_DOWN_BUTTON:
+			playSong(MP3_DOWN_BUTTON);
+			break;
+		}
+	}
+}
+

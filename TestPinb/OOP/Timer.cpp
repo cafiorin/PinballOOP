@@ -12,7 +12,7 @@ http://pinballhomemade.blogspot.com.br
 Timer::Timer(long time, const char *szName, Pinball *pinball, PinballObject *parent, TimerType type) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Timer Constructor");
 	#endif
 
@@ -26,7 +26,7 @@ Timer::Timer(long time, const char *szName, Pinball *pinball, PinballObject *par
 Timer::~Timer()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Timer Destructor");
 	#endif
 }
@@ -89,8 +89,6 @@ bool Timer::Loop(int value)
 
 		if (Check())
 		{
-			m_lastTime = Millis();
-
 			if (m_parent != NULL)
 			{
 				m_parent->NotifyEvent(this, EVENT_TIMEISOVER, 0);
@@ -104,6 +102,8 @@ bool Timer::Loop(int value)
 			{
 				m_enabled = false;
 			}
+
+			m_lastTime = Millis();
 		}
 	}
 

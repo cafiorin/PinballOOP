@@ -60,12 +60,16 @@ public:
 	void sendMessageToAnotherArduino(int address, char msg);
 	char receiveMessageFromAnotherArduino(int howMany);
 	virtual void DataReceived(char c) {};
-
+	virtual void PlaySongToInput(int portNumber) {}
 	Input *GetInput(int channel) { return m_Inputs[channel]; }
 	Output *GetOutput(int channel) { return m_Outputs[channel]; }
 
 	void AddPinballInput(Input *input);
 	void AddPinballOutput(Output *output);
+
+	void EnableSFX(bool enable) { m_enableSfx = enable; }
+	bool IsEnabledSFX() { return m_enableSfx; }
+	bool m_enableSfx;
 
 protected:
 #ifdef ARDUINOLIB

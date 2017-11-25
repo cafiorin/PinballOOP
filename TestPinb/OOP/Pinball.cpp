@@ -24,6 +24,7 @@ Pinball::Pinball() : PinballObject("Pinball", this)
 {
 	m_Status = StatusPinball::initializing;
 	m_serial = NULL;
+	m_enableSfx = true;
 }
 
 
@@ -36,6 +37,7 @@ Pinball::Pinball(const char *szName, HardwareSerial *serial) : PinballObject (sz
 {
 	m_serial = serial;
 	m_Status = StatusPinball::initializing;
+	m_enableSfx = true;
 }
 #endif
 
@@ -43,7 +45,7 @@ Pinball::Pinball(const char *szName, HardwareSerial *serial) : PinballObject (sz
 Pinball::~Pinball()
 /*---------------------------------------------------------------------*/
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	LogMessage("Pinball Destructor");
 	#endif
 
@@ -199,12 +201,15 @@ void Pinball::sendMessageToAnotherArduino(int address, char msg)
 	LogMessage("Pinball::sendMessageToAnotherArduino");
 	#endif
 
-#ifdef ARDUINOLIB
-	// send the data
-	Wire.beginTransmission(address); // transmit to device
-	Wire.write(msg);
-	Wire.endTransmission();
-#endif
+	#ifdef ARDUINOLIB
+	if (m_enableSfx)
+	{
+		// send the data
+		Wire.beginTransmission(address); // transmit to device
+		Wire.write(msg);
+		Wire.endTransmission();
+	}
+	#endif
 }
 
 

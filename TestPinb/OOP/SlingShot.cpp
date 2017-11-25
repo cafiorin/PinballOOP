@@ -7,13 +7,15 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 #include "SlingShot.h"
+#include "Pinball.h"
 #include "PinballObject.h"
+#include "DefinesMp3.h"
 
 //-------------------------------------------------------//
 SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput, Multiplex *multiplex) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("SlingShot Constructor");
 	#endif
 
@@ -29,7 +31,7 @@ SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1,
 SlingShot::~SlingShot()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("SlingShot Destructor");
 	#endif
 
@@ -65,22 +67,8 @@ bool SlingShot::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
+		m_pinball->NotifyEvent(this, event, valueToSend);
 		return true;
 	}
-	return false;
-}
-
-
-//-------------------------------------------------------//
-bool SlingShot::Loop(int value)
-//-------------------------------------------------------//
-{
-	if (m_enabled)
-	{
-		#ifdef DEBUGMESSAGESLOOP
-		Debug("SlingShot Loop");
-		#endif
-	}
-
 	return false;
 }

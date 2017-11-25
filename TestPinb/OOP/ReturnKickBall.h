@@ -5,25 +5,23 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#if !defined(Light__INCLUDED_)
-#define Light__INCLUDED_
+#if !defined(ReturnKickBall__INCLUDED_)
+#define ReturnKickBall__INCLUDED_
 
 #include "defines.h"
 #include "Utils.h"
-#include "Timer.h"
+#include "Input.h"
 #include "Output.h"
 
-class Light : public Output
+class ReturnKickBall : public PinballObject
 {
 public:
-	Light(const char *szName, Pinball *pinball, int portNumber, Multiplex *multiplex);
-	virtual ~Light();
+	ReturnKickBall(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput, Multiplex *multiplex);
+	virtual ~ReturnKickBall();
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
-	void StartBlink(long value=700);
-	void EndBlink();
-
 protected:
-	Timer *m_timerBlinking;
+	Input *m_input1;
+	Output *m_output;
 };
-#endif 
+#endif // !defined(ReturnKickBall__INCLUDED_)

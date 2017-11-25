@@ -12,7 +12,7 @@ http://pinballhomemade.blogspot.com.br
 Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject *pinballObject):Port(pinball,szName,portNumber)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Input Constructor");
 	#endif
 
@@ -23,29 +23,15 @@ Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject
 	m_pinballObjectParent = pinballObject;
 
 	m_pinball->AddPinballInput(this);
-	//Init();
 }
 
 //-------------------------------------------------------//
 Input::~Input()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Input Destructor");
 	#endif
-}
-
-//-------------------------------------------------------//
-bool Input::Init()
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	Debug("Input::Init");
-	#endif
-
-	m_debounceCount = 0;
-
-	return true;
 }
 
 //-------------------------------------------------------//
@@ -78,6 +64,7 @@ void Input::CheckDebounce()
 			#endif
 
 			m_pinballObjectParent->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
+			m_pinball->PlaySongToInput(this->m_portNumber);
 		}
 		else
 		{
@@ -92,14 +79,15 @@ void Input::CheckDebounce()
 }
 
 //-------------------------------------------------------//
-void Input::SetInput (bool value)
+bool Input::SetInput (bool value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP
 	Debug("Input::SetInput");
 	#endif
 
-	if (m_InputValue != value)
+	bool newValue = (m_InputValue != value);
+	if (newValue)
 	{
 		m_InputValue = value;
 		m_debounceCount = 0;
@@ -111,4 +99,6 @@ void Input::SetInput (bool value)
 		m_debounceCount++;
 		CheckDebounce();
 	}
+
+	return newValue;
 }

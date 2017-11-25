@@ -13,7 +13,7 @@ http://pinballhomemade.blogspot.com.br
 Output::Output(const char *szName, Pinball *pinball, int port, Multiplex *multiplex ):Port(pinball,szName, port)
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Output Constructor");
 	#endif
 
@@ -28,9 +28,11 @@ Output::Output(const char *szName, Pinball *pinball, int port, Multiplex *multip
 Output::~Output()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Output Destructor");
 	#endif
+
+	delete m_TimerOn;
 }
 
 //-------------------------------------------------------//
@@ -84,8 +86,13 @@ bool Output::NotifyEvent(PinballObject *sender, int event, int valueToSend)
     Debug("Output::NotifyEvent");
     #endif
 
-    TurnOff();
-    return true;
+	if (event == EVENT_TIMEISOVER)
+	{
+		TurnOff();
+		return true;
+	}
+
+	return false;
 }
 
 //-------------------------------------------------------//

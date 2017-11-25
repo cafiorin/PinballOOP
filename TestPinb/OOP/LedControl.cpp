@@ -16,18 +16,31 @@ http://pinballhomemade.blogspot.com.br
 
 
 //-----------------------------------------------------------
-LedControl::LedControl(int dataPin, PinballMaster *pinball):PinballObject("LedControl",pinball)
+LedControl::LedControl(PinballMaster *pinball):PinballObject("LedControl",pinball)
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("LedControl Constructor");
+	#endif
+
 	#ifdef ARDUINOLIB
-	FastLED.addLeds<WS2812B, 5, GRB>(m_leds, NUM_LEDS);
+	FastLED.addLeds<WS2812B, DATA_STRIP_LED, GRB>(m_leds, NUM_LEDS);
 	#endif // ARDUINOLIB
+
+	for (int i = 0; i < NUM_LEDS; i++)
+	{
+		TurnOff(i);
+	}
 }
 
 //-----------------------------------------------------------
 LedControl::~LedControl()
 //-----------------------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("LedControl Destructor");
+	#endif
+
 }
 
 
@@ -38,6 +51,11 @@ bool LedControl::Init()
 	#ifdef DEBUGMESSAGES
 	Debug("LedControl::Init");
 	#endif
+
+	for (int i = 0; i < NUM_LEDS; i++)
+	{
+		TurnOff(i);
+	}
 
 	return true;
 }
@@ -50,6 +68,7 @@ void LedControl::TurnOn(int Led)
 	Debug("LedControl::TurnOn");
 	#endif
 
+	m_ledsValue[Led] = true;
 
 	#ifdef ARDUINOLIB
 	m_leds[Led] = CRGB::White;
@@ -65,6 +84,8 @@ void LedControl::TurnOff(int Led)
 	Debug("LedControl::TurnOff");
 	#endif
 
+	m_ledsValue[Led] = false;
+
 	#ifdef ARDUINOLIB
 	m_leds[Led] = CRGB::Black;
 	FastLED.show();
@@ -73,13 +94,12 @@ void LedControl::TurnOff(int Led)
 }
 
 //-----------------------------------------------------------
-void LedControl::Loop()
+void LedControl::AttractModeLoop()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESLOOP
-	Debug("LedControl::Loop");
+	Debug("LedControl::AttractModeLoop");
 	#endif
-
 
 	#ifdef ARDUINOLIB
 	static uint8_t hue;
@@ -96,6 +116,4 @@ void LedControl::Loop()
 		FastLED.delay(33);
 	}
 	#endif
-
 }
-

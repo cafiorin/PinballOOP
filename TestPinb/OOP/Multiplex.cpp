@@ -1,6 +1,9 @@
-#ifdef ARDUINOLIB
-#include <Arduino.h>
-#endif
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* BSD 3-Clause License
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Code by Cassius Fiorin - cafiorin@gmail.com
+http://pinballhomemade.blogspot.com.br
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Utils.h"
 #include "Pinball.h"
@@ -9,7 +12,16 @@
 #include "PinballObject.h"
 #include "Multiplex.h"
 
-static const int _muxChAddress[16][4] = {
+#ifdef ARDUINOLIB
+#include <Arduino.h>
+#endif
+
+#ifdef DOS
+#include "HardwareSerial.h"
+#endif // DOS
+
+static const int _muxChAddress[16][4] = 
+{
     {0,0,0,0}, //channel 0
     {1,0,0,0}, //channel 1
     {0,1,0,0}, //channel 2
@@ -28,8 +40,14 @@ static const int _muxChAddress[16][4] = {
     {1,1,1,1}  //channel 15
 };
 
+//-----------------------------------------------
 Multiplex::Multiplex(Pinball *pinball, const int S0,const int S1,const int S2,const int S3,const int SIG, const int OUTSIG, const int chipSelect1, const int chipSelect2, const int chipSelect3, const int chipSelect4, const int chipSelect5) : PinballObject("Mult", pinball)
+//-----------------------------------------------
 {
+	#ifdef DEBUGMESSAGESCREATION
+	LogMessage("Multiplex Constructor");
+	#endif
+
 	_adrsPin[0] = S0;
 	_adrsPin[1] = S1;
 	_adrsPin[2] = S2;
@@ -45,8 +63,14 @@ Multiplex::Multiplex(Pinball *pinball, const int S0,const int S1,const int S2,co
 	_chipSelect5 = chipSelect5;
 }
 
+//-----------------------------------------------
 void Multiplex::setup()
+//-----------------------------------------------
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Multiplex::setup");
+	#endif
+
 	int i;
 
 	pinMode(_sig, INPUT);
@@ -75,8 +99,14 @@ void Multiplex::setup()
 
 }
 
+//-----------------------------------------------
 void Multiplex::enableChip(int chipNumber)
+//-----------------------------------------------
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Multiplex::enableChip");
+	#endif
+
 	// set all to Disable (HIGH)
 	digitalWrite(_chipSelect1, HIGH);
 	digitalWrite(_chipSelect2, HIGH);
@@ -88,8 +118,14 @@ void Multiplex::enableChip(int chipNumber)
 	digitalWrite(chipNumber, LOW);
 }
 
+//-----------------------------------------------
 void Multiplex::resetAllOutput()
+//-----------------------------------------------
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Multiplex::resetAllOutput");
+	#endif
+
 	digitalWrite(_outsig, LOW);
 
 	digitalWrite(_chipSelect4, LOW);
@@ -105,8 +141,14 @@ void Multiplex::resetAllOutput()
 }
 
 
+//-----------------------------------------------
 void Multiplex::writeChannel(int ch,int value)
+//-----------------------------------------------
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Multiplex::writeChannel");
+	#endif
+
 	if (ch < 0 || ch > 32)
 		return ;
 
@@ -120,8 +162,14 @@ void Multiplex::writeChannel(int ch,int value)
 }
 
 
+//-----------------------------------------------
 int Multiplex::readChannel(int ch)
+//-----------------------------------------------
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage("Multiplex::readChannel");
+	#endif
+
 	if (ch < 0 || ch > 47)
 		return 0;
 
@@ -144,8 +192,9 @@ int Multiplex::readChannel(int ch)
 	return digitalRead(_sig);
 }
 
-
+//-----------------------------------------------
 bool Multiplex::Loop(int value)
+//-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESLOOP
 	LogMessage("Multiplex::Loop");
@@ -154,6 +203,8 @@ bool Multiplex::Loop(int value)
 	digitalWrite(_chipSelect1, HIGH);
 	digitalWrite(_chipSelect2, HIGH);
 	digitalWrite(_chipSelect3, HIGH);
+
+	bool someInputChanged = false;
 
 	for (int ch = 0; ch < 16; ch++)
 	{
@@ -166,32 +217,35 @@ bool Multiplex::Loop(int value)
 		Input *input = m_pinball->GetInput(ch);
 		if (input != NULL)
 		{
-			input->SetInput(read);
+			someInputChanged = input->SetInput(read);
 		}
 
 		digitalWrite(_chipSelect2, LOW);
 		read = digitalRead(_sig);
 		digitalWrite(_chipSelect2, HIGH);
-		input = m_pinball->GetInput(ch+16);
+		input = m_pinball->GetInput(ch + 16);
 		if (input != NULL)
 		{
-			input->SetInput(read);
+			someInputChanged = input->SetInput(read);
 		}
 
 		digitalWrite(_chipSelect3, LOW);
 		read = digitalRead(_sig);
 		digitalWrite(_chipSelect3, HIGH);
-		input = m_pinball->GetInput(ch+32);
+		input = m_pinball->GetInput(ch + 32);
 		if (input != NULL)
 		{
-			input->SetInput(read);
+			someInputChanged = input->SetInput(read);
 		}
 	}
-	return 0;
+
+	return someInputChanged;
 }
 
 
+//-----------------------------------------------
 void Multiplex::_addressing(int ch)
+//-----------------------------------------------
 {
 	int i;
 	for (i = 0; i < 4; i ++)

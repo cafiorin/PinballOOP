@@ -12,10 +12,10 @@ http://pinballhomemade.blogspot.com.br
 Menu::Menu(const char *szName, PinballMaster *pinball) 
 //-------------------------------------------------------//
 {
-	m_Pinball = pinball;
+	m_PinballMaster = pinball;
 	
 	#ifdef DEBUGMESSAGES
-	m_Pinball->Debug("Menu Constructor");
+	m_PinballMaster->Debug("Menu Constructor");
 	#endif
 
 
@@ -27,7 +27,7 @@ Menu::~Menu()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_Pinball->Debug("Menu Destructor");
+	m_PinballMaster->Debug("Menu Destructor");
 	#endif
 }
 
@@ -36,7 +36,7 @@ bool Menu::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_Pinball->Debug("Menu::Init");
+	m_PinballMaster->Debug("Menu::Init");
 	#endif
 	
 	m_isShowing = false;
@@ -48,29 +48,34 @@ bool Menu::Init()
 
 	//Test
 	MenuString *pLed = new MenuString(pTest, -1, "Led");
-	MenuString *pCoin = new MenuString(pTest, -1, "Bobina");
-	MenuString *pSound = new MenuString(pTest, -1, "Som");
+	MenuString *pCoin = new MenuString(pTest, -1, "Coin");
+	MenuString *pOutput = new MenuString(pTest, -1, "Output");
+	MenuString *pSound = new MenuString(pTest, -1, "Sound");
 
 	//Config
 	MenuString *pSfx = new MenuString(pConfig, -1, "SFX");
-	MenuString *pNBalls = new MenuString(pConfig, -1, "Bolas");
+	MenuString *pNBalls = new MenuString(pConfig, -1, "Balls");
 
 	//Led
 	new MenuString(pLed, EVENT_TEST_LED_1BY1, "1 a 1");
 	new MenuString(pLed, EVENT_TEST_LED_AUTO, "Auto");
 
-	//Bobina
+	//Coin
 	new MenuString(pCoin, EVENT_TEST_COIN_1BY1, "1 a 1");
 	new MenuString(pCoin, EVENT_TEST_COIN_AUTO, "Auto");
 
-	//Som
+	//Output
+	new MenuString(pOutput, EVENT_TEST_OUTPUTS_1BY1, "1 a 1");
+	new MenuString(pOutput, EVENT_TEST_OUTPUTS_AUTO, "Auto");
+
+	//Sound
 	new MenuString(pSound, EVENT_TEST_SOUND_BOARD1, "Placa 1");
 	new MenuString(pSound, EVENT_TEST_SOUND_BOARD2, "Placa 2");
 
 	//SFX
 	new MenuString(pSfx, EVENT_TEST_SFX_ONOFF, "ON/OFF");
 
-	//Bolas
+	//Balls
 	new MenuString(pNBalls, EVENT_TEST_NBALLS3, "3");
 	new MenuString(pNBalls, EVENT_TEST_NBALLS4, "4");
 	new MenuString(pNBalls, EVENT_TEST_NBALLS5, "5");
@@ -98,13 +103,13 @@ void Menu::PressButtonMenu()
 		//Exit menu
 		if (m_backSelected && m_menuOptionSelected->GetParent() == NULL)
 		{
-			m_Pinball->NotifyEvent(NULL, EVENT_TEST_EXIT_MENU, 0);
+			m_PinballMaster->NotifyEvent(NULL, EVENT_TEST_EXIT_MENU, 0);
 			m_isShowing = false;
 		}
 		//Action
 		else if (m_subOptionSelected->GetAction() != -1 && !m_backSelected)
 		{
-			m_Pinball->NotifyEvent(NULL, m_subOptionSelected->GetAction(), 0);
+			m_PinballMaster->NotifyEvent(NULL, m_subOptionSelected->GetAction(), 0);
 			m_isShowing = false;
 		}
 		else
@@ -147,14 +152,14 @@ void Menu::PrintMenu(ButtonPressed button)
 	if(m_subOption >= children.size() || m_subOption < 0)
 	{
 		m_subOption = (int) children.size();
-		m_Pinball->printText(szLine1, "Voltar", 0);
+		m_PinballMaster->printText(szLine1, "Voltar", 0);
 		m_backSelected = true;
 		return;
 	}
 
 	char *szLine2 = children[m_subOption]->GetString();
 	m_subOptionSelected = children[m_subOption];
-	m_Pinball->printText(szLine1, szLine2, 0);
+	m_PinballMaster->printText(szLine1, szLine2, 0);
 	m_backSelected = false;
 }
 
@@ -163,7 +168,7 @@ bool Menu::PressUpDownButton(bool upButton)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_Pinball->Debug("Menu::PressButton");
+	m_PinballMaster->Debug("Menu::PressButton");
 	#endif
 
 	if (upButton)

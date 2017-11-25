@@ -12,11 +12,11 @@ http://pinballhomemade.blogspot.com.br
 Light::Light(const char *szName, Pinball *pinball, int port, Multiplex *multiplex):Output(szName, pinball, port,multiplex)
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Light Constructor");
-#endif
+	#endif
 
-	m_timerBlinking = new Timer(700, "TBlink", this->m_pinball);
+	m_timerBlinking = new Timer(700, "TBlink", this->m_pinball,this,TimerType::continuous);
 
 	Init();
 }
@@ -25,50 +25,52 @@ Light::Light(const char *szName, Pinball *pinball, int port, Multiplex *multiple
 Light::~Light()
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESCREATION
 	Debug("Light Destructor");
-#endif
+	#endif
+
+	delete m_timerBlinking;
 }
 
 //-------------------------------------------------------//
-bool Light::Init()
+bool Light::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //-------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
-	Debug("Light::Init");
-#endif
+	#ifdef DEBUGMESSAGES
+	Debug("Light::NotifyEvent");
+	#endif
 
-	return Output::Init();
-}
-
-//-------------------------------------------------------//
-bool Light::Loop(int value)
-//-------------------------------------------------------//
-{
-#ifdef DEBUGMESSAGESLOOP
-	Debug("Output::Loop");
-#endif
-
-	if (m_timerBlinking->Check())
+	if (event == EVENT_TIMEISOVER)
 	{
 		if (this->IsTurnOn())
 			TurnOff();
 		else
 			TurnOn();
-
-		m_timerBlinking->Start();
+		return true;
 	}
 
-	return Output::Loop(value);
+	return false;
 }
 
+//-----------------------------------------------------//
 void Light::StartBlink(long value)
+//-----------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Output::StartBlink");
+	#endif
+
 	m_timerBlinking->ChangeValue(value);
 }
 
+//-----------------------------------------------------//
 void Light::EndBlink()
+//-----------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	Debug("Output::EndBlink");
+	#endif
+
 	m_timerBlinking->Disable();
 }
 

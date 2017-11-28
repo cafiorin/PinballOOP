@@ -13,6 +13,8 @@ http://pinballhomemade.blogspot.com.br
 #include "Input.h"
 #include "Output.h"
 
+class SequencerLeds;
+
 class DropTarget : public PinballObject
 {
 public:
@@ -24,6 +26,8 @@ public:
 
 	void Reset();
 	bool IsAllTargets() { return m_AllTargets; }
+	void AddLeds(int led1, int led2, int led3);
+	void AddLeds(int led1, int led2, int led3,int led4,int led5);
 
 protected:
 	int m_sizeInputs;
@@ -31,6 +35,7 @@ protected:
 	Output *m_output;
 
 	bool m_AllTargets;
+	SequencerLeds *m_SequencerLeds;
 
 };
 #endif // !defined(DropTarget__INCLUDED_)

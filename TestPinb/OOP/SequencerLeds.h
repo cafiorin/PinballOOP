@@ -11,12 +11,13 @@ http://pinballhomemade.blogspot.com.br
 #include "defines.h"
 #include "PinballObject.h"
 
-#define MAXLIGHTS 20
+#define MAXLIGHTS 10
 
 enum SequencerType
 {
-	turnOn1by1,
-	all
+	turnOnAndturnOff_1by1,
+	turnOn1by1_AndTurnOffAll,
+	blinkingAll
 };
 
 
@@ -33,11 +34,14 @@ public:
 
 	bool TimerIsOver(PinballObject *sender);
 	void AddLed(int led, bool turnOnWithNext = false);
+	void RemoveLed(int led);
 	void Start();
 	void End();
 
 	int m_Leds[MAXLIGHTS];
 	bool m_LedsTurnOnWithNext[MAXLIGHTS];
+	bool m_LedsAlwaysTurnOn[MAXLIGHTS];
+	bool m_blink;
 	char m_count;
 	char m_pos;
 	SequencerType m_type;
@@ -55,9 +59,12 @@ public:
 			return 0;
 		return led + 1;
 	}
+	void TurnOnAlwaysLed(int position, bool blink);
 
 protected:
 	Timer *m_timerSeq;
+
+
 
 };
 

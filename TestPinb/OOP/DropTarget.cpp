@@ -8,6 +8,7 @@ http://pinballhomemade.blogspot.com.br
 #include "DropTarget.h"
 #include "Output.h"
 #include "PinballMaster.h"
+#include "SequencerLeds.h"
 
 //-------------------------------------------------------//
 DropTarget::DropTarget(const char *szName, PinballMaster *pinball, 
@@ -21,13 +22,13 @@ DropTarget::DropTarget(const char *szName, PinballMaster *pinball,
 	Debug("DropTarget Constructor");
 	#endif
 
+	m_SequencerLeds = new SequencerLeds(m_pinball, SequencerType::blinkingAll, 300);
 	m_sizeInputs = 3;
 	m_input[0] = new Input("DT31In", pinball, portNumberInput1,this);
 	m_input[1] = new Input("DT32In", pinball, portNumberInput2, this);
 	m_input[2] = new Input("DT33In", pinball, portNumberInput3, this);
 
 	m_output = new Output("DT3Out", pinball, portNumberOutput);
-
 	Init();
 }
 
@@ -45,6 +46,7 @@ DropTarget::DropTarget(const char *szName, PinballMaster *pinball,
 	Debug("DropTarget Constructor");
 	#endif
 
+	m_SequencerLeds = new SequencerLeds(m_pinball, SequencerType::blinkingAll, 300);
 	m_sizeInputs = 5;
 	m_input[0] = new Input("DT51In", pinball, portNumberInput1, this);
 	m_input[1] = new Input("DT52In", pinball, portNumberInput2, this);
@@ -65,6 +67,8 @@ DropTarget::~DropTarget()
 	#ifdef DEBUGMESSAGESCREATION
 	Debug("DropTarget Destructor");
 	#endif
+
+	delete m_SequencerLeds;
 
 	for (int i = 0; i < m_sizeInputs; i++)
 	{
@@ -87,6 +91,36 @@ bool DropTarget::Init()
 }
 
 //-------------------------------------------------------//
+void DropTarget::AddLeds(int led1, int led2, int led3)
+//-------------------------------------------------------//
+{
+	if (m_SequencerLeds == NULL)
+	{
+		m_SequencerLeds = new SequencerLeds(m_pinball, SequencerType::blinkingAll, 300);
+	}
+
+	m_SequencerLeds->AddLed(led1);
+	m_SequencerLeds->AddLed(led2);
+	m_SequencerLeds->AddLed(led3);
+}
+
+//-------------------------------------------------------//
+void DropTarget::AddLeds(int led1, int led2, int led3, int led4, int led5)
+//-------------------------------------------------------//
+{
+	if (m_SequencerLeds == NULL)
+	{
+	}
+
+	m_SequencerLeds->AddLed(led1);
+	m_SequencerLeds->AddLed(led2);
+	m_SequencerLeds->AddLed(led3);
+	m_SequencerLeds->AddLed(led4);
+	m_SequencerLeds->AddLed(led5);
+
+}
+
+//-------------------------------------------------------//
 bool DropTarget::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //-------------------------------------------------------//
 {
@@ -96,27 +130,26 @@ bool DropTarget::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 
 	if (event == EVENT_EDGEPOSITIVE)
 	{
-		bool allTargets = false;
+		int totalTargets = 0;
 		for (int i = 0; i < m_sizeInputs; i++)
 		{
 			if (m_input[i]->GetInput())
 			{
-				allTargets = true;
+				m_SequencerLeds->TurnOnAlwaysLed(i, true);
+				totalTargets++;
 			}
 			else
 			{
-				allTargets = false;
-				break;
+				m_SequencerLeds->TurnOnAlwaysLed(i, false);
 			}
 		}
 
-		if (allTargets)
+		if (totalTargets == m_sizeInputs)
 		{
 			m_pinball->NotifyEvent(this, EVENT_DROPTARGETDOWN, m_sizeInputs);
 			Reset();
+			return true;
 		}
-
-		return (allTargets);
 	}
 	return false;
 }
@@ -132,4 +165,5 @@ void DropTarget::Reset()
 
 	m_AllTargets = false;
 	m_output->TurnOnByTimer(TIME_COIL_ON);
+	m_SequencerLeds->Start();
 }

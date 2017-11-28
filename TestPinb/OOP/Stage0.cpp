@@ -21,7 +21,7 @@ Stage0::Stage0(PinballMaster *pinball,int number):StageBase(pinball,number)
 	Debug("Stage0 Constructor");
 	#endif
 
-	m_LedsStage = new SequencerLeds(pinball, SequencerType::turnOn1by1, 300);
+	m_LedsStage = new SequencerLeds(pinball, SequencerType::turnOnAndturnOff_1by1, 300);
 	m_LedsStage->AddLed(LED_STAGE11, true);
 	m_LedsStage->AddLed(LED_STAGE12);
 
@@ -38,7 +38,7 @@ Stage0::Stage0(PinballMaster *pinball,int number):StageBase(pinball,number)
 	m_LedsStage->AddLed(LED_STAGE52);
 
 	// Target
-	m_LedsTarget = new SequencerLeds(pinball, SequencerType::turnOn1by1, 300);
+	m_LedsTarget = new SequencerLeds(pinball, SequencerType::turnOnAndturnOff_1by1, 300);
 	m_LedsTarget->AddLed(LED_HOLE_B1);
 	m_LedsTarget->AddLed(LED_HOLE_B2);
 	m_LedsTarget->AddLed(LED_HOLE_A1,true);

@@ -24,7 +24,7 @@ StageBase::StageBase(PinballMaster *pinball, int number) : PinballObject("STAGE"
 	m_currentPlayer = NULL;
 
 	// Loop Leds
-	m_LedsLoop = new SequencerLeds(pinball, SequencerType::turnOn1by1, 300);
+	m_LedsLoop = new SequencerLeds(pinball, SequencerType::turnOnAndturnOff_1by1, 300);
 	m_LedsLoop->AddLed(LED_LOOP_B1);
 	m_LedsLoop->AddLed(LED_LOOP_B2);
 	m_LedsLoop->AddLed(LED_LOOP_A1, true);

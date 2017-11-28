@@ -6,10 +6,10 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Timer.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 
 //-------------------------------------------------------//
-Timer::Timer(long time, const char *szName, Pinball *pinball, PinballObject *parent, TimerType type) : PinballObject(szName, pinball)
+Timer::Timer(long time, const char *szName, PinballMaster *pinball, PinballObject *parent, TimerType type) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION

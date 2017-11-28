@@ -6,11 +6,11 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "AccumulatorBall.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
-AccumulatorBall::AccumulatorBall(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
+AccumulatorBall::AccumulatorBall(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberOutput) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -29,7 +29,7 @@ AccumulatorBall::AccumulatorBall(const char *szName, Pinball *pinball, int portN
 	m_input4 = new Input("AccIn4", pinball, portNumberInput4, this);
 	m_input4->SetDebounceRead(5);
 
-	m_output = new Output("ReOut", pinball, portNumberOutput,multiplex);
+	m_output = new Output("ReOut", pinball, portNumberOutput);
 
 	m_nBalls = 0;
 }

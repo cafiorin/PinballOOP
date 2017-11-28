@@ -20,7 +20,6 @@ http://pinballhomemade.blogspot.com.br
 
 #define ADDRESS_MASTER 4
 #define ADDRESS_SLAVE  5
-#define INIT_THEME 0
 #define DATA_STRIP_LED 5
 
 #define MAX_SIZE_DEBUG_MESSAGE 120
@@ -32,6 +31,18 @@ http://pinballhomemade.blogspot.com.br
 #define MAX_MULTIPLY 6
 
 #define TIME_COIL_ON 20
+
+//Communication
+#define COMM_INIT_THEME 0
+#define COMM_TEST_SOUND 1
+#define COMM_INIT_THEME_STAGE0 2
+#define COMM_INIT_THEME_STAGE1 3
+#define COMM_INIT_THEME_STAGE2 4
+#define COMM_INIT_THEME_STAGE3 5
+#define COMM_INIT_THEME_STAGE4 6
+#define COMM_INIT_THEME_STAGE5 7
+
+
 
 //Events
 #define EVENT_EDGEPOSITIVE 1

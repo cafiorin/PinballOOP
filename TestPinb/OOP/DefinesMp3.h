@@ -8,6 +8,13 @@ http://pinballhomemade.blogspot.com.br
 #ifndef DefinesMp3_h
 #define DefinesMp3_h
 
+#define MP3_THEME_STAGE0 "theme.mp3"
+#define MP3_THEME_STAGE1 "theme.mp3"
+#define MP3_THEME_STAGE2 "theme.mp3"
+#define MP3_THEME_STAGE3 "theme.mp3"
+#define MP3_THEME_STAGE4 "theme.mp3"
+#define MP3_THEME_STAGE5 "theme.mp3"
+
 #define MP3_GAMEOVER "gameov2.mp3"
 #define MP3_EXTRABALL "newba01.mp3"
 #define MP3_HIGHSCORE "high1.mp3"

@@ -6,17 +6,17 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "PinballObject.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 
 /*---------------------------------------------------------------------*/
-PinballObject::PinballObject(const char *szName, Pinball *pinball)
+PinballObject::PinballObject(const char *szName, PinballMaster *pinball)
 /*---------------------------------------------------------------------*/
 {
 	strcpy(m_szName, szName);
 	m_enabled = true;
 	m_pinball = pinball;
 
-	if (m_pinball != NULL && m_pinball != this)
+	if (m_pinball != NULL)
 	{
 		m_pinball->AddPinballObject(this);
 	}
@@ -30,7 +30,7 @@ PinballObject::~PinballObject()
 	Debug("PinballObject Destructor");
 	#endif
 
-	if (m_pinball != NULL && m_pinball != this)
+	if (m_pinball != NULL)
 		m_pinball->RemovePinballObject(this);
 }
 

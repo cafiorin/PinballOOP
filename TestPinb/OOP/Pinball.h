@@ -38,7 +38,7 @@ class Input;
 class Output;
 class SFEMP3Shield;
 
-class Pinball : public PinballObject
+class Pinball 
 {
 public:
 #ifdef ARDUINOLIB
@@ -52,8 +52,6 @@ public:
 	void LogMessage(const char *szMessage);
 	void LogMessageValue(const char *szMessage, int value);
 
-	void AddPinballObject(PinballObject *Pinballobj);
-	void RemovePinballObject(PinballObject *Pinballobj);
 	void playSong(char song[], bool priority=true);
 	void ChangeVolume(bool plus, uint8_t delta = 5);
 
@@ -61,11 +59,6 @@ public:
 	char receiveMessageFromAnotherArduino(int howMany);
 	virtual void DataReceived(char c) {};
 	virtual void PlaySongToInput(int portNumber) {}
-	Input *GetInput(int channel) { return m_Inputs[channel]; }
-	Output *GetOutput(int channel) { return m_Outputs[channel]; }
-
-	void AddPinballInput(Input *input);
-	void AddPinballOutput(Output *output);
 
 	void EnableSFX(bool enable) { m_enableSfx = enable; }
 	bool IsEnabledSFX() { return m_enableSfx; }
@@ -77,9 +70,6 @@ protected:
 #endif // ARDUINOLIB
 
 	HardwareSerial *m_serial;
-	Vector<PinballObject *> m_PinballObjs;
-	Input *m_Inputs[MAX_INPUTCHANNELS];
-	Output *m_Outputs[MAX_OUTPUTCHANNELS];
 
 	StatusPinball m_Status;
 	AttractMode *m_AttractMode;

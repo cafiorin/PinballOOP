@@ -27,7 +27,6 @@ public:
 	Player(PinballMaster *pinball);
 	virtual ~Player();
 	virtual bool Init();
-	virtual bool Loop(int value);
 
 	static int m_indexPlayerCurrent;
 
@@ -53,7 +52,6 @@ protected:
 	bool m_ExtraBall;
 	StageBase *m_Stage;
 	StatusPlayer m_Status;
-	PinballMaster *m_PinballMaster;
 };
 
 #endif

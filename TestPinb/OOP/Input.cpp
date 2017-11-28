@@ -6,10 +6,10 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Input.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 
 //-------------------------------------------------------//
-Input::Input(const char *szName, Pinball *pinball, int portNumber, PinballObject *pinballObject):Port(pinball,szName,portNumber)
+Input::Input(const char *szName, PinballMaster *pinball, int portNumber, PinballObject *pinballObject):Port(pinball,szName,portNumber)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -63,7 +63,14 @@ void Input::CheckDebounce()
 			Debug("Input::Edge Positive");
 			#endif
 
-			m_pinballObjectParent->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
+			if (m_pinballObjectParent != NULL)
+			{
+				m_pinballObjectParent->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
+			}
+			else
+			{
+				m_pinball->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
+			}
 			m_pinball->PlaySongToInput(this->m_portNumber);
 		}
 		else

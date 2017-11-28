@@ -39,8 +39,6 @@ public:
 	void FinishTest();
 
 protected:
-	PinballMaster *m_PinballMaster;
-
 	int m_MenuTest;
 	int m_startTestValue;
 	Timer *m_timerAuto;

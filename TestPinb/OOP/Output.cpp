@@ -6,18 +6,18 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Output.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 #include "Multiplex.h"
 
 //-------------------------------------------------------//
-Output::Output(const char *szName, Pinball *pinball, int port, Multiplex *multiplex ):Port(pinball,szName, port)
+Output::Output(const char *szName, PinballMaster *pinball, int port):Port(pinball,szName, port)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
 	Debug("Output Constructor");
 	#endif
 
-	m_Multiplex = multiplex;
+	m_Multiplex = pinball->GetMultiplex();
 	m_TimerOn = new Timer(100, "TOon", pinball,this,TimerType::once);
 	pinball->AddPinballOutput(this);
 

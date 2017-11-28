@@ -19,7 +19,6 @@ Player::Player(PinballMaster *pinball):PinballObject("Player",pinball)
 	LogMessage("Player Constructor");
 	#endif
 
-	m_PinballMaster = pinball;
 	m_Stage = NULL;
 	m_Status = StatusPlayer::waiting;
 }
@@ -43,8 +42,8 @@ bool Player::Init()
 	#endif
 
 	m_Status = StatusPlayer::waiting;
-	this->m_Stage = m_PinballMaster->GetStage(0);
-	this->m_nBalls = m_PinballMaster->GetBallsByPlayer();
+	this->m_Stage = m_pinball->GetStage(0);
+	this->m_nBalls = m_pinball->GetBallsByPlayer();
 	m_Score = 0;
 	m_ExtraBall = false;
 	m_Multiply = 1;
@@ -60,26 +59,8 @@ void Player::SetNextStage()
 	LogMessage("Player::SetNextStage");
 	#endif
 
-	this->m_Stage = m_PinballMaster->GetStage(0);
+	this->m_Stage = m_pinball->GetStage(0);
 	this->m_Stage->SetCurrentPlayer(this);
-}
-
-//-------------------------------------------------------//
-bool Player::Loop(int value)
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGESLOOP
-	LogMessage("Player::Loop");
-	#endif
-
-	if (m_Status == StatusPlayer::playing)
-	{
-		if (m_Stage != NULL)
-		{
-			m_Stage->Loop(value);
-		}
-	}
-	return false;
 }
 
 //-------------------------------------------------------//
@@ -105,7 +86,7 @@ bool Player::SetCurrentPlayer(int indexPlayer)
 			m_Stage->SetCurrentPlayer(this);
 		}
 
-		m_PinballMaster->GetNewBall();
+		m_pinball->GetNewBall();
 
 		DisplayScore();
 		return true;
@@ -145,7 +126,7 @@ void Player::DisplayScore()
 	char szPlayerScore[10];
 	sprintf(szPlayerScore, "%05d", m_Score);
 
-	m_PinballMaster->printText(szPlayer, szPlayerScore, 1);
+	m_pinball->printText(szPlayer, szPlayerScore, 1);
 }
 
 //---------------------------------------------------------------------//

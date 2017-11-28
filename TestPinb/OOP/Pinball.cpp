@@ -32,7 +32,7 @@ Pinball::Pinball() : PinballObject("Pinball", this)
 
 #ifdef DOS
 /*---------------------------------------------------------------------*/
-Pinball::Pinball(const char *szName, HardwareSerial *serial) : PinballObject (szName, this)
+Pinball::Pinball(const char *szName, HardwareSerial *serial) 
 /*---------------------------------------------------------------------*/
 {
 	m_serial = serial;
@@ -48,12 +48,6 @@ Pinball::~Pinball()
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage("Pinball Destructor");
 	#endif
-
-	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
-	{
-		delete m_PinballObjs[i];
-	}
-
 }
 
 /*---------------------------------------------------------------------*/
@@ -78,56 +72,6 @@ void Pinball::LogMessageValue(const char *szMessage, int value)
 	#endif
 }
 
-
-/*---------------------------------------------------------------------*/
-void Pinball::AddPinballInput(Input *input)
-/*---------------------------------------------------------------------*/
-{
-	#ifdef DEBUGMESSAGES
-	LogMessageValue("Pinball::AddPinballInput", input->GetPortNumber());
-	#endif
-
-	if (input != NULL)
-	{
-		m_Inputs[input->GetPortNumber()] = input;
-	}
-}
-
-/*---------------------------------------------------------------------*/
-void Pinball::AddPinballOutput(Output *output)
-/*---------------------------------------------------------------------*/
-{
-	#ifdef DEBUGMESSAGES
-	LogMessageValue("Pinball::AddPinballOutput", output->GetPortNumber());
-	#endif
-
-	if (output != NULL)
-	{
-		m_Outputs[output->GetPortNumber()] = output;
-	}
-}
-
-/*---------------------------------------------------------------------*/
-void Pinball::AddPinballObject(PinballObject *Pinballobj)
-/*---------------------------------------------------------------------*/
-{
-	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball::AddPinballObject");
-	#endif
-
-	m_PinballObjs.push_back(Pinballobj);
-}
-
-/*---------------------------------------------------------------------*/
-void Pinball::RemovePinballObject(PinballObject *Pinballobj)
-/*---------------------------------------------------------------------*/
-{
-#ifdef DEBUGMESSAGES
-	LogMessage("Pinball::RemovePinballObject");
-#endif
-
-	m_PinballObjs.pop_back(Pinballobj);
-}
 
 //----------------------------------------------------//
 void Pinball::playSong(char song[], bool priority /*default=true*/)

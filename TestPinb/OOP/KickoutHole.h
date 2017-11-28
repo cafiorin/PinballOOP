@@ -16,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 class KickoutHole : public PinballObject
 {
 public:
-	KickoutHole(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput, Multiplex *multiplex);
+	KickoutHole(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput);
 	virtual ~KickoutHole();
 	virtual bool Init();
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);

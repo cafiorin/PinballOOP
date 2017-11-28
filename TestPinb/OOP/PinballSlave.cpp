@@ -12,6 +12,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Vector.h"
 #include "Utils.h"
 #include "Input.h"
+#include "DefinesMp3.h"
 
 #ifdef DOS
 #include "PinballMaster.h"
@@ -121,9 +122,51 @@ void PinballSlave::DataReceived(char c)
 
 	switch (c)
 	{
-		case INIT_THEME:
+		case COMM_TEST_SOUND:
 		{
-			playSong("Theme.mp3"); //TODO:
+			playSong(MP3_THEME_STAGE0);
+		}
+		break;
+
+		case COMM_INIT_THEME:
+		{
+			playSong(MP3_THEME);
+		}
+		break;
+
+		case COMM_INIT_THEME_STAGE0:
+		{
+			playSong(MP3_THEME_STAGE0);
+		}
+		break;
+
+		case COMM_INIT_THEME_STAGE1:
+		{
+			playSong(MP3_THEME_STAGE1);
+		}
+		break;
+
+		case COMM_INIT_THEME_STAGE2:
+		{
+			playSong(MP3_THEME_STAGE2);
+		}
+		break;
+
+		case COMM_INIT_THEME_STAGE3:
+		{
+			playSong(MP3_THEME_STAGE3);
+		}
+		break;
+		
+		case COMM_INIT_THEME_STAGE4:
+		{
+			playSong(MP3_THEME_STAGE4);
+		}
+		break;
+		
+		case COMM_INIT_THEME_STAGE5:
+		{
+			playSong(MP3_THEME_STAGE5);
 		}
 		break;
 	}

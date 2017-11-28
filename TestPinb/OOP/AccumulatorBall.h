@@ -16,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 class AccumulatorBall : public PinballObject
 {
 public:
-	AccumulatorBall(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberOutput, Multiplex *multiplex);
+	AccumulatorBall(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberOutput);
 
 	virtual ~AccumulatorBall();
 	virtual bool Init();

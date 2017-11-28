@@ -52,6 +52,13 @@ public:
 
 	LedControl *GetLedControl() {return m_LedControl;}
 	Multiplex *GetMultiplex() { return m_Multiplex; }
+	Input *GetInput(int channel) { return m_Inputs[channel]; }
+	Output *GetOutput(int channel) { return m_Outputs[channel]; }
+
+	void AddPinballObject(PinballObject *Pinballobj);
+	void RemovePinballObject(PinballObject *Pinballobj);
+	void AddPinballInput(Input *input);
+	void AddPinballOutput(Output *output);
 
 	void clearDisplay(int line=0);
 	void printText(char *text1, char *text2, char font);
@@ -99,6 +106,10 @@ private :
 protected:
 	Multiplex *m_Multiplex;
 	LedControl *m_LedControl;
+
+	Vector<PinballObject *> m_PinballObjs;
+	Input *m_Inputs[MAX_INPUTCHANNELS];
+	Output *m_Outputs[MAX_OUTPUTCHANNELS];
 
 };
 

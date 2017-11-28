@@ -6,11 +6,11 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "ReturnKickBall.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
-ReturnKickBall::ReturnKickBall(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
+ReturnKickBall::ReturnKickBall(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -18,7 +18,7 @@ ReturnKickBall::ReturnKickBall(const char *szName, Pinball *pinball, int portNum
 	#endif
 
 	m_input1 = new Input("ReIn", pinball, portNumberInput,this);
-	m_output = new Output("ReOut", pinball, portNumberOutput,multiplex);
+	m_output = new Output("ReOut", pinball, portNumberOutput);
 
 	Init();
 }

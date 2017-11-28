@@ -16,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 class Light : public Output
 {
 public:
-	Light(const char *szName, Pinball *pinball, int portNumber, Multiplex *multiplex);
+	Light(const char *szName, PinballMaster *pinball, int portNumber);
 	virtual ~Light();
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 

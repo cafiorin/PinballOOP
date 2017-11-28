@@ -22,7 +22,6 @@ SequencerLeds::SequencerLeds(PinballMaster *pinball, SequencerType type,long tim
 	Debug("SequencerLeds Constructor");
 	#endif
 
-	m_PinballMaster = pinball;
 	m_timerSeq = new Timer(time, "TimerSeq", pinball, this, TimerType::continuous);
 	m_type = type;
 	m_enabled = false;
@@ -72,11 +71,11 @@ void SequencerLeds::Start()
 	{
 		End();
 		m_pos = 0;
-		m_PinballMaster->GetLedControl()->TurnOn(m_Leds[m_pos]);
+		m_pinball->GetLedControl()->TurnOn(m_Leds[m_pos]);
 		if (m_LedsTurnOnWithNext[m_pos])
 		{
 			m_pos = GetNext(m_pos);
-			m_PinballMaster->GetLedControl()->TurnOn(m_Leds[m_pos]);
+			m_pinball->GetLedControl()->TurnOn(m_Leds[m_pos]);
 		}
 
 		m_timerSeq->Start();
@@ -94,7 +93,7 @@ void SequencerLeds::End()
 	m_pos = 0;
 	for (char i = 0; i < m_count; i++)
 	{
-		m_PinballMaster->GetLedControl()->TurnOff(m_Leds[i]);
+		m_pinball->GetLedControl()->TurnOff(m_Leds[i]);
 	}
 
 }
@@ -131,7 +130,7 @@ bool SequencerLeds::TimerIsOver(PinballObject *sender)
 		Debug("...Timer is over to seq");
 		#endif
 
-		LedControl *pLedControl = m_PinballMaster->GetLedControl();
+		LedControl *pLedControl = m_pinball->GetLedControl();
 
 		if (m_type == SequencerType::turnOn1by1)
 		{

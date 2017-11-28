@@ -148,6 +148,12 @@ PinballMaster::~PinballMaster()
 #ifdef DEBUGMESSAGESCREATION
 	LogMessage("PinballMaster Destructor");
 #endif
+
+	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
+	{
+		delete m_PinballObjs[i];
+	}
+
 }
 
 //---------------------------------------------------------------------//
@@ -156,7 +162,7 @@ void PinballMaster::CreateObjects()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("PinballMaster::CreateObjects");
+	LogMessage("PinballMaster::CreateObjects");
 	#endif
 
 	printText("Pinball", "init", 0);
@@ -164,60 +170,60 @@ void PinballMaster::CreateObjects()
 	m_LedControl = new LedControl(this);
 	m_Menu = new Menu("Menu", this);
 	m_SelfTest = new SelfTest(this);
-	m_TimerToShowPlayers = new Timer(1000, "TimerSP", this, this, TimerType::continuous);
+	m_TimerToShowPlayers = new Timer(1000, "TimerSP", this, NULL, TimerType::continuous);
 	m_nSecondsTimerToShowPlayers = 5;
 	m_Multiplex = new Multiplex(this, 23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
 
-	Input *pInputStartButton = new Input("SB", this, INPUT_START_BUTTON, this);
-	Input *pInputMenu = new Input("BM", this, INPUT_MENU_BUTTON, this);
-	Input *pInputVolumePlus = new Input("VP", this, INPUT_UP_BUTTON, this);
-	Input *pInputVolumeMinus = new Input("VM", this, INPUT_DOWN_BUTTON, this);
+	Input *pInputStartButton = new Input("SB", this, INPUT_START_BUTTON);
+	Input *pInputMenu = new Input("BM", this, INPUT_MENU_BUTTON);
+	Input *pInputVolumePlus = new Input("VP", this, INPUT_UP_BUTTON);
+	Input *pInputVolumeMinus = new Input("VM", this, INPUT_DOWN_BUTTON);
 
-	m_TurnFlipperOn = new Output("TFO", this, OUTPUT_FLIPPER_ON_5V, m_Multiplex);
-	m_OutBall = new OutBall("OB", this, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL1_48V, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL2_48V, m_Multiplex);
-	m_Hole = new KickoutHole("HOLE", this, INPUT_SW_HOLE, OUTPUT_HOLE_48V, m_Multiplex);
+	m_TurnFlipperOn = new Output("TFO", this, OUTPUT_FLIPPER_ON_5V);
+	m_OutBall = new OutBall("OB", this, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL1_48V, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL2_48V);
+	m_Hole = new KickoutHole("HOLE", this, INPUT_SW_HOLE, OUTPUT_HOLE_48V);
 
-	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, INPUT_SW_SLINGSHOT_LEFT1, INPUT_SW_SLINGSHOT_LEFT2, OUTPUT_SLINGSHOTLEFT_48V, m_Multiplex);
-	SlingShot *pSlingShotRight = new SlingShot("SLR", this, INPUT_SW_SLINGSHOT_RIGHT1, INPUT_SW_SLINGSHOT_RIGHT2, OUTPUT_SLINGSHOTRIGHT_48V, m_Multiplex);
+	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, INPUT_SW_SLINGSHOT_LEFT1, INPUT_SW_SLINGSHOT_LEFT2, OUTPUT_SLINGSHOTLEFT_48V);
+	SlingShot *pSlingShotRight = new SlingShot("SLR", this, INPUT_SW_SLINGSHOT_RIGHT1, INPUT_SW_SLINGSHOT_RIGHT2, OUTPUT_SLINGSHOTRIGHT_48V);
 
-	Input *pInputOutLaneLeft = new Input("OLL", this, INPUT_SW_OUTLANE_LEFT, this);
-	Input *pInputReturnBallLeft = new Input("RBL", this, INPUT_SW_RETURNBALL_LEFT, this);
-	Input *pInputReturnBallRight = new Input("RBR", this, INPUT_SW_RETURNBALL_RIGHT, this);
-	Input *pInputOutLaneRight = new Input("OLR", this, INPUT_SW_OUTLANE_RIGHT, this);
+	Input *pInputOutLaneLeft = new Input("OLL", this, INPUT_SW_OUTLANE_LEFT);
+	Input *pInputReturnBallLeft = new Input("RBL", this, INPUT_SW_RETURNBALL_LEFT);
+	Input *pInputReturnBallRight = new Input("RBR", this, INPUT_SW_RETURNBALL_RIGHT);
+	Input *pInputOutLaneRight = new Input("OLR", this, INPUT_SW_OUTLANE_RIGHT);
 
-	Input *pInputTargetGreen1 = new Input("TG1", this, INPUT_SW_TARGET_GREEN1, this);
-	Input *pInputTargetRed1 = new Input("TR1", this, INPUT_SW_TARGET_RED1, this);
+	Input *pInputTargetGreen1 = new Input("TG1", this, INPUT_SW_TARGET_GREEN1);
+	Input *pInputTargetRed1 = new Input("TR1", this, INPUT_SW_TARGET_RED1);
 
-	DropTarget *pDropTarget5 = new DropTarget("DT5", this, INPUT_SW_DROPTARGET_51, INPUT_SW_DROPTARGET_52, INPUT_SW_DROPTARGET_53, INPUT_SW_DROPTARGET_54, INPUT_SW_DROPTARGET_55, OUTPUT_DROPTARGET5_48V, m_Multiplex);
-	Input *pInputRolloverStarRed1 = new Input("RSR1", this, INPUT_SW_ROLLOVER_STAR_RED1, this);
-	DropTarget *pDropTarget3 = new DropTarget("DT3", this, INPUT_SW_DROPTARGET_31, INPUT_SW_DROPTARGET_32, INPUT_SW_DROPTARGET_33, OUTPUT_DROPTARGET3_48V, m_Multiplex);
+	DropTarget *pDropTarget5 = new DropTarget("DT5", this, INPUT_SW_DROPTARGET_51, INPUT_SW_DROPTARGET_52, INPUT_SW_DROPTARGET_53, INPUT_SW_DROPTARGET_54, INPUT_SW_DROPTARGET_55, OUTPUT_DROPTARGET5_48V);
+	Input *pInputRolloverStarRed1 = new Input("RSR1", this, INPUT_SW_ROLLOVER_STAR_RED1);
+	DropTarget *pDropTarget3 = new DropTarget("DT3", this, INPUT_SW_DROPTARGET_31, INPUT_SW_DROPTARGET_32, INPUT_SW_DROPTARGET_33, OUTPUT_DROPTARGET3_48V);
 
-	Input *pInputTargetRed2 = new Input("TR2", this, INPUT_SW_TARGET_RED2, this);
-	Input *pInputTargetYellow2 = new Input("TY2", this, INPUT_SW_TARGET_YELLOW2, this);
-	Input *pInputTargetGreen2 = new Input("TG2", this, INPUT_SW_TARGET_GREEN2, this);
+	Input *pInputTargetRed2 = new Input("TR2", this, INPUT_SW_TARGET_RED2);
+	Input *pInputTargetYellow2 = new Input("TY2", this, INPUT_SW_TARGET_YELLOW2);
+	Input *pInputTargetGreen2 = new Input("TG2", this, INPUT_SW_TARGET_GREEN2);
 
-	Input *pInputTargetYellow1 = new Input("TY1", this, INPUT_SW_TARGET_YELLOW1, this);
+	Input *pInputTargetYellow1 = new Input("TY1", this, INPUT_SW_TARGET_YELLOW1);
 
-	Bumper *pBumperLeft = new Bumper("BL", this, INPUT_SW_BUMPER_LEFT, OUTPUT_BUMPER_LEFT_48V, m_Multiplex);
-	Bumper *pBumperCenter = new Bumper("BC", this, INPUT_SW_BUMPER_CENTER, OUTPUT_BUMPER_CENTER_48V, m_Multiplex);
-	Bumper *pBumperRight = new Bumper("BR", this, INPUT_SW_BUMPER_RIGHT, OUTPUT_BUMPER_RIGHT_48V, m_Multiplex);
+	Bumper *pBumperLeft = new Bumper("BL", this, INPUT_SW_BUMPER_LEFT, OUTPUT_BUMPER_LEFT_48V,LED_BUMPER_LEFT);
+	Bumper *pBumperCenter = new Bumper("BC", this, INPUT_SW_BUMPER_CENTER, OUTPUT_BUMPER_CENTER_48V, LED_BUMPER_CENTER);
+	Bumper *pBumperRight = new Bumper("BR", this, INPUT_SW_BUMPER_RIGHT, OUTPUT_BUMPER_RIGHT_48V, LED_BUMPER_RIGHT);
 
-	Input *pInputRolloverStarGreen = new Input("RSG", this, INPUT_SW_ROLLOVER_STAR_GREEN, this);
+	Input *pInputRolloverStarGreen = new Input("RSG", this, INPUT_SW_ROLLOVER_STAR_GREEN);
 
-	Input *pInputRolloverLeft = new Input("RML", this, INPUT_SW_ROLLOVER_LEFT, this);
-	Input *pInputRolloverCenter = new Input("RMC", this, INPUT_SW_ROLLOVER_CENTER, this);
-	Input *pInputRolloverRight = new Input("RMR", this, INPUT_SW_ROLLOVER_RIGHT, this);
+	Input *pInputRolloverLeft = new Input("RML", this, INPUT_SW_ROLLOVER_LEFT);
+	Input *pInputRolloverCenter = new Input("RMC", this, INPUT_SW_ROLLOVER_CENTER);
+	Input *pInputRolloverRight = new Input("RMR", this, INPUT_SW_ROLLOVER_RIGHT);
 
-	Input *pInputRolloverStarRed2 = new Input("RSR2", this, INPUT_SW_ROLLOVER_STAR_RED2, this);
-	Input *pInputTargetHigher = new Input("TH", this, INPUT_SW_TARGET_HIGHER, this);
-	Input *pInputSpinner = new Input("Spin", this, INPUT_SW_SPINNER, this);
+	Input *pInputRolloverStarRed2 = new Input("RSR2", this, INPUT_SW_ROLLOVER_STAR_RED2);
+	Input *pInputTargetHigher = new Input("TH", this, INPUT_SW_TARGET_HIGHER);
+	Input *pInputSpinner = new Input("Spin", this, INPUT_SW_SPINNER);
 
-	Input *pInputRampIn = new Input("RampIn", this, INPUT_SW_RAMP_IN, this);
-	Input *pInputRampOut1 = new Input("RampO1", this, INPUT_SW_RAMP_OUT1, this);
-	Input *pInputRampOut2 = new Input("RampO2", this, INPUT_SW_RAMP_OUT2, this);
+	Input *pInputRampIn = new Input("RampIn", this, INPUT_SW_RAMP_IN);
+	Input *pInputRampOut1 = new Input("RampO1", this, INPUT_SW_RAMP_OUT1);
+	Input *pInputRampOut2 = new Input("RampO2", this, INPUT_SW_RAMP_OUT2);
 
-	ReturnKickBall *returnKB = new ReturnKickBall("RKB", this, INPUT_SW_RETURNBALL_LEFT, OUTPUT_RETURNBALL_48V, m_Multiplex);
-	AccumulatorBall *accBall = new AccumulatorBall("RKB", this, INPUT_SW_ACCBALL1, INPUT_SW_ACCBALL2, INPUT_SW_ACCBALL3, INPUT_SW_ACCBALL4, OUTPUT_ACCBALL_48V, m_Multiplex);
+	ReturnKickBall *returnKB = new ReturnKickBall("RKB", this, INPUT_SW_RETURNBALL_LEFT, OUTPUT_RETURNBALL_48V);
+	AccumulatorBall *accBall = new AccumulatorBall("RKB", this, INPUT_SW_ACCBALL1, INPUT_SW_ACCBALL2, INPUT_SW_ACCBALL3, INPUT_SW_ACCBALL4, OUTPUT_ACCBALL_48V);
 
 	CreateStages();
 
@@ -235,7 +241,7 @@ void PinballMaster::CreateStages()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::CreateStages");
+	LogMessage("PinballMaster::CreateStages");
 	#endif
 
 	m_TotalStages = 1;
@@ -249,7 +255,7 @@ bool PinballMaster::Init()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::Init");
+	LogMessage("PinballMaster::Init");
 	#endif
 
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
@@ -280,7 +286,7 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, int event, int valueToSen
 	if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
 		#ifdef DEBUGMESSAGES
-		Debug("PinballMaster::NotifyEvent Test");
+		LogMessage("PinballMaster::NotifyEvent Test");
 		#endif
 
 		return SetupTest(event);
@@ -288,7 +294,7 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, int event, int valueToSen
 	else if (event == EVENT_EDGEPOSITIVE)
 	{
 		#ifdef DEBUGMESSAGES
-		Debug("PinballMaster::NotifyEvent edge Positive");
+		LogMessage("PinballMaster::NotifyEvent edge Positive");
 		#endif
 
 		// -- E D G E  P O S I T I V E --
@@ -351,7 +357,7 @@ bool PinballMaster::EventStartButton(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::EventStartButton");
+	LogMessage("PinballMaster::EventStartButton");
 	#endif
 
 	if (m_Status == StatusPinball::attractmode)
@@ -384,7 +390,7 @@ bool PinballMaster::EventMenuButton(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::EventMenuButton");
+	LogMessage("PinballMaster::EventMenuButton");
 	#endif
 
 
@@ -407,7 +413,7 @@ bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::EventUpDownButton");
+	LogMessage("PinballMaster::EventUpDownButton");
 	#endif
 
 	if (m_Status == StatusPinball::menusetup)
@@ -428,7 +434,7 @@ bool PinballMaster::PlayfieldEvent(PinballObject *sender, int event, int valueTo
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::PlayfieldEvent");
+	LogMessage("PinballMaster::PlayfieldEvent");
 	#endif
 
 	if (m_Status == StatusPinball::playingmode)
@@ -444,7 +450,7 @@ bool PinballMaster::TimerIsOver(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::TimerIsOver");
+	LogMessage("PinballMaster::TimerIsOver");
 	#endif
 
 	if (sender == m_TimerToShowPlayers)
@@ -467,7 +473,7 @@ bool PinballMaster::SetupTest(int event)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::SetupTest");
+	LogMessage("PinballMaster::SetupTest");
 	#endif
 
 	if (event == EVENT_TEST_EXIT_MENU)
@@ -502,7 +508,7 @@ void PinballMaster::StartGame(int Players)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::StartGame");
+	LogMessage("PinballMaster::StartGame");
 	#endif
 
 	m_nPlayers = Players;
@@ -600,7 +606,7 @@ void PinballMaster::ShowChooseNumberOfPlayers()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballMaster::ShowChooseNumberOfPlayers");
+	LogMessage("PinballMaster::ShowChooseNumberOfPlayers");
 	#endif
 
 	if (m_Status == StatusPinball::getplayers)
@@ -629,12 +635,6 @@ bool PinballMaster::Loop(int value)
 		case StatusPinball::attractmode:
 		{
 			m_LedControl->AttractModeLoop();
-		}
-		break;
-
-		case StatusPinball::playingmode:
-		{
-			m_Players[m_playerPlaying]->Loop(0);
 		}
 		break;
 	}
@@ -910,5 +910,55 @@ void PinballMaster::PlaySongToInput(int portNumber)
 			break;
 		}
 	}
+}
+
+/*---------------------------------------------------------------------*/
+void PinballMaster::AddPinballInput(Input *input)
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGES
+	LogMessageValue("Pinball::AddPinballInput", input->GetPortNumber());
+#endif
+
+	if (input != NULL)
+	{
+		m_Inputs[input->GetPortNumber()] = input;
+	}
+}
+
+/*---------------------------------------------------------------------*/
+void PinballMaster::AddPinballOutput(Output *output)
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGES
+	LogMessageValue("Pinball::AddPinballOutput", output->GetPortNumber());
+#endif
+
+	if (output != NULL)
+	{
+		m_Outputs[output->GetPortNumber()] = output;
+	}
+}
+
+/*---------------------------------------------------------------------*/
+void PinballMaster::AddPinballObject(PinballObject *Pinballobj)
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::AddPinballObject");
+#endif
+
+	m_PinballObjs.push_back(Pinballobj);
+}
+
+/*---------------------------------------------------------------------*/
+void PinballMaster::RemovePinballObject(PinballObject *Pinballobj)
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGES
+	LogMessage("Pinball::RemovePinballObject");
+#endif
+
+	m_PinballObjs.pop_back(Pinballobj);
 }
 

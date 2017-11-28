@@ -7,12 +7,12 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 #include "SlingShot.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 #include "PinballObject.h"
 #include "DefinesMp3.h"
 
 //-------------------------------------------------------//
-SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput, Multiplex *multiplex) : PinballObject(szName, pinball)
+SlingShot::SlingShot(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -22,7 +22,7 @@ SlingShot::SlingShot(const char *szName, Pinball *pinball, int portNumberInput1,
 	m_input1 = new Input("SLIn1", pinball, portNumberInput1, this);
 	m_input2 = new Input("SLIn2", pinball, portNumberInput2, this);
 	
-	m_output = new Output("SLOut", pinball, portNumberOutput, multiplex);
+	m_output = new Output("SLOut", pinball, portNumberOutput);
 
 	Init();
 }

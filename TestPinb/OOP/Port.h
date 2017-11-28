@@ -15,7 +15,7 @@ class Port : public PinballObject
 {
 
 public:
-	Port(Pinball *pinball, const char *szName, int portNumber);
+	Port(PinballMaster *pinball, const char *szName, int portNumber);
 	virtual ~Port();
 	int GetPortNumber() { return m_portNumber; }
 

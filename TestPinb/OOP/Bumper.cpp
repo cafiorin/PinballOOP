@@ -6,11 +6,14 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Bumper.h"
+#include "Input.h"
+#include "Output.h"
+#include "LedControl.h"
 #include "PinballObject.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 
 //-------------------------------------------------------//
-Bumper::Bumper(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
+Bumper::Bumper(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput,int LedNumber) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -18,8 +21,9 @@ Bumper::Bumper(const char *szName, Pinball *pinball, int portNumberInput, int po
 	#endif
 
 	m_input = new Input("BperIn", pinball, portNumberInput,this);
-	m_output = new Output("BperOut", pinball, portNumberOutput, multiplex);
-
+	m_output = new Output("BperOut", pinball, portNumberOutput);
+	m_Led = LedNumber;
+	m_TimerLed = new Timer(200, "TBL", pinball, this, TimerType::once);
 	Init();
 }
 
@@ -47,7 +51,13 @@ bool Bumper::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
 		m_pinball->NotifyEvent(this, event, valueToSend);
+		m_pinball->GetLedControl()->TurnOn(m_Led);
+		m_TimerLed->Start();
 		return true;
+	}
+	else if (event == EVENT_TIMEISOVER)
+	{
+		m_pinball->GetLedControl()->TurnOff(m_Led);
 	}
 	return false;
 }

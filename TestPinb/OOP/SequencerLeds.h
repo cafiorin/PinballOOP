@@ -57,7 +57,6 @@ public:
 	}
 
 protected:
-	PinballMaster *m_PinballMaster;
 	Timer *m_timerSeq;
 
 };

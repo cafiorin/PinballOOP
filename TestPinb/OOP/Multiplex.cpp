@@ -6,7 +6,7 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Utils.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 #include "Input.h"
 #include "Output.h"
 #include "PinballObject.h"
@@ -41,7 +41,7 @@ static const int _muxChAddress[16][4] =
 };
 
 //-----------------------------------------------
-Multiplex::Multiplex(Pinball *pinball, const int S0,const int S1,const int S2,const int S3,const int SIG, const int OUTSIG, const int chipSelect1, const int chipSelect2, const int chipSelect3, const int chipSelect4, const int chipSelect5) : PinballObject("Mult", pinball)
+Multiplex::Multiplex(PinballMaster *pinball, const int S0,const int S1,const int S2,const int S3,const int SIG, const int OUTSIG, const int chipSelect1, const int chipSelect2, const int chipSelect3, const int chipSelect4, const int chipSelect5) : PinballObject("Mult", pinball)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -196,50 +196,55 @@ int Multiplex::readChannel(int ch)
 bool Multiplex::Loop(int value)
 //-----------------------------------------------
 {
-	#ifdef DEBUGMESSAGESLOOP
-	LogMessage("Multiplex::Loop");
-	#endif
-
-	digitalWrite(_chipSelect1, HIGH);
-	digitalWrite(_chipSelect2, HIGH);
-	digitalWrite(_chipSelect3, HIGH);
-
-	bool someInputChanged = false;
-
-	for (int ch = 0; ch < 16; ch++)
+	if (IsEnabled())
 	{
-		_addressing(ch);
+		#ifdef DEBUGMESSAGESLOOP
+		LogMessage("Multiplex::Loop");
+		#endif
 
-		int read;
-		digitalWrite(_chipSelect1, LOW);
-		read = digitalRead(_sig);
 		digitalWrite(_chipSelect1, HIGH);
-		Input *input = m_pinball->GetInput(ch);
-		if (input != NULL)
-		{
-			someInputChanged = input->SetInput(read);
-		}
-
-		digitalWrite(_chipSelect2, LOW);
-		read = digitalRead(_sig);
 		digitalWrite(_chipSelect2, HIGH);
-		input = m_pinball->GetInput(ch + 16);
-		if (input != NULL)
+		digitalWrite(_chipSelect3, HIGH);
+
+		bool someInputChanged = false;
+
+		for (int ch = 0; ch < 16; ch++)
 		{
-			someInputChanged = input->SetInput(read);
+			_addressing(ch);
+
+			int read;
+			digitalWrite(_chipSelect1, LOW);
+			read = digitalRead(_sig);
+			digitalWrite(_chipSelect1, HIGH);
+			Input *input = m_pinball->GetInput(ch);
+			if (input != NULL)
+			{
+				someInputChanged = input->SetInput(read);
+			}
+
+			digitalWrite(_chipSelect2, LOW);
+			read = digitalRead(_sig);
+			digitalWrite(_chipSelect2, HIGH);
+			input = m_pinball->GetInput(ch + 16);
+			if (input != NULL)
+			{
+				someInputChanged = input->SetInput(read);
+			}
+
+			digitalWrite(_chipSelect3, LOW);
+			read = digitalRead(_sig);
+			digitalWrite(_chipSelect3, HIGH);
+			input = m_pinball->GetInput(ch + 32);
+			if (input != NULL)
+			{
+				someInputChanged = input->SetInput(read);
+			}
 		}
 
-		digitalWrite(_chipSelect3, LOW);
-		read = digitalRead(_sig);
-		digitalWrite(_chipSelect3, HIGH);
-		input = m_pinball->GetInput(ch + 32);
-		if (input != NULL)
-		{
-			someInputChanged = input->SetInput(read);
-		}
+		return someInputChanged;
 	}
 
-	return someInputChanged;
+	return false;
 }
 
 

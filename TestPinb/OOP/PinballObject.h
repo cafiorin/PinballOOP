@@ -10,12 +10,12 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 
-class Pinball;
+class PinballMaster;
 
 class PinballObject
 {
 public:
-	PinballObject(const char *szName, Pinball *pinball);
+	PinballObject(const char *szName, PinballMaster *pinball);
 	virtual ~PinballObject();
 	char *getName() { return m_szName; }
 	bool IsEnabled() { return m_enabled; }
@@ -24,7 +24,7 @@ public:
 	void LogMessage(const char *szMessage);
 	void LogMessageValue(const char *szMessage, int value);
 	void Debug(const char *szMessage);
-	Pinball *GetPinball() { return m_pinball; }
+	PinballMaster *GetPinball() { return m_pinball; }
 
 //virtual methods
 	virtual bool Init();
@@ -34,7 +34,7 @@ public:
 protected:
 	char m_szName[MAX_NAME];
 	bool m_enabled;
-	Pinball *m_pinball;
+	PinballMaster *m_pinball;
 };
 
 #endif

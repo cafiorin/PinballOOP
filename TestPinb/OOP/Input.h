@@ -16,7 +16,7 @@ class Input : public Port
 {
 
 public:
-	Input(const char *szName, Pinball *pinball, int portNumber, PinballObject *pinballObject);
+	Input(const char *szName, PinballMaster *pinball, int portNumber, PinballObject *pinballObject=NULL);
 	virtual ~Input();
 
 	bool GetInput();

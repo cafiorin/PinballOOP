@@ -19,7 +19,6 @@ http://pinballhomemade.blogspot.com.br
 
 
 
-// TODO: reference additional headers your program requires here
 #define _CRT_SECURE_NO_WARNINGS
 #define DOS
 #pragma warning( disable : 4996 )  

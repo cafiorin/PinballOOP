@@ -18,7 +18,7 @@ class Multiplex;
 class Output : public Port
 {
 public:
-	Output(const char *szName, Pinball *pinball, int portNumber, Multiplex *multiplex);
+	Output(const char *szName, PinballMaster *pinball, int portNumber);
 	virtual ~Output();
 
 	bool IsTurnOn(){return m_turnOn;}

@@ -15,7 +15,7 @@ Menu::Menu(const char *szName, PinballMaster *pinball)
 	m_PinballMaster = pinball;
 	
 	#ifdef DEBUGMESSAGES
-	m_PinballMaster->Debug("Menu Constructor");
+	m_PinballMaster->LogMessage("Menu Constructor");
 	#endif
 
 
@@ -27,7 +27,7 @@ Menu::~Menu()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_PinballMaster->Debug("Menu Destructor");
+	m_PinballMaster->LogMessage("Menu Destructor");
 	#endif
 }
 
@@ -36,7 +36,7 @@ bool Menu::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_PinballMaster->Debug("Menu::Init");
+	m_PinballMaster->LogMessage("Menu::Init");
 	#endif
 	
 	m_isShowing = false;
@@ -168,7 +168,7 @@ bool Menu::PressUpDownButton(bool upButton)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_PinballMaster->Debug("Menu::PressButton");
+	m_PinballMaster->LogMessage("Menu::PressButton");
 	#endif
 
 	if (upButton)

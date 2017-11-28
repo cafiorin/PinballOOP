@@ -6,11 +6,11 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "KickoutHole.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
-KickoutHole::KickoutHole(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput,Multiplex *multiplex) : PinballObject(szName, pinball)
+KickoutHole::KickoutHole(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -18,7 +18,7 @@ KickoutHole::KickoutHole(const char *szName, Pinball *pinball, int portNumberInp
 	#endif
 
 	m_input1 = new Input("KHIn", pinball, portNumberInput,this);
-	m_output = new Output("KHOut", pinball, portNumberOutput,multiplex);
+	m_output = new Output("KHOut", pinball, portNumberOutput);
 
 	Init();
 }

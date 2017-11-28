@@ -16,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 class SlingShot : public PinballObject
 {
 public:
-	SlingShot(const char *szName, Pinball *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput, Multiplex *multiplex);
+	SlingShot(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput);
 	virtual ~SlingShot();
 	virtual bool Init();
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);

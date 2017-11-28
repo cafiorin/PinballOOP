@@ -20,7 +20,7 @@ enum TimerType
 class Timer : public PinballObject
 {
 public:
-	Timer(long time, const char *szName, Pinball *pinball, PinballObject *parent=NULL, TimerType type=TimerType::once);
+	Timer(long time, const char *szName, PinballMaster *pinball, PinballObject *parent=NULL, TimerType type=TimerType::once);
 	virtual ~Timer();
 	virtual bool Loop(int value);
 	PinballObject *m_parent;

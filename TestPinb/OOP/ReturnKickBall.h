@@ -16,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 class ReturnKickBall : public PinballObject
 {
 public:
-	ReturnKickBall(const char *szName, Pinball *pinball, int portNumberInput, int portNumberOutput, Multiplex *multiplex);
+	ReturnKickBall(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput);
 	virtual ~ReturnKickBall();
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 

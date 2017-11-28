@@ -7,15 +7,14 @@ http://pinballhomemade.blogspot.com.br
 
 #include "DropTarget.h"
 #include "Output.h"
-#include "Pinball.h"
+#include "PinballMaster.h"
 
 //-------------------------------------------------------//
-DropTarget::DropTarget(const char *szName, Pinball *pinball, 
+DropTarget::DropTarget(const char *szName, PinballMaster *pinball, 
 						int portNumberInput1, 
 						int portNumberInput2, 
 						int portNumberInput3, 
-						int portNumberOutput,
-						Multiplex *multiplex) : PinballObject(szName, pinball)
+						int portNumberOutput) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -27,20 +26,19 @@ DropTarget::DropTarget(const char *szName, Pinball *pinball,
 	m_input[1] = new Input("DT32In", pinball, portNumberInput2, this);
 	m_input[2] = new Input("DT33In", pinball, portNumberInput3, this);
 
-	m_output = new Output("DT3Out", pinball, portNumberOutput,multiplex);
+	m_output = new Output("DT3Out", pinball, portNumberOutput);
 
 	Init();
 }
 
 //-------------------------------------------------------//
-DropTarget::DropTarget(const char *szName, Pinball *pinball,
+DropTarget::DropTarget(const char *szName, PinballMaster *pinball,
 	int portNumberInput1,
 	int portNumberInput2,
 	int portNumberInput3,
 	int portNumberInput4,
 	int portNumberInput5,
-	int portNumberOutput,
-	Multiplex *multiplex) : PinballObject(szName, pinball)
+	int portNumberOutput) : PinballObject(szName, pinball)
 	//-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -54,7 +52,7 @@ DropTarget::DropTarget(const char *szName, Pinball *pinball,
 	m_input[3] = new Input("DT54In", pinball, portNumberInput4, this);
 	m_input[4] = new Input("DT55In", pinball, portNumberInput5, this);
 
-	m_output = new Output("DT5Out", pinball, portNumberOutput,multiplex);
+	m_output = new Output("DT5Out", pinball, portNumberOutput);
 
 	Init();
 }

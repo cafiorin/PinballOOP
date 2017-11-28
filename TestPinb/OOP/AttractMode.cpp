@@ -43,7 +43,7 @@ bool AttractMode::Init()
 	Debug("AttractMode::Init");
 	#endif
 
-	m_PinballMaster->sendMessageToAnotherArduino(ADDRESS_SLAVE, INIT_THEME);
+	m_PinballMaster->sendMessageToAnotherArduino(ADDRESS_SLAVE, COMM_INIT_THEME);
 	m_PinballMaster->printText("PRESS", "START", 0);
 	m_showGameOver = false;
     m_PinballMaster->playSong(MP3_THEME00);

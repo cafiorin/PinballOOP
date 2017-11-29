@@ -32,6 +32,19 @@ void PrintReadKey()
 	printf("Read Key :");
 }
 
+void PrintTime(long time)
+{
+	int x = 70;
+	int y = 40;
+	clrbox(x, y, x + 18, y + 2, BLACK);
+
+	setcolor(WHITE);
+	box(x, y, x + 18, y + 2, y + 7, y + 7, "");
+	gotoxy(x + 2, y + 1);
+	printf("Time :%ld ms", time);
+}
+
+
 int ReadKey()
 {
 	if (_kbhit())
@@ -139,6 +152,7 @@ int main()
 	PrintReadKey();
 
 	int ch = 0;
+	long lastTime = 0;
 	do
 	{
 		ch = ReadKey();
@@ -176,7 +190,15 @@ int main()
 			}
 		}
 
+		long t1 = Millis();
 		pPinballMaster->Loop(0);
+		long t2 = Millis() - t1;
+		if (lastTime < t2)
+		{
+			PrintTime(Millis() - t1);
+			lastTime = t2;
+		}
+
 		pPinballSlave->Loop(0);
 
 	} while (ch != -2);

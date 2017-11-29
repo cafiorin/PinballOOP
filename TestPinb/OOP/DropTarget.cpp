@@ -22,7 +22,7 @@ DropTarget::DropTarget(const char *szName, PinballMaster *pinball,
 	Debug("DropTarget Constructor");
 	#endif
 
-	m_SequencerLeds = new SequencerLeds(m_pinball, SequencerType::blinkingAll, 300);
+	m_SequencerLeds = new SequencerLeds(m_pinball, SequencerType::blinkingAll, 1000);
 	m_sizeInputs = 3;
 	m_input[0] = new Input("DT31In", pinball, portNumberInput1,this);
 	m_input[1] = new Input("DT32In", pinball, portNumberInput2, this);

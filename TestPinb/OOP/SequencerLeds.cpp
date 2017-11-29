@@ -67,8 +67,8 @@ void SequencerLeds::TurnOnAlwaysLed(int position,bool turnOn)
 	if (position < m_count)
 	{
 		m_LedsAlwaysTurnOn[position] = turnOn;
+		m_pinball->GetLedControl()->TurnOn(m_Leds[position]);
 	}
-
 }
 
 
@@ -231,7 +231,6 @@ bool SequencerLeds::TimerIsOver(PinballObject *sender)
 				}
 			}
 			m_blink = !m_blink;
-			Start();
 		}
 
 		return true;

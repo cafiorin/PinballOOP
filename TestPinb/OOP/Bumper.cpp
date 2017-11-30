@@ -24,7 +24,6 @@ Bumper::Bumper(const char *szName, PinballMaster *pinball, int portNumberInput, 
 	m_output = new Output("BperOut", pinball, portNumberOutput);
 	m_Led = LedNumber;
 	m_TimerLed = new Timer(200, "TBL", pinball, this, TimerType::once);
-	Init();
 }
 
 //-------------------------------------------------------//

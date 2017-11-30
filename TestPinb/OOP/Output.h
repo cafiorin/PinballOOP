@@ -25,7 +25,7 @@ public:
 	void TurnOn();
 	void TurnOnByTimer(long time=TIME_COIL_ON);
 	void TurnOff();
-	virtual bool Init();
+	virtual bool Init(StatusPinball status);
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 protected:

@@ -19,7 +19,7 @@ public:
 	AccumulatorBall(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberOutput);
 
 	virtual ~AccumulatorBall();
-	virtual bool Init();
+	virtual bool Init(StatusPinball status);
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 	int GetNumberBalls() {return m_nBalls;}
 	void LanchBall();

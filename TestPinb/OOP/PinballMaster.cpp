@@ -20,6 +20,7 @@ http://pinballhomemade.blogspot.com.br
 #include "ReturnKickBall.h"
 #include "AccumulatorBall.h"
 #include "DropTarget.h"
+#include "Target.h"
 #include "OutBall.h"
 #include "Menu.h"
 #include "Multiplex.h"
@@ -154,6 +155,7 @@ PinballMaster::~PinballMaster()
 		delete m_PinballObjs[i];
 	}
 
+	delete m_Menu;
 }
 
 //---------------------------------------------------------------------//
@@ -164,15 +166,20 @@ void PinballMaster::CreateObjects()
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage("PinballMaster::CreateObjects");
 	#endif
+	m_Status = StatusPinball::initializing;
 
 	printText("Pinball", "init", 0);
-
+	
 	m_LedControl = new LedControl(this);
 	m_Menu = new Menu("Menu", this);
 	m_SelfTest = new SelfTest(this);
 	m_TimerToShowPlayers = new Timer(1000, "TimerSP", this, NULL, TimerType::continuous);
 	m_nSecondsTimerToShowPlayers = 5;
 	m_Multiplex = new Multiplex(this, 23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
+	
+	//Initialize objects
+	m_GI = new Output("GI", this, OUTPUT_GI_ON_12V);
+	m_GI->TurnOn();
 
 	Input *pInputStartButton = new Input("SB", this, INPUT_START_BUTTON);
 	Input *pInputMenu = new Input("BM", this, INPUT_MENU_BUTTON);
@@ -186,13 +193,13 @@ void PinballMaster::CreateObjects()
 	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, INPUT_SW_SLINGSHOT_LEFT1, INPUT_SW_SLINGSHOT_LEFT2, OUTPUT_SLINGSHOTLEFT_48V);
 	SlingShot *pSlingShotRight = new SlingShot("SLR", this, INPUT_SW_SLINGSHOT_RIGHT1, INPUT_SW_SLINGSHOT_RIGHT2, OUTPUT_SLINGSHOTRIGHT_48V);
 
-	Input *pInputOutLaneLeft = new Input("OLL", this, INPUT_SW_OUTLANE_LEFT);
-	Input *pInputReturnBallLeft = new Input("RBL", this, INPUT_SW_RETURNBALL_LEFT);
-	Input *pInputReturnBallRight = new Input("RBR", this, INPUT_SW_RETURNBALL_RIGHT);
-	Input *pInputOutLaneRight = new Input("OLR", this, INPUT_SW_OUTLANE_RIGHT);
+	//Target *pInputOutLaneLeft = new Target("OLL", this, INPUT_SW_OUTLANE_LEFT,LED_OUTLANE_LEFT);
+	Target *pInputReturnBallLeft = new Target("RBL", this, INPUT_SW_RETURNBALL_LEFT,LED_RETURNBALL_LEFT);
+	Target *pInputReturnBallRight = new Target("RBR", this, INPUT_SW_RETURNBALL_RIGHT,LED_RETURNBALL_RIGHT);
+	Target *pInputOutLaneRight = new Target("OLR", this, INPUT_SW_OUTLANE_RIGHT,LED_OUTLANE_RIGHT);
 
-	Input *pInputTargetGreen1 = new Input("TG1", this, INPUT_SW_TARGET_GREEN1);
-	Input *pInputTargetRed1 = new Input("TR1", this, INPUT_SW_TARGET_RED1);
+	Target *pInputTargetGreen1 = new Target("TG1", this, INPUT_SW_TARGET_GREEN1,LED_TARGET_GREEN1);
+	Target *pInputTargetRed1 = new Target("TR1", this, INPUT_SW_TARGET_RED1, LED_TARGET_RED1);
 
 	DropTarget *pDropTarget5 = new DropTarget("DT5", this, INPUT_SW_DROPTARGET_51, INPUT_SW_DROPTARGET_52, INPUT_SW_DROPTARGET_53, INPUT_SW_DROPTARGET_54, INPUT_SW_DROPTARGET_55, OUTPUT_DROPTARGET5_48V);
 	pDropTarget5->AddLeds(LED_DROPTARGET_51, LED_DROPTARGET_52, LED_DROPTARGET_53, LED_DROPTARGET_54, LED_DROPTARGET_55);
@@ -224,10 +231,11 @@ void PinballMaster::CreateObjects()
 	Input *pInputRampOut1 = new Input("RampO1", this, INPUT_SW_RAMP_OUT1);
 	Input *pInputRampOut2 = new Input("RampO2", this, INPUT_SW_RAMP_OUT2);
 
-	ReturnKickBall *returnKB = new ReturnKickBall("RKB", this, INPUT_SW_RETURNBALL_LEFT, OUTPUT_RETURNBALL_48V);
+	ReturnKickBall *returnKB = new ReturnKickBall("RKB", this, INPUT_SW_OUTLANE_LEFT, OUTPUT_RETURNBALL_48V, LED_OUTLANE_LEFT);
 	AccumulatorBall *accBall = new AccumulatorBall("RKB", this, INPUT_SW_ACCBALL1, INPUT_SW_ACCBALL2, INPUT_SW_ACCBALL3, INPUT_SW_ACCBALL4, OUTPUT_ACCBALL_48V);
 
 	CreateStages();
+	Init(StatusPinball::initializing);
 
 	//Last 
 	m_AttractMode = new AttractMode(this);
@@ -235,7 +243,7 @@ void PinballMaster::CreateObjects()
 	printText("Pinball", "OK", 0);
 	delay(200);
 
-	Init();
+	Init(StatusPinball::attractmode);
 }
 
 //---------------------------------------------------------------------//
@@ -253,17 +261,19 @@ void PinballMaster::CreateStages()
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::Init()
+bool PinballMaster::Init(StatusPinball status)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage("PinballMaster::Init");
 	#endif
 
+	m_Status = status;
+
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
 		PinballObject *pObject = m_PinballObjs[i];
-		if (!pObject->Init())
+		if (!pObject->Init(status))
 		{
 			#ifdef DEBUGMESSAGES
 			LogMessage("Pinball Error");
@@ -271,9 +281,6 @@ bool PinballMaster::Init()
 			#endif
 		}
 	}
-
-	m_Status = StatusPinball::attractmode;
-
 	return true;
 }
 
@@ -427,6 +434,10 @@ bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
 	{
 		m_SelfTest->EventUpDownButton(sender, upButton);
 	}
+	else
+	{
+		ChangeVolume(upButton);
+	}
 
 	return false;
 }
@@ -482,7 +493,7 @@ bool PinballMaster::SetupTest(int event)
 	{
 		m_SelfTest->FinishTest();
 		m_Status = StatusPinball::attractmode;
-		m_AttractMode->Init();
+		m_AttractMode->Init(m_Status);
 	}
 	else if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
@@ -492,12 +503,12 @@ bool PinballMaster::SetupTest(int event)
 			printText("Set", "Ball", 1);
 			delay(300);
 			m_Status = StatusPinball::attractmode;
-			m_AttractMode->Init();
+			m_AttractMode->Init(m_Status);
 			return true;
 		}
 		else
 		{
-			m_Status = StatusPinball::menutest;
+			Init(StatusPinball::menutest);
 			m_SelfTest->StartTest(event);
 		}
 	}
@@ -512,6 +523,7 @@ void PinballMaster::StartGame(int Players)
 	#ifdef DEBUGMESSAGES
 	LogMessage("PinballMaster::StartGame");
 	#endif
+	this->Init(StatusPinball::playingmode);
 
 	m_nPlayers = Players;
 
@@ -519,7 +531,7 @@ void PinballMaster::StartGame(int Players)
 
 	for (int i = 0; i < m_nPlayers; i++)
 	{
-		m_Players[i]->Init();
+		m_Players[i]->Init(StatusPinball::playingmode);
 	}
 
 	m_playerPlaying = 0;
@@ -587,7 +599,7 @@ void PinballMaster::NextPlayer()
 	else
 	{
 		//GameOver
-		m_Status = StatusPinball::attractmode;
+		Init(StatusPinball::attractmode);
 		m_AttractMode->InitGameOver();
 	}
 }
@@ -629,7 +641,7 @@ bool PinballMaster::Loop(int value)
 
 	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
 	{
-		m_PinballObjs[i]->Loop(value);
+		m_PinballObjs[i]->Loop();
 	}
 
 	switch (m_Status)
@@ -640,7 +652,6 @@ bool PinballMaster::Loop(int value)
 		}
 		break;
 	}
-
 	return true;
 }
 

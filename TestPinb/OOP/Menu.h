@@ -56,7 +56,8 @@ class Menu
 public:
 	Menu(const char *szName, PinballMaster *pinball);
 	virtual ~Menu();
-	virtual bool Init();
+	virtual bool Init(StatusPinball status);
+	void DestroyChildren(MenuString *menuString);
 
 	void PressButtonMenu();
 	bool PressUpDownButton(bool upButton);

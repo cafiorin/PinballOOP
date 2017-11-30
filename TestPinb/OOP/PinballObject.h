@@ -10,6 +10,17 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 
+enum StatusPinball
+{
+	initializing,
+	menusetup,
+	menutest,
+	attractmode,
+	getplayers,
+	playingmode,
+	waitingmessages
+};
+
 class PinballMaster;
 
 class PinballObject
@@ -27,8 +38,8 @@ public:
 	PinballMaster *GetPinball() { return m_pinball; }
 
 //virtual methods
-	virtual bool Init();
-	virtual bool Loop(int value);
+	virtual bool Init(StatusPinball status);
+	virtual void Loop();
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 protected:

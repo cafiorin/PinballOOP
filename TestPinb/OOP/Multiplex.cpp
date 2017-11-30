@@ -193,7 +193,7 @@ int Multiplex::readChannel(int ch)
 }
 
 //-----------------------------------------------
-bool Multiplex::Loop(int value)
+void Multiplex::Loop()
 //-----------------------------------------------
 {
 	if (IsEnabled())
@@ -206,8 +206,6 @@ bool Multiplex::Loop(int value)
 		digitalWrite(_chipSelect2, HIGH);
 		digitalWrite(_chipSelect3, HIGH);
 
-		bool someInputChanged = false;
-
 		for (int ch = 0; ch < 16; ch++)
 		{
 			_addressing(ch);
@@ -219,7 +217,7 @@ bool Multiplex::Loop(int value)
 			Input *input = m_pinball->GetInput(ch);
 			if (input != NULL)
 			{
-				someInputChanged = input->SetInput(read);
+				input->SetInput(read);
 			}
 
 			digitalWrite(_chipSelect2, LOW);
@@ -228,7 +226,7 @@ bool Multiplex::Loop(int value)
 			input = m_pinball->GetInput(ch + 16);
 			if (input != NULL)
 			{
-				someInputChanged = input->SetInput(read);
+				input->SetInput(read);
 			}
 
 			digitalWrite(_chipSelect3, LOW);
@@ -237,14 +235,10 @@ bool Multiplex::Loop(int value)
 			input = m_pinball->GetInput(ch + 32);
 			if (input != NULL)
 			{
-				someInputChanged = input->SetInput(read);
+				input->SetInput(read);
 			}
 		}
-
-		return someInputChanged;
 	}
-
-	return false;
 }
 
 

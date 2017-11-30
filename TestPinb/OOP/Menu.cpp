@@ -18,27 +18,6 @@ Menu::Menu(const char *szName, PinballMaster *pinball)
 	m_PinballMaster->LogMessage("Menu Constructor");
 	#endif
 
-
-	Init();
-}
-
-//-------------------------------------------------------//
-Menu::~Menu()
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	m_PinballMaster->LogMessage("Menu Destructor");
-	#endif
-}
-
-//-------------------------------------------------------//
-bool Menu::Init()
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	m_PinballMaster->LogMessage("Menu::Init");
-	#endif
-	
 	m_isShowing = false;
 
 	//Menu
@@ -79,7 +58,42 @@ bool Menu::Init()
 	new MenuString(pNBalls, EVENT_TEST_NBALLS3, "3");
 	new MenuString(pNBalls, EVENT_TEST_NBALLS4, "4");
 	new MenuString(pNBalls, EVENT_TEST_NBALLS5, "5");
+}
 
+//-------------------------------------------------------//
+Menu::~Menu()
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	m_PinballMaster->LogMessage("Menu Destructor");
+	#endif
+
+	DestroyChildren(m_pMenu);
+}
+
+//-------------------------------------------------------//
+void Menu::DestroyChildren(MenuString *pMenuString)
+//-------------------------------------------------------//
+{
+	Vector<MenuString *> children = pMenuString->GetChildren();
+
+	for(int i=0; i < children.size();i++)
+	{
+		DestroyChildren(children[i]);
+	}
+
+	delete pMenuString;
+}
+
+//-------------------------------------------------------//
+bool Menu::Init(StatusPinball status)
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	m_PinballMaster->LogMessage("Menu::Init");
+	#endif
+
+	m_isShowing = false;
 	return true;
 }
 

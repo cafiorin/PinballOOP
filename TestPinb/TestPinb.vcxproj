@@ -173,6 +173,7 @@
     <ClInclude Include="OOP\SlingShot.h" />
     <ClInclude Include="OOP\Stage0.h" />
     <ClInclude Include="OOP\StageBase.h" />
+    <ClInclude Include="OOP\Target.h" />
     <ClInclude Include="OOP\Timer.h" />
     <ClInclude Include="OOP\Utils.h" />
     <ClInclude Include="OOP\Vector.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="OOP\SlingShot.cpp" />
     <ClCompile Include="OOP\Stage0.cpp" />
     <ClCompile Include="OOP\StageBase.cpp" />
+    <ClCompile Include="OOP\Target.cpp" />
     <ClCompile Include="OOP\Timer.cpp" />
     <ClCompile Include="OOP\Utils.cpp" />
     <ClCompile Include="stdafx.cpp" />

@@ -28,7 +28,6 @@ OutBall::OutBall(const char *szName, PinballMaster *pinball, int portNumberInput
 	m_output2 = new Output("OBOut2", pinball, portNumberOutput2);
 
 	m_nBalls = 4;
-	Init();
 }
 
 //-------------------------------------------------------//
@@ -46,7 +45,7 @@ OutBall::~OutBall()
 }
 
 //-------------------------------------------------------//
-bool OutBall::Init()
+bool OutBall::Init(StatusPinball status)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

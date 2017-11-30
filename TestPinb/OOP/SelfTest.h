@@ -20,8 +20,6 @@ public:
 	SelfTest(PinballMaster *pinball);
 	virtual ~SelfTest();
 
-	virtual bool Init() {return true;}
-	virtual void Loop() {};
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 	void IncrementTestValue();

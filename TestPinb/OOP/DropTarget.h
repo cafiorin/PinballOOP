@@ -21,7 +21,7 @@ public:
 	DropTarget(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberOutput);
 	DropTarget(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberInput5, int portNumberOutput);
 	virtual ~DropTarget();
-	virtual bool Init();
+	virtual bool Init(StatusPinball status);
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 	void Reset();

@@ -43,23 +43,6 @@ LedControl::~LedControl()
 
 }
 
-
-//-----------------------------------------------------------
-bool LedControl::Init()
-//-----------------------------------------------------------
-{
-	#ifdef DEBUGMESSAGES
-	Debug("LedControl::Init");
-	#endif
-
-	for (int i = 0; i < NUM_LEDS; i++)
-	{
-		TurnOff(i);
-	}
-
-	return true;
-}
-
 //-----------------------------------------------------------
 void LedControl::TurnOn(int Led)
 //-----------------------------------------------------------

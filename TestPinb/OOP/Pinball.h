@@ -18,18 +18,6 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 #include "AttractMode.h"
 
-enum StatusPinball
-{
-	initializing,
-	menusetup,
-	menutest,
-	attractmode,
-	getplayers,
-	playingmode,
-	waitingmessages
-};
-
-
 #define MAX_INPUTCHANNELS 48
 #define MAX_OUTPUTCHANNELS 32
 
@@ -58,7 +46,6 @@ public:
 	void sendMessageToAnotherArduino(int address, char msg);
 	char receiveMessageFromAnotherArduino(int howMany);
 	virtual void DataReceived(char c) {};
-	virtual void PlaySongToInput(int portNumber) {}
 
 	void EnableSFX(bool enable) { m_enableSfx = enable; }
 	bool IsEnabledSFX() { return m_enableSfx; }

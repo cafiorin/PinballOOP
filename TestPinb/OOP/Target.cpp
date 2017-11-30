@@ -5,87 +5,67 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "ReturnKickBall.h"
+#include "Target.h"
 #include "PinballMaster.h"
 #include "PinballObject.h"
 #include "Input.h"
-#include "Output.h"
 #include "Timer.h"
 
 //-------------------------------------------------------//
-ReturnKickBall::ReturnKickBall(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput,int led) : PinballObject(szName, pinball)
+Target::Target(const char *szName, PinballMaster *pinball, int portNumberInput, int led) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("ReturnKickBall Constructor");
+	Debug("Target Constructor");
 	#endif
 
+	m_input = new Input("TIn", pinball, portNumberInput,this);
+	m_hit = false;
 	m_led = led;
-
-	m_input1 = new Input("ReIn", pinball, portNumberInput,this);
-	m_output = new Output("ReOut", pinball, portNumberOutput);
-
-	m_returnBallOn = true;
 	m_timerBlinkLed = new Timer(400, "TTLB", pinball, this, TimerType::continuous);
 	m_timerBlinkLed->Disable();
 }
 
 //-------------------------------------------------------//
-bool ReturnKickBall::Init(StatusPinball status)
+Target::~Target()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGESCREATION
+	Debug("Target Destructor");
+	#endif
+	
+	delete m_timerBlinkLed;
+	delete m_input;
+}
+
+//-------------------------------------------------------//
+bool Target::Init(StatusPinball status)
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	Debug("Target::Init");
+	#endif
 	if (status == StatusPinball::playingmode)
 	{
-		m_returnBallOn = true;
-		m_timerBlinkLed->Disable();
-		m_pinball->GetLedControl()->TurnOn(m_led);
+		m_timerBlinkLed->Start();
+		m_hit = false;
 	}
 	return true;
 }
 
 //-------------------------------------------------------//
-ReturnKickBall::~ReturnKickBall()
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGESCREATION
-	Debug("ReturnKickBall Destructor");
-	#endif
-	
-	delete m_timerBlinkLed;
-	delete m_input1;
-	delete m_output;
-}
-
-//-------------------------------------------------------//
-void ReturnKickBall::SetReturnBall(bool returnBallOn)
-//-------------------------------------------------------//
-{
-	m_returnBallOn = returnBallOn;
-	if (!m_returnBallOn)
-	{
-		m_timerBlinkLed->Start();
-	}
-	else
-	{
-		m_timerBlinkLed->Disable();
-		m_pinball->GetLedControl()->TurnOn(m_led);
-	}
-}
-
-//-------------------------------------------------------//
-bool ReturnKickBall::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool Target::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("ReturnKickBall::NotifyEvent");
+	Debug("Target::NotifyEvent");
 	#endif
 
 	if (event == EVENT_EDGEPOSITIVE)
 	{
-		if (m_returnBallOn)
-		{
-			m_output->TurnOnByTimer(TIME_COIL_ON);
-		}
+		m_timerBlinkLed->Disable();
+		m_pinball->GetLedControl()->TurnOn(m_led);
+		m_hit = true;
 		m_pinball->NotifyEvent(this, event, valueToSend);
 		return true;
 	}
@@ -98,8 +78,8 @@ bool ReturnKickBall::NotifyEvent(PinballObject *sender, int event, int valueToSe
 			else
 				m_pinball->GetLedControl()->TurnOn(m_led);
 		}
-
 		return true;
 	}
+
 	return false;
 }

@@ -51,7 +51,7 @@ class Multiplex : public PinballObject
 	 void			writeChannel(int ch, int value);
 	 void			resetAllOutput();
 
-	 virtual bool Loop(int value);
+	 virtual void Loop();
 
  private:
 	 int	 _adrsPin[4];

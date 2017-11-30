@@ -34,7 +34,7 @@ Player::~Player()
 
 
 //-------------------------------------------------------//
-bool Player::Init()
+bool Player::Init(StatusPinball status)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

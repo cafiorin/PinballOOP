@@ -12,8 +12,8 @@ http://pinballhomemade.blogspot.com.br
 #define DOS
 //#define ARDUINOLIB
 
-// To DEBUGMESSAGES
-#define DEBUGMESSAGES
+// To Show DEBUG messages
+//#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 //#define DEBUGMESSAGESCREATION
 //-----------------------
@@ -132,7 +132,7 @@ http://pinballhomemade.blogspot.com.br
 #define OUTPUT_LOW_5 5
 #define OUTPUT_LOW_6 6
 #define OUTPUT_LOW_7 7
-#define OUTPUT_LOW_8 8 //12V
+#define OUTPUT_GI_ON_12V 8 //12V
 #define OUTPUT_LOW_9 9
 #define OUTPUT_LOW_10 10
 #define OUTPUT_LOW_11 11

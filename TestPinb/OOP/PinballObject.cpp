@@ -74,7 +74,7 @@ void PinballObject::Debug(const char *szMessage)
 }
 
 /*---------------------------------------------------------------------*/
-bool PinballObject::Init()
+bool PinballObject::Init(StatusPinball status)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGES
@@ -85,14 +85,12 @@ bool PinballObject::Init()
 }
 
 /*---------------------------------------------------------------------*/
-bool PinballObject::Loop(int value)
+void PinballObject::Loop()
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP
 	Debug("PinballObject::Loop");
 	#endif
-
-	return false;
 }
 
 //---------------------------------------------------------------------//

@@ -19,8 +19,6 @@ KickoutHole::KickoutHole(const char *szName, PinballMaster *pinball, int portNum
 
 	m_input1 = new Input("KHIn", pinball, portNumberInput,this);
 	m_output = new Output("KHOut", pinball, portNumberOutput);
-
-	Init();
 }
 
 //-------------------------------------------------------//
@@ -36,7 +34,7 @@ KickoutHole::~KickoutHole()
 }
 
 //-------------------------------------------------------//
-bool KickoutHole::Init()
+bool KickoutHole::Init(StatusPinball status)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

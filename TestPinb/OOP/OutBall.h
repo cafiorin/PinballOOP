@@ -20,7 +20,7 @@ class OutBall : public PinballObject
 public:
 	OutBall(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberOutput1, int portNumberInput2, int portNumberOutput2);
 	virtual ~OutBall();
-	virtual bool Init();
+	virtual bool Init(StatusPinball status);
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 	void LanchBall();

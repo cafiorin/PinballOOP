@@ -5,29 +5,31 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#if !defined(KickoutHole__INCLUDED_)
-#define KickoutHole__INCLUDED_
+#if !defined(Target__INCLUDED_)
+#define Target__INCLUDED_
 
 #include "defines.h"
 #include "Utils.h"
-#include "Input.h"
-#include "Output.h"
+#include "PinballObject.h"
 
-class KickoutHole : public PinballObject
+class Timer;
+class Input;
+
+class Target : public PinballObject
 {
 public:
-	KickoutHole(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput);
-	virtual ~KickoutHole();
+	Target(const char *szName, PinballMaster *pinball, int portNumberInput, int led);
+	virtual ~Target();
 	virtual bool Init(StatusPinball status);
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
-	void LanchBall();
-	bool IsThereBall() { return m_ball; }
+	bool IsHit() { return m_hit; }
 
 protected:
-	Input *m_input1;
-	Output *m_output;
-	bool m_ball;
+	Input *m_input;
+	int m_led;
+	bool m_hit;
+	Timer *m_timerBlinkLed;
 
 };
-#endif // !defined(KickoutHole__INCLUDED_)
+#endif // !defined(Target__INCLUDED_)

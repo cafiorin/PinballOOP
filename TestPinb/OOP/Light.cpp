@@ -17,8 +17,6 @@ Light::Light(const char *szName, PinballMaster *pinball, int port):Output(szName
 	#endif
 
 	m_timerBlinking = new Timer(700, "TBlink", this->m_pinball,this,TimerType::continuous);
-
-	Init();
 }
 
 //-------------------------------------------------------//

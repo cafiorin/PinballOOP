@@ -23,8 +23,6 @@ SlingShot::SlingShot(const char *szName, PinballMaster *pinball, int portNumberI
 	m_input2 = new Input("SLIn2", pinball, portNumberInput2, this);
 	
 	m_output = new Output("SLOut", pinball, portNumberOutput);
-
-	Init();
 }
 
 //-------------------------------------------------------//
@@ -41,7 +39,7 @@ SlingShot::~SlingShot()
 }
 
 //-------------------------------------------------------//
-bool SlingShot::Init()
+bool SlingShot::Init(StatusPinball status)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

@@ -51,32 +51,22 @@ AccumulatorBall::~AccumulatorBall()
 }
 
 //-------------------------------------------------------//
-bool AccumulatorBall::Init()
+bool AccumulatorBall::Init(StatusPinball status)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	Debug("AccumulatorBall::Init");
 	#endif
 
-	if (m_input1->GetInput())
+	int nTries = 5;
+	while (m_nBalls > 0 || nTries > 0)
 	{
-		m_output->TurnOnByTimer();
-		delay(300);
-	}
-	if (m_input2->GetInput())
-	{
-		m_output->TurnOnByTimer();
-		delay(300);
-	}
-	if (m_input3->GetInput())
-	{
-		m_output->TurnOnByTimer();
-		delay(300);
-	}
-	if (m_input4->GetInput())
-	{
-		m_output->TurnOnByTimer();
-		delay(300);
+		if (m_input1->GetInput())
+		{
+			LanchBall();
+			delay(1000);
+		}
+		nTries--;
 	}
 
 	m_nBalls = 0;

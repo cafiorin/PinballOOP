@@ -79,7 +79,14 @@ void Input::CheckDebounce()
 			Debug("Input::Edge Negative");
 			#endif
 
-			m_pinballObjectParent->NotifyEvent(this, EVENT_EDGENEGATIVE, m_portNumber);
+			if (m_pinballObjectParent != NULL)
+			{
+				m_pinballObjectParent->NotifyEvent(this, EVENT_EDGENEGATIVE, m_portNumber);
+			}
+			else
+			{
+				m_pinball->NotifyEvent(this, EVENT_EDGENEGATIVE, m_portNumber);
+			}
 		}
 
 	}

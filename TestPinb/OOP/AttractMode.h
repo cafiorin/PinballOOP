@@ -19,7 +19,7 @@ public:
 	AttractMode(PinballMaster *pinball);
 	virtual ~AttractMode();
 
-	virtual bool Init();
+	virtual bool Init(StatusPinball status);
 	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
 
 	void InitGameOver();

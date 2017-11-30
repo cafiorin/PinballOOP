@@ -22,14 +22,15 @@ DropTarget::DropTarget(const char *szName, PinballMaster *pinball,
 	Debug("DropTarget Constructor");
 	#endif
 
-	m_SequencerLeds = new SequencerLeds(m_pinball, SequencerType::blinkingAll, 1000);
+	m_SequencerLeds = new SequencerLeds(m_pinball, SequencerType::blinkingAll, 300);
+	m_SequencerLeds->Disable();
+
 	m_sizeInputs = 3;
 	m_input[0] = new Input("DT31In", pinball, portNumberInput1,this);
 	m_input[1] = new Input("DT32In", pinball, portNumberInput2, this);
 	m_input[2] = new Input("DT33In", pinball, portNumberInput3, this);
 
 	m_output = new Output("DT3Out", pinball, portNumberOutput);
-	Init();
 }
 
 //-------------------------------------------------------//
@@ -47,6 +48,8 @@ DropTarget::DropTarget(const char *szName, PinballMaster *pinball,
 	#endif
 
 	m_SequencerLeds = new SequencerLeds(m_pinball, SequencerType::blinkingAll, 300);
+	m_SequencerLeds->Disable();
+
 	m_sizeInputs = 5;
 	m_input[0] = new Input("DT51In", pinball, portNumberInput1, this);
 	m_input[1] = new Input("DT52In", pinball, portNumberInput2, this);
@@ -55,8 +58,6 @@ DropTarget::DropTarget(const char *szName, PinballMaster *pinball,
 	m_input[4] = new Input("DT55In", pinball, portNumberInput5, this);
 
 	m_output = new Output("DT5Out", pinball, portNumberOutput);
-
-	Init();
 }
 
 
@@ -79,14 +80,16 @@ DropTarget::~DropTarget()
 }
 
 //-------------------------------------------------------//
-bool DropTarget::Init()
+bool DropTarget::Init(StatusPinball status)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	Debug("DropTarget::Init");
 	#endif
-	
-	Reset();
+	if (status == StatusPinball::playingmode)
+	{
+		Reset();
+	}
 	return true;
 }
 
@@ -94,11 +97,6 @@ bool DropTarget::Init()
 void DropTarget::AddLeds(int led1, int led2, int led3)
 //-------------------------------------------------------//
 {
-	if (m_SequencerLeds == NULL)
-	{
-		m_SequencerLeds = new SequencerLeds(m_pinball, SequencerType::blinkingAll, 300);
-	}
-
 	m_SequencerLeds->AddLed(led1);
 	m_SequencerLeds->AddLed(led2);
 	m_SequencerLeds->AddLed(led3);
@@ -108,10 +106,6 @@ void DropTarget::AddLeds(int led1, int led2, int led3)
 void DropTarget::AddLeds(int led1, int led2, int led3, int led4, int led5)
 //-------------------------------------------------------//
 {
-	if (m_SequencerLeds == NULL)
-	{
-	}
-
 	m_SequencerLeds->AddLed(led1);
 	m_SequencerLeds->AddLed(led2);
 	m_SequencerLeds->AddLed(led3);

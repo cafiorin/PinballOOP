@@ -24,8 +24,6 @@ public:
 	LedControl(PinballMaster *pinball);
 	virtual ~LedControl();
 
-	virtual bool Init();
-
 	void TurnOn(int Led);
 	void TurnOff(int Led);
 	bool IsTurn(int Led) { return m_ledsValue[Led]; }

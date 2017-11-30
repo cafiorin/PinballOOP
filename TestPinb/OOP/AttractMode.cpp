@@ -36,7 +36,7 @@ AttractMode::~AttractMode()
 
 
 //-----------------------------------------------------------
-bool AttractMode::Init()
+bool AttractMode::Init(StatusPinball status)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES

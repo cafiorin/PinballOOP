@@ -78,7 +78,7 @@ bool Timer::Check(long time /*=0 default*/)
 }
 
 //-------------------------------------------------------//
-bool Timer::Loop(int value)
+void Timer::Loop()
 //-------------------------------------------------------//
 {
 	if (m_enabled)
@@ -106,7 +106,5 @@ bool Timer::Loop(int value)
 			m_lastTime = Millis();
 		}
 	}
-
-	return false;
 }
 

@@ -127,22 +127,31 @@ int main()
 	pPinballSlave->SetPinballMaster(pPinballMaster);
 
 	HardwareSerial *inputs = new HardwareSerial(1, 30);
-	inputs->println("Start Button - 00");
-	inputs->println("Menu  Button - 01");
-	inputs->println("Up Button    - 02");
-	inputs->println("Down Button  - 03");
-	
-	inputs->println("OUTBALL1     - 04");
-	inputs->println("OUTBALL2     - 05");
-	inputs->println("LAUNCHBALL   - 06");
-	inputs->println("SLINGSHOT_LEFT1 - 07");
-	inputs->println("SLINGSHOT_LEFT2 - 08");
-	inputs->println("SLINGSHOT_RIGHT1- 09");
-	inputs->println("SLINGSHOT_RIGHT2- 10");
-	inputs->println("OUTLANE_LEFT    - 11");
-	inputs->println("OUTLANE_RIGHT   - 12");
-	inputs->println("RETURNBALL_LEFT - 13");
-	inputs->println("RETURNBALL_RIGHT- 14");
+	inputs->println("Menu/Up/Down   - 0,1,2");
+	inputs->println("=>Start Button - 3");
+	inputs->println("OUTBALL1/2     - 4,5");
+	inputs->println("LAUNCHBALL     - 6");
+	inputs->println("SLINGSHOT L1/L2- 7,8");
+	inputs->println("SLINGSHOT R1/R2- 9,10");
+	inputs->println("OUTLANE_L/R    - 11,12");
+	inputs->println("RETURNBALL_L/R - 13,14");
+	inputs->println("TARGET_RED1    - 15");
+	inputs->println("TARGET_GREEN1  - 16");
+	inputs->println("TARGET_YELLOW1 - 17");
+	inputs->println("TARGET_RED2    - 18");
+	inputs->println("TARGET_GREEN2  - 19");
+	inputs->println("TARGET_YELLOW2 - 20");
+	inputs->println("DTARGET_51-55  - 21-25");
+	inputs->println("DTARGET_31-33  - 26-28");
+	inputs->println("STAR G R1/R2   - 29,30,31");
+	inputs->println("=> ROVER_L/C/R - 32,33,34");
+	inputs->println("BUMPER_L/C/R   - 35,36,37");
+	inputs->println("TARGET_HIGHER  - 38");
+	inputs->println("RAMP_IN        - 39");
+	inputs->println("RAMP_OUT1,2    - 40,41");
+	inputs->println("SPINNER        - 42");
+	inputs->println("HOLE           - 43");
+	inputs->println("ACCBALL1       - 44-47");
 
 	for (int i = 0; i < NUM_LEDS; i++)
 	{

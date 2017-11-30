@@ -36,7 +36,7 @@ Output::~Output()
 }
 
 //-------------------------------------------------------//
-bool Output::Init()
+bool Output::Init(StatusPinball status)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

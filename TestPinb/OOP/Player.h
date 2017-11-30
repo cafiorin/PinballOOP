@@ -26,7 +26,7 @@ class Player : public PinballObject
 public:
 	Player(PinballMaster *pinball);
 	virtual ~Player();
-	virtual bool Init();
+	virtual bool Init(StatusPinball status);
 
 	static int m_indexPlayerCurrent;
 

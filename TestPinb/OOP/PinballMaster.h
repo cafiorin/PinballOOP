@@ -63,11 +63,11 @@ public:
 	void clearDisplay(int line=0);
 	void printText(char *text1, char *text2, char font);
 
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
-	virtual bool Init();
-	virtual bool Loop(int value);
+	bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	bool Init(StatusPinball status);
+	bool Loop(int value);
+	void PlaySongToInput(int portNumber);
 	virtual void DataReceived(char c);
-	virtual void PlaySongToInput(int portNumber);
 
 	#ifdef ARDUINOLIB
 	PinballMaster *m_PinballMaster;
@@ -84,7 +84,7 @@ public:
 	void GetNewBall();
 	void PlayerLostBall();
 	void NextPlayer();
-
+	bool IsPlaying() { return m_Status == StatusPinball::playingmode; }
 	void CreateStages();
 	int m_TotalStages;
 	StageBase *m_Stages[MAX_STAGES];
@@ -106,6 +106,7 @@ private :
 protected:
 	Multiplex *m_Multiplex;
 	LedControl *m_LedControl;
+	Output *m_GI;
 
 	Vector<PinballObject *> m_PinballObjs;
 	Input *m_Inputs[MAX_INPUTCHANNELS];

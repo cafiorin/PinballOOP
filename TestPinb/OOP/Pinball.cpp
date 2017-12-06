@@ -19,7 +19,7 @@ http://pinballhomemade.blogspot.com.br
 #include <SFEMP3Shield.h>
 
 //---------------------------------------------------------------------//
-Pinball::Pinball() : PinballObject("Pinball", this)
+Pinball::Pinball()
 //---------------------------------------------------------------------//
 {
 	m_Status = StatusPinball::initializing;

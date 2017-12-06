@@ -22,7 +22,7 @@
     <ProjectGuid>{E36FBB9E-E4FB-4938-ABA3-B69A0E4B7F69}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TestPinb</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

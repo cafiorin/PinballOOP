@@ -186,3 +186,49 @@ void StageBase::SetMultiply()
 		pLedControl->TurnOn(LED_MULTIPLY_2X + multiply - 1);
 	}
 }
+
+//-----------------------------------------------------------
+void StageBase::SetLedStage()
+//-----------------------------------------------------------
+{
+	#ifdef DEBUGMESSAGES
+	Debug("StageBase::SetLedStage");
+	#endif
+
+	LedControl *pLedControl = m_PinballMaster->GetLedControl();
+
+	pLedControl->TurnOff(LED_STAGE11);
+	pLedControl->TurnOff(LED_STAGE12);
+	pLedControl->TurnOff(LED_STAGE21);
+	pLedControl->TurnOff(LED_STAGE22);
+	pLedControl->TurnOff(LED_STAGE31);
+	pLedControl->TurnOff(LED_STAGE32);
+	pLedControl->TurnOff(LED_STAGE41);
+	pLedControl->TurnOff(LED_STAGE42);
+	pLedControl->TurnOff(LED_STAGE51);
+	pLedControl->TurnOff(LED_STAGE52);
+
+	switch (m_number)
+	{
+	case 1:
+		pLedControl->TurnOn(LED_STAGE11);
+		pLedControl->TurnOn(LED_STAGE12);
+		break;
+	case 2:
+		pLedControl->TurnOn(LED_STAGE21);
+		pLedControl->TurnOn(LED_STAGE22);
+		break;
+	case 3:
+		pLedControl->TurnOn(LED_STAGE31);
+		pLedControl->TurnOn(LED_STAGE32);
+		break;
+	case 4:
+		pLedControl->TurnOn(LED_STAGE41);
+		pLedControl->TurnOn(LED_STAGE42);
+		break;
+	case 5:
+		pLedControl->TurnOn(LED_STAGE51);
+		pLedControl->TurnOn(LED_STAGE52);
+		break;
+	}
+}

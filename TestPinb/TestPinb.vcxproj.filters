@@ -120,6 +120,9 @@
     <ClInclude Include="OOP\Target.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OOP\Stage1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -210,6 +213,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\Target.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\Stage1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

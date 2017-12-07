@@ -29,6 +29,8 @@ public:
 	void SetMultiply();
 	bool CheckRolloversMultiply();
 	void TurnOffRolloversMultiply();
+	void SetLedStage();
+
 
 protected:
 	PinballMaster *m_PinballMaster;

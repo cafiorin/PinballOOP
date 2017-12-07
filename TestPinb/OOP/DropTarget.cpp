@@ -141,7 +141,7 @@ bool DropTarget::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 		if (totalTargets == m_sizeInputs)
 		{
 			m_pinball->NotifyEvent(this, EVENT_DROPTARGETDOWN, m_sizeInputs);
-			Reset();
+			//Reset();
 			return true;
 		}
 	}

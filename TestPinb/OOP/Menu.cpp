@@ -48,8 +48,8 @@ Menu::Menu(const char *szName, PinballMaster *pinball)
 	new MenuString(pOutput, EVENT_TEST_OUTPUTS_AUTO, "Auto");
 
 	//Sound
-	new MenuString(pSound, EVENT_TEST_SOUND_BOARD1, "Placa 1");
-	new MenuString(pSound, EVENT_TEST_SOUND_BOARD2, "Placa 2");
+	new MenuString(pSound, EVENT_TEST_SOUND_BOARD1, "Board 1");
+	new MenuString(pSound, EVENT_TEST_SOUND_BOARD2, "Board 2");
 
 	//SFX
 	new MenuString(pSfx, EVENT_TEST_SFX_ONOFF, "ON/OFF");

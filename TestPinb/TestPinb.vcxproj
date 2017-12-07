@@ -172,6 +172,7 @@
     <ClInclude Include="OOP\SequencerLeds.h" />
     <ClInclude Include="OOP\SlingShot.h" />
     <ClInclude Include="OOP\Stage0.h" />
+    <ClInclude Include="OOP\Stage1.h" />
     <ClInclude Include="OOP\StageBase.h" />
     <ClInclude Include="OOP\Target.h" />
     <ClInclude Include="OOP\Timer.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="OOP\SequencerLeds.cpp" />
     <ClCompile Include="OOP\SlingShot.cpp" />
     <ClCompile Include="OOP\Stage0.cpp" />
+    <ClCompile Include="OOP\Stage1.cpp" />
     <ClCompile Include="OOP\StageBase.cpp" />
     <ClCompile Include="OOP\Target.cpp" />
     <ClCompile Include="OOP\Timer.cpp" />

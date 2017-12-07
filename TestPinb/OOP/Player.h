@@ -40,7 +40,6 @@ public:
 
 	bool SetExtraBall();
 	bool GetExtraBall() { return m_ExtraBall; }
-
 	void SetNextStage();
 
 	StatusPlayer GetStatus(){ return m_Status; }

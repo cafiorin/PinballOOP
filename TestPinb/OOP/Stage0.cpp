@@ -9,6 +9,8 @@ http://pinballhomemade.blogspot.com.br
 #include "Stage0.h"
 #include "Player.h"
 #include "SequencerLeds.h"
+#include "PinballMaster.h"
+#include "DropTarget.h"
 
 //Stage Qualify to race
 //Target : Take ball in hole
@@ -66,6 +68,15 @@ int Stage0::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 	#endif
 
 	int score = StageBase::PlayfieldEvent(sender,event,valueToSend);
+	
+	if (event == EVENT_DROPTARGETDOWN)
+	{
+		if(sender == m_PinballMaster->m_DropTarget3)
+			m_PinballMaster->m_DropTarget3->Reset();
+		else
+			m_PinballMaster->m_DropTarget5->Reset();
+		return score;
+	}
 
 	if(valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
 	{

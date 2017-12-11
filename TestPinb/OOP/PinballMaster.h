@@ -29,6 +29,7 @@ class Player;
 class OutBall;
 class Output;
 class KickoutHole;
+class DropTarget;
 
 class PinballMaster : public Pinball
 {
@@ -49,6 +50,7 @@ public:
 	OutBall *m_OutBall;
 	Output *m_TurnFlipperOn;
 	KickoutHole *m_Hole;
+	DropTarget *m_DropTarget3, *m_DropTarget5;
 
 	LedControl *GetLedControl() {return m_LedControl;}
 	Multiplex *GetMultiplex() { return m_Multiplex; }

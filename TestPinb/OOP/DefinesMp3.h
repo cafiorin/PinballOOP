@@ -9,11 +9,12 @@ http://pinballhomemade.blogspot.com.br
 #define DefinesMp3_h
 
 #define MP3_THEME_STAGE0 "theme.mp3"
-#define MP3_THEME_STAGE1 "theme.mp3"
-#define MP3_THEME_STAGE2 "theme.mp3"
-#define MP3_THEME_STAGE3 "theme.mp3"
-#define MP3_THEME_STAGE4 "theme.mp3"
-#define MP3_THEME_STAGE5 "theme.mp3"
+#define MP3_THEME_STAGE1 "theme1.mp3"
+#define MP3_THEME_STAGE2 "theme2.mp3"
+#define MP3_THEME_STAGE3 "theme3.mp3"
+#define MP3_THEME_STAGE4 "theme4.mp3"
+#define MP3_THEME_STAGE5 "theme5.mp3"
+#define MP3_THEME_STAGE5 "theme6.mp3"
 
 #define MP3_GAMEOVER "gameov2.mp3"
 #define MP3_EXTRABALL "newba01.mp3"

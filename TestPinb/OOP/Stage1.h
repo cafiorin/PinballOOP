@@ -24,6 +24,11 @@ public:
 	void Finished();
 
 	bool m_DropTargetOk;
+	bool m_Targets[3];
+	SequencerLeds *m_LedsHole;
+
+	void ResetStage();
+
 };
 
 #endif

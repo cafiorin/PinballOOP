@@ -16,9 +16,10 @@ http://pinballhomemade.blogspot.com.br
 #define MP3_THEME_STAGE5 "theme5.mp3"
 #define MP3_THEME_STAGE5 "theme6.mp3"
 
-#define MP3_GAMEOVER "gameov2.mp3"
-#define MP3_EXTRABALL "newba01.mp3"
+#define MP3_GAMEOVER "gameover.mp3"
+#define MP3_EXTRABALL "extrabal.mp3"
 #define MP3_HIGHSCORE "high1.mp3"
+#define MP3_SKILLHIT "skillhit.mp3"
 #define MP3_EXTRAPOINT "yahoo.mp3"
 #define MP3_THEME "theme.mp3"
 #define MP3_THEME00 "theme00.mp3"

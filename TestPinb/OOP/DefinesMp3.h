@@ -14,7 +14,7 @@ http://pinballhomemade.blogspot.com.br
 #define MP3_THEME_STAGE3 "theme3.mp3"
 #define MP3_THEME_STAGE4 "theme4.mp3"
 #define MP3_THEME_STAGE5 "theme5.mp3"
-#define MP3_THEME_STAGE5 "theme6.mp3"
+#define MP3_THEME_STAGE6 "theme6.mp3"
 
 #define MP3_GAMEOVER "gameover.mp3"
 #define MP3_EXTRABALL "extrabal.mp3"
@@ -24,6 +24,9 @@ http://pinballhomemade.blogspot.com.br
 #define MP3_THEME "theme.mp3"
 #define MP3_THEME00 "theme00.mp3"
 #define MP3_TESTSOUND "yahoo.mp3"
+#define MP3_STAGESTEP "stage.mp3"
+#define MP3_THEMEWINNER "themeSFX.mp3"
+#define MP3_STAGECLEAR "stgclear.mp3"
 
 
 #define MP3_HAHAHA1 "hahaha.mp3"

@@ -11,6 +11,7 @@ http://pinballhomemade.blogspot.com.br
 #include "SequencerLeds.h"
 #include "PinballMaster.h"
 #include "DropTarget.h"
+#include "DefinesMp3.h"
 
 //Stage Qualify to race
 //Target : Take ball in hole

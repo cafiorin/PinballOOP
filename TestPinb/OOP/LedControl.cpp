@@ -44,6 +44,27 @@ LedControl::~LedControl()
 }
 
 //-----------------------------------------------------------
+void LedControl::TurnAll(bool turnOn)
+//-----------------------------------------------------------
+{
+	#ifdef DEBUGMESSAGES
+	Debug("LedControl::TurnOnAll");
+	#endif
+
+	for (int i = LED_FIRST; i <= LED_LAST; i++)
+	{
+		m_ledsValue[i] = turnOn;
+		#ifdef ARDUINOLIB
+		m_leds[i] = turnOn ? CRGB::White : CRGB::Black;
+		#endif
+	}
+#ifdef ARDUINOLIB
+	FastLED.show();
+#endif
+
+}
+
+//-----------------------------------------------------------
 void LedControl::TurnOn(int Led)
 //-----------------------------------------------------------
 {

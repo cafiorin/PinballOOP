@@ -8,12 +8,13 @@ http://pinballhomemade.blogspot.com.br
 #ifndef Pinball__INCLUDED_
 #define Pinball__INCLUDED_
 
+#include "defines.h"
+
 #ifdef ARDUINOLIB
 #include <SFEMP3Shield.h>
 #include <Wire.h>
 #endif // ARDUINOLIB
 
-#include "defines.h"
 #include "Vector.h"
 #include "PinballObject.h"
 #include "AttractMode.h"

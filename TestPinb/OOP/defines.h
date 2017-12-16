@@ -23,6 +23,8 @@ http://pinballhomemade.blogspot.com.br
 #define DATA_STRIP_LED 5
 
 #define MAX_SIZE_DEBUG_MESSAGE 120
+#define LAST_STAGE 3
+
 #define MAX_NAME 25
 #define MAX_LEDS 66
 #define MAX_BALLS 3
@@ -159,6 +161,7 @@ http://pinballhomemade.blogspot.com.br
 #define OUTPUT_COINS_FINISH 27
 
 //LEDS
+#define LED_FIRST 0
 #define LED_LAUNCHBALL 0
 
 #define LED_MULTIPLY_2X 1
@@ -235,6 +238,7 @@ http://pinballhomemade.blogspot.com.br
 #define LED_TARGET_HIGHER_B3 59
 #define LED_TARGET_HIGHER_A1 60
 #define LED_TARGET_HIGHER_A2 61
+#define LED_LAST 61
 
 //POINTS - SCORE
 #define SCORE_DEFAULT 1

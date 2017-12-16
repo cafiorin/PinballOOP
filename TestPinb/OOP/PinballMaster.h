@@ -92,6 +92,7 @@ public:
 	StageBase *m_Stages[MAX_STAGES];
 	StageBase *GetStage(int number) { return m_Stages[number]; }
 	int GetBallsByPlayer() { return m_nBallByPlayer; }
+	void playSongWait(char song[]);
 
 //Events
 private :

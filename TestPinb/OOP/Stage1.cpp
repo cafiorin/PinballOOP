@@ -11,6 +11,7 @@ http://pinballhomemade.blogspot.com.br
 #include "SequencerLeds.h"
 #include "PinballMaster.h"
 #include "DropTarget.h"
+#include "DefinesMp3.h"
 
 //Stage 1: (E: the great project)
 //1 - Take the 3 Droptargets
@@ -58,6 +59,7 @@ int Stage1::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 	if (event == EVENT_DROPTARGETDOWN && sender == m_PinballMaster->m_DropTarget3)
 	{
 		m_DropTargetOk = true;
+		m_PinballMaster->playSong(MP3_STAGESTEP);
 		return score;
 	}
 
@@ -84,6 +86,7 @@ int Stage1::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 	if (m_Targets[0] && m_Targets[1] && m_Targets[2] && m_DropTargetOk && !m_LedsHole->IsEnabled())
 	{
 		m_LedsHole->Start();
+		m_PinballMaster->playSong(MP3_STAGESTEP);
 	}
 
 	return score;

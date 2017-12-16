@@ -981,3 +981,41 @@ void PinballMaster::RemovePinballObject(PinballObject *Pinballobj)
 	m_PinballObjs.pop_back(Pinballobj);
 }
 
+//----------------------------------------------------//
+void PinballMaster::playSongWait(char song[])
+//-----------------------------------------------------------------------//
+{
+	char szMsg[50];
+	sprintf(szMsg, "Play song: %s", song);
+	LogMessage(szMsg);
+
+
+#ifdef ARDUINOLIB
+	if (song != NULL)
+	{
+		if (m_MP3player->getState() == playback)
+		{
+			m_MP3player->stopTrack();
+		}
+
+		int8_t result = m_MP3player->playMP3(song);
+		if (result != 0)
+		{
+			char szMsg[50];
+			sprintf(szMsg, "Error code: %d when trying to play track", result);
+			LogMessage(szMsg);
+		}
+		else
+		{
+			bool turn = false;
+			while (m_MP3player->getState() == playback)
+			{
+				m_LedControl->TurnAll(turn);
+				delay(300);
+				turn = !turn;
+			}
+		}
+	}
+#endif // ARDUINOLIB
+
+}

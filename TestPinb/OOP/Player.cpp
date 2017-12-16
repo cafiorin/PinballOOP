@@ -8,6 +8,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Player.h"
 #include "PinballObject.h"
 #include "PinballMaster.h"
+#include "DefinesMp3.h"
 
 int Player::m_indexPlayerCurrent = 0;
 
@@ -59,7 +60,23 @@ void Player::SetNextStage()
 	LogMessage("Player::SetNextStage");
 	#endif
 
-	this->m_Stage = m_pinball->GetStage(0);
+	int nextStage = m_Stage->GetNumber() + 1;
+	if (nextStage > LAST_STAGE)
+	{
+		nextStage = 0;
+		//Play winner song!
+		m_pinball->printText("Winner", "!!!!!", 0);
+		m_pinball->playSongWait(MP3_THEMEWINNER);
+
+	}
+	else
+	{
+		//Stage clear
+		m_pinball->printText("Stage", "Clear", 0);
+		m_pinball->playSongWait(MP3_STAGECLEAR);
+	}
+
+	this->m_Stage = m_pinball->GetStage(nextStage);
 	this->m_Stage->SetCurrentPlayer(this);
 }
 

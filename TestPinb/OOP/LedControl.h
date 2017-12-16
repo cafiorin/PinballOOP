@@ -26,6 +26,8 @@ public:
 
 	void TurnOn(int Led);
 	void TurnOff(int Led);
+	void TurnAll(bool turnOn);
+
 	bool IsTurn(int Led) { return m_ledsValue[Led]; }
 	void AttractModeLoop();
 

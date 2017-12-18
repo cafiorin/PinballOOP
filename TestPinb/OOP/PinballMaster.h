@@ -90,7 +90,11 @@ public:
 	void CreateStages();
 	int m_TotalStages;
 	StageBase *m_Stages[MAX_STAGES];
-	StageBase *GetStage(int number) { return m_Stages[number]; }
+	StageBase *GetStage(int number) 
+	{ 
+		if(number >= m_TotalStages) return m_Stages[number]; 
+		return NULL;
+	}
 	int GetBallsByPlayer() { return m_nBallByPlayer; }
 	void playSongWait(char song[]);
 
@@ -114,7 +118,7 @@ protected:
 	Vector<PinballObject *> m_PinballObjs;
 	Input *m_Inputs[MAX_INPUTCHANNELS];
 	Output *m_Outputs[MAX_OUTPUTCHANNELS];
-
+	static int iCountObj;
 };
 
 #endif

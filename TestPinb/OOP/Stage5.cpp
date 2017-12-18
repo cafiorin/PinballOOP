@@ -6,12 +6,18 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "defines.h"
-#include "Stage4.h"
+#include "Stage5.h"
 #include "Player.h"
 #include "SequencerLeds.h"
 #include "PinballMaster.h"
 #include "DropTarget.h"
 #include "DefinesMp3.h"
+#include "KickoutHole.h"
+
+#ifdef DOS
+#include <cstdlib> // for srand, rand
+#include <ctime>   // for time
+#endif
 
 //Stage 2: (E: the great project)
 //1 - Take the 5 Droptargets
@@ -21,14 +27,23 @@ http://pinballhomemade.blogspot.com.br
 //5 - Take the ball in hole.
 
 //-----------------------------------------------------------
-Stage4::Stage4(PinballMaster *pinball,int number):StageBase(pinball,number)
+Stage5::Stage5(PinballMaster *pinball,int number):StageBase(pinball,number)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Stage4 Constructor");
+	Debug("Stage5 Constructor");
 	#endif
 
-	m_FlagCount = 0;
+	#ifdef ARDUINOLIB
+	m_FlagCurrent = random(MAX_FLAGS);
+	#endif
+
+	#ifdef DOS
+	srand(time(0));
+	m_FlagCurrent = rand() % MAX_FLAGS;
+	#endif // DOS
+	
+	m_FlagCapturedCount = 0;
 
 	//TARGET_GREEN1
 	int count = 0;
@@ -89,42 +104,55 @@ Stage4::Stage4(PinballMaster *pinball,int number):StageBase(pinball,number)
 }
 
 //-----------------------------------------------------------
-Stage4::~Stage4()
+Stage5::~Stage5()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Stage4 Destructor");
+	Debug("Stage5 Destructor");
 	#endif
 }
 
 //-----------------------------------------------------------
-int Stage4::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
+int Stage5::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Stage4::PlayfieldEvent");
+	LogMessage("Stage5::PlayfieldEvent");
 	#endif
 
 	int score = StageBase::PlayfieldEvent(sender,event,valueToSend);
 
 	if(valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
 	{
-		if (valueToSend == m_Flags[m_FlagCount]->GetNumber() && m_FlagCount < MAX_FLAGS)
+		if (valueToSend == m_Flags[m_FlagCurrent]->GetNumber() && m_FlagCapturedCount < MAX_FLAGS)
 		{
 			m_PinballMaster->playSong(MP3_STAGESTEP);
-			m_Flags[m_FlagCount]->Captured();
-			m_FlagCount++;
-			if (m_FlagCount >= MAX_FLAGS)
+			m_Flags[m_FlagCurrent]->Captured();
+			m_FlagCapturedCount++;
+			
+			if (m_FlagCapturedCount >= MAX_FLAGS)
 			{
 				m_LedsHole->Start();
 			}
 			else
 			{
-				m_Flags[m_FlagCount]->EnableToCapture();
+				do
+				{
+					#ifdef ARDUINOLIB
+					m_FlagCurrent = random(MAX_FLAGS);
+					#endif
+
+					#ifdef DOS
+					m_FlagCurrent = rand() % MAX_FLAGS;
+					#endif // DOS
+
+				} while (m_Flags[m_FlagCurrent]->IsCaptured());
+
+				m_Flags[m_FlagCurrent]->EnableToCapture();
 			}
 		}
 
-		if (valueToSend == INPUT_SW_HOLE && (m_FlagCount >= MAX_FLAGS))
+		if (valueToSend == INPUT_SW_HOLE && (m_FlagCurrent >= MAX_FLAGS))
 		{
 			m_LedsHole->End();
 			score += SCORE_TARGET_STAGE;
@@ -140,11 +168,11 @@ int Stage4::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 }
 
 //-----------------------------------------------------------
-void Stage4::RestartPlayer()
+void Stage5::RestartPlayer()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Stage4::RestartPlayer");
+	LogMessage("Stage5::RestartPlayer");
 	#endif
 
 	StageBase::RestartPlayer();
@@ -152,15 +180,15 @@ void Stage4::RestartPlayer()
 }
 
 //-----------------------------------------------------------
-void Stage4::ResetStage()
+void Stage5::ResetStage()
 //-----------------------------------------------------------
 {
 	for (int i = 0; i < MAX_FLAGS; i++)
 	{
 		m_Flags[i]->Disable();
 	}
-	m_FlagCount = 0;
-	m_Flags[m_FlagCount]->EnableToCapture();
+	m_FlagCurrent = 0;
+	m_Flags[m_FlagCurrent]->EnableToCapture();
 	m_LedsHole->Disable();
 
 	m_PinballMaster->m_DropTarget3->Reset();
@@ -170,11 +198,11 @@ void Stage4::ResetStage()
 	
 
 //-----------------------------------------------------------
-void Stage4::Finished()
+void Stage5::Finished()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Stage4::Finished");
+	LogMessage("Stage5::Finished");
 	#endif
 
 	if (m_currentPlayer != NULL)

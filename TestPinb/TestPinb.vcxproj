@@ -151,6 +151,7 @@
     <ClInclude Include="OOP\defines.h" />
     <ClInclude Include="OOP\DefinesMp3.h" />
     <ClInclude Include="OOP\DropTarget.h" />
+    <ClInclude Include="OOP\Flag.h" />
     <ClInclude Include="OOP\HardwareSerial.h" />
     <ClInclude Include="OOP\ht1632pinball.h" />
     <ClInclude Include="OOP\Input.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="OOP\Stage2.h" />
     <ClInclude Include="OOP\Stage3.h" />
     <ClInclude Include="OOP\Stage4.h" />
+    <ClInclude Include="OOP\Stage5.h" />
     <ClInclude Include="OOP\StageBase.h" />
     <ClInclude Include="OOP\Target.h" />
     <ClInclude Include="OOP\Timer.h" />
@@ -213,6 +215,7 @@
     <ClCompile Include="OOP\Stage2.cpp" />
     <ClCompile Include="OOP\Stage3.cpp" />
     <ClCompile Include="OOP\Stage4.cpp" />
+    <ClCompile Include="OOP\Stage5.cpp" />
     <ClCompile Include="OOP\StageBase.cpp" />
     <ClCompile Include="OOP\Target.cpp" />
     <ClCompile Include="OOP\Timer.cpp" />

@@ -9,6 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 #include "PinballMaster.h"
 #include "DefinesMp3.h"
+#include "KickoutHole.h"
 
 int Player::m_indexPlayerCurrent = 0;
 
@@ -22,6 +23,11 @@ Player::Player(PinballMaster *pinball):PinballObject("Player",pinball)
 
 	m_Stage = NULL;
 	m_Status = StatusPlayer::waiting;
+	m_nBalls = MAX_BALLS;
+	m_Score = 0;
+	m_ExtraBall = false;
+	m_Multiply = 1;
+
 }
 
 //-------------------------------------------------------//
@@ -76,8 +82,12 @@ void Player::SetNextStage()
 		m_pinball->playSongWait(MP3_STAGECLEAR);
 	}
 
-	this->m_Stage = m_pinball->GetStage(nextStage);
-	this->m_Stage->SetCurrentPlayer(this);
+	m_Stage = m_pinball->GetStage(nextStage);
+	if(m_Stage != NULL)
+		m_Stage->SetCurrentPlayer(this);
+	m_pinball->m_Hole->LanchBall();
+
+
 }
 
 //-------------------------------------------------------//

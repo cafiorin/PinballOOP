@@ -4,19 +4,19 @@
 Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-#ifndef Stage4__INCLUDED_
-#define Stage4__INCLUDED_
+#ifndef Stage5__INCLUDED_
+#define Stage5__INCLUDED_
 
 #include "defines.h"
 #include "StageBase.h"
 #include "SequencerLeds.h"
 #include "Flag.h"
 
-class Stage4 : public StageBase
+class Stage5 : public StageBase
 {
 public:
-	Stage4(PinballMaster *pinball,int number);
-	virtual ~Stage4();
+	Stage5(PinballMaster *pinball,int number);
+	virtual ~Stage5();
 
 	virtual int PlayfieldEvent(PinballObject *sender, int event, int valueToSend);
 	virtual void RestartPlayer();
@@ -25,7 +25,7 @@ public:
 
 	SequencerLeds *m_LedsHole;
 	Flag *m_Flags[MAX_FLAGS];
-	int m_FlagCount;
+	int m_FlagCurrent, m_FlagCapturedCount;
 	void ResetStage();
 
 };

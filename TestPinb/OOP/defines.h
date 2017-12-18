@@ -23,13 +23,13 @@ http://pinballhomemade.blogspot.com.br
 #define DATA_STRIP_LED 5
 
 #define MAX_SIZE_DEBUG_MESSAGE 120
-#define LAST_STAGE 3
+#define LAST_STAGE 5
 
 #define MAX_NAME 25
 #define MAX_LEDS 66
 #define MAX_BALLS 3
 #define MAX_PLAYERS 8
-#define MAX_STAGES 1
+#define MAX_STAGES 6
 #define MAX_MULTIPLY 6
 
 #define TIME_COIL_ON 20

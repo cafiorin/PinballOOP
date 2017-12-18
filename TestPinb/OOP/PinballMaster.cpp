@@ -30,6 +30,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Stage2.h"
 #include "Stage3.h"
 #include "Stage4.h"
+#include "Stage5.h"
 #include "Player.h"
 #include "DefinesMp3.h"
 
@@ -77,6 +78,7 @@ PinballMaster::PinballMaster()
 	m_TimerToShowPlayers = NULL;
 	m_nSecondsTimerToShowPlayers = 5;
 	m_Multiplex = NULL;
+	m_TotalStages = -1;
 
 }
 
@@ -121,6 +123,14 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 	m_Status = StatusPinball::initializing;
 	m_nBallByPlayer = MAX_BALLS;
 	m_enableSfx = true;
+	m_LedControl = NULL;
+	m_SelfTest = NULL;
+	m_AttractMode = NULL;
+	m_Menu = NULL;
+	m_TimerToShowPlayers = NULL;
+	m_nSecondsTimerToShowPlayers = 5;
+	m_Multiplex = NULL;
+	m_TotalStages = -1;
 
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage("PinballMaster Constructor");
@@ -177,9 +187,10 @@ void PinballMaster::CreateObjects()
 	m_LedControl = new LedControl(this);
 	m_Menu = new Menu("Menu", this);
 	m_SelfTest = new SelfTest(this);
+	m_Multiplex = new Multiplex(this, 23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
+
 	m_TimerToShowPlayers = new Timer(1000, "TimerSP", this, NULL, TimerType::continuous);
 	m_nSecondsTimerToShowPlayers = 5;
-	m_Multiplex = new Multiplex(this, 23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
 	
 	//Initialize objects
 	m_GI = new Output("GI", this, OUTPUT_GI_ON_12V);
@@ -239,6 +250,7 @@ void PinballMaster::CreateObjects()
 	AccumulatorBall *accBall = new AccumulatorBall("RKB", this, INPUT_SW_ACCBALL1, INPUT_SW_ACCBALL2, INPUT_SW_ACCBALL3, INPUT_SW_ACCBALL4, OUTPUT_ACCBALL_48V);
 
 	CreateStages();
+
 	Init(StatusPinball::initializing);
 
 	//Last 
@@ -266,6 +278,7 @@ void PinballMaster::CreateStages()
 	m_Stages[2] = new Stage2(this, 2);
 	m_Stages[3] = new Stage3(this, 3);
 	m_Stages[4] = new Stage4(this, 4);
+	m_Stages[5] = new Stage5(this, 5);
 }
 
 //---------------------------------------------------------------------//
@@ -278,9 +291,11 @@ bool PinballMaster::Init(StatusPinball status)
 
 	m_Status = status;
 
-	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
+	size_t size = m_PinballObjs.size();
+	for (unsigned int i = 0; i < size ; i++)
 	{
 		PinballObject *pObject = m_PinballObjs[i];
+	//	cout << pObject->getName() << "  ";
 		if (!pObject->Init(status))
 		{
 			#ifdef DEBUGMESSAGES
@@ -961,6 +976,8 @@ void PinballMaster::AddPinballOutput(Output *output)
 	}
 }
 
+int PinballMaster::iCountObj = 0;
+
 /*---------------------------------------------------------------------*/
 void PinballMaster::AddPinballObject(PinballObject *Pinballobj)
 /*---------------------------------------------------------------------*/
@@ -968,8 +985,14 @@ void PinballMaster::AddPinballObject(PinballObject *Pinballobj)
 #ifdef DEBUGMESSAGES
 	LogMessage("Pinball::AddPinballObject");
 #endif
-
 	m_PinballObjs.push_back(Pinballobj);
+	iCountObj++;
+	size_t size = m_PinballObjs.size();
+	if (size != iCountObj)
+	{
+		cout << "Error";
+	}
+
 }
 
 /*---------------------------------------------------------------------*/

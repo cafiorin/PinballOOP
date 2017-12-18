@@ -178,6 +178,7 @@
     <ClInclude Include="OOP\Stage3.h" />
     <ClInclude Include="OOP\Stage4.h" />
     <ClInclude Include="OOP\Stage5.h" />
+    <ClInclude Include="OOP\Stage6.h" />
     <ClInclude Include="OOP\StageBase.h" />
     <ClInclude Include="OOP\Target.h" />
     <ClInclude Include="OOP\Timer.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="OOP\Stage3.cpp" />
     <ClCompile Include="OOP\Stage4.cpp" />
     <ClCompile Include="OOP\Stage5.cpp" />
+    <ClCompile Include="OOP\Stage6.cpp" />
     <ClCompile Include="OOP\StageBase.cpp" />
     <ClCompile Include="OOP\Target.cpp" />
     <ClCompile Include="OOP\Timer.cpp" />

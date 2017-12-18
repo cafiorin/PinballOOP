@@ -27,6 +27,7 @@ http://pinballhomemade.blogspot.com.br
 #define MP3_STAGESTEP "stage.mp3"
 #define MP3_THEMEWINNER "themeSFX.mp3"
 #define MP3_STAGECLEAR "stgclear.mp3"
+#define MP3_TIMEISOVER "crashcar.mp3"
 
 
 #define MP3_HAHAHA1 "hahaha.mp3"

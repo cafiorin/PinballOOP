@@ -88,11 +88,10 @@ public:
 	void NextPlayer();
 	bool IsPlaying() { return m_Status == StatusPinball::playingmode; }
 	void CreateStages();
-	int m_TotalStages;
 	StageBase *m_Stages[MAX_STAGES];
 	StageBase *GetStage(int number) 
 	{ 
-		if(number >= m_TotalStages) return m_Stages[number]; 
+		if(number < MAX_STAGES) return m_Stages[number];
 		return NULL;
 	}
 	int GetBallsByPlayer() { return m_nBallByPlayer; }

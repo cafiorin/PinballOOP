@@ -29,7 +29,7 @@ http://pinballhomemade.blogspot.com.br
 #define MAX_LEDS 66
 #define MAX_BALLS 3
 #define MAX_PLAYERS 8
-#define MAX_STAGES 6
+#define MAX_STAGES 7
 #define MAX_MULTIPLY 6
 
 #define TIME_COIL_ON 20

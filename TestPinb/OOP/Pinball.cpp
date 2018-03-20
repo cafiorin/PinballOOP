@@ -24,6 +24,7 @@ Pinball::Pinball()
 {
 	m_Status = StatusPinball::initializing;
 	m_serial = NULL;
+	m_MP3player = NULL;
 	m_enableSfx = true;
 }
 
@@ -54,10 +55,13 @@ Pinball::~Pinball()
 void Pinball::LogMessage(const char *szMessage)
 /*---------------------------------------------------------------------*/
 {
-	#ifdef DEBUGMESSAGES
-	m_serial->println(szMessage);
-	m_serial->flush();
-	delay(10);
+#ifdef DEBUGMESSAGES
+	if (m_serial != NULL)
+	{
+		m_serial->println(szMessage);
+		m_serial->flush();
+		delay(10);
+	}
 	#endif
 }
 
@@ -65,12 +69,15 @@ void Pinball::LogMessage(const char *szMessage)
 void Pinball::LogMessageValue(const char *szMessage, int value)
 /*---------------------------------------------------------------------*/
 {
-	#ifdef DEBUGMESSAGES
-	char szDebug[MAX_SIZE_DEBUG_MESSAGE];
-	sprintf(szDebug, "%s - value:%d", szMessage, value);
-	m_serial->println(szDebug);
-    m_serial->flush();
-	delay(10);
+#ifdef DEBUGMESSAGES
+	if (m_serial != NULL)
+	{
+		char szDebug[MAX_SIZE_DEBUG_MESSAGE];
+		sprintf(szDebug, "%s - value:%d", szMessage, value);
+		m_serial->println(szDebug);
+		m_serial->flush();
+		delay(10);
+}
 	#endif
 }
 
@@ -85,7 +92,7 @@ void Pinball::playSong(char song[], bool priority /*default=true*/)
 
 
 	#ifdef ARDUINOLIB
-	if (song != NULL)
+	if (song != NULL && m_MP3player != NULL)
 	{
 		if (priority && m_MP3player->getState() == playback)
 		{
@@ -109,34 +116,37 @@ void Pinball::playSong(char song[], bool priority /*default=true*/)
 void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 //-----------------------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+#ifdef DEBUGMESSAGES
 	LogMessage("Pinball::ChangeVolume");
-	#endif
+#endif
 
-	#ifdef DOS
+#ifdef DOS
 	LogMessage("Change Volume");
-	#endif // DOS
+#endif // DOS
 
 
-	#ifdef ARDUINOLIB
-	union twobyte mp3_vol;
-	mp3_vol.word = m_MP3player->getVolume();
-	uint8_t volume = mp3_vol.byte[1];
-	if(plus)
-		volume += delta;
-	else
-		volume -= delta;
-
-	if (volume >= 254)
+#ifdef ARDUINOLIB
+	if (m_MP3player != NULL)
 	{
-		volume = 254;
-	}
-	else if (volume <= 2)
-	{
-		volume = 2;
-	}
+		union twobyte mp3_vol;
+		mp3_vol.word = m_MP3player->getVolume();
+		uint8_t volume = mp3_vol.byte[1];
+		if (plus)
+			volume += delta;
+		else
+			volume -= delta;
 
-	m_MP3player->setVolume(volume, volume);
+		if (volume >= 254)
+		{
+			volume = 254;
+		}
+		else if (volume <= 2)
+		{
+			volume = 2;
+		}
+
+		m_MP3player->setVolume(volume, volume);
+	}
 	#endif // ARDUINOLIB
 }
 

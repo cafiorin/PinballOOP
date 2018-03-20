@@ -86,27 +86,30 @@ int ReadKey()
 
 void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 {
-	ledPrint->printbox(30, (NUM_LEDS/2)+2, "Led");
-	ledPrint->m_YInit = 1;
-	ledPrint->m_XInit = 100;
-
-	int i = 0;
-	for (; i < NUM_LEDS/2; i++)
+	if (pPinballMaster->GetLedControl() != NULL)
 	{
-		char szMsg[30];
-		sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->GetLedControl()->IsTurn(i) ? 1 : 0));
-		ledPrint->printone(szMsg);
-	}
+		ledPrint->printbox(30, (NUM_LEDS / 2) + 2, "Led");
+		ledPrint->m_YInit = 1;
+		ledPrint->m_XInit = 100;
 
-	ledPrint->ResetLine();
-	ledPrint->m_YInit = 1;
-	ledPrint->m_XInit = 115;
+		int i = 0;
+		for (; i < NUM_LEDS / 2; i++)
+		{
+			char szMsg[30];
+			sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->GetLedControl()->IsTurn(i) ? 1 : 0));
+			ledPrint->printone(szMsg);
+		}
 
-	for (; i < NUM_LEDS; i++)
-	{
-		char szMsg[30];
-		sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->GetLedControl()->IsTurn(i)?1:0));
-		ledPrint->printone(szMsg);
+		ledPrint->ResetLine();
+		ledPrint->m_YInit = 1;
+		ledPrint->m_XInit = 115;
+
+		for (; i < NUM_LEDS; i++)
+		{
+			char szMsg[30];
+			sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->GetLedControl()->IsTurn(i) ? 1 : 0));
+			ledPrint->printone(szMsg);
+		}
 	}
 }
 
@@ -153,11 +156,13 @@ int main()
 	inputs->println("HOLE           - 43");
 	inputs->println("ACCBALL1       - 44-47");
 
-	for (int i = 0; i < NUM_LEDS; i++)
+	if (pPinballMaster->GetLedControl() != NULL)
 	{
-		Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
+		for (int i = 0; i < NUM_LEDS; i++)
+		{
+			Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
+		}
 	}
-
 	PrintReadKey();
 
 	int ch = 0;
@@ -184,18 +189,21 @@ int main()
 		}
 		else
 		{
-			bool someChange = false;
-			for (int i = 0; i < NUM_LEDS; i++)
+			if (pPinballMaster->GetLedControl() != NULL)
 			{
-				if (Leds[i] != pPinballMaster->GetLedControl()->IsTurn(i))
+				bool someChange = false;
+				for (int i = 0; i < NUM_LEDS; i++)
 				{
-					Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
-					someChange = true;
+					if (Leds[i] != pPinballMaster->GetLedControl()->IsTurn(i))
+					{
+						Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
+						someChange = true;
+					}
 				}
-			}
-			if (someChange)
-			{
-				printLeds(pPinballMaster, ledPrint);
+				if (someChange)
+				{
+					printLeds(pPinballMaster, ledPrint);
+				}
 			}
 		}
 

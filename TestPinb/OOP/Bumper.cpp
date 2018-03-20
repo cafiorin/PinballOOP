@@ -50,13 +50,21 @@ bool Bumper::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
 		m_pinball->NotifyEvent(this, event, valueToSend);
-		m_pinball->GetLedControl()->TurnOn(m_Led);
+		LedControl *ledControl = m_pinball->GetLedControl();
+		if (ledControl != NULL)
+		{
+			ledControl->TurnOn(m_Led);
+		}
 		m_TimerLed->Start();
 		return true;
 	}
 	else if (event == EVENT_TIMEISOVER)
 	{
-		m_pinball->GetLedControl()->TurnOff(m_Led);
+		LedControl *ledControl = m_pinball->GetLedControl();
+		if (ledControl != NULL)
+		{
+			ledControl->TurnOff(m_Led);
+		}
 	}
 	return false;
 }

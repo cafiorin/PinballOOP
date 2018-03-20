@@ -58,7 +58,10 @@ void Output::TurnOn()
 		#endif
 
 		m_turnOn = true;
-		m_Multiplex->writeChannel(m_portNumber, HIGH);
+		if (m_Multiplex != NULL)
+		{
+			m_Multiplex->writeChannel(m_portNumber, HIGH);
+		}
 	}
 }
 
@@ -108,6 +111,9 @@ void Output::TurnOff()
 		m_timerDelay = 0;
 		m_turnOn = false;
 
-		m_Multiplex->writeChannel(m_portNumber, LOW);
+		if (m_Multiplex != NULL)
+		{
+			m_Multiplex->writeChannel(m_portNumber, LOW);
+		}
 	}
 }

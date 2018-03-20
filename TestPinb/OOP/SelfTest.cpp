@@ -251,13 +251,16 @@ void SelfTest::DoTestLed()
 	sprintf(szLed, "%d", m_startTestValue);
 	m_pinball->printText("Led:", szLed, 0);
 
-	if (ledControl->IsTurn(m_startTestValue))
+	if (ledControl != NULL)
 	{
-		ledControl->TurnOff(m_startTestValue);
-	}
-	else
-	{
-		ledControl->TurnOn(m_startTestValue);
+		if (ledControl->IsTurn(m_startTestValue))
+		{
+			ledControl->TurnOff(m_startTestValue);
+		}
+		else
+		{
+			ledControl->TurnOn(m_startTestValue);
+		}
 	}
 }
 
@@ -338,9 +341,12 @@ void SelfTest::FinishTest()
 		case EVENT_TEST_LED_AUTO:
 		{
 			LedControl *ledControl = m_pinball->GetLedControl();
-			for (int i = 0; i < MAX_LEDS; i++)
+			if (ledControl != NULL)
 			{
-				ledControl->TurnOff(i);
+				for (int i = 0; i < MAX_LEDS; i++)
+				{
+					ledControl->TurnOff(i);
+				}
 			}
 		}
 		break;

@@ -45,7 +45,10 @@ PinballMaster *m_PinballMaster = NULL;
 void receiveMessageFromAnotherArduinoMaster(int howMany)
 //-----------------------------------------------------------------------//
 {
-	m_PinballMaster->receiveMessageFromAnotherArduino(howMany);
+	if (m_PinballMaster != NULL)
+	{
+		m_PinballMaster->receiveMessageFromAnotherArduino(howMany);
+	}
 }
 
 //-----------------------------------------------------------------------//
@@ -395,7 +398,10 @@ bool PinballMaster::EventStartButton(PinballObject *sender)
 
 	if (m_Status == StatusPinball::attractmode)
 	{
-		m_TimerToShowPlayers->Start();
+		if (m_TimerToShowPlayers != NULL)
+		{
+			m_TimerToShowPlayers->Start();
+		}
 		m_Status = StatusPinball::getplayers;
 		m_nPlayers = 1;
 		m_nSecondsTimerToShowPlayers = 5;
@@ -411,7 +417,10 @@ bool PinballMaster::EventStartButton(PinballObject *sender)
 		}
 		m_nSecondsTimerToShowPlayers = 5;
 		ShowChooseNumberOfPlayers();
-		m_TimerToShowPlayers->Start();
+		if (m_TimerToShowPlayers != NULL)
+		{
+			m_TimerToShowPlayers->Start();
+		}
 		return true;
 	}
 	return false;
@@ -430,7 +439,10 @@ bool PinballMaster::EventMenuButton(PinballObject *sender)
 	if (m_Status == StatusPinball::attractmode || m_Status == StatusPinball::menusetup)
 	{
 		m_Status = StatusPinball::menusetup;
-		m_Menu->PressButtonMenu();
+		if (m_Menu != NULL)
+		{
+			m_Menu->PressButtonMenu();
+		}
 		return true;
 	}
 	else if (m_Status == StatusPinball::menutest)
@@ -453,7 +465,10 @@ bool PinballMaster::EventEnterButton(PinballObject *sender)
 	if (m_Status == StatusPinball::attractmode || m_Status == StatusPinball::menusetup)
 	{
 		m_Status = StatusPinball::menusetup;
-		m_Menu->PressButtonEnter();
+		if (m_Menu != NULL)
+		{
+			m_Menu->PressButtonEnter();
+		}
 		return true;
 	}
 	else if (m_Status == StatusPinball::menutest)
@@ -475,12 +490,18 @@ bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
 
 	if (m_Status == StatusPinball::menusetup)
 	{
-		m_Menu->PressUpDownButton(upButton);
+		if (m_Menu != NULL)
+		{
+			m_Menu->PressUpDownButton(upButton);
+		}
 		return true;
 	}
 	else if (m_Status == StatusPinball::menutest)
 	{
-		m_SelfTest->EventUpDownButton(sender, upButton);
+		if (m_SelfTest != NULL)
+		{
+			m_SelfTest->EventUpDownButton(sender, upButton);
+		}
 	}
 	else
 	{
@@ -514,7 +535,7 @@ bool PinballMaster::TimerIsOver(PinballObject *sender)
 	LogMessage("PinballMaster::TimerIsOver");
 	#endif
 
-	if (sender == m_TimerToShowPlayers)
+	if (sender == m_TimerToShowPlayers && m_TimerToShowPlayers != NULL)
 	{
 		m_nSecondsTimerToShowPlayers--;
 		ShowChooseNumberOfPlayers();
@@ -539,9 +560,15 @@ bool PinballMaster::SetupTest(int event)
 
 	if (event == EVENT_TEST_EXIT_MENU)
 	{
-		m_SelfTest->FinishTest();
+		if (m_SelfTest != NULL)
+		{
+			m_SelfTest->FinishTest();
+		}
 		m_Status = StatusPinball::attractmode;
-		m_AttractMode->Init(m_Status);
+		if (m_AttractMode != NULL)
+		{
+			m_AttractMode->Init(m_Status);
+		}
 	}
 	else if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
@@ -551,13 +578,19 @@ bool PinballMaster::SetupTest(int event)
 			printText("Set", "Ball", 1);
 			delay(300);
 			m_Status = StatusPinball::attractmode;
-			m_AttractMode->Init(m_Status);
+			if (m_AttractMode != NULL)
+			{
+				m_AttractMode->Init(m_Status);
+			}
 			return true;
 		}
 		else
 		{
 			Init(StatusPinball::menutest);
-			m_SelfTest->StartTest(event);
+			if (m_SelfTest != NULL)
+			{
+				m_SelfTest->StartTest(event);
+			}
 		}
 	}
 
@@ -648,7 +681,10 @@ void PinballMaster::NextPlayer()
 	{
 		//GameOver
 		Init(StatusPinball::attractmode);
-		m_AttractMode->InitGameOver();
+		if (m_AttractMode != NULL)
+		{
+			m_AttractMode->InitGameOver();
+		}
 	}
 }
 
@@ -696,7 +732,10 @@ bool PinballMaster::Loop(int value)
 	{
 		case StatusPinball::attractmode:
 		{
-			m_LedControl->AttractModeLoop();
+			if (m_LedControl != NULL)
+			{
+				m_LedControl->AttractModeLoop();
+			}
 		}
 		break;
 	}
@@ -1044,8 +1083,8 @@ void PinballMaster::playSongWait(char song[])
 	LogMessage(szMsg);
 
 
-#ifdef ARDUINOLIB
-	if (song != NULL)
+	#ifdef ARDUINOLIB
+	if (song != NULL && m_MP3player != NULL)
 	{
 		if (m_MP3player->getState() == playback)
 		{
@@ -1064,9 +1103,12 @@ void PinballMaster::playSongWait(char song[])
 			bool turn = false;
 			while (m_MP3player->getState() == playback)
 			{
-				m_LedControl->TurnAll(turn);
-				delay(300);
-				turn = !turn;
+				if (m_LedControl != NULL)
+				{
+					m_LedControl->TurnAll(turn);
+					delay(300);
+					turn = !turn;
+				}
 			}
 		}
 	}

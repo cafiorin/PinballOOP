@@ -16,10 +16,10 @@ PinballMaster m_pinball;
 void setup()  
 {
 	Serial.begin(115200);
- Serial.print(F(" -< R E S E T >- "));
-  Serial.print(F("########################")); 
-	Serial.print(F("Iniciando...")); 
-  Serial.print(F("########################")); 
+	Serial.println(F(" -< R E S E T >- "));
+	Serial.println(F("########################")); 
+	Serial.println(F("Iniciando...")); 
+	Serial.println(F("########################")); 
 
 	Wire.begin();
 

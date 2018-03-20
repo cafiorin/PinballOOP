@@ -71,7 +71,7 @@ void Player::SetNextStage()
 	{
 		nextStage = 0;
 		//Play winner song!
-		m_pinball->printText("Winner", "!!!!!", 0);
+		m_pinball->printText("Winner", "", 0);
 		m_pinball->playSongWait(MP3_THEMEWINNER);
 
 	}

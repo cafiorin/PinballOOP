@@ -22,7 +22,7 @@ http://pinballhomemade.blogspot.com.br
 //Stage 2: (E: the great project)
 //1 - Take the 5 Droptargets
 //2 - Take the 3 Droptargets
-//3 - Take the INPUT_SW_TARGET_HIGHER Target
+//3 - Take the INPUT_SW_HOLE Target
 //4 - Take the Ramp
 //5 - Take the ball in hole.
 
@@ -87,7 +87,7 @@ Stage5::Stage5(PinballMaster *pinball,int number):StageBase(pinball,number)
 
 	//TARGET_HIGHER
 	count++;
-	m_Flags[count] = new Flag(INPUT_SW_TARGET_HIGHER);
+	m_Flags[count] = new Flag(INPUT_SW_HOLE);
 	m_Flags[count]->m_Leds = new SequencerLeds(pinball, SequencerType::turnOnAndturnOff_1by1, 300);
 	m_Flags[count]->m_Leds->AddLed(LED_TARGET_HIGHER_B1);
 	m_Flags[count]->m_Leds->AddLed(LED_TARGET_HIGHER_B2);

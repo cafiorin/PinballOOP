@@ -53,10 +53,10 @@ void PinballObject::LogMessage(const char *szMessage)
 void PinballObject::LogMessageValue(const char *szMessage,int value)
 /*---------------------------------------------------------------------*/
 {
-	if (strlen(szMessage) + strlen(m_szName)+7 < MAX_SIZE_DEBUG_MESSAGE)
+	if (strlen(szMessage) + strlen(m_szName)+10 < MAX_SIZE_DEBUG_MESSAGE)
 	{
 		char szMsg[MAX_SIZE_DEBUG_MESSAGE];
-		sprintf(szMsg, "[%s]:%s-val:%d", m_szName, szMessage,value);
+		sprintf(szMsg, "[%s]:%s-value:%d", m_szName, szMessage,value);
 
 		if (m_pinball != NULL)
 			m_pinball->LogMessage(szMsg);

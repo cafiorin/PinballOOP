@@ -148,6 +148,57 @@ void Menu::PressButtonMenu()
 	}
 }
 
+
+//-------------------------------------------------------//
+void Menu::PressButtonEnter()
+//-------------------------------------------------------//
+{
+	if (!m_isShowing)
+	{
+		m_isShowing = true;
+		m_menuOptionSelected = m_pMenu;
+		m_subOption = 0;
+		m_subOptionSelected = m_pMenu->GetChildren()[0];
+		m_backSelected = false;
+
+		PrintMenu(ButtonPressed::start);
+	}
+	else
+	{
+		//Exit menu
+		if (m_backSelected && m_menuOptionSelected->GetParent() == NULL)
+		{
+			m_PinballMaster->NotifyEvent(NULL, EVENT_TEST_EXIT_MENU, 0);
+			m_isShowing = false;
+		}
+		//Action
+		else if (m_subOptionSelected->GetAction() != -1 && !m_backSelected)
+		{
+			m_PinballMaster->NotifyEvent(NULL, m_subOptionSelected->GetAction(), 0);
+			m_isShowing = false;
+		}
+		else
+		{
+			//Option Pressed
+			if (!m_backSelected)
+			{
+				m_menuOptionSelected = m_subOptionSelected;
+				m_subOption = 0;
+				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
+			}
+			else
+			{
+				//Pressed Back
+				m_menuOptionSelected = m_menuOptionSelected->GetParent();
+				m_subOption = 0;
+				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
+				m_backSelected = false;
+			}
+			PrintMenu(ButtonPressed::start);
+		}
+	}
+}
+
 //-------------------------------------------------------//
 void Menu::PrintMenu(ButtonPressed button)
 //-------------------------------------------------------//

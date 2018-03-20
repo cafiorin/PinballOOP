@@ -16,7 +16,8 @@ enum ButtonPressed
 {
 	start,
 	up,
-	down
+	down,
+	enter
 };
 
 
@@ -61,6 +62,7 @@ public:
 
 	void PressButtonMenu();
 	bool PressUpDownButton(bool upButton);
+	void PressButtonEnter();
 
 protected:
 	MenuString *m_pMenu;

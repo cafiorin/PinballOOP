@@ -1,0 +1,23 @@
+Conector Gabinete
+
+1 - 48v  [FIO VERMELHO]
+2 - 48v
+3 - Vazio
+4 - GND (48v)
+5 - Botão porta - ESCAPE
+6 - Botão Flipper DIREITO
+7 - ALTO FALANTE (+)
+8 - Botão Flipper ESQUERDO
+9 - ALTO FALANTE (-)
+10 - Botão Porta BEGIN TEST
+
+11 - Botão START
+12 - 12 V1
+13 - Botão START
+14 - GND (5V)
+15 - 5V
+16 - Botão Flipper DIREITO
+17 - 12 V2
+18 - Botão Flipper ESQUERDO
+19 - Botão porta VOLUME -
+20 - Botão porta VOLUME +   [FIO LARANJA]

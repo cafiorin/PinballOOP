@@ -57,6 +57,7 @@ void Pinball::LogMessage(const char *szMessage)
 	#ifdef DEBUGMESSAGES
 	m_serial->println(szMessage);
 	m_serial->flush();
+	delay(10);
 	#endif
 }
 
@@ -66,9 +67,10 @@ void Pinball::LogMessageValue(const char *szMessage, int value)
 {
 	#ifdef DEBUGMESSAGES
 	char szDebug[MAX_SIZE_DEBUG_MESSAGE];
-	sprintf(szDebug, "%s-val:%d", szMessage, value);
+	sprintf(szDebug, "%s - value:%d", szMessage, value);
 	m_serial->println(szDebug);
     m_serial->flush();
+	delay(10);
 	#endif
 }
 

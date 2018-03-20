@@ -101,6 +101,7 @@ public:
 private :
 	void CreateObjects();
 	bool EventStartButton(PinballObject *sender);
+	bool EventEnterButton(PinballObject *sender);
 	bool EventMenuButton(PinballObject *sender);
 	bool TimerIsOver(PinballObject *sender);
 	bool PlayfieldEvent(PinballObject *sender, int event, int valueToSend);

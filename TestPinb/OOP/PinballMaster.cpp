@@ -194,13 +194,14 @@ void PinballMaster::CreateObjects()
 	m_GI = new Output("GI", this, OUTPUT_GI_ON_12V);
 	m_GI->TurnOn();
 
-	Input *pInputStartButton = new Input("SB", this, INPUT_START_BUTTON);
+	Input *pInputStartButton = new Input("BS", this, INPUT_START_BUTTON);
 	Input *pInputMenu = new Input("BM", this, INPUT_MENU_BUTTON);
-	Input *pInputVolumePlus = new Input("VP", this, INPUT_UP_BUTTON);
-	Input *pInputVolumeMinus = new Input("VM", this, INPUT_DOWN_BUTTON);
+	Input *pInputVolumePlus = new Input("V-", this, INPUT_UP_BUTTON);
+	Input *pInputVolumeMinus = new Input("V+", this, INPUT_DOWN_BUTTON);
+	Input *pInputEnter = new Input("BE", this, INPUT_ENTER_BUTTON);
 
 	m_TurnFlipperOn = new Output("TFO", this, OUTPUT_FLIPPER_ON_5V);
-	m_OutBall = new OutBall("OB", this, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL1_48V, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL2_48V);
+	m_OutBall = new OutBall("OB", this, INPUT_SW_OUTBALL1, OUTPUT_OUTBALL1_48V, INPUT_SW_OUTBALL2, OUTPUT_OUTBALL2_48V);
 	m_Hole = new KickoutHole("HOLE", this, INPUT_SW_HOLE, OUTPUT_HOLE_48V);
 
 	SlingShot *pSlingShotLeft = new SlingShot("SLL", this, INPUT_SW_SLINGSHOT_LEFT1, INPUT_SW_SLINGSHOT_LEFT2, OUTPUT_SLINGSHOTLEFT_48V);
@@ -237,7 +238,6 @@ void PinballMaster::CreateObjects()
 	Input *pInputRolloverRight = new Input("RMR", this, INPUT_SW_ROLLOVER_RIGHT);
 
 	Input *pInputRolloverStarRed2 = new Input("RSR2", this, INPUT_SW_ROLLOVER_STAR_RED2);
-	Input *pInputTargetHigher = new Input("TH", this, INPUT_SW_TARGET_HIGHER);
 	Input *pInputSpinner = new Input("Spin", this, INPUT_SW_SPINNER);
 
 	Input *pInputRampIn = new Input("RampIn", this, INPUT_SW_RAMP_IN);
@@ -351,6 +351,11 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, int event, int valueToSen
 				return EventUpDownButton(sender,false);
 			}
 			break;
+		case INPUT_ENTER_BUTTON:
+		{
+			return EventEnterButton(sender);
+		}
+		break;
 		}
 
 		// -- P L A Y F I E L D --
@@ -435,6 +440,30 @@ bool PinballMaster::EventMenuButton(PinballObject *sender)
 
 	return false;
 }
+
+//---------------------------------------------------------------------//
+bool PinballMaster::EventEnterButton(PinballObject *sender)
+//---------------------------------------------------------------------//
+{
+#ifdef DEBUGMESSAGES
+	LogMessage("PinballMaster::EventMenuButton");
+#endif
+
+
+	if (m_Status == StatusPinball::attractmode || m_Status == StatusPinball::menusetup)
+	{
+		m_Status = StatusPinball::menusetup;
+		m_Menu->PressButtonEnter();
+		return true;
+	}
+	else if (m_Status == StatusPinball::menutest)
+	{
+		SetupTest(EVENT_TEST_EXIT_MENU);
+	}
+
+	return false;
+}
+
 
 //---------------------------------------------------------------------//
 bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
@@ -882,10 +911,6 @@ void PinballMaster::PlaySongToInput(int portNumber)
 			playSong(MP3_ROLLOVER_RIGHT);
 			break;
 
-		case INPUT_SW_TARGET_HIGHER:
-			playSong(MP3_TARGET_HIGHER);
-			break;
-
 		case INPUT_SW_RAMP_IN:
 			playSong(MP3_RAMP_IN);
 			break;
@@ -940,6 +965,10 @@ void PinballMaster::PlaySongToInput(int portNumber)
 		case INPUT_DOWN_BUTTON:
 			playSong(MP3_DOWN_BUTTON);
 			break;
+		case INPUT_ENTER_BUTTON:
+			playSong(MP3_MENU_BUTTON);
+			break;
+
 		}
 	}
 }
@@ -954,7 +983,9 @@ void PinballMaster::AddPinballInput(Input *input)
 
 	if (input != NULL)
 	{
-		m_Inputs[input->GetPortNumber()] = input;
+		int port = input->GetPortNumber();
+		if(port < MAX_INPUTCHANNELS)
+			m_Inputs[port] = input;
 	}
 }
 
@@ -968,7 +999,9 @@ void PinballMaster::AddPinballOutput(Output *output)
 
 	if (output != NULL)
 	{
-		m_Outputs[output->GetPortNumber()] = output;
+		int port = output->GetPortNumber();
+		if (port < MAX_OUTPUTCHANNELS)
+			m_Outputs[output->GetPortNumber()] = output;
 	}
 }
 

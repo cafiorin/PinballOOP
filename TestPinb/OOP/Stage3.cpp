@@ -16,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 //Stage 2: (E: the great project)
 //1 - Take the 5 Droptargets
 //2 - Take the 3 Droptargets
-//3 - Take the INPUT_SW_TARGET_HIGHER Target
+//3 - Take the INPUT_SW_HOLE Target
 //4 - Take the Ramp
 //5 - Take the ball in hole.
 
@@ -94,7 +94,7 @@ int Stage3::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 
 	if(valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
 	{
-		if (valueToSend == INPUT_SW_TARGET_HIGHER && 
+		if (valueToSend == INPUT_SW_HOLE &&
 			m_DropTarget3) //Step3
 		{
 			m_TargetsHigher = true;

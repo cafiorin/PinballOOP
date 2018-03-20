@@ -153,12 +153,18 @@ void Multiplex::writeChannel(int ch,int value)
 		return ;
 
 	digitalWrite(_outsig, value);
-	_addressing(ch);
 
-	if(ch < 16)
+	if (ch < 16)
+	{
+		_addressing(ch);
 		enableChip(_chipSelect4);
+	}
 	else
+	{
+		ch -= 16;
+		_addressing(ch);
 		enableChip(_chipSelect5);
+	}
 }
 
 

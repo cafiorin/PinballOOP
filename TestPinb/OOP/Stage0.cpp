@@ -72,10 +72,13 @@ int Stage0::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 	
 	if (event == EVENT_DROPTARGETDOWN)
 	{
-		if(sender == m_PinballMaster->m_DropTarget3)
-			m_PinballMaster->m_DropTarget3->Reset();
-		else
-			m_PinballMaster->m_DropTarget5->Reset();
+		DropTarget* dt3 = m_PinballMaster->GetDropTarget3();
+		DropTarget *dt5 = m_PinballMaster->GetDropTarget5();
+
+		if(sender == dt3 && dt3 != NULL)
+			dt3->Reset();
+		else if(dt5 != NULL)
+			dt5->Reset();
 		return score;
 	}
 

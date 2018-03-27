@@ -46,11 +46,11 @@ bool Bumper::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 	Debug("Bumper::NotifyEvent");
 	#endif
 
+	LedControl *ledControl = m_pinball->GetLedControl();
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
 		m_pinball->NotifyEvent(this, event, valueToSend);
-		LedControl *ledControl = m_pinball->GetLedControl();
 		if (ledControl != NULL)
 		{
 			ledControl->TurnOn(m_Led);
@@ -60,7 +60,6 @@ bool Bumper::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 	}
 	else if (event == EVENT_TIMEISOVER)
 	{
-		LedControl *ledControl = m_pinball->GetLedControl();
 		if (ledControl != NULL)
 		{
 			ledControl->TurnOff(m_Led);

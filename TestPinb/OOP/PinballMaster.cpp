@@ -59,58 +59,26 @@ void SetupWireToMaster()
 	Wire.onReceive(receiveMessageFromAnotherArduinoMaster); // register event to handle requests
 }
 
-#endif // ARDUINOLIB
-
-/*---------------------------------------------------------------------*/
-//							C L A S S
-
-#ifdef ARDUINOLIB
 /*---------------------------------------------------------------------*/
 PinballMaster::PinballMaster()
 /*---------------------------------------------------------------------*/
 {
-	m_Status = StatusPinball::initializing;
-	m_nBallByPlayer = MAX_BALLS;
-	m_enableSfx = true;
 	m_PinballMaster = this;
 	SetupWireToMaster();
-
-	m_LedControl = NULL;
-	m_SelfTest = NULL;
-	m_AttractMode = NULL;
-	m_Menu = NULL;
-	m_TimerToShowPlayers = NULL;
-	m_nSecondsTimerToShowPlayers = 5;
-	m_Multiplex = NULL;
 }
 
 /*---------------------------------------------------------------------*/
 void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 /*---------------------------------------------------------------------*/
 {
-	ht1632_setup();
 	m_serial = serial;
-
+	ht1632_setup();
+	
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage("Pinball Constructor");
+	LogMessage("Pinball Setup");
 	#endif
 
 	m_MP3player = MP3player;
-
-	for (int ch = 0; ch < MAX_INPUTCHANNELS; ch++)
-	{
-		m_Inputs[ch] = NULL;
-	}
-
-	for (int ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
-	{
-		m_Outputs[ch] = NULL;
-	}
-
-	for (int i = 0; i < MAX_PLAYERS; i++)
-	{
-		m_Players[i] = new Player(this);
-	}
 
 	CreateObjects();
 }
@@ -122,35 +90,9 @@ void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinball(szName, serial)
 /*---------------------------------------------------------------------*/
 {
-	m_Status = StatusPinball::initializing;
-	m_nBallByPlayer = MAX_BALLS;
-	m_enableSfx = true;
-	m_LedControl = NULL;
-	m_SelfTest = NULL;
-	m_AttractMode = NULL;
-	m_Menu = NULL;
-	m_TimerToShowPlayers = NULL;
-	m_nSecondsTimerToShowPlayers = 5;
-	m_Multiplex = NULL;
-	
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage("PinballMaster Constructor");
+	LogMessage("PinballMaster Construtor");
 	#endif
-
-	for (int ch = 0; ch < MAX_INPUTCHANNELS; ch++)
-	{
-		m_Inputs[ch] = NULL;
-	}
-
-	for (int ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
-	{
-		m_Outputs[ch] = NULL;
-	}
-
-	for (int i = 0; i < MAX_PLAYERS; i++)
-	{
-		m_Players[i] = new Player(this);
-	}
 
 	CreateObjects();
 }
@@ -181,12 +123,48 @@ void PinballMaster::CreateObjects()
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage("PinballMaster::CreateObjects");
 	#endif
+
+	m_nBallByPlayer = MAX_BALLS;
+	m_enableSfx = true;
+	m_LedControl = NULL;
+	m_SelfTest = NULL;
+	m_AttractMode = NULL;
+	m_Menu = NULL;
+	m_TimerToShowPlayers = NULL;
+	m_nSecondsTimerToShowPlayers = 5;
+	m_Multiplex = NULL;
+	m_OutBall = NULL;
+	m_Hole = NULL;
+	m_TurnFlipperOn = NULL;
+	m_DropTarget5 = NULL;
+	m_DropTarget3 = NULL;
+	m_GI = NULL;
 	m_Status = StatusPinball::initializing;
 
+	for (int ch = 0; ch < MAX_INPUTCHANNELS; ch++)
+	{
+		m_Inputs[ch] = NULL;
+	}
+
+	for (int ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
+	{
+		m_Outputs[ch] = NULL;
+	}
+
+	for (int i = 0; i < MAX_STAGES; i++)
+	{
+		m_Stages[i] = NULL;
+	}
+
+	for (int i = 0; i < MAX_PLAYERS; i++)
+	{
+		m_Players[i] = new Player(this);
+	}
+
 	printText("Pinball", "init", 0);
-	
+
 	m_LedControl = new LedControl(this);
-	m_Menu = new Menu("Menu", this);
+	m_Menu = new Menu(this);
 	m_SelfTest = new SelfTest(this);
 	m_Multiplex = new Multiplex(this, 23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
 
@@ -519,7 +497,7 @@ bool PinballMaster::PlayfieldEvent(PinballObject *sender, int event, int valueTo
 	LogMessage("PinballMaster::PlayfieldEvent");
 	#endif
 
-	if (m_Status == StatusPinball::playingmode)
+	if (m_Status == StatusPinball::playingmode && m_playerPlaying> 0 && m_playerPlaying < MAX_PLAYERS)
 	{
 		m_Players[m_playerPlaying]->NotifyEvent(sender, event, valueToSend);
 	}
@@ -617,7 +595,8 @@ void PinballMaster::StartGame(int Players)
 
 	m_playerPlaying = 0;
 	m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying);
-	m_TurnFlipperOn->TurnOn();
+	if(m_TurnFlipperOn != NULL)
+		m_TurnFlipperOn->TurnOn();
 }
 
 //---------------------------------------------------------------------//
@@ -626,9 +605,10 @@ void PinballMaster::PlayerLostBall()
 {
 	if (m_Status == StatusPinball::playingmode)
 	{
-		if (!m_OutBall->IsThereAnyBallInGame())
+		if (m_OutBall != NULL && !m_OutBall->IsThereAnyBallInGame())
 		{
-			m_TurnFlipperOn->TurnOff();
+			if (m_TurnFlipperOn != NULL)
+				m_TurnFlipperOn->TurnOff();
 
 			m_Players[m_playerPlaying]->LostBall();
 			NextPlayer();
@@ -636,7 +616,7 @@ void PinballMaster::PlayerLostBall()
 		else
 		{
 			//Ball in hole ?
-			if (m_Hole->IsThereBall())
+			if (m_Hole != NULL && m_Hole->IsThereBall())
 			{
 				m_Hole->LanchBall();
 			}
@@ -674,7 +654,8 @@ void PinballMaster::NextPlayer()
 	{
 		if (m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying))
 		{
-			m_TurnFlipperOn->TurnOn();
+			if (m_TurnFlipperOn != NULL)
+				m_TurnFlipperOn->TurnOn();
 		}
 	}
 	else
@@ -693,7 +674,7 @@ void PinballMaster::NextPlayer()
 void PinballMaster::GetNewBall()
 //---------------------------------------------------------------------//
 {
-	if (m_Status == StatusPinball::playingmode)
+	if (m_Status == StatusPinball::playingmode && m_OutBall != NULL)
 	{
 		m_OutBall->LanchBall();
 	}
@@ -709,7 +690,7 @@ void PinballMaster::ShowChooseNumberOfPlayers()
 
 	if (m_Status == StatusPinball::getplayers)
 	{
-		char szPlayers[10];
+		char szPlayers[15];
 		sprintf(szPlayers, "%d  %ds", m_nPlayers, m_nSecondsTimerToShowPlayers);
 		printText("Players", szPlayers, 0);
 	}
@@ -1058,7 +1039,7 @@ void PinballMaster::AddPinballObject(PinballObject *Pinballobj)
 	size_t size = m_PinballObjs.size();
 	if (size != iCountObj)
 	{
-		cout << "Error";
+		LogMessage("Pinball::AddPinballObject Error Count");
 	}
 
 }
@@ -1067,11 +1048,18 @@ void PinballMaster::AddPinballObject(PinballObject *Pinballobj)
 void PinballMaster::RemovePinballObject(PinballObject *Pinballobj)
 /*---------------------------------------------------------------------*/
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	LogMessage("Pinball::RemovePinballObject");
-#endif
+	#endif
 
 	m_PinballObjs.pop_back(Pinballobj);
+
+	iCountObj--;
+	size_t size = m_PinballObjs.size();
+	if (size != iCountObj)
+	{
+		LogMessage("Pinball::RemovePinballObject Error Count");
+	}
 }
 
 //----------------------------------------------------//

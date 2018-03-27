@@ -20,13 +20,18 @@ enum ButtonPressed
 	enter
 };
 
+#define MAX_NAME_MENU 10
 
 class MenuString
 {
 public:
 	MenuString(MenuString *parent, int action, char *szMenu)
 	{
-		strcpy(m_szMenu, szMenu);
+		if(strlen(szMenu) < MAX_NAME_MENU)
+			strcpy(m_szMenu, szMenu);
+		else
+			strcpy(m_szMenu, "MAX");
+
 		m_action = action;
 		m_parent = parent;
 		if (parent != NULL)
@@ -48,14 +53,14 @@ public:
 private:
 	MenuString *m_parent;
 	int m_action;
-	char m_szMenu[10];
+	char m_szMenu[MAX_NAME_MENU];
 	Vector<MenuString *> m_Children;
 };
 
 class Menu
 {
 public:
-	Menu(const char *szName, PinballMaster *pinball);
+	Menu(PinballMaster *pinball);
 	virtual ~Menu();
 	virtual bool Init(StatusPinball status);
 	void DestroyChildren(MenuString *menuString);

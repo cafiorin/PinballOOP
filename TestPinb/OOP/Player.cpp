@@ -27,7 +27,6 @@ Player::Player(PinballMaster *pinball):PinballObject("Player",pinball)
 	m_Score = 0;
 	m_ExtraBall = false;
 	m_Multiply = 1;
-
 }
 
 //-------------------------------------------------------//
@@ -66,28 +65,32 @@ void Player::SetNextStage()
 	LogMessage("Player::SetNextStage");
 	#endif
 
-	int nextStage = m_Stage->GetNumber() + 1;
-	if (nextStage > LAST_STAGE)
+	if (m_Stage != NULL)
 	{
-		nextStage = 0;
-		//Play winner song!
-		m_pinball->printText("Winner", "", 0);
-		m_pinball->playSongWait(MP3_THEMEWINNER);
+		int nextStage = m_Stage->GetNumber() + 1;
+		if (nextStage > LAST_STAGE)
+		{
+			nextStage = 0;
+			//Play winner song!
+			m_pinball->printText("Winner", "", 0);
+			m_pinball->playSongWait(MP3_THEMEWINNER);
 
+		}
+		else
+		{
+			//Stage clear
+			m_pinball->printText("Stage", "Clear", 0);
+			m_pinball->playSongWait(MP3_STAGECLEAR);
+		}
+
+		m_Stage = m_pinball->GetStage(nextStage);
+		if (m_Stage != NULL)
+			m_Stage->SetCurrentPlayer(this);
+
+		KickoutHole *Hole = m_pinball->GetKickoutHole();
+		if (Hole != NULL)
+			Hole->LanchBall();
 	}
-	else
-	{
-		//Stage clear
-		m_pinball->printText("Stage", "Clear", 0);
-		m_pinball->playSongWait(MP3_STAGECLEAR);
-	}
-
-	m_Stage = m_pinball->GetStage(nextStage);
-	if(m_Stage != NULL)
-		m_Stage->SetCurrentPlayer(this);
-	m_pinball->m_Hole->LanchBall();
-
-
 }
 
 //-------------------------------------------------------//

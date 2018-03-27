@@ -92,22 +92,25 @@ int StageBase::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 	{
 		bool allRollovers = false;
 		LedControl *pLedControl = m_PinballMaster->GetLedControl();
-		switch (valueToSend)
+		if (pLedControl != NULL)
 		{
-		case INPUT_SW_ROLLOVER_CENTER:
-			pLedControl->TurnOn(LED_ROLLOVER_CENTER);
-			allRollovers = CheckRolloversMultiply();
-			break;
+			switch (valueToSend)
+			{
+			case INPUT_SW_ROLLOVER_CENTER:
+				pLedControl->TurnOn(LED_ROLLOVER_CENTER);
+				allRollovers = CheckRolloversMultiply();
+				break;
 
-		case INPUT_SW_ROLLOVER_LEFT:
-			pLedControl->TurnOn(LED_ROLLOVER_LEFT);
-			allRollovers = CheckRolloversMultiply();
-			break;
+			case INPUT_SW_ROLLOVER_LEFT:
+				pLedControl->TurnOn(LED_ROLLOVER_LEFT);
+				allRollovers = CheckRolloversMultiply();
+				break;
 
-		case INPUT_SW_ROLLOVER_RIGHT:
-			pLedControl->TurnOn(LED_ROLLOVER_RIGHT);
-			allRollovers = CheckRolloversMultiply();
-			break;
+			case INPUT_SW_ROLLOVER_RIGHT:
+				pLedControl->TurnOn(LED_ROLLOVER_RIGHT);
+				allRollovers = CheckRolloversMultiply();
+				break;
+			}
 		}
 
 		if (allRollovers)
@@ -146,20 +149,22 @@ bool StageBase::CheckRolloversMultiply()
 	#endif
 
 	LedControl *pLedControl = m_PinballMaster->GetLedControl();
-
-	if (pLedControl->IsTurn(LED_ROLLOVER_CENTER) &&
-		pLedControl->IsTurn(LED_ROLLOVER_LEFT) &&
-		pLedControl->IsTurn(LED_ROLLOVER_RIGHT))
+	if (pLedControl != NULL)
 	{
-		if (m_currentPlayer != NULL)
+		if (pLedControl->IsTurn(LED_ROLLOVER_CENTER) &&
+			pLedControl->IsTurn(LED_ROLLOVER_LEFT) &&
+			pLedControl->IsTurn(LED_ROLLOVER_RIGHT))
 		{
-			if (m_currentPlayer->SetNextMultiply())
+			if (m_currentPlayer != NULL)
 			{
-				SetMultiply();
-				TurnOffRolloversMultiply();
+				if (m_currentPlayer->SetNextMultiply())
+				{
+					SetMultiply();
+					TurnOffRolloversMultiply();
+				}
 			}
+			return true;
 		}
-		return true;
 	}
 	return false;
 }

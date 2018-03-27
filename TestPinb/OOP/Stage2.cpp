@@ -62,8 +62,9 @@ int Stage2::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 
 	int score = StageBase::PlayfieldEvent(sender,event,valueToSend);
 
+	DropTarget *dt5 = m_PinballMaster->GetDropTarget5();
 	if (event == EVENT_DROPTARGETDOWN && 
-		sender == m_PinballMaster->m_DropTarget5 &&
+		sender == dt5 && dt5 != NULL &&
 		!m_DropTargetOk) //Step 1
 	{
 		m_DropTargetOk = true;
@@ -118,8 +119,14 @@ void Stage2::ResetStage()
 	m_DropTargetOk = false;
 	m_TargetsHigher = false;
 	m_LedsHole->Disable();
-	m_PinballMaster->m_DropTarget3->Reset();
-	m_PinballMaster->m_DropTarget5->Reset();
+
+	DropTarget* dt3 = m_PinballMaster->GetDropTarget3();
+	DropTarget *dt5 = m_PinballMaster->GetDropTarget5();
+	if (dt3 != NULL)
+		dt3->Reset();
+	if (dt5 != NULL)
+		dt5->Reset();
+
 	SetLedStage();
 }
 	

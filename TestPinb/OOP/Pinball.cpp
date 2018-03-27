@@ -27,8 +27,6 @@ Pinball::Pinball()
 	m_MP3player = NULL;
 	m_enableSfx = true;
 }
-
-
 #endif
 
 #ifdef DOS
@@ -73,10 +71,13 @@ void Pinball::LogMessageValue(const char *szMessage, int value)
 	if (m_serial != NULL)
 	{
 		char szDebug[MAX_SIZE_DEBUG_MESSAGE];
-		sprintf(szDebug, "%s - value:%d", szMessage, value);
-		m_serial->println(szDebug);
-		m_serial->flush();
-		delay(10);
+		if (strlen(szMessage) + 15 < MAX_SIZE_DEBUG_MESSAGE)
+		{
+			sprintf(szDebug, "%s - value:%d", szMessage, value);
+			m_serial->println(szDebug);
+			m_serial->flush();
+			delay(10);
+		}
 }
 	#endif
 }
@@ -87,8 +88,11 @@ void Pinball::playSong(char song[], bool priority /*default=true*/)
 //-----------------------------------------------------------------------//
 {
 	char szMsg[50];
-	sprintf(szMsg, "Play song: %s", song);
-	LogMessage(szMsg);
+	if (strlen(szMsg) < 50)
+	{
+		sprintf(szMsg, "Play song: %s", song);
+		LogMessage(szMsg);
+	}
 
 
 	#ifdef ARDUINOLIB
@@ -116,13 +120,13 @@ void Pinball::playSong(char song[], bool priority /*default=true*/)
 void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 //-----------------------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	LogMessage("Pinball::ChangeVolume");
-#endif
+	#endif
 
-#ifdef DOS
+	#ifdef DOS
 	LogMessage("Change Volume");
-#endif // DOS
+	#endif // DOS
 
 
 #ifdef ARDUINOLIB

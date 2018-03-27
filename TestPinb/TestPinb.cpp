@@ -86,7 +86,8 @@ int ReadKey()
 
 void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 {
-	if (pPinballMaster->GetLedControl() != NULL)
+	LedControl *pLedControl = pPinballMaster->GetLedControl();
+	if (pLedControl != NULL)
 	{
 		ledPrint->printbox(30, (NUM_LEDS / 2) + 2, "Led");
 		ledPrint->m_YInit = 1;
@@ -96,7 +97,7 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 		for (; i < NUM_LEDS / 2; i++)
 		{
 			char szMsg[30];
-			sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->GetLedControl()->IsTurn(i) ? 1 : 0));
+			sprintf(szMsg, "L%d=>%d", i, (pLedControl->IsTurn(i) ? 1 : 0));
 			ledPrint->printone(szMsg);
 		}
 
@@ -107,7 +108,7 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 		for (; i < NUM_LEDS; i++)
 		{
 			char szMsg[30];
-			sprintf(szMsg, "L%d=>%d", i, (pPinballMaster->GetLedControl()->IsTurn(i) ? 1 : 0));
+			sprintf(szMsg, "L%d=>%d", i, (pLedControl->IsTurn(i) ? 1 : 0));
 			ledPrint->printone(szMsg);
 		}
 	}
@@ -163,6 +164,7 @@ int main()
 			Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
 		}
 	}
+
 	PrintReadKey();
 
 	int ch = 0;
@@ -214,6 +216,8 @@ int main()
 		{
 			PrintTime(Millis() - t1);
 			lastTime = t2;
+
+			PrintReadKey();
 		}
 
 		pPinballSlave->Loop(0);

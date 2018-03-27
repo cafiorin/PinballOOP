@@ -72,18 +72,22 @@ int Stage3::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
 
 	int score = StageBase::PlayfieldEvent(sender,event,valueToSend);
 
+	DropTarget* dt3 = m_PinballMaster->GetDropTarget3();
+	DropTarget *dt5 = m_PinballMaster->GetDropTarget5();
+
 	if (event == EVENT_DROPTARGETDOWN && 
-		sender == m_PinballMaster->m_DropTarget5 &&
+		sender == dt5 &&
 		!m_DropTarget5) //Step 1
 	{
-		m_PinballMaster->m_DropTarget3->Reset();
+		if(dt3 != NULL)
+			dt3->Reset();
 		m_DropTarget5 = true;
 		m_PinballMaster->playSong(MP3_STAGESTEP);
 		return score;
 	}
 
 	if (event == EVENT_DROPTARGETDOWN &&
-		sender == m_PinballMaster->m_DropTarget3 &&
+		sender == dt3 &&
 		!m_DropTarget3 && m_DropTarget5) //Step2
 	{
 		m_DropTarget3 = true;
@@ -152,8 +156,14 @@ void Stage3::ResetStage()
 	m_LedsTargetHigher->Disable();
 	m_LedsRamp->Disable();
 
-	m_PinballMaster->m_DropTarget3->Reset();
-	m_PinballMaster->m_DropTarget5->Reset();
+	DropTarget* dt3 = m_PinballMaster->GetDropTarget3();
+	if (dt3 != NULL)
+		dt3->Reset();
+
+	DropTarget *dt5 = m_PinballMaster->GetDropTarget5();
+	if (dt5 != NULL)
+		dt5->Reset();
+
 	SetLedStage();
 }
 	

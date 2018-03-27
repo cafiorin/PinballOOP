@@ -12,7 +12,11 @@ http://pinballhomemade.blogspot.com.br
 PinballObject::PinballObject(const char *szName, PinballMaster *pinball)
 /*---------------------------------------------------------------------*/
 {
-	strcpy(m_szName, szName);
+	if(strlen(szName)<MAX_NAME)
+		strcpy(m_szName, szName);
+	else
+		strcpy(m_szName, "MAX_NAME");
+
 	m_enabled = true;
 	m_pinball = pinball;
 
@@ -39,7 +43,7 @@ PinballObject::~PinballObject()
 void PinballObject::LogMessage(const char *szMessage)
 /*---------------------------------------------------------------------*/
 {
-	if (strlen(szMessage) + strlen(m_szName) < MAX_SIZE_DEBUG_MESSAGE)
+	if (strlen(szMessage) + strlen(m_szName)+5 < MAX_SIZE_DEBUG_MESSAGE)
 	{
 		char szMsg[MAX_SIZE_DEBUG_MESSAGE];
 		sprintf(szMsg, "[%s]:%s", m_szName, szMessage);
@@ -53,7 +57,7 @@ void PinballObject::LogMessage(const char *szMessage)
 void PinballObject::LogMessageValue(const char *szMessage,int value)
 /*---------------------------------------------------------------------*/
 {
-	if (strlen(szMessage) + strlen(m_szName)+10 < MAX_SIZE_DEBUG_MESSAGE)
+	if (strlen(szMessage) + strlen(m_szName)+16 < MAX_SIZE_DEBUG_MESSAGE)
 	{
 		char szMsg[MAX_SIZE_DEBUG_MESSAGE];
 		sprintf(szMsg, "[%s]:%s-value:%d", m_szName, szMessage,value);

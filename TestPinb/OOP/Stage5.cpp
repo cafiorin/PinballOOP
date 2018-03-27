@@ -191,8 +191,13 @@ void Stage5::ResetStage()
 	m_Flags[m_FlagCurrent]->EnableToCapture();
 	m_LedsHole->Disable();
 
-	m_PinballMaster->m_DropTarget3->Reset();
-	m_PinballMaster->m_DropTarget5->Reset();
+	DropTarget* dt3 = m_PinballMaster->GetDropTarget3();
+	if (dt3 != NULL)
+		dt3->Reset();
+
+	DropTarget *dt5 = m_PinballMaster->GetDropTarget5();
+	if (dt5 != NULL)
+		dt5->Reset();
 	SetLedStage();
 }
 	

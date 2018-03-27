@@ -9,7 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 
 //-------------------------------------------------------//
-Menu::Menu(const char *szName, PinballMaster *pinball) 
+Menu::Menu(PinballMaster *pinball) 
 //-------------------------------------------------------//
 {
 	m_PinballMaster = pinball;

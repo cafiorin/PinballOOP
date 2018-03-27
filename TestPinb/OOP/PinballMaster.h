@@ -45,17 +45,19 @@ public:
 
 	virtual ~PinballMaster();
 	
-	Menu *m_Menu;
-	SelfTest *m_SelfTest;
-	OutBall *m_OutBall;
-	Output *m_TurnFlipperOn;
-	KickoutHole *m_Hole;
-	DropTarget *m_DropTarget3, *m_DropTarget5;
-
 	LedControl *GetLedControl() {return m_LedControl;}
 	Multiplex *GetMultiplex() { return m_Multiplex; }
-	Input *GetInput(int channel) { return m_Inputs[channel]; }
-	Output *GetOutput(int channel) { return m_Outputs[channel]; }
+	Input *GetInput(int channel) 
+	{ 
+		if(channel < MAX_INPUTCHANNELS) return m_Inputs[channel]; 
+		return NULL;
+	}
+
+	Output *GetOutput(int channel) 
+	{ 
+		if (channel < MAX_OUTPUTCHANNELS) return m_Outputs[channel];
+		return NULL;
+	}
 
 	void AddPinballObject(PinballObject *Pinballobj);
 	void RemovePinballObject(PinballObject *Pinballobj);
@@ -79,19 +81,25 @@ public:
 
 	int m_nPlayers;
 	void ShowChooseNumberOfPlayers();
-	Timer *m_TimerToShowPlayers;
 	int m_nSecondsTimerToShowPlayers;
-	Player *m_Players[MAX_PLAYERS];
 	int m_playerPlaying;
 	void GetNewBall();
 	void PlayerLostBall();
 	void NextPlayer();
 	bool IsPlaying() { return m_Status == StatusPinball::playingmode; }
 	void CreateStages();
-	StageBase *m_Stages[MAX_STAGES];
+
+	Menu *GetMenu() { return m_Menu; }
+	SelfTest *GetSelfTest() { return m_SelfTest; }
+	OutBall *GetOutBall() { return m_OutBall; }
+	Output *GetTurnFlipperOn() { return m_TurnFlipperOn; }
+	KickoutHole *GetKickoutHole() { return m_Hole; }
+	DropTarget *GetDropTarget3() { return m_DropTarget3; }
+	DropTarget *GetDropTarget5() { return m_DropTarget5; }
+
 	StageBase *GetStage(int number) 
 	{ 
-		if(number < MAX_STAGES) return m_Stages[number];
+		if (number < MAX_STAGES) return m_Stages[number];
 		return NULL;
 	}
 	int GetBallsByPlayer() { return m_nBallByPlayer; }
@@ -118,6 +126,19 @@ protected:
 	Vector<PinballObject *> m_PinballObjs;
 	Input *m_Inputs[MAX_INPUTCHANNELS];
 	Output *m_Outputs[MAX_OUTPUTCHANNELS];
+	StageBase *m_Stages[MAX_STAGES];
+	Player *m_Players[MAX_PLAYERS];
+	Timer *m_TimerToShowPlayers;
+
+	Menu *m_Menu;
+	SelfTest *m_SelfTest;
+	OutBall *m_OutBall;
+	Output *m_TurnFlipperOn;
+	KickoutHole *m_Hole;
+	DropTarget *m_DropTarget3;
+	DropTarget *m_DropTarget5;
+
+
 	static int iCountObj;
 };
 

@@ -18,16 +18,16 @@ class Input;
 class Target : public PinballObject
 {
 public:
-	Target(const char *szName, PinballMaster *pinball, int portNumberInput, int led);
+	Target(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t led);
 	virtual ~Target();
 	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 
 	bool IsHit() { return m_hit; }
 
 protected:
 	Input *m_input;
-	int m_led;
+	uint8_t m_led;
 	bool m_hit;
 	Timer *m_timerBlinkLed;
 

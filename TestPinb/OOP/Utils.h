@@ -42,19 +42,19 @@ long Millis();
 
 clock_t Millis();
 long timediff(clock_t t2, clock_t t1);
-void gotoxy(int x, int y);
-void getCursorXY(int &x, int&y);
+void gotoxy(uint8_t x, uint8_t y);
+void getCursorXY(uint8_t &x, int&y);
 void setcolor(WORD color);
 void clrscr();
 void box(unsigned x, unsigned y, unsigned sx, unsigned sy, unsigned char col, unsigned char col2, char text_[]);
 void clrbox(unsigned char x1, unsigned char y1, unsigned char x2, unsigned char y2, unsigned char bkcol);
 void putbox(unsigned x, unsigned y, unsigned sx, unsigned sy, unsigned char col, unsigned char col2, unsigned char bkcol, char text_[]);
 void txtPlot(unsigned char x, unsigned char y, unsigned char Color);
-void delay(unsigned int milliseconds);
+void delay(long milliseconds);
 
-void pinMode(int port, int io);
-void digitalWrite(int port, int value);
-int digitalRead(int port);
+void pinMode(uint8_t port, uint8_t io);
+void digitalWrite(uint8_t port, uint8_t value);
+uint8_t digitalRead(uint8_t port);
 #endif
 
 #endif

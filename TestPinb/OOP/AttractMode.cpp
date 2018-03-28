@@ -65,7 +65,7 @@ void AttractMode::InitGameOver()
 }
 
 //---------------------------------------------------------------------//
-bool AttractMode::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool AttractMode::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

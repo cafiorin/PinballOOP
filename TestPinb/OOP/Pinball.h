@@ -39,13 +39,13 @@ public:
 #endif
 	virtual ~Pinball();
 	void LogMessage(const char *szMessage);
-	void LogMessageValue(const char *szMessage, int value);
+	void LogMessageValue(const char *szMessage, uint8_t value);
 
 	void playSong(char song[], bool priority=true);
 	void ChangeVolume(bool plus, uint8_t delta = 5);
 
-	void sendMessageToAnotherArduino(int address, char msg);
-	char receiveMessageFromAnotherArduino(int howMany);
+	void sendMessageToAnotherArduino(uint8_t address, char msg);
+	char receiveMessageFromAnotherArduino(uint8_t howMany);
 	virtual void DataReceived(char c) {};
 
 	void EnableSFX(bool enable) { m_enableSfx = enable; }

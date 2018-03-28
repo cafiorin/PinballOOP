@@ -54,7 +54,7 @@ void PinballObject::LogMessage(const char *szMessage)
 }
 
 /*---------------------------------------------------------------------*/
-void PinballObject::LogMessageValue(const char *szMessage,int value)
+void PinballObject::LogMessageValue(const char *szMessage,uint8_t value)
 /*---------------------------------------------------------------------*/
 {
 	if (strlen(szMessage) + strlen(m_szName)+16 < MAX_SIZE_DEBUG_MESSAGE)
@@ -98,7 +98,7 @@ void PinballObject::Loop()
 }
 
 //---------------------------------------------------------------------//
-bool PinballObject::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool PinballObject::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP

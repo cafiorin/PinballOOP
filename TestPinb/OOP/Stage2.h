@@ -15,10 +15,10 @@ class SequencerLeds;
 class Stage2 : public StageBase
 {
 public:
-	Stage2(PinballMaster *pinball,int number);
+	Stage2(PinballMaster *pinball,uint8_t number);
 	virtual ~Stage2();
 
-	virtual int PlayfieldEvent(PinballObject *sender, int event, int valueToSend);
+	virtual uint8_t PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 	virtual void RestartPlayer();
 
 	void Finished();

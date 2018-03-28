@@ -5,7 +5,7 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// TestPinb.cpp : Defines the entry point for the console application.
+// TestPinb.cpp : Defines the entry pouint8_t for the console application.
 // use with #define DOS and comment define ARDUINOLIB
 
 #include "stdafx.h"
@@ -15,15 +15,15 @@ http://pinballhomemade.blogspot.com.br
 #include "OOP\Utils.h"
 #include "OOP\Input.h"
 
-int ikeyCount = 0;
+uint8_t ikeyCount = 0;
 char szKey[80];
-int Ard = 0;
+uint8_t Ard = 0;
 
 
 void PrintReadKey()
 {
-	int x = 70;
-	int y = 20;
+	uint8_t x = 70;
+	uint8_t y = 20;
 	clrbox(x, y, x + 18, y + 2, BLACK);
 
 	setcolor(WHITE);
@@ -34,8 +34,8 @@ void PrintReadKey()
 
 void PrintTime(long time)
 {
-	int x = 70;
-	int y = 40;
+	uint8_t x = 70;
+	uint8_t y = 40;
 	clrbox(x, y, x + 18, y + 2, BLACK);
 
 	setcolor(WHITE);
@@ -45,7 +45,7 @@ void PrintTime(long time)
 }
 
 
-int ReadKey()
+uint8_t ReadKey()
 {
 	if (_kbhit())
 	{
@@ -62,7 +62,7 @@ int ReadKey()
 		}
 		else if (ch == 13) // ENTER
 		{
-			int sw = atoi(szKey);
+			uint8_t sw = atoi(szKey);
 			ikeyCount = 0;
 			szKey[ikeyCount] = 0;
 			PrintReadKey();
@@ -93,7 +93,7 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 		ledPrint->m_YInit = 1;
 		ledPrint->m_XInit = 100;
 
-		int i = 0;
+		uint8_t i = 0;
 		for (; i < NUM_LEDS / 2; i++)
 		{
 			char szMsg[30];
@@ -115,9 +115,9 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 }
 
 
-int main()
+uint8_t main()
 {
-	bool firstPrint = true;
+	bool firstPruint8_t = true;
 	bool Leds[NUM_LEDS];
 
 	HardwareSerial *serial = new HardwareSerial();
@@ -126,7 +126,7 @@ int main()
 	HardwareSerial *serial2 = new HardwareSerial(100);
 	PinballSlave *pPinballSlave = new PinballSlave("Slave", serial2);
 
-	HardwareSerial *ledPrint = new HardwareSerial(100, 1);
+	HardwareSerial *ledPruint8_t = new HardwareSerial(100, 1);
 
 	pPinballSlave->SetPinballMaster(pPinballMaster);
 
@@ -159,7 +159,7 @@ int main()
 
 	if (pPinballMaster->GetLedControl() != NULL)
 	{
-		for (int i = 0; i < NUM_LEDS; i++)
+		for (uint8_t i = 0; i < NUM_LEDS; i++)
 		{
 			Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
 		}
@@ -167,7 +167,7 @@ int main()
 
 	PrintReadKey();
 
-	int ch = 0;
+	uint8_t ch = 0;
 	long lastTime = 0;
 	do
 	{
@@ -187,14 +187,14 @@ int main()
 		if (firstPrint)
 		{
 			printLeds(pPinballMaster, ledPrint);
-			firstPrint = false;
+			firstPruint8_t = false;
 		}
 		else
 		{
 			if (pPinballMaster->GetLedControl() != NULL)
 			{
 				bool someChange = false;
-				for (int i = 0; i < NUM_LEDS; i++)
+				for (uint8_t i = 0; i < NUM_LEDS; i++)
 				{
 					if (Leds[i] != pPinballMaster->GetLedControl()->IsTurn(i))
 					{

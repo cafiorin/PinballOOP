@@ -25,7 +25,7 @@ enum ButtonPressed
 class MenuString
 {
 public:
-	MenuString(MenuString *parent, int action, char *szMenu)
+	MenuString(MenuString *parent, uint8_t action, char *szMenu)
 	{
 		if(strlen(szMenu) < MAX_NAME_MENU)
 			strcpy(m_szMenu, szMenu);
@@ -47,12 +47,12 @@ public:
 
 	char *GetString() { return m_szMenu; }
 	Vector<MenuString *>GetChildren() { return m_Children; }
-	int GetAction() { return m_action; }
+	uint8_t GetAction() { return m_action; }
 	MenuString *GetParent() { return m_parent; }
 
 private:
 	MenuString *m_parent;
-	int m_action;
+	uint8_t m_action;
 	char m_szMenu[MAX_NAME_MENU];
 	Vector<MenuString *> m_Children;
 };
@@ -75,7 +75,7 @@ protected:
 
 	bool m_isShowing;
 	MenuString *m_menuOptionSelected;
-	int m_subOption;
+	uint8_t m_subOption;
 	MenuString *m_subOptionSelected;
 	bool m_backSelected;
 

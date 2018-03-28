@@ -19,16 +19,16 @@ class Timer;
 class ReturnKickBall : public PinballObject
 {
 public:
-	ReturnKickBall(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput,int led);
+	ReturnKickBall(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t led);
 	virtual ~ReturnKickBall();
 	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 	void SetReturnBall(bool returnBallOn);
 
 protected:
 	Input *m_input1;
 	Output *m_output;
-	int m_led;
+	uint8_t m_led;
 	bool m_returnBallOn;
 	Timer *m_timerBlinkLed;
 

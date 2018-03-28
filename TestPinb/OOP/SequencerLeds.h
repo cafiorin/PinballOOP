@@ -30,15 +30,15 @@ public:
 	SequencerLeds(PinballMaster *pinball, SequencerType type, long time);
 	virtual ~SequencerLeds();
 
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 
 	bool TimerIsOver(PinballObject *sender);
-	void AddLed(int led, bool turnOnWithNext = false);
-	void RemoveLed(int led);
+	void AddLed(uint8_t led, bool turnOnWithNext = false);
+	void RemoveLed(uint8_t led);
 	void Start();
 	void End();
 
-	int m_Leds[MAXLIGHTS];
+	uint8_t m_Leds[MAXLIGHTS];
 	bool m_LedsTurnOnWithNext[MAXLIGHTS];
 	bool m_LedsAlwaysTurnOn[MAXLIGHTS];
 	bool m_blink;
@@ -46,20 +46,20 @@ public:
 	char m_pos;
 	SequencerType m_type;
 
-	int GetPrev(int pos)
+	uint8_t GetPrev(uint8_t pos)
 	{
 		if (pos - 1 < 0 )
 			return m_count - 1;
 		return pos - 1;
 	}
 
-	int GetNext(int led)
+	uint8_t GetNext(uint8_t led)
 	{
 		if (led + 1 >= m_count)
 			return 0;
 		return led + 1;
 	}
-	void TurnOnAlwaysLed(int position, bool blink);
+	void TurnOnAlwaysLed(uint8_t position, bool blink);
 
 protected:
 	Timer *m_timerSeq;

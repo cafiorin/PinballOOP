@@ -10,7 +10,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
-AccumulatorBall::AccumulatorBall(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberOutput) : PinballObject(szName, pinball)
+AccumulatorBall::AccumulatorBall(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberInput4, uint8_t portNumberOutput) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -58,7 +58,7 @@ bool AccumulatorBall::Init(StatusPinball status)
 	Debug("AccumulatorBall::Init");
 	#endif
 
-	int nTries = 5;
+	uint8_t nTries = 5;
 	while (m_nBalls > 0 || nTries > 0)
 	{
 		if (m_input1->GetInput())
@@ -76,7 +76,7 @@ bool AccumulatorBall::Init(StatusPinball status)
 
 
 //-------------------------------------------------------//
-bool AccumulatorBall::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool AccumulatorBall::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

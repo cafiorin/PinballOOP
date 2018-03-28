@@ -15,7 +15,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballMaster.h"
 
 //-------------------------------------------------------//
-OutBall::OutBall(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberOutput1, int portNumberInput2, int portNumberOutput2) : PinballObject(szName, pinball)
+OutBall::OutBall(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberOutput1, uint8_t portNumberInput2, uint8_t portNumberOutput2) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -59,7 +59,7 @@ bool OutBall::Init(StatusPinball status)
 	}
 	else
 	{
-		int nTries = 0;
+		uint8_t nTries = 0;
 		while (m_input1->GetInput() && !m_input2->GetInput() && nTries < 5)
 		{
 			m_output1->TurnOnByTimer();
@@ -82,7 +82,7 @@ bool OutBall::Init(StatusPinball status)
 }
 
 //-------------------------------------------------------//
-bool OutBall::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool OutBall::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

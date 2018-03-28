@@ -15,17 +15,17 @@ http://pinballhomemade.blogspot.com.br
 class Stage5 : public StageBase
 {
 public:
-	Stage5(PinballMaster *pinball,int number);
+	Stage5(PinballMaster *pinball,uint8_t number);
 	virtual ~Stage5();
 
-	virtual int PlayfieldEvent(PinballObject *sender, int event, int valueToSend);
+	virtual uint8_t PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 	virtual void RestartPlayer();
 
 	void Finished();
 
 	SequencerLeds *m_LedsHole;
 	Flag *m_Flags[MAX_FLAGS];
-	int m_FlagCurrent, m_FlagCapturedCount;
+	uint8_t m_FlagCurrent, m_FlagCapturedCount;
 	void ResetStage();
 
 };

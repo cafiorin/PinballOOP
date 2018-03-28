@@ -17,7 +17,7 @@ http://pinballhomemade.blogspot.com.br
 //Target : Take ball in hole
 
 //-----------------------------------------------------------
-Stage0::Stage0(PinballMaster *pinball,int number):StageBase(pinball,number)
+Stage0::Stage0(PinballMaster *pinball,uint8_t number):StageBase(pinball,number)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -61,14 +61,14 @@ Stage0::~Stage0()
 }
 
 //-----------------------------------------------------------
-int Stage0::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
+uint8_t Stage0::PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage("Stage0::PlayfieldEvent");
 	#endif
 
-	int score = StageBase::PlayfieldEvent(sender,event,valueToSend);
+	uint8_t score = StageBase::PlayfieldEvent(sender,event,valueToSend);
 	
 	if (event == EVENT_DROPTARGETDOWN)
 	{

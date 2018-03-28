@@ -13,7 +13,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballMaster.h"
 
 //-------------------------------------------------------//
-Bumper::Bumper(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput,int LedNumber) : PinballObject(szName, pinball)
+Bumper::Bumper(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t LedNumber) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -39,7 +39,7 @@ Bumper::~Bumper()
 }
 
 //-------------------------------------------------------//
-bool Bumper::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool Bumper::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

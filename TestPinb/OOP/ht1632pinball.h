@@ -126,7 +126,7 @@ void OutputA_74164(unsigned char x) //Input a digital level to 74164
 // If s<0, select all.
 //Output Argument: void
 //**************************************************************************************************
-void ChipSelect(int select)
+void ChipSelect(uint8_t select)
 {
 	unsigned char tmp = 0;
 	if (select < 0) //Enable all HT1632Cs
@@ -236,7 +236,7 @@ void ht1632_setup()
 	pinMode(ht1632_data, OUTPUT);
 	pinMode(ht1632_clk, OUTPUT);
 
-	for (int j = 1; j <= CHIP_MAX; j++)
+	for (uint8_t j = 1; j <= CHIP_MAX; j++)
 	{
 		ht1632_sendcmd(j, HT1632_CMD_SYSDIS);  // Disable system
 		ht1632_sendcmd(j, HT1632_CMD_COMS00);
@@ -293,7 +293,7 @@ unsigned char xyToIndex(unsigned char x, unsigned char y)
 //                y: Y coordinate
 //Output Argument: color setted on x,y coordinates
 //**************************************************************************************************
-int get_pixel(unsigned char x, unsigned char y) {
+uint8_t get_pixel(unsigned char x, unsigned char y) {
 	unsigned char addr, bitval, nChip;
 
 	if (x >= 32) {
@@ -322,12 +322,12 @@ int get_pixel(unsigned char x, unsigned char y) {
 
 
 /*
-* plot a point on the display, with the upper left hand corner
+* plot a pouint8_t on the display, with the upper left hand corner
 * being (0,0), and the lower right hand corner being (31, 15);
 * parameter "color" could have one of the 4 values:
 * black (off), red, green or yellow;
 */
-void ht1632_plot(int x, int y, unsigned char color)
+void ht1632_plot(uint8_t x, uint8_t y, unsigned char color)
 {
 	unsigned char nChip, addr, bitval;
 
@@ -407,7 +407,7 @@ void ht1632_plot(int x, int y, unsigned char color)
 void ht1632_clear()
 {
 	char i;
-	for (int i = 1; i <= CHIP_MAX; i++)
+	for (uint8_t i = 1; i <= CHIP_MAX; i++)
 	{
 		ChipSelect(-1);
 		ht1632_writebits(HT1632_ID_WR, 1 << 2);  // send ID: WRITE to RAM
@@ -416,7 +416,7 @@ void ht1632_clear()
 			ht1632_writebits(0, 1 << 7); // send 8 bits of data
 		ChipSelect(0);
 
-		for (int j = 0; j < 64; j++)
+		for (uint8_t j = 0; j < 64; j++)
 			ht1632_shadowram[j][i] = 0;
 	}
 }
@@ -530,7 +530,7 @@ void ht1632_putchar1(unsigned char x, unsigned char y, char c, unsigned char col
 * Slightly adopted for using fonts with more rows then 8
 *  ht1632_putcharsizecolor(x location, y location , char ,  size as integer, colorname (RANDOMCOLOR for random color),  name of the font array,  umber of columns, number of rows, 'G' for Gimp or 'T' for The Dot Factory font arrays)
 */
-void ht1632_putcharsizecolor(int x, int y, unsigned char c, char size, unsigned char color, unsigned char secondcolor, unsigned char fontname [][NCOLUMNS], int columncountfont, char rowcountfont, char oddeven)
+void ht1632_putcharsizecolor(uint8_t x, uint8_t y, unsigned char c, char size, unsigned char color, unsigned char secondcolor, unsigned char fontname [][NCOLUMNS], uint8_t columncountfont, char rowcountfont, char oddeven)
 {
 
 	unsigned char dots, dots2, dots3, cc, cc2, cc3, rr, g, t, t3, divisor;
@@ -652,7 +652,7 @@ void ht1632_putcharsizecolor(int x, int y, unsigned char c, char size, unsigned 
 }
 
 
-void ht1632_putcharsize1D(int x, int y, unsigned char c, char size, unsigned char color, unsigned char secondcolor, unsigned char * fontname, char columncountfont, char rowcountfont, char oddeven)
+void ht1632_putcharsize1D(uint8_t x, uint8_t y, unsigned char c, char size, unsigned char color, unsigned char secondcolor, unsigned char * fontname, char columncountfont, char rowcountfont, char oddeven)
 {
 
 	unsigned short dots, dots2, dots3, cc, cc2, cc3, rr, g, t, t3, divisor, arrayposition;
@@ -770,7 +770,7 @@ void ht1632_putcharsize1D(int x, int y, unsigned char c, char size, unsigned cha
 *  ht1632_putbigbitmap(x location, y location , bitmapname ,  colorname (RANDOMCOLOR for random color), name of the second color (instead of BLACK), number of columns, number of rows, 'G' for Gimp or 'T' for The Dot Factory bitmap arrays).
 */
 
-void ht1632_putbigbitmap(int x, int y, unsigned char color, unsigned char secondcolor, unsigned char * bitmapname, int columncountbitmap, unsigned char rowcountbitmap, char oddeven)
+void ht1632_putbigbitmap(uint8_t x, uint8_t y, unsigned char color, unsigned char secondcolor, unsigned char * bitmapname, uint8_t columncountbitmap, unsigned char rowcountbitmap, char oddeven)
 {
 	unsigned short dots, dots2, dots3, dots4, dots5, dots6, dots7, dots8, dots9, dots10, cc, cc2, cc3, cc4, cc5, cc6, cc7, cc8, cc9, cc10, g, t, t3, t4, t5, t6, t7, t8, t9, t10, divisor, startcolum, endcolumn;
 
@@ -1214,13 +1214,13 @@ void ht1632_putbigbitmap(int x, int y, unsigned char color, unsigned char second
 
 
 
-void scrollbitmapxcolor(int y, unsigned char color, unsigned char secondcolor, unsigned char * bitmapname, int columncountbitmap, unsigned char rowcountbitmap, char oddeven, int delaytime) {
+void scrollbitmapxcolor(uint8_t y, unsigned char color, unsigned char secondcolor, unsigned char * bitmapname, uint8_t columncountbitmap, unsigned char rowcountbitmap, char oddeven, uint8_t delaytime) {
 	unsigned char showcolor, showsecondcolor;
-	int xa = 0;
+	uint8_t xa = 0;
 	while (xa < 1) {
-		int xpos = X_MAX;
+		uint8_t xpos = X_MAX;
 		while (xpos > (-1 * (columncountbitmap))) {
-			for (int i = 0; i < 1; i++) {
+			for (uint8_t i = 0; i < 1; i++) {
 				if (color == 4){
 					showcolor = random(3) + 1;
 				}
@@ -1251,13 +1251,13 @@ void scrollbitmapxcolor(int y, unsigned char color, unsigned char secondcolor, u
 * Original function by Bill Ho
 * scrollbitmapy (y location, colorname (RANDOMCOLOR for random color), name of the second color (instead of BLACK), bitmapnae , number of columns, number of rows, 'G' for Gimp or 'T' for The Dot Factory bitmap arrays, delaytime in milliseconds).
 */
-void scrollbitmapycolor(int x, unsigned char color, unsigned char secondcolor, unsigned char * bitmapname, int columncountbitmap, unsigned char rowcountbitmap, char oddeven, int delaytime) {
+void scrollbitmapycolor(uint8_t x, unsigned char color, unsigned char secondcolor, unsigned char * bitmapname, uint8_t columncountbitmap, unsigned char rowcountbitmap, char oddeven, uint8_t delaytime) {
 	unsigned char showcolor, showsecondcolor;
-	int ya = 0;
+	uint8_t ya = 0;
 	while (ya < 1) {
-		int ypos = Y_MAX;
+		uint8_t ypos = Y_MAX;
 		while (ypos > (-1 * (rowcountbitmap))) {
-			for (int i = 0; i < 1; i++) {
+			for (uint8_t i = 0; i < 1; i++) {
 				if (color == 4){
 					showcolor = random(3) + 1;
 				}
@@ -1290,14 +1290,14 @@ void scrollbitmapycolor(int x, unsigned char color, unsigned char secondcolor, u
 */
 
 
-void scrolltextxcolor(int y, char Str1 [], unsigned char color, int delaytime){
-	int messageLength = strlen(Str1) + 1;
+void scrolltextxcolor(uint8_t y, char Str1 [], unsigned char color, uint8_t delaytime){
+	uint8_t messageLength = strlen(Str1) + 1;
 	unsigned char showcolor;
-	int xa = 0;
+	uint8_t xa = 0;
 	while (xa < 1) {
-		int xpos = X_MAX;
+		uint8_t xpos = X_MAX;
 		while (xpos > (-1 * (6 * messageLength))) {
-			for (int i = 0; i < messageLength; i++) {
+			for (uint8_t i = 0; i < messageLength; i++) {
 
 				if (color == 4){
 					showcolor = random(3) + 1;
@@ -1321,14 +1321,14 @@ void scrolltextxcolor(int y, char Str1 [], unsigned char color, int delaytime){
 * Original function by Bill Ho
 *  scrolltextxsizexcolor(y location, string ,  size as integer,  colorname (RANDOMCOLOR for random color), name of the second color (instead of BLACK), name of the font array,  umber of columns, number of rows, 'G' for Gimp or 'T' for The Dot Factory font arrays, delaytime in milliseconds)
 */
-void scrolltextsizexcolor(int y, char Str1 [], char size, unsigned char color, unsigned char secondcolor, unsigned char fontname [][NCOLUMNS], int columncountfont, char rowcountfont, char oddeven, int delaytime){
-	int messageLength = strlen(Str1) + 1;
+void scrolltextsizexcolor(uint8_t y, char Str1 [], char size, unsigned char color, unsigned char secondcolor, unsigned char fontname [][NCOLUMNS], uint8_t columncountfont, char rowcountfont, char oddeven, uint8_t delaytime){
+	uint8_t messageLength = strlen(Str1) + 1;
 	unsigned char showcolor, showsecondcolor;
-	int xa = 0;
+	uint8_t xa = 0;
 	while (xa < 1) {
-		int xpos = X_MAX;
+		uint8_t xpos = X_MAX;
 		while (xpos > (-1 * (columncountfont*size* messageLength))) {
-			for (int i = 0; i < messageLength; i++) {
+			for (uint8_t i = 0; i < messageLength; i++) {
 				if (color == 4){
 					showcolor = random(3) + 1;
 				}
@@ -1360,14 +1360,14 @@ void scrolltextsizexcolor(int y, char Str1 [], char size, unsigned char color, u
 * Original function by Bill Ho
 *  scrolltextxsizeycolor(y location, string ,  size as integer, colorname (RANDOMCOLOR for random color), name of the second color (instead of BLACK), name of the font array,  number of columns, number of rows, 'G' for Gimp or 'T' for The Dot Factory font arrays, delaytime in milliseconds)
 */
-void scrolltextsizey(int x, char Str1 [], char size, unsigned char color, unsigned char secondcolor, unsigned char fontname [][NCOLUMNS], int columncountfont, char rowcountfont, char oddeven, int delaytime){
-	int messageLength = strlen(Str1) + 1;
+void scrolltextsizey(uint8_t x, char Str1 [], char size, unsigned char color, unsigned char secondcolor, unsigned char fontname [][NCOLUMNS], uint8_t columncountfont, char rowcountfont, char oddeven, uint8_t delaytime){
+	uint8_t messageLength = strlen(Str1) + 1;
 	unsigned char showcolor, showsecondcolor;
-	int ya = 0;
+	uint8_t ya = 0;
 	while (ya < 1) {
-		int ypos = Y_MAX;
+		uint8_t ypos = Y_MAX;
 		while (ypos > (-1 * (columncountfont*size* messageLength))) {
-			for (int i = 0; i < messageLength; i++) {
+			for (uint8_t i = 0; i < messageLength; i++) {
 				if (color == 4){
 					showcolor = random(3) + 1;
 				}
@@ -1398,14 +1398,14 @@ void scrolltextsizey(int x, char Str1 [], char size, unsigned char color, unsign
 * Original function by Bill Ho
 *  scrolltextsize1Dxcolor(x location, string ,  size as integer, colorname (RANDOMCOLOR for random color), name of the second color (instead of BLACK), name of the font array,  number of columns, number of rows, 'G' for Gimp or 'T' for The Dot Factory font arrays, delaytime in milliseconds)
 */
-void scrolltextsize1Dxcolor(int y, char Str1 [], char size, unsigned char color, unsigned char secondcolor, unsigned char * fontname, int columncountfont, char rowcountfont, char oddeven, int delaytime){
-	int messageLength = strlen(Str1) + 1;
+void scrolltextsize1Dxcolor(uint8_t y, char Str1 [], char size, unsigned char color, unsigned char secondcolor, unsigned char * fontname, uint8_t columncountfont, char rowcountfont, char oddeven, uint8_t delaytime){
+	uint8_t messageLength = strlen(Str1) + 1;
 	unsigned char showcolor, showsecondcolor;
-	int xa = 0;
+	uint8_t xa = 0;
 	while (xa < 1) {
-		int xpos = X_MAX;
+		uint8_t xpos = X_MAX;
 		while (xpos > (-1 * (columncountfont*size* messageLength))) {
-			for (int i = 0; i < messageLength; i++) {
+			for (uint8_t i = 0; i < messageLength; i++) {
 				if (color == 4){
 					showcolor = random(3) + 1;
 				}
@@ -1430,11 +1430,11 @@ void scrolltextsize1Dxcolor(int y, char Str1 [], char size, unsigned char color,
 	}
 }
 
-void textcolor(int x, int y, char Str1 [], unsigned char color)
+void textcolor(uint8_t x, uint8_t y, char Str1 [], unsigned char color)
 {
-	int messageLength = strlen(Str1) + 1;
+	uint8_t messageLength = strlen(Str1) + 1;
 	unsigned char showcolor;
-	for (int i = 0; i < messageLength; i++)
+	for (uint8_t i = 0; i < messageLength; i++)
 	{
 
 		if (color == 4){
@@ -1450,11 +1450,11 @@ void textcolor(int x, int y, char Str1 [], unsigned char color)
 
 }
 
-void textcolor1(int x, int y, char Str1 [], unsigned char color, char cfont)
+void textcolor1(uint8_t x, uint8_t y, char Str1 [], unsigned char color, char cfont)
 {
-	int messageLength = strlen(Str1) + 1;
+	uint8_t messageLength = strlen(Str1) + 1;
 	unsigned char showcolor;
-	for (int i = 0; i < messageLength; i++)
+	for (uint8_t i = 0; i < messageLength; i++)
 	{
 
 		if (color == 4){

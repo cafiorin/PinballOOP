@@ -13,7 +13,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Timer.h"
 
 //-------------------------------------------------------//
-ReturnKickBall::ReturnKickBall(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput,int led) : PinballObject(szName, pinball)
+ReturnKickBall::ReturnKickBall(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t led) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -81,7 +81,7 @@ void ReturnKickBall::SetReturnBall(bool returnBallOn)
 }
 
 //-------------------------------------------------------//
-bool ReturnKickBall::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool ReturnKickBall::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

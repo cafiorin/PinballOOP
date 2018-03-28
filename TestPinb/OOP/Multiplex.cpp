@@ -20,7 +20,7 @@ http://pinballhomemade.blogspot.com.br
 #include "HardwareSerial.h"
 #endif // DOS
 
-static const int _muxChAddress[16][4] = 
+static const uint8_t _muxChAddress[16][4] = 
 {
     {0,0,0,0}, //channel 0
     {1,0,0,0}, //channel 1
@@ -41,7 +41,7 @@ static const int _muxChAddress[16][4] =
 };
 
 //-----------------------------------------------
-Multiplex::Multiplex(PinballMaster *pinball, const int S0,const int S1,const int S2,const int S3,const int SIG, const int OUTSIG, const int chipSelect1, const int chipSelect2, const int chipSelect3, const int chipSelect4, const int chipSelect5) : PinballObject("Mult", pinball)
+Multiplex::Multiplex(PinballMaster *pinball, const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIG, const uint8_t OUTSIG, const uint8_t chipSelect1, const uint8_t chipSelect2, const uint8_t chipSelect3, const uint8_t chipSelect4, const uint8_t chipSelect5) : PinballObject("Mult", pinball)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -71,7 +71,7 @@ void Multiplex::setup()
 	LogMessage("Multiplex::setup");
 	#endif
 
-	int i;
+	uint8_t i;
 
 	pinMode(_sig, INPUT);
 	pinMode(_outsig, OUTPUT);
@@ -100,7 +100,7 @@ void Multiplex::setup()
 }
 
 //-----------------------------------------------
-void Multiplex::enableChip(int chipNumber)
+void Multiplex::enableChip(uint8_t chipNumber)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
@@ -131,7 +131,7 @@ void Multiplex::resetAllOutput()
 	digitalWrite(_chipSelect4, LOW);
 	digitalWrite(_chipSelect5, LOW);
 
-	for (int i = 0; i < 16; i++)
+	for (uint8_t i = 0; i < 16; i++)
 	{
 		_addressing(i);
 	}
@@ -142,7 +142,7 @@ void Multiplex::resetAllOutput()
 
 
 //-----------------------------------------------
-void Multiplex::writeChannel(int ch,int value)
+void Multiplex::writeChannel(uint8_t ch,uint8_t value)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
@@ -169,7 +169,7 @@ void Multiplex::writeChannel(int ch,int value)
 
 
 //-----------------------------------------------
-int Multiplex::readChannel(int ch)
+uint8_t Multiplex::readChannel(uint8_t ch)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
@@ -212,11 +212,11 @@ void Multiplex::Loop()
 		digitalWrite(_chipSelect2, HIGH);
 		digitalWrite(_chipSelect3, HIGH);
 
-		for (int ch = 0; ch < 16; ch++)
+		for (uint8_t ch = 0; ch < 16; ch++)
 		{
 			_addressing(ch);
 
-			int read;
+			uint8_t read;
 			digitalWrite(_chipSelect1, LOW);
 			read = digitalRead(_sig);
 			digitalWrite(_chipSelect1, HIGH);
@@ -249,10 +249,10 @@ void Multiplex::Loop()
 
 
 //-----------------------------------------------
-void Multiplex::_addressing(int ch)
+void Multiplex::_addressing(uint8_t ch)
 //-----------------------------------------------
 {
-	int i;
+	uint8_t i;
 	for (i = 0; i < 4; i ++)
 	{
 		#if defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MKL26Z64__)

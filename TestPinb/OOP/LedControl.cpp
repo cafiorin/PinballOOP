@@ -32,7 +32,7 @@ LedControl::LedControl(PinballMaster *pinball):PinballObject("LedControl",pinbal
 		#endif // ARDUINOLIB
 	}
 
-	for (int i = 0; i <= NUM_LEDS; i++)
+	for (uint8_t i = 0; i <= NUM_LEDS; i++)
 	{
 		TurnOff(i);
 	}
@@ -56,7 +56,7 @@ void LedControl::TurnAll(bool turnOn)
 	Debug("LedControl::TurnOnAll");
 	#endif
 
-	for (int i = LED_FIRST; i <= LED_LAST; i++)
+	for (uint8_t i = LED_FIRST; i <= LED_LAST; i++)
 	{
 		m_ledsValue[i] = turnOn;
 		if (m_enabled)
@@ -76,7 +76,7 @@ void LedControl::TurnAll(bool turnOn)
 }
 
 //-----------------------------------------------------------
-void LedControl::TurnOn(int Led)
+void LedControl::TurnOn(uint8_t Led)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
@@ -98,7 +98,7 @@ void LedControl::TurnOn(int Led)
 }
 
 //-----------------------------------------------------------
-void LedControl::TurnOff(int Led)
+void LedControl::TurnOff(uint8_t Led)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
@@ -131,7 +131,7 @@ void LedControl::AttractModeLoop()
 	{
 		#ifdef ARDUINOLIB
 		static uint8_t hue;
-		for (int i = 0; i <= LED_LAST / 2; i++)
+		for (uint8_t i = 0; i <= LED_LAST / 2; i++)
 		{
 			// fade everything out
 			m_leds.fadeToBlackBy(40);

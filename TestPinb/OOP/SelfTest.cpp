@@ -131,7 +131,7 @@ bool SelfTest::EventUpDownButton(PinballObject *sender, bool upButton)
 }
 
 //---------------------------------------------------------------------//
-void SelfTest::StartTest(int event)
+void SelfTest::StartTest(uint8_t event)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -343,7 +343,7 @@ void SelfTest::FinishTest()
 			LedControl *ledControl = m_pinball->GetLedControl();
 			if (ledControl != NULL)
 			{
-				for (int i = 0; i < MAX_LEDS; i++)
+				for (uint8_t i = 0; i < MAX_LEDS; i++)
 				{
 					ledControl->TurnOff(i);
 				}
@@ -354,7 +354,7 @@ void SelfTest::FinishTest()
 }
 
 //---------------------------------------------------------------------//
-bool SelfTest::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool SelfTest::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

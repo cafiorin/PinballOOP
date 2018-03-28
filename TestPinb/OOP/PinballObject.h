@@ -33,14 +33,14 @@ public:
 	void Enable() { m_enabled = true; }
 	void Disable() { m_enabled = false; }
 	void LogMessage(const char *szMessage);
-	void LogMessageValue(const char *szMessage, int value);
+	void LogMessageValue(const char *szMessage, uint8_t value);
 	void Debug(const char *szMessage);
 	PinballMaster *GetPinball() { return m_pinball; }
 
 //virtual methods
 	virtual bool Init(StatusPinball status);
 	virtual void Loop();
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 
 protected:
 	char m_szName[MAX_NAME];

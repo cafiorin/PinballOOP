@@ -11,7 +11,7 @@ http://pinballhomemade.blogspot.com.br
 #include "DefinesMp3.h"
 #include "KickoutHole.h"
 
-int Player::m_indexPlayerCurrent = 0;
+uint8_t Player::m_indexPlayerCurrent = 0;
 
 //-------------------------------------------------------//
 Player::Player(PinballMaster *pinball):PinballObject("Player",pinball)
@@ -67,7 +67,7 @@ void Player::SetNextStage()
 
 	if (m_Stage != NULL)
 	{
-		int nextStage = m_Stage->GetNumber() + 1;
+		uint8_t nextStage = m_Stage->GetNumber() + 1;
 		if (nextStage > LAST_STAGE)
 		{
 			nextStage = 0;
@@ -94,7 +94,7 @@ void Player::SetNextStage()
 }
 
 //-------------------------------------------------------//
-bool Player::SetCurrentPlayer(int indexPlayer)
+bool Player::SetCurrentPlayer(uint8_t indexPlayer)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -193,7 +193,7 @@ bool Player::SetExtraBall()
 
 
 //---------------------------------------------------------------------//
-bool Player::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool Player::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -206,7 +206,7 @@ bool Player::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 		{
 			if (event == EVENT_DROPTARGETDOWN || (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH))
 			{
-				int score = m_Stage->PlayfieldEvent(sender, event, valueToSend);
+				uint8_t score = m_Stage->PlayfieldEvent(sender, event, valueToSend);
 				m_Score += (score * m_Multiply);
 				DisplayScore();
 				return true;

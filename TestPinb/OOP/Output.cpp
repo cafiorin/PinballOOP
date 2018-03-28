@@ -10,7 +10,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Multiplex.h"
 
 //-------------------------------------------------------//
-Output::Output(const char *szName, PinballMaster *pinball, int port):Port(pinball,szName, port)
+Output::Output(const char *szName, PinballMaster *pinball, uint8_t port):Port(pinball,szName, port)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -82,7 +82,7 @@ void Output::TurnOnByTimer(long time)
 }
 
 //-------------------------------------------------------//
-bool Output::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool Output::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-------------------------------------------------------//
 {
     #ifdef DEBUGMESSAGES

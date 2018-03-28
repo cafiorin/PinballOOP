@@ -12,10 +12,10 @@ http://pinballhomemade.blogspot.com.br
 
 //-------------------------------------------------------//
 DropTarget::DropTarget(const char *szName, PinballMaster *pinball, 
-						int portNumberInput1, 
-						int portNumberInput2, 
-						int portNumberInput3, 
-						int portNumberOutput) : PinballObject(szName, pinball)
+						uint8_t portNumberInput1, 
+						uint8_t portNumberInput2, 
+						uint8_t portNumberInput3, 
+						uint8_t portNumberOutput) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -35,12 +35,12 @@ DropTarget::DropTarget(const char *szName, PinballMaster *pinball,
 
 //-------------------------------------------------------//
 DropTarget::DropTarget(const char *szName, PinballMaster *pinball,
-	int portNumberInput1,
-	int portNumberInput2,
-	int portNumberInput3,
-	int portNumberInput4,
-	int portNumberInput5,
-	int portNumberOutput) : PinballObject(szName, pinball)
+	uint8_t portNumberInput1,
+	uint8_t portNumberInput2,
+	uint8_t portNumberInput3,
+	uint8_t portNumberInput4,
+	uint8_t portNumberInput5,
+	uint8_t portNumberOutput) : PinballObject(szName, pinball)
 	//-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -71,7 +71,7 @@ DropTarget::~DropTarget()
 
 	delete m_SequencerLeds;
 
-	for (int i = 0; i < m_sizeInputs; i++)
+	for (uint8_t i = 0; i < m_sizeInputs; i++)
 	{
 		delete m_input[i];
 	} 
@@ -94,7 +94,7 @@ bool DropTarget::Init(StatusPinball status)
 }
 
 //-------------------------------------------------------//
-void DropTarget::AddLeds(int led1, int led2, int led3)
+void DropTarget::AddLeds(uint8_t led1, uint8_t led2, uint8_t led3)
 //-------------------------------------------------------//
 {
 	m_SequencerLeds->AddLed(led1);
@@ -103,7 +103,7 @@ void DropTarget::AddLeds(int led1, int led2, int led3)
 }
 
 //-------------------------------------------------------//
-void DropTarget::AddLeds(int led1, int led2, int led3, int led4, int led5)
+void DropTarget::AddLeds(uint8_t led1, uint8_t led2, uint8_t led3, uint8_t led4, uint8_t led5)
 //-------------------------------------------------------//
 {
 	m_SequencerLeds->AddLed(led1);
@@ -115,7 +115,7 @@ void DropTarget::AddLeds(int led1, int led2, int led3, int led4, int led5)
 }
 
 //-------------------------------------------------------//
-bool DropTarget::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool DropTarget::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -124,8 +124,8 @@ bool DropTarget::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 
 	if (event == EVENT_EDGEPOSITIVE)
 	{
-		int totalTargets = 0;
-		for (int i = 0; i < m_sizeInputs; i++)
+		uint8_t totalTargets = 0;
+		for (uint8_t i = 0; i < m_sizeInputs; i++)
 		{
 			if (m_input[i]->GetInput())
 			{

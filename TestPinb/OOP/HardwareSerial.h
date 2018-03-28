@@ -21,19 +21,19 @@ http://pinballhomemade.blogspot.com.br
 class HardwareSerial
 {
 public:
-	HardwareSerial(int xlog=1,int ylog=1);
+	HardwareSerial(uint8_t xlog=1,uint8_t ylog=1);
 	~HardwareSerial();
 	void println(const char *szLog);
 	void jumpline();
 	void flush(){};
 	void ResetLine() { m_line = 0; }
 	void printone(const char *szLog);
-	void printbox(int width, int height, char *szTitle);
+	void printbox(uint8_t width, uint8_t height, char *szTitle);
 
-	int m_line;
+	uint8_t m_line;
 	char m_strings[MAX_STRINGS][50];
-	int m_XInit;
-	int m_YInit;
+	uint8_t m_XInit;
+	uint8_t m_YInit;
 
 };
 #endif

@@ -58,13 +58,13 @@ void Pinball::LogMessage(const char *szMessage)
 	{
 		m_serial->println(szMessage);
 		m_serial->flush();
-		delay(10);
+		delay(100);
 	}
 	#endif
 }
 
 /*---------------------------------------------------------------------*/
-void Pinball::LogMessageValue(const char *szMessage, int value)
+void Pinball::LogMessageValue(const char *szMessage, uint8_t value)
 /*---------------------------------------------------------------------*/
 {
 #ifdef DEBUGMESSAGES
@@ -76,7 +76,7 @@ void Pinball::LogMessageValue(const char *szMessage, int value)
 			sprintf(szDebug, "%s - value:%d", szMessage, value);
 			m_serial->println(szDebug);
 			m_serial->flush();
-			delay(10);
+			delay(100);
 		}
 }
 	#endif
@@ -155,7 +155,7 @@ void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 }
 
 //-----------------------------------------------------------------------//
-void Pinball::sendMessageToAnotherArduino(int address, char msg)
+void Pinball::sendMessageToAnotherArduino(uint8_t address, char msg)
 //-----------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -176,7 +176,7 @@ void Pinball::sendMessageToAnotherArduino(int address, char msg)
 
 
 //-----------------------------------------------------------------------//
-char Pinball::receiveMessageFromAnotherArduino(int howMany)
+char Pinball::receiveMessageFromAnotherArduino(uint8_t howMany)
 //-----------------------------------------------------------------------//
 {
 #ifdef DEBUGMESSAGES

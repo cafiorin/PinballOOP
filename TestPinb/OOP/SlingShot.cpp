@@ -12,7 +12,7 @@ http://pinballhomemade.blogspot.com.br
 #include "DefinesMp3.h"
 
 //-------------------------------------------------------//
-SlingShot::SlingShot(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberOutput) : PinballObject(szName, pinball)
+SlingShot::SlingShot(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberOutput) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -55,7 +55,7 @@ bool SlingShot::Init(StatusPinball status)
 }
 
 //-------------------------------------------------------//
-bool SlingShot::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool SlingShot::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

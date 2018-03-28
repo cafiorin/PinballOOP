@@ -16,12 +16,12 @@ http://pinballhomemade.blogspot.com.br
 class AccumulatorBall : public PinballObject
 {
 public:
-	AccumulatorBall(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberOutput);
+	AccumulatorBall(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberInput4, uint8_t portNumberOutput);
 
 	virtual ~AccumulatorBall();
 	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
-	int GetNumberBalls() {return m_nBalls;}
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
+	uint8_t GetNumberBalls() {return m_nBalls;}
 	void LanchBall();
 
 protected:
@@ -31,6 +31,6 @@ protected:
 	Input *m_input4;
 	Output *m_output;
 
-	int m_nBalls;
+	uint8_t m_nBalls;
 };
 #endif // !defined(AccumulatorBall__INCLUDED_)

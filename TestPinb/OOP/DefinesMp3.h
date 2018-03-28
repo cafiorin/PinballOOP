@@ -20,7 +20,7 @@ http://pinballhomemade.blogspot.com.br
 #define MP3_EXTRABALL "extrabal.mp3"
 #define MP3_HIGHSCORE "high1.mp3"
 #define MP3_SKILLHIT "skillhit.mp3"
-#define MP3_EXTRAPOINT "yahoo.mp3"
+#define MP3_EXTRAPOuint8_t "yahoo.mp3"
 #define MP3_THEME "theme.mp3"
 #define MP3_THEME00 "theme00.mp3"
 #define MP3_TESTSOUND "yahoo.mp3"

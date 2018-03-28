@@ -17,7 +17,7 @@ http://pinballhomemade.blogspot.com.br
 class Flag
 {
 public:
-	Flag(int number)
+	Flag(uint8_t number)
 	{
 		m_number = number;
 		m_captured = false;
@@ -56,11 +56,11 @@ public:
 		}
 	}
 
-	int GetNumber() { return m_number; }
+	uint8_t GetNumber() { return m_number; }
 	SequencerLeds *m_Leds;
 	bool IsCaptured() { return m_captured; }
 private:
-	int m_number;
+	uint8_t m_number;
 	bool m_captured, m_enableToCapture;
 };
 

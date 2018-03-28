@@ -43,7 +43,7 @@ SequencerLeds::~SequencerLeds()
 
 
 //-----------------------------------------------------------
-void SequencerLeds::AddLed(int led, bool turnOnWithNext)
+void SequencerLeds::AddLed(uint8_t led, bool turnOnWithNext)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
@@ -65,7 +65,7 @@ void SequencerLeds::AddLed(int led, bool turnOnWithNext)
 }
 
 //-----------------------------------------------------------
-void SequencerLeds::TurnOnAlwaysLed(int position,bool turnOn)
+void SequencerLeds::TurnOnAlwaysLed(uint8_t position,bool turnOn)
 //-----------------------------------------------------------
 {
 	if (position < m_count)
@@ -81,7 +81,7 @@ void SequencerLeds::TurnOnAlwaysLed(int position,bool turnOn)
 
 
 //-----------------------------------------------------------
-void SequencerLeds::RemoveLed(int led)
+void SequencerLeds::RemoveLed(uint8_t led)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
@@ -167,7 +167,7 @@ void SequencerLeds::End()
 }
 
 //---------------------------------------------------------------------//
-bool SequencerLeds::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool SequencerLeds::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -204,7 +204,7 @@ bool SequencerLeds::TimerIsOver(PinballObject *sender)
 			if (m_type == SequencerType::turnOnAndturnOff_1by1)
 			{
 				pLedControl->TurnOff(m_Leds[m_pos]);
-				int posPrev = GetPrev(m_pos);
+				uint8_t posPrev = GetPrev(m_pos);
 				if (m_LedsTurnOnWithNext[posPrev])
 				{
 					pLedControl->TurnOff(m_Leds[posPrev]);
@@ -237,7 +237,7 @@ bool SequencerLeds::TimerIsOver(PinballObject *sender)
 			}
 			else if (m_type == SequencerType::blinkingAll)
 			{
-				for (int i = 0; i < m_count; i++)
+				for (uint8_t i = 0; i < m_count; i++)
 				{
 					if (!m_LedsAlwaysTurnOn[i])
 					{

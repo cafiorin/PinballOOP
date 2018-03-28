@@ -19,7 +19,7 @@ http://pinballhomemade.blogspot.com.br
 //3 - Take the ball in hole.
 
 //-----------------------------------------------------------
-Stage1::Stage1(PinballMaster *pinball,int number):StageBase(pinball,number)
+Stage1::Stage1(PinballMaster *pinball,uint8_t number):StageBase(pinball,number)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -47,14 +47,14 @@ Stage1::~Stage1()
 }
 
 //-----------------------------------------------------------
-int Stage1::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
+uint8_t Stage1::PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage("Stage1::PlayfieldEvent");
 	#endif
 
-	int score = StageBase::PlayfieldEvent(sender,event,valueToSend);
+	uint8_t score = StageBase::PlayfieldEvent(sender,event,valueToSend);
 	DropTarget* dt3 = m_PinballMaster->GetDropTarget3();
 
 	if (event == EVENT_DROPTARGETDOWN && sender == dt3 && dt3 != NULL)

@@ -12,7 +12,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Timer.h"
 
 //-------------------------------------------------------//
-Target::Target(const char *szName, PinballMaster *pinball, int portNumberInput, int led) : PinballObject(szName, pinball)
+Target::Target(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t led) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -54,7 +54,7 @@ bool Target::Init(StatusPinball status)
 }
 
 //-------------------------------------------------------//
-bool Target::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool Target::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

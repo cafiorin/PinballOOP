@@ -18,13 +18,13 @@ http://pinballhomemade.blogspot.com.br
 class OutBall : public PinballObject
 {
 public:
-	OutBall(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberOutput1, int portNumberInput2, int portNumberOutput2);
+	OutBall(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberOutput1, uint8_t portNumberInput2, uint8_t portNumberOutput2);
 	virtual ~OutBall();
 	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 
 	void LanchBall();
-	int GetBalls() { return m_nBalls; }
+	uint8_t GetBalls() { return m_nBalls; }
 	bool IsThereAnyBallInGame() { return (m_nBalls < MAX_PINBALLBALL); }
 
 protected:
@@ -32,7 +32,7 @@ protected:
 	Output *m_output1;
 	Input *m_input2;
 	Output *m_output2;
-	int m_nBalls;
+	uint8_t m_nBalls;
 
 	void AddBall() { (m_nBalls + 1) > MAX_PINBALLBALL ? m_nBalls = MAX_PINBALLBALL : m_nBalls++; }
 	void RemoveBall() { (m_nBalls - 1) <= 0 ? m_nBalls = 0 : m_nBalls--; }

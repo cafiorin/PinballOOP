@@ -24,11 +24,11 @@ public:
 	LedControl(PinballMaster *pinball);
 	virtual ~LedControl();
 
-	void TurnOn(int Led);
-	void TurnOff(int Led);
+	void TurnOn(uint8_t Led);
+	void TurnOff(uint8_t Led);
 	void TurnAll(bool turnOn);
 
-	bool IsTurn(int Led) { return m_ledsValue[Led]; }
+	bool IsTurn(uint8_t Led) { return m_ledsValue[Led]; }
 	void AttractModeLoop();
 
 	#ifdef ARDUINOLIB

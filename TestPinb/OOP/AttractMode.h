@@ -20,7 +20,7 @@ public:
 	virtual ~AttractMode();
 
 	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 
 	void InitGameOver();
 

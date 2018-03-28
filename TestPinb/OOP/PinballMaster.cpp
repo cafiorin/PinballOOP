@@ -42,7 +42,7 @@ http://pinballhomemade.blogspot.com.br
 PinballMaster *m_PinballMaster = NULL;
 
 //-----------------------------------------------------------------------//
-void receiveMessageFromAnotherArduinoMaster(int howMany)
+void receiveMessageFromAnotherArduinoMaster(uint8_t howMany)
 //-----------------------------------------------------------------------//
 {
 	if (m_PinballMaster != NULL)
@@ -107,7 +107,7 @@ PinballMaster::~PinballMaster()
 	LogMessage("PinballMaster Destructor");
 #endif
 
-	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
+	for (uint8_t i = 0; i < m_PinballObjs.size(); i++)
 	{
 		delete m_PinballObjs[i];
 	}
@@ -141,22 +141,22 @@ void PinballMaster::CreateObjects()
 	m_GI = NULL;
 	m_Status = StatusPinball::initializing;
 
-	for (int ch = 0; ch < MAX_INPUTCHANNELS; ch++)
+	for (uint8_t ch = 0; ch < MAX_INPUTCHANNELS; ch++)
 	{
 		m_Inputs[ch] = NULL;
 	}
 
-	for (int ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
+	for (uint8_t ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
 	{
 		m_Outputs[ch] = NULL;
 	}
 
-	for (int i = 0; i < MAX_STAGES; i++)
+	for (uint8_t i = 0; i < MAX_STAGES; i++)
 	{
 		m_Stages[i] = NULL;
 	}
 
-	for (int i = 0; i < MAX_PLAYERS; i++)
+	for (uint8_t i = 0; i < MAX_PLAYERS; i++)
 	{
 		m_Players[i] = new Player(this);
 	}
@@ -269,7 +269,7 @@ bool PinballMaster::Init(StatusPinball status)
 	m_Status = status;
 
 	size_t size = m_PinballObjs.size();
-	for (unsigned int i = 0; i < size ; i++)
+	for (uint8_t i = 0; i < size ; i++)
 	{
 		PinballObject *pObject = m_PinballObjs[i];
 	//	cout << pObject->getName() << "  ";
@@ -285,7 +285,7 @@ bool PinballMaster::Init(StatusPinball status)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool PinballMaster::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -490,7 +490,7 @@ bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
+bool PinballMaster::PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -529,7 +529,7 @@ bool PinballMaster::TimerIsOver(PinballObject *sender)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::SetupTest(int event)
+bool PinballMaster::SetupTest(uint8_t event)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -576,7 +576,7 @@ bool PinballMaster::SetupTest(int event)
 }
 
 //---------------------------------------------------------------------//
-void PinballMaster::StartGame(int Players)
+void PinballMaster::StartGame(uint8_t Players)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -588,7 +588,7 @@ void PinballMaster::StartGame(int Players)
 
 	m_Status = StatusPinball::playingmode;
 
-	for (int i = 0; i < m_nPlayers; i++)
+	for (uint8_t i = 0; i < m_nPlayers; i++)
 	{
 		m_Players[i]->Init(StatusPinball::playingmode);
 	}
@@ -634,7 +634,7 @@ void PinballMaster::NextPlayer()
 		m_playerPlaying = 0;
 
 	bool isAnyPlayerWaiting = false;
-	int player = m_playerPlaying;
+	uint8_t player = m_playerPlaying;
 	do
 	{
 		player++;
@@ -697,14 +697,14 @@ void PinballMaster::ShowChooseNumberOfPlayers()
 }
 
 /*---------------------------------------------------------------------*/
-bool PinballMaster::Loop(int value)
+bool PinballMaster::Loop(uint8_t value)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP
 	LogMessage("PinballMaster::Loop");
 	#endif
 
-	for (unsigned int i = 0; i < m_PinballObjs.size(); i++)
+	for (uint8_t i = 0; i < m_PinballObjs.size(); i++)
 	{
 		m_PinballObjs[i]->Loop();
 	}
@@ -724,7 +724,7 @@ bool PinballMaster::Loop(int value)
 }
 
 //-----------------------------------------------------------------------//
-void PinballMaster::clearDisplay(int line)
+void PinballMaster::clearDisplay(uint8_t line)
 //-----------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -760,11 +760,11 @@ void PinballMaster::printText(char *text1, char *text2, char font)
 	#endif
 
 	#ifdef DOS
-	int xCursor, yCursor;
+	uint8_t xCursor, yCursor;
 	getCursorXY(xCursor, yCursor);
 
-	int x = 70;
-	int y = 1;
+	uint8_t x = 70;
+	uint8_t y = 1;
 	clrbox(x, y, x + 10, y + 3, BLACK);
 	box(x, y, x + 10, y + 3, y + 6, y + 6, "Display");
 
@@ -797,7 +797,7 @@ void PinballMaster::DataReceived(char c)
 }
 
 //---------------------------------------------------------------------//
-void PinballMaster::PlaySongToInput(int portNumber)
+void PinballMaster::PlaySongToInput(uint8_t portNumber)
 //---------------------------------------------------------------------//
 {
 	if(m_Status == StatusPinball::playingmode)
@@ -1003,7 +1003,7 @@ void PinballMaster::AddPinballInput(Input *input)
 
 	if (input != NULL)
 	{
-		int port = input->GetPortNumber();
+		uint8_t port = input->GetPortNumber();
 		if(port < MAX_INPUTCHANNELS)
 			m_Inputs[port] = input;
 	}
@@ -1019,13 +1019,13 @@ void PinballMaster::AddPinballOutput(Output *output)
 
 	if (output != NULL)
 	{
-		int port = output->GetPortNumber();
+		uint8_t port = output->GetPortNumber();
 		if (port < MAX_OUTPUTCHANNELS)
 			m_Outputs[output->GetPortNumber()] = output;
 	}
 }
 
-int PinballMaster::iCountObj = 0;
+uint8_t PinballMaster::iCountObj = 0;
 
 /*---------------------------------------------------------------------*/
 void PinballMaster::AddPinballObject(PinballObject *Pinballobj)

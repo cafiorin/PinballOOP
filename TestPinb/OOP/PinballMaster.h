@@ -47,13 +47,13 @@ public:
 	
 	LedControl *GetLedControl() {return m_LedControl;}
 	Multiplex *GetMultiplex() { return m_Multiplex; }
-	Input *GetInput(int channel) 
+	Input *GetInput(uint8_t channel) 
 	{ 
 		if(channel < MAX_INPUTCHANNELS) return m_Inputs[channel]; 
 		return NULL;
 	}
 
-	Output *GetOutput(int channel) 
+	Output *GetOutput(uint8_t channel) 
 	{ 
 		if (channel < MAX_OUTPUTCHANNELS) return m_Outputs[channel];
 		return NULL;
@@ -64,25 +64,25 @@ public:
 	void AddPinballInput(Input *input);
 	void AddPinballOutput(Output *output);
 
-	void clearDisplay(int line=0);
+	void clearDisplay(uint8_t line=0);
 	void printText(char *text1, char *text2, char font);
 
-	bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 	bool Init(StatusPinball status);
-	bool Loop(int value);
-	void PlaySongToInput(int portNumber);
+	bool Loop(uint8_t value);
+	void PlaySongToInput(uint8_t portNumber);
 	virtual void DataReceived(char c);
 
 	#ifdef ARDUINOLIB
 	PinballMaster *m_PinballMaster;
 	#endif
 
-	void StartGame(int Players);
+	void StartGame(uint8_t Players);
 
-	int m_nPlayers;
+	uint8_t m_nPlayers;
 	void ShowChooseNumberOfPlayers();
-	int m_nSecondsTimerToShowPlayers;
-	int m_playerPlaying;
+	uint8_t m_nSecondsTimerToShowPlayers;
+	uint8_t m_playerPlaying;
 	void GetNewBall();
 	void PlayerLostBall();
 	void NextPlayer();
@@ -97,12 +97,12 @@ public:
 	DropTarget *GetDropTarget3() { return m_DropTarget3; }
 	DropTarget *GetDropTarget5() { return m_DropTarget5; }
 
-	StageBase *GetStage(int number) 
+	StageBase *GetStage(uint8_t number) 
 	{ 
 		if (number < MAX_STAGES) return m_Stages[number];
 		return NULL;
 	}
-	int GetBallsByPlayer() { return m_nBallByPlayer; }
+	uint8_t GetBallsByPlayer() { return m_nBallByPlayer; }
 	void playSongWait(char song[]);
 
 //Events
@@ -112,11 +112,11 @@ private :
 	bool EventEnterButton(PinballObject *sender);
 	bool EventMenuButton(PinballObject *sender);
 	bool TimerIsOver(PinballObject *sender);
-	bool PlayfieldEvent(PinballObject *sender, int event, int valueToSend);
+	bool PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 	bool EventUpDownButton(PinballObject *sender,bool upButton);
-	bool SetupTest(int event);
-	int m_nBallByPlayer;
-	void SetBallsByPlayer(int balls) { m_nBallByPlayer = balls; }
+	bool SetupTest(uint8_t event);
+	uint8_t  m_nBallByPlayer;
+	void SetBallsByPlayer(uint8_t balls) { m_nBallByPlayer = balls; }
 
 protected:
 	Multiplex *m_Multiplex;
@@ -139,7 +139,7 @@ protected:
 	DropTarget *m_DropTarget5;
 
 
-	static int iCountObj;
+	static uint8_t iCountObj;
 };
 
 #endif

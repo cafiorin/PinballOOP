@@ -29,7 +29,7 @@ class Vector
 	void pop_back(Data const &x)
 	{
 		bool start_copy = false;
-		for (int i = 0; i < d_size-1; i++)
+		for (uint8_t i = 0; i < d_size-1; i++)
 		{
 			if (start_copy || d_data[i] == x)
 			{

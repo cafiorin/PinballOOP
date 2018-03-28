@@ -28,7 +28,7 @@ http://pinballhomemade.blogspot.com.br
 //5 - Take the ball in hole.
 
 //-----------------------------------------------------------
-Stage6::Stage6(PinballMaster *pinball,int number):StageBase(pinball,number)
+Stage6::Stage6(PinballMaster *pinball,uint8_t number):StageBase(pinball,number)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -48,7 +48,7 @@ Stage6::Stage6(PinballMaster *pinball,int number):StageBase(pinball,number)
 	m_TimerToCapture = new Timer(1000, "TimerCap", pinball, this, TimerType::continuous);
 
 	//TARGET_GREEN1
-	int count = 0;
+	uint8_t count = 0;
 	m_Flags[count] = new Flag(INPUT_SW_TARGET_GREEN1);
 	m_Flags[count]->m_Leds = new SequencerLeds(pinball, SequencerType::turnOnAndturnOff_1by1, 300);
 	m_Flags[count]->m_Leds->AddLed(LED_TARGET_GREEN1);
@@ -115,7 +115,7 @@ Stage6::~Stage6()
 }
 
 //---------------------------------------------------------------------//
-bool Stage6::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool Stage6::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //---------------------------------------------------------------------//
 {
 #ifdef DEBUGMESSAGES
@@ -128,7 +128,7 @@ bool Stage6::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 		m_FlagCapturedCount = 0;
 		m_PinballMaster->playSong(MP3_TIMEISOVER);
 		
-		for (int i = 0; i < MAX_FLAGS; i++)
+		for (uint8_t i = 0; i < MAX_FLAGS; i++)
 			m_Flags[i]->Disable();
 
 		m_Flags[m_FlagCurrent]->EnableToCapture();
@@ -139,14 +139,14 @@ bool Stage6::NotifyEvent(PinballObject *sender, int event, int valueToSend)
 
 
 //-----------------------------------------------------------
-int Stage6::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
+uint8_t Stage6::PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage("Stage6::PlayfieldEvent");
 	#endif
 
-	int score = StageBase::PlayfieldEvent(sender,event,valueToSend);
+	uint8_t score = StageBase::PlayfieldEvent(sender,event,valueToSend);
 
 	if(valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
 	{
@@ -209,7 +209,7 @@ void Stage6::RestartPlayer()
 void Stage6::ResetStage()
 //-----------------------------------------------------------
 {
-	for (int i = 0; i < MAX_FLAGS; i++)
+	for (uint8_t i = 0; i < MAX_FLAGS; i++)
 	{
 		m_Flags[i]->Disable();
 	}

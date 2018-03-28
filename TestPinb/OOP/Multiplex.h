@@ -44,27 +44,27 @@ class PinballObject;
 class Multiplex : public PinballObject
 {
  public:
-	 Multiplex(PinballMaster *pinball, const int S0, const int S1, const int S2, const int S3, const int SIG, const int OUTSIG, const int chipSelect1, const int chipSelect2, const int chipSelect3, const int chipSelect4, const int chipSelect5);
+	 Multiplex(PinballMaster *pinball, const uint8_t S0, const uint8_t S1, const uint8_t S2, const uint8_t S3, const uint8_t SIG, const uint8_t OUTSIG, const uint8_t chipSelect1, const uint8_t chipSelect2, const uint8_t chipSelect3, const uint8_t chipSelect4, const uint8_t chipSelect5);
 	 void 			setup();
-	 void			enableChip(int chipNumber);
-	 int 			readChannel(int ch);
-	 void			writeChannel(int ch, int value);
+	 void			enableChip(uint8_t chipNumber);
+	 uint8_t 			readChannel(uint8_t ch);
+	 void			writeChannel(uint8_t ch, uint8_t value);
 	 void			resetAllOutput();
 
 	 virtual void Loop();
 
  private:
 	 int	 _adrsPin[4];
-	 int 	_sig;
-	 int 	_outsig;
+	 uint8_t 	_sig;
+	 uint8_t 	_outsig;
 
-	 int 	_chipSelect1;
-	 int 	_chipSelect2;
-	 int 	_chipSelect3;
-	 int 	_chipSelect4;
-	 int 	_chipSelect5;
+	 uint8_t 	_chipSelect1;
+	 uint8_t 	_chipSelect2;
+	 uint8_t 	_chipSelect3;
+	 uint8_t 	_chipSelect4;
+	 uint8_t 	_chipSelect5;
 
-	 void 		_addressing(int ch);
+	 void 		_addressing(uint8_t ch);
 };
 #endif
 

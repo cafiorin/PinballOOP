@@ -8,7 +8,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Port.h"
 
 //-------------------------------------------------------//
-Port::Port(PinballMaster *pinball, const char *szName, int portNumber):PinballObject(szName,pinball)
+Port::Port(PinballMaster *pinball, const char *szName, uint8_t portNumber):PinballObject(szName,pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION

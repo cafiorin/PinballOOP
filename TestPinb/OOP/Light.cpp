@@ -9,7 +9,7 @@ http://pinballhomemade.blogspot.com.br
 
 
 //-------------------------------------------------------//
-Light::Light(const char *szName, PinballMaster *pinball, int port):Output(szName, pinball, port)
+Light::Light(const char *szName, PinballMaster *pinball, uint8_t port):Output(szName, pinball, port)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -31,7 +31,7 @@ Light::~Light()
 }
 
 //-------------------------------------------------------//
-bool Light::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool Light::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

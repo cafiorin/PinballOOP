@@ -18,7 +18,7 @@ class Multiplex;
 class Output : public Port
 {
 public:
-	Output(const char *szName, PinballMaster *pinball, int portNumber);
+	Output(const char *szName, PinballMaster *pinball, uint8_t portNumber);
 	virtual ~Output();
 
 	bool IsTurnOn(){return m_turnOn;}
@@ -26,7 +26,7 @@ public:
 	void TurnOnByTimer(long time=TIME_COIL_ON);
 	void TurnOff();
 	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 
 protected:
 	bool m_turnOn;

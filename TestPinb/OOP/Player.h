@@ -28,15 +28,15 @@ public:
 	virtual ~Player();
 	virtual bool Init(StatusPinball status);
 
-	static int m_indexPlayerCurrent;
+	static uint8_t m_indexPlayerCurrent;
 
-	bool SetCurrentPlayer(int indexPlayer);
+	bool SetCurrentPlayer(uint8_t indexPlayer);
 	void DisplayScore();
-	bool  NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	bool  NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 	void LostBall();
 
 	bool SetNextMultiply();
-	int GetMultiply() { return m_Multiply; }
+	uint8_t GetMultiply() { return m_Multiply; }
 
 	bool SetExtraBall();
 	bool GetExtraBall() { return m_ExtraBall; }
@@ -45,9 +45,9 @@ public:
 	StatusPlayer GetStatus(){ return m_Status; }
 
 protected:
-	int m_nBalls;
-	int m_Score;
-	int m_Multiply;
+	uint8_t m_nBalls;
+	uint8_t m_Score;
+	uint8_t m_Multiply;
 	bool m_ExtraBall;
 	StageBase *m_Stage;
 	StatusPlayer m_Status;

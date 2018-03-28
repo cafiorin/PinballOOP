@@ -10,7 +10,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
-KickoutHole::KickoutHole(const char *szName, PinballMaster *pinball, int portNumberInput, int portNumberOutput) : PinballObject(szName, pinball)
+KickoutHole::KickoutHole(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t portNumberOutput) : PinballObject(szName, pinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -51,7 +51,7 @@ bool KickoutHole::Init(StatusPinball status)
 }
 
 //-------------------------------------------------------//
-bool KickoutHole::NotifyEvent(PinballObject *sender, int event, int valueToSend)
+bool KickoutHole::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

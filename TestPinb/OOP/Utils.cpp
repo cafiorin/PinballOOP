@@ -11,8 +11,8 @@ http://pinballhomemade.blogspot.com.br
 
 void myStrcpy(char *str1, const char *str2)
 {
-	int bufsize = sizeof(str1);
-	int len = (int) strlen(str2);
+	uint8_t bufsize = sizeof(str1);
+	uint8_t len = (int) strlen(str2);
 	if (len < bufsize)
 	{
 		strcpy(str1, str2);
@@ -35,9 +35,9 @@ long Millis()
 
 #ifdef DOS
 
-void pinMode(int port, int io) {}
-void digitalWrite(int port, int value) {}
-int digitalRead(int port) { return LOW; }
+void pinMode(uint8_t port, uint8_t io) {}
+void digitalWrite(uint8_t port, uint8_t value) {}
+uint8_t digitalRead(uint8_t port) { return LOW; }
 
 clock_t Millis()
 {
@@ -51,7 +51,7 @@ long timediff(clock_t t2, clock_t t1)
 	return elapsed;
 }
 
-void gotoxy(int x, int y)
+void gotoxy(uint8_t x, uint8_t y)
 {
 	COORD coord;
 	coord.X = x;
@@ -59,7 +59,7 @@ void gotoxy(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void getCursorXY(int &x, int&y)
+void getCursorXY(uint8_t &x, int&y)
 {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 
@@ -125,7 +125,7 @@ void box(unsigned x, unsigned y, unsigned sx, unsigned sy, unsigned char col, un
 
 void clrbox(unsigned char x1, unsigned char y1, unsigned char x2, unsigned char y2, unsigned char bkcol)
 {
-	int x, y;
+	uint8_t x, y;
 	setcolor(bkcol);                       //Set to color bkcol
 
 	for (y = y1; y<y2; y++)                    //Fill Y Region Loop
@@ -149,10 +149,10 @@ void txtPlot(unsigned char x, unsigned char y, unsigned char Color)
 	gotoxy(x, y); cprintf(".");
 }
 
-void delay(unsigned int milliseconds)
+void delay(long milliseconds)
 {
 	clock_t ticks1, ticks2;
-	unsigned int tic1 = 0, tic2 = 0, tick = 0;
+	long tic1 = 0, tic2 = 0, tick = 0;
 
 	ticks1 = clock();
 	while (tick<milliseconds)

@@ -9,7 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballMaster.h"
 
 //-------------------------------------------------------//
-Input::Input(const char *szName, PinballMaster *pinball, int portNumber, PinballObject *pinballObject):Port(pinball,szName,portNumber)
+Input::Input(const char *szName, PinballMaster *pinball, uint8_t portNumber, PinballObject *pinballObject):Port(pinball,szName,portNumber)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION

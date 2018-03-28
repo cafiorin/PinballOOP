@@ -12,7 +12,7 @@ http://pinballhomemade.blogspot.com.br
 #include "DefinesMp3.h"
 
 //---------------------------------------------------
-StageBase::StageBase(PinballMaster *pinball, int number) : PinballObject("STAGE",pinball)
+StageBase::StageBase(PinballMaster *pinball, uint8_t number) : PinballObject("STAGE",pinball)
 //---------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -77,7 +77,7 @@ void StageBase::RestartPlayer()
 }
 
 //-----------------------------------------------------------
-int StageBase::PlayfieldEvent(PinballObject *sender, int event, int valueToSend)
+uint8_t StageBase::PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
@@ -186,7 +186,7 @@ void StageBase::SetMultiply()
 		pLedControl->TurnOff(LED_MULTIPLY_5X);
 		pLedControl->TurnOff(LED_MULTIPLY_6X);
 
-		int multiply = m_currentPlayer->GetMultiply();
+		uint8_t multiply = m_currentPlayer->GetMultiply();
 		if (multiply > 1)
 		{
 			pLedControl->TurnOn(LED_MULTIPLY_2X + multiply - 1);

@@ -11,13 +11,13 @@ http://pinballhomemade.blogspot.com.br
 #include "Utils.h"
 
 /*---------------------------------------------------------------------*/
-HardwareSerial::HardwareSerial(int xlog, int ylog)
+HardwareSerial::HardwareSerial(uint8_t xlog, uint8_t ylog)
 /*---------------------------------------------------------------------*/
 {
 	m_XInit = xlog;
 	m_YInit = ylog;
-	int x = m_XInit;
-	int y = m_YInit;
+	uint8_t x = m_XInit;
+	uint8_t y = m_YInit;
 	setcolor(WHITE);
 	clrbox(x, y, x + 52, y + MAX_STRINGS + 1, BLACK);
 	m_line = -1;
@@ -30,11 +30,11 @@ HardwareSerial::~HardwareSerial()
 }
 
 /*---------------------------------------------------------------------*/
-void HardwareSerial::printbox(int width,int height,char *szTitle)
+void HardwareSerial::printbox(uint8_t width,uint8_t height,char *szTitle)
 /*---------------------------------------------------------------------*/
 {
-	int x = m_XInit;
-	int y = m_YInit;
+	uint8_t x = m_XInit;
+	uint8_t y = m_YInit;
 	setcolor(WHITE);
 	box(x, y, x + width, y + height + 1, y + 6, y + 6, szTitle);
 
@@ -46,8 +46,8 @@ void HardwareSerial::printbox(int width,int height,char *szTitle)
 void HardwareSerial::printone(const char *szLog)
 /*---------------------------------------------------------------------*/
 {
-	int x = m_XInit;
-	int y = m_YInit;
+	uint8_t x = m_XInit;
+	uint8_t y = m_YInit;
 	setcolor(WHITE);
 
 	m_line++;
@@ -60,8 +60,8 @@ void HardwareSerial::printone(const char *szLog)
 void HardwareSerial::println(const char *szLog)
 /*---------------------------------------------------------------------*/
 {
-	int x = m_XInit;
-	int y = m_YInit;
+	uint8_t x = m_XInit;
+	uint8_t y = m_YInit;
 	setcolor(WHITE);
 	box(x, y, x + 52, y + MAX_STRINGS + 1, y + 6, y + 6, "Logger");
 
@@ -69,7 +69,7 @@ void HardwareSerial::println(const char *szLog)
 	if (m_line >= MAX_STRINGS)
 	{
 		m_line = MAX_STRINGS-1;
-		for (int i = 1; i < MAX_STRINGS; i++)
+		for (uint8_t i = 1; i < MAX_STRINGS; i++)
 		{
 			strcpy(m_strings[i-1], m_strings[i]);
 			gotoxy(x + 2, y + 1 + i-1);

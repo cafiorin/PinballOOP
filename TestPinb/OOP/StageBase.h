@@ -18,13 +18,13 @@ class SequencerLeds;
 class StageBase : public PinballObject
 {
 public:
-	StageBase(PinballMaster *pinball, int number);
+	StageBase(PinballMaster *pinball, uint8_t number);
 	virtual ~StageBase();
-	int GetNumber() { return m_number; }
+	uint8_t GetNumber() { return m_number; }
 	void SetCurrentPlayer(Player *player);
 
 	virtual void RestartPlayer();
-	virtual int PlayfieldEvent(PinballObject *sender, int event, int valueToSend);
+	virtual uint8_t PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 	
 	void SetMultiply();
 	bool CheckRolloversMultiply();
@@ -34,7 +34,7 @@ public:
 
 protected:
 	PinballMaster *m_PinballMaster;
-	int m_number;
+	uint8_t m_number;
 	Player *m_currentPlayer;
 	SequencerLeds *m_LedsLoop;
 };

@@ -18,19 +18,19 @@ class SequencerLeds;
 class DropTarget : public PinballObject
 {
 public:
-	DropTarget(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberOutput);
-	DropTarget(const char *szName, PinballMaster *pinball, int portNumberInput1, int portNumberInput2, int portNumberInput3, int portNumberInput4, int portNumberInput5, int portNumberOutput);
+	DropTarget(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberOutput);
+	DropTarget(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberInput4, uint8_t portNumberInput5, uint8_t portNumberOutput);
 	virtual ~DropTarget();
 	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 
 	void Reset();
 	bool IsAllTargets() { return m_AllTargets; }
-	void AddLeds(int led1, int led2, int led3);
-	void AddLeds(int led1, int led2, int led3,int led4,int led5);
+	void AddLeds(uint8_t led1, uint8_t led2, uint8_t led3);
+	void AddLeds(uint8_t led1, uint8_t led2, uint8_t led3,uint8_t led4,uint8_t led5);
 
 protected:
-	int m_sizeInputs;
+	uint8_t m_sizeInputs;
 	Input *m_input[5];
 	Output *m_output;
 

@@ -15,12 +15,12 @@ class Port : public PinballObject
 {
 
 public:
-	Port(PinballMaster *pinball, const char *szName, int portNumber);
+	Port(PinballMaster *pinball, const char *szName, uint8_t portNumber);
 	virtual ~Port();
-	int GetPortNumber() { return m_portNumber; }
+	uint8_t GetPortNumber() { return m_portNumber; }
 
 protected:
-	int m_portNumber;
+	uint8_t m_portNumber;
 
 };
 #endif // !defined(Port__INCLUDED_)

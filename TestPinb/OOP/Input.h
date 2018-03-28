@@ -16,16 +16,16 @@ class Input : public Port
 {
 
 public:
-	Input(const char *szName, PinballMaster *pinball, int portNumber, PinballObject *pinballObject=NULL);
+	Input(const char *szName, PinballMaster *pinball, uint8_t portNumber, PinballObject *pinballObject=NULL);
 	virtual ~Input();
 
 	bool GetInput();
-	void SetDebounceRead(int debounce){m_debounceRead = debounce;}
+	void SetDebounceRead(uint8_t debounce){m_debounceRead = debounce;}
 	bool SetInput(bool value);
 
 private:
-	int m_debounceRead;    // the debounce time; increase if the output flickers
-	int m_debounceCount;
+	uint8_t m_debounceRead;    // the debounce time; increase if the output flickers
+	uint8_t m_debounceCount;
 	bool m_InputValue;
 	bool m_Edge;
 	PinballObject *m_pinballObjectParent;

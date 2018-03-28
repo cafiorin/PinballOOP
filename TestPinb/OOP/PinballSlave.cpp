@@ -24,7 +24,7 @@ http://pinballhomemade.blogspot.com.br
 PinballSlave *m_PinballSlave = NULL;
 
 //-----------------------------------------------------------------------//
-void receiveMessageFromAnotherArduinoSlave(int howMany)
+void receiveMessageFromAnotherArduinoSlave(uint8_t howMany)
 //-----------------------------------------------------------------------//
 {
 	m_PinballSlave->receiveMessageFromAnotherArduino(howMany);
@@ -101,7 +101,7 @@ bool PinballSlave::Init()
 
 
 /*---------------------------------------------------------------------*/
-bool PinballSlave::Loop(int value)
+bool PinballSlave::Loop(uint8_t value)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP

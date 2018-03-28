@@ -20,13 +20,13 @@ public:
 	SelfTest(PinballMaster *pinball);
 	virtual ~SelfTest();
 
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 
 	void IncrementTestValue();
 	void DecrementTestValue();
 
 	bool EventUpDownButton(PinballObject *sender, bool upButton);
-	void StartTest(int event);
+	void StartTest(uint8_t event);
 	void DoTest();
 	void DoTestLed();
 	void DoTestCoin();
@@ -37,8 +37,8 @@ public:
 	void FinishTest();
 
 protected:
-	int m_MenuTest;
-	int m_startTestValue;
+	uint8_t m_MenuTest;
+	uint8_t m_startTestValue;
 	Timer *m_timerAuto;
 
 };

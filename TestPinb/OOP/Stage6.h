@@ -15,19 +15,19 @@ http://pinballhomemade.blogspot.com.br
 class Stage6 : public StageBase
 {
 public:
-	Stage6(PinballMaster *pinball,int number);
+	Stage6(PinballMaster *pinball,uint8_t number);
 	virtual ~Stage6();
 
-	virtual int PlayfieldEvent(PinballObject *sender, int event, int valueToSend);
+	virtual uint8_t PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 	virtual void RestartPlayer();
-	virtual bool NotifyEvent(PinballObject *sender, int event, int valueToSend);
+	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 
 	void Finished();
 
 	SequencerLeds *m_LedsHole;
 	Timer *m_TimerToCapture;
 	Flag *m_Flags[MAX_FLAGS];
-	int m_FlagCurrent, m_FlagCapturedCount;
+	uint8_t m_FlagCurrent, m_FlagCapturedCount;
 	void ResetStage();
 
 };

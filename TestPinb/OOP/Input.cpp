@@ -13,7 +13,7 @@ Input::Input(const char *szName, PinballMaster *pinball, uint8_t portNumber, Pin
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Input Constructor");
+	DebugOut(F("Input Constructor"));
 	#endif
 
 	m_debounceRead = DEBOUNCEREAD;
@@ -30,7 +30,7 @@ Input::~Input()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Input Destructor");
+	Debug(F("Input Destructor"));
 	#endif
 }
 
@@ -39,7 +39,7 @@ bool Input::GetInput()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP
-	Debug("Input::GetInput");
+	DebugOut(F("Input::GetInput"));
 	#endif
 
 	return m_InputValue;
@@ -50,7 +50,7 @@ void Input::CheckDebounce()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP
-	Debug("Input::CheckDebounce");
+	DebugOut(F("Input::CheckDebounce"));
 	#endif
 	if (m_debounceCount > m_debounceRead)
 	{
@@ -60,7 +60,7 @@ void Input::CheckDebounce()
 		if (m_InputValue)
 		{
 			#ifdef DEBUGMESSAGES
-			Debug("Input::Edge Positive");
+			DebugOut(F("Input::Edge Positive"));
 			#endif
 
 			if (m_pinballObjectParent != NULL)
@@ -76,7 +76,7 @@ void Input::CheckDebounce()
 		else
 		{
 			#ifdef DEBUGMESSAGES
-			Debug("Input::Edge Negative");
+			DebugOut(F("Input::Edge Negative"));
 			#endif
 
 			if (m_pinballObjectParent != NULL)
@@ -97,7 +97,7 @@ bool Input::SetInput (bool value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP
-	Debug("Input::SetInput");
+	DebugOut(F("Input::SetInput"));
 	#endif
 
 	bool newValue = (m_InputValue != value);

@@ -26,12 +26,12 @@ http://pinballhomemade.blogspot.com.br
 #include "Multiplex.h"
 #include "SelfTest.h"
 #include "Stage0.h"
-#include "Stage1.h"
-#include "Stage2.h"
-#include "Stage3.h"
-#include "Stage4.h"
-#include "Stage5.h"
-#include "Stage6.h"
+//#include "Stage1.h"
+//#include "Stage2.h"
+//#include "Stage3.h"
+//#include "Stage4.h"
+//#include "Stage5.h"
+//#include "Stage6.h"
 #include "Player.h"
 #include "DefinesMp3.h"
 
@@ -73,9 +73,9 @@ void PinballMaster::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 {
 	m_serial = serial;
 	ht1632_setup();
-	
+
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage("Pinball Setup");
+	LogMessageOut(F("Pinball Setup"));
 	#endif
 
 	m_MP3player = MP3player;
@@ -91,7 +91,7 @@ PinballMaster::PinballMaster(const char *szName, HardwareSerial *serial) : Pinba
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage("PinballMaster Construtor");
+	LogMessageOut(F("PinballMaster Construtor"));
 	#endif
 
 	CreateObjects();
@@ -104,7 +104,7 @@ PinballMaster::~PinballMaster()
 /*---------------------------------------------------------------------*/
 {
 #ifdef DEBUGMESSAGESCREATION
-	LogMessage("PinballMaster Destructor");
+	LogMessageOut(F("PinballMaster Destructor"));
 #endif
 
 	for (uint8_t i = 0; i < m_PinballObjs.size(); i++)
@@ -121,7 +121,7 @@ void PinballMaster::CreateObjects()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage("PinballMaster::CreateObjects");
+	LogMessageOut(F("PinballMaster::CreateObjects"));
 	#endif
 
 	m_nBallByPlayer = MAX_BALLS;
@@ -168,17 +168,17 @@ void PinballMaster::CreateObjects()
 	m_SelfTest = new SelfTest(this);
 	m_Multiplex = new Multiplex(this, 23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
 
-	m_TimerToShowPlayers = new Timer(1000, "TimerSP", this, NULL, TimerType::continuous);
+	m_TimerToShowPlayers = new Timer(1000, "TiSP", this, NULL, TimerType::continuous);
 	m_nSecondsTimerToShowPlayers = 5;
-	
+
 	//Initialize objects
 	m_GI = new Output("GI", this, OUTPUT_GI_ON_12V);
 	m_GI->TurnOn();
 
 	Input *pInputStartButton = new Input("BS", this, INPUT_START_BUTTON);
 	Input *pInputMenu = new Input("BM", this, INPUT_MENU_BUTTON);
-	Input *pInputVolumePlus = new Input("V-", this, INPUT_UP_BUTTON);
-	Input *pInputVolumeMinus = new Input("V+", this, INPUT_DOWN_BUTTON);
+	Input *pInputVolumePlus = new Input("VP", this, INPUT_UP_BUTTON);
+	Input *pInputVolumeMinus = new Input("VM", this, INPUT_DOWN_BUTTON);
 	Input *pInputEnter = new Input("BE", this, INPUT_ENTER_BUTTON);
 
 	m_TurnFlipperOn = new Output("TFO", this, OUTPUT_FLIPPER_ON_5V);
@@ -221,9 +221,9 @@ void PinballMaster::CreateObjects()
 	Input *pInputRolloverStarRed2 = new Input("RSR2", this, INPUT_SW_ROLLOVER_STAR_RED2);
 	Input *pInputSpinner = new Input("Spin", this, INPUT_SW_SPINNER);
 
-	Input *pInputRampIn = new Input("RampIn", this, INPUT_SW_RAMP_IN);
-	Input *pInputRampOut1 = new Input("RampO1", this, INPUT_SW_RAMP_OUT1);
-	Input *pInputRampOut2 = new Input("RampO2", this, INPUT_SW_RAMP_OUT2);
+	Input *pInputRampIn = new Input("RaIn", this, INPUT_SW_RAMP_IN);
+	Input *pInputRampOut1 = new Input("RaO1", this, INPUT_SW_RAMP_OUT1);
+	Input *pInputRampOut2 = new Input("RaO2", this, INPUT_SW_RAMP_OUT2);
 
 	ReturnKickBall *returnKB = new ReturnKickBall("RKB", this, INPUT_SW_OUTLANE_LEFT, OUTPUT_RETURNBALL_48V, LED_OUTLANE_LEFT);
 	AccumulatorBall *accBall = new AccumulatorBall("RKB", this, INPUT_SW_ACCBALL1, INPUT_SW_ACCBALL2, INPUT_SW_ACCBALL3, INPUT_SW_ACCBALL4, OUTPUT_ACCBALL_48V);
@@ -232,7 +232,7 @@ void PinballMaster::CreateObjects()
 
 	Init(StatusPinball::initializing);
 
-	//Last 
+	//Last
 	m_AttractMode = new AttractMode(this);
 
 	printText("Pinball", "OK", 0);
@@ -246,16 +246,16 @@ void PinballMaster::CreateStages()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::CreateStages");
+	LogMessageOut(F("PinballMaster::CreateStages"));
 	#endif
 
 	m_Stages[0] = new Stage0(this, 0);
-	m_Stages[1] = new Stage1(this, 1);
-	m_Stages[2] = new Stage2(this, 2);
-	m_Stages[3] = new Stage3(this, 3);
-	m_Stages[4] = new Stage4(this, 4);
-	m_Stages[5] = new Stage5(this, 5);
-	m_Stages[6] = new Stage6(this, 6);
+	//m_Stages[1] = new Stage1(this, 1);
+	//m_Stages[2] = new Stage2(this, 2);
+	//m_Stages[3] = new Stage3(this, 3);
+	//m_Stages[4] = new Stage4(this, 4);
+	//m_Stages[5] = new Stage5(this, 5);
+	//m_Stages[6] = new Stage6(this, 6);
 }
 
 //---------------------------------------------------------------------//
@@ -263,7 +263,7 @@ bool PinballMaster::Init(StatusPinball status)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::Init");
+	LogMessageOut(F("PinballMaster::Init"));
 	#endif
 
 	m_Status = status;
@@ -276,7 +276,7 @@ bool PinballMaster::Init(StatusPinball status)
 		if (!pObject->Init(status))
 		{
 			#ifdef DEBUGMESSAGES
-			LogMessage("Pinball Error");
+			LogMessageOut(F("Pinball Error"));
 			delay(500);
 			#endif
 		}
@@ -289,13 +289,13 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t va
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessageValue("PinballMaster::NotifyEvent",event);
+	LogMessageValueOut(F("PinballMaster::NotifyEvent"),event);
 	#endif
 
 	if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
 		#ifdef DEBUGMESSAGES
-		LogMessage("PinballMaster::NotifyEvent Test");
+		LogMessageOut(F("PinballMaster::NotifyEvent Test"));
 		#endif
 
 		return SetupTest(event);
@@ -303,7 +303,7 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t va
 	else if (event == EVENT_EDGEPOSITIVE)
 	{
 		#ifdef DEBUGMESSAGES
-		LogMessage("PinballMaster::NotifyEvent edge Positive");
+		LogMessageOut(F("PinballMaster::NotifyEvent edge Positive"));
 		#endif
 
 		// -- E D G E  P O S I T I V E --
@@ -371,7 +371,7 @@ bool PinballMaster::EventStartButton(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::EventStartButton");
+	LogMessageOut(F("PinballMaster::EventStartButton"));
 	#endif
 
 	if (m_Status == StatusPinball::attractmode)
@@ -410,7 +410,7 @@ bool PinballMaster::EventMenuButton(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::EventMenuButton");
+	LogMessageOut(F("PinballMaster::EventMenuButton"));
 	#endif
 
 
@@ -436,7 +436,7 @@ bool PinballMaster::EventEnterButton(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
 #ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::EventMenuButton");
+	LogMessageOut(F("PinballMaster::EventMenuButton"));
 #endif
 
 
@@ -463,7 +463,7 @@ bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::EventUpDownButton");
+	LogMessageOut(F("PinballMaster::EventUpDownButton"));
 	#endif
 
 	if (m_Status == StatusPinball::menusetup)
@@ -494,7 +494,7 @@ bool PinballMaster::PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::PlayfieldEvent");
+	LogMessageOut(F("PinballMaster::PlayfieldEvent"));
 	#endif
 
 	if (m_Status == StatusPinball::playingmode && m_playerPlaying> 0 && m_playerPlaying < MAX_PLAYERS)
@@ -510,7 +510,7 @@ bool PinballMaster::TimerIsOver(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::TimerIsOver");
+	LogMessageOut(F("PinballMaster::TimerIsOver"));
 	#endif
 
 	if (sender == m_TimerToShowPlayers && m_TimerToShowPlayers != NULL)
@@ -533,7 +533,7 @@ bool PinballMaster::SetupTest(uint8_t event)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::SetupTest");
+	LogMessageOut(F("PinballMaster::SetupTest"));
 	#endif
 
 	if (event == EVENT_TEST_EXIT_MENU)
@@ -580,7 +580,7 @@ void PinballMaster::StartGame(uint8_t Players)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::StartGame");
+	LogMessageOut(F("PinballMaster::StartGame"));
 	#endif
 	this->Init(StatusPinball::playingmode);
 
@@ -638,7 +638,7 @@ void PinballMaster::NextPlayer()
 	do
 	{
 		player++;
-	
+
 		if (player >= m_nPlayers)
 			player = 0;
 
@@ -685,7 +685,7 @@ void PinballMaster::ShowChooseNumberOfPlayers()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::ShowChooseNumberOfPlayers");
+	LogMessageOut(F("PinballMaster::ShowChooseNumberOfPlayers"));
 	#endif
 
 	if (m_Status == StatusPinball::getplayers)
@@ -701,7 +701,7 @@ bool PinballMaster::Loop(uint8_t value)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP
-	LogMessage("PinballMaster::Loop");
+	LogMessageOut(F("PinballMaster::Loop"));
 	#endif
 
 	for (uint8_t i = 0; i < m_PinballObjs.size(); i++)
@@ -728,7 +728,7 @@ void PinballMaster::clearDisplay(uint8_t line)
 //-----------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::clearDisplay");
+	LogMessageOut(F("PinballMaster::clearDisplay"));
 	#endif
 
 
@@ -756,7 +756,7 @@ void PinballMaster::printText(char *text1, char *text2, char font)
 //-----------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball::printText");
+	LogMessageOut(F("Pinball::printText"));
 	#endif
 
 	#ifdef DOS
@@ -792,7 +792,7 @@ void PinballMaster::DataReceived(char c)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballMaster::DataReceived");
+	LogMessageOut(F("PinballMaster::DataReceived"));
 	#endif
 }
 
@@ -997,14 +997,14 @@ void PinballMaster::PlaySongToInput(uint8_t portNumber)
 void PinballMaster::AddPinballInput(Input *input)
 /*---------------------------------------------------------------------*/
 {
-#ifdef DEBUGMESSAGES
-	LogMessageValue("Pinball::AddPinballInput", input->GetPortNumber());
-#endif
-
 	if (input != NULL)
 	{
+        #ifdef DEBUGMESSAGES
+        LogMessageValueOut(F("Pinball::AddPinballInput"), input->GetPortNumber());
+        #endif
+
 		uint8_t port = input->GetPortNumber();
-		if(port < MAX_INPUTCHANNELS)
+		if(port >= 0 && port < MAX_INPUTCHANNELS)
 			m_Inputs[port] = input;
 	}
 }
@@ -1013,14 +1013,14 @@ void PinballMaster::AddPinballInput(Input *input)
 void PinballMaster::AddPinballOutput(Output *output)
 /*---------------------------------------------------------------------*/
 {
-#ifdef DEBUGMESSAGES
-	LogMessageValue("Pinball::AddPinballOutput", output->GetPortNumber());
-#endif
-
 	if (output != NULL)
 	{
+        #ifdef DEBUGMESSAGES
+        LogMessageValueOut(F("Pinball::AddPinballOutput"), output->GetPortNumber());
+        #endif
+
 		uint8_t port = output->GetPortNumber();
-		if (port < MAX_OUTPUTCHANNELS)
+		if (port >= 0 && port < MAX_OUTPUTCHANNELS)
 			m_Outputs[output->GetPortNumber()] = output;
 	}
 }
@@ -1032,14 +1032,14 @@ void PinballMaster::AddPinballObject(PinballObject *Pinballobj)
 /*---------------------------------------------------------------------*/
 {
 #ifdef DEBUGMESSAGES
-	LogMessage("Pinball::AddPinballObject");
+	LogMessageOut(F("Pinball::AddPinballObject"));
 #endif
 	m_PinballObjs.push_back(Pinballobj);
 	iCountObj++;
 	size_t size = m_PinballObjs.size();
 	if (size != iCountObj)
 	{
-		LogMessage("Pinball::AddPinballObject Error Count");
+		LogMessageOut(F("Pinball::AddPinballObject Error Count"));
 	}
 
 }
@@ -1049,7 +1049,7 @@ void PinballMaster::RemovePinballObject(PinballObject *Pinballobj)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball::RemovePinballObject");
+	LogMessageOut(F("Pinball::RemovePinballObject"));
 	#endif
 
 	m_PinballObjs.pop_back(Pinballobj);
@@ -1058,7 +1058,7 @@ void PinballMaster::RemovePinballObject(PinballObject *Pinballobj)
 	size_t size = m_PinballObjs.size();
 	if (size != iCountObj)
 	{
-		LogMessage("Pinball::RemovePinballObject Error Count");
+		LogMessageOut(F("Pinball::RemovePinballObject Error Count"));
 	}
 }
 

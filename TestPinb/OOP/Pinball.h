@@ -27,7 +27,7 @@ class Input;
 class Output;
 class SFEMP3Shield;
 
-class Pinball 
+class Pinball
 {
 public:
 #ifdef ARDUINOLIB
@@ -40,6 +40,8 @@ public:
 	virtual ~Pinball();
 	void LogMessage(const char *szMessage);
 	void LogMessageValue(const char *szMessage, uint8_t value);
+	void LogMessageOut(const __FlashStringHelper *szMessage);
+	void LogMessageValueOut(const __FlashStringHelper *szMessage, uint8_t value);
 
 	void playSong(char song[], bool priority=true);
 	void ChangeVolume(bool plus, uint8_t delta = 5);
@@ -51,6 +53,7 @@ public:
 	void EnableSFX(bool enable) { m_enableSfx = enable; }
 	bool IsEnabledSFX() { return m_enableSfx; }
 	bool m_enableSfx;
+	HardwareSerial *GetSerial(){return m_serial;}
 
 protected:
 #ifdef ARDUINOLIB

@@ -31,7 +31,7 @@ PinballObject::~PinballObject()
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("PinballObject Destructor");
+	DebugOut(F("PinballObject Destructor"));
 	#endif
 
 	if (m_pinball != NULL)
@@ -54,6 +54,21 @@ void PinballObject::LogMessage(const char *szMessage)
 }
 
 /*---------------------------------------------------------------------*/
+void PinballObject::LogMessageOut(const __FlashStringHelper *szMessage)
+/*---------------------------------------------------------------------*/
+{
+	if (m_pinball != NULL && m_pinball->GetSerial() != NULL)
+	{
+		m_pinball->GetSerial()->print(m_szName);
+		m_pinball->GetSerial()->print(F(":"));
+		m_pinball->GetSerial()->println(szMessage);
+		m_pinball->GetSerial()->flush();
+		delay(100);
+	}
+
+}
+
+/*---------------------------------------------------------------------*/
 void PinballObject::LogMessageValue(const char *szMessage,uint8_t value)
 /*---------------------------------------------------------------------*/
 {
@@ -67,6 +82,22 @@ void PinballObject::LogMessageValue(const char *szMessage,uint8_t value)
 	}
 }
 
+/*---------------------------------------------------------------------*/
+void PinballObject::LogMessageValueOut(const __FlashStringHelper *szMessage,uint8_t value)
+/*---------------------------------------------------------------------*/
+{
+	if (m_pinball != NULL && m_pinball->GetSerial() != NULL)
+	{
+		m_pinball->GetSerial()->print(m_szName);
+		m_pinball->GetSerial()->print(F(":"));
+		m_pinball->GetSerial()->print(szMessage);
+		m_pinball->GetSerial()->print(F(":"));
+		m_pinball->GetSerial()->println(value);
+		m_pinball->GetSerial()->flush();
+		delay(100);
+	}
+
+}
 
 /*---------------------------------------------------------------------*/
 void PinballObject::Debug(const char *szMessage)
@@ -78,11 +109,22 @@ void PinballObject::Debug(const char *szMessage)
 }
 
 /*---------------------------------------------------------------------*/
+void PinballObject::DebugOut(const __FlashStringHelper *szMessage)
+/*---------------------------------------------------------------------*/
+{
+	if (m_pinball != NULL && m_pinball->GetSerial() != NULL)
+	{
+		m_pinball->GetSerial()->println(szMessage);
+		m_pinball->GetSerial()->flush();
+		delay(100);
+	}
+}
+/*---------------------------------------------------------------------*/
 bool PinballObject::Init(StatusPinball status)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGES
-	Debug("PinballObject::Init");
+	DebugOut(F("PinballObject::Init"));
 	#endif
 
 	return true;
@@ -93,7 +135,7 @@ void PinballObject::Loop()
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP
-	Debug("PinballObject::Loop");
+	DebugOut(F("PinballObject::Loop"));
 	#endif
 }
 
@@ -102,7 +144,7 @@ bool PinballObject::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t va
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP
-	Debug("PinballObject::NotifyEvent");
+	DebugOut(F("PinballObject::NotifyEvent"));
 	#endif
 
 	return false;

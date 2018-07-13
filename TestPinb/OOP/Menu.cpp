@@ -9,13 +9,13 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 
 //-------------------------------------------------------//
-Menu::Menu(PinballMaster *pinball) 
+Menu::Menu(PinballMaster *pinball)
 //-------------------------------------------------------//
 {
 	m_PinballMaster = pinball;
-	
+
 	#ifdef DEBUGMESSAGES
-	m_PinballMaster->LogMessage("Menu Constructor");
+	m_PinballMaster->LogMessageOut(F("Menu Constructor"));
 	#endif
 
 	m_isShowing = false;
@@ -251,7 +251,7 @@ bool Menu::PressUpDownButton(bool upButton)
 		PrintMenu(ButtonPressed::up);
 		return true;
 	}
-	else 
+	else
 	{
 		m_subOption--;
 		PrintMenu(ButtonPressed::down);

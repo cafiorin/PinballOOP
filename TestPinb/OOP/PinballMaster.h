@@ -44,17 +44,17 @@ public:
 #endif
 
 	virtual ~PinballMaster();
-	
+
 	LedControl *GetLedControl() {return m_LedControl;}
 	Multiplex *GetMultiplex() { return m_Multiplex; }
-	Input *GetInput(uint8_t channel) 
-	{ 
-		if(channel < MAX_INPUTCHANNELS) return m_Inputs[channel]; 
+	Input *GetInput(uint8_t channel)
+	{
+		if(channel < MAX_INPUTCHANNELS) return m_Inputs[channel];
 		return NULL;
 	}
 
-	Output *GetOutput(uint8_t channel) 
-	{ 
+	Output *GetOutput(uint8_t channel)
+	{
 		if (channel < MAX_OUTPUTCHANNELS) return m_Outputs[channel];
 		return NULL;
 	}
@@ -97,8 +97,8 @@ public:
 	DropTarget *GetDropTarget3() { return m_DropTarget3; }
 	DropTarget *GetDropTarget5() { return m_DropTarget5; }
 
-	StageBase *GetStage(uint8_t number) 
-	{ 
+	StageBase *GetStage(uint8_t number)
+	{
 		if (number < MAX_STAGES) return m_Stages[number];
 		return NULL;
 	}

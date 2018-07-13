@@ -31,7 +31,7 @@ Pinball::Pinball()
 
 #ifdef DOS
 /*---------------------------------------------------------------------*/
-Pinball::Pinball(const char *szName, HardwareSerial *serial) 
+Pinball::Pinball(const char *szName, HardwareSerial *serial)
 /*---------------------------------------------------------------------*/
 {
 	m_serial = serial;
@@ -45,12 +45,26 @@ Pinball::~Pinball()
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage("Pinball Destructor");
+	LogMessageOut(F("Pinball Destructor"));
 	#endif
 }
 
 /*---------------------------------------------------------------------*/
 void Pinball::LogMessage(const char *szMessage)
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGES
+	if (m_serial != NULL)
+	{
+		m_serial->println(szMessage);
+		m_serial->flush();
+		delay(100);
+	}
+	#endif
+}
+
+/*---------------------------------------------------------------------*/
+void Pinball::LogMessageOut(const __FlashStringHelper *szMessage)
 /*---------------------------------------------------------------------*/
 {
 #ifdef DEBUGMESSAGES
@@ -82,6 +96,21 @@ void Pinball::LogMessageValue(const char *szMessage, uint8_t value)
 	#endif
 }
 
+/*---------------------------------------------------------------------*/
+void Pinball::LogMessageValueOut(const __FlashStringHelper *szMessage, uint8_t value)
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGES
+	if (m_serial != NULL)
+	{
+		m_serial->print(szMessage);
+		m_serial->print(F(":"));
+		m_serial->println(value);
+		m_serial->flush();
+		delay(100);
+    }
+	#endif
+}
 
 //----------------------------------------------------//
 void Pinball::playSong(char song[], bool priority /*default=true*/)
@@ -121,7 +150,7 @@ void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 //-----------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball::ChangeVolume");
+	LogMessageOut(F("Pinball::ChangeVolume"));
 	#endif
 
 	#ifdef DOS
@@ -159,7 +188,7 @@ void Pinball::sendMessageToAnotherArduino(uint8_t address, char msg)
 //-----------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Pinball::sendMessageToAnotherArduino");
+	LogMessageOut(F("Pinball::sendMessageToAnotherArduino"));
 	#endif
 
 	#ifdef ARDUINOLIB
@@ -180,7 +209,7 @@ char Pinball::receiveMessageFromAnotherArduino(uint8_t howMany)
 //-----------------------------------------------------------------------//
 {
 #ifdef DEBUGMESSAGES
-	LogMessage("Pinball::receiveMessageFromAnotherArduino");
+	LogMessageOut(F("Pinball::receiveMessageFromAnotherArduino"));
 #endif
 
 #ifdef ARDUINOLIB

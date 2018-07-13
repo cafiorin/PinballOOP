@@ -32,8 +32,11 @@ public:
 	bool IsEnabled() { return m_enabled; }
 	void Enable() { m_enabled = true; }
 	void Disable() { m_enabled = false; }
+	void DebugOut(const __FlashStringHelper *szMessage);
 	void LogMessage(const char *szMessage);
+    void LogMessageOut(const __FlashStringHelper *szMessage);
 	void LogMessageValue(const char *szMessage, uint8_t value);
+	void LogMessageValueOut(const __FlashStringHelper *szMessage, uint8_t value);
 	void Debug(const char *szMessage);
 	PinballMaster *GetPinball() { return m_pinball; }
 

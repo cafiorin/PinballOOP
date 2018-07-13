@@ -22,14 +22,14 @@ http://pinballhomemade.blogspot.com.br
 #define ADDRESS_SLAVE  5
 #define DATA_STRIP_LED 5
 
-#define MAX_SIZE_DEBUG_MESSAGE 80
+#define MAX_SIZE_DEBUG_MESSAGE 50
 #define LAST_STAGE 5
 
-#define MAX_NAME 25
+#define MAX_NAME 15
 #define MAX_LEDS 66
 #define MAX_BALLS 3
 #define MAX_PLAYERS 8
-#define MAX_STAGES 7
+#define MAX_STAGES 1
 #define MAX_MULTIPLY 6
 
 #define TIME_COIL_ON 20
@@ -64,8 +64,8 @@ http://pinballhomemade.blogspot.com.br
 #define EVENT_TEST_NBALLS3 208
 #define EVENT_TEST_NBALLS4 209
 #define EVENT_TEST_NBALLS5 210
-#define EVENT_TEST_OUTPUTS_1BY1 211 
-#define EVENT_TEST_OUTPUTS_AUTO 212 
+#define EVENT_TEST_OUTPUTS_1BY1 211
+#define EVENT_TEST_OUTPUTS_AUTO 212
 #define EVENT_TEST_EXIT_MENU 213
 #define EVENT_TEST_FINISH 213
 

@@ -25,14 +25,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Menu.h"
 #include "Multiplex.h"
 #include "SelfTest.h"
-#include "Stage0.h"
-#include "Stage1.h"
-#include "Stage2.h"
-#include "Stage3.h"
-#include "Stage4.h"
-#include "Stage5.h"
-#include "Stage6.h"
-#include "Player.h"
 #include "DefinesMp3.h"
 
 #ifdef ARDUINOLIB
@@ -126,9 +118,7 @@ void PinballMaster::CreateObjects()
 
 	m_nBallByPlayer = MAX_BALLS;
 	m_enableSfx = true;
-	m_LedControl = NULL;
 	m_SelfTest = NULL;
-	m_AttractMode = NULL;
 	m_Menu = NULL;
 	m_TimerToShowPlayers = NULL;
 	m_nSecondsTimerToShowPlayers = 5;
@@ -151,19 +141,8 @@ void PinballMaster::CreateObjects()
 		m_Outputs[ch] = NULL;
 	}
 
-	for (uint8_t i = 0; i < MAX_STAGES; i++)
-	{
-		m_Stages[i] = NULL;
-	}
-
-	for (uint8_t i = 0; i < MAX_PLAYERS; i++)
-	{
-		m_Players[i] = new Player(this);
-	}
-
 	printText("Pinball", "init", 0);
 
-	m_LedControl = new LedControl(this);
 	m_Menu = new Menu(this);
 	m_SelfTest = new SelfTest(this);
 	m_Multiplex = new Multiplex(this, 23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
@@ -228,12 +207,7 @@ void PinballMaster::CreateObjects()
 	ReturnKickBall *returnKB = new ReturnKickBall("RKB", this, INPUT_SW_OUTLANE_LEFT, OUTPUT_RETURNBALL_48V, LED_OUTLANE_LEFT);
 	AccumulatorBall *accBall = new AccumulatorBall("RKB", this, INPUT_SW_ACCBALL1, INPUT_SW_ACCBALL2, INPUT_SW_ACCBALL3, INPUT_SW_ACCBALL4, OUTPUT_ACCBALL_48V);
 
-	CreateStages();
-
 	Init(StatusPinball::initializing);
-
-	//Last
-	m_AttractMode = new AttractMode(this);
 
 	printText("Pinball", "OK", 0);
 	delay(200);
@@ -248,14 +222,6 @@ void PinballMaster::CreateStages()
 	#ifdef DEBUGMESSAGES
 	LogMessageOut(F("PinballMaster::CreateStages"));
 	#endif
-
-	m_Stages[0] = new Stage0(this, 0);
-	m_Stages[1] = new Stage1(this, 1);
-	m_Stages[2] = new Stage2(this, 2);
-	m_Stages[3] = new Stage3(this, 3);
-	m_Stages[4] = new Stage4(this, 4);
-	m_Stages[5] = new Stage5(this, 5);
-	m_Stages[6] = new Stage6(this, 6);
 }
 
 //---------------------------------------------------------------------//
@@ -499,7 +465,7 @@ bool PinballMaster::PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t
 
 	if (m_Status == StatusPinball::playingmode && m_playerPlaying> 0 && m_playerPlaying < MAX_PLAYERS)
 	{
-		m_Players[m_playerPlaying]->NotifyEvent(sender, event, valueToSend);
+		//m_Players[m_playerPlaying]->NotifyEvent(sender, event, valueToSend);
 	}
 
 	return true;
@@ -543,10 +509,6 @@ bool PinballMaster::SetupTest(uint8_t event)
 			m_SelfTest->FinishTest();
 		}
 		m_Status = StatusPinball::attractmode;
-		if (m_AttractMode != NULL)
-		{
-			m_AttractMode->Init(m_Status);
-		}
 	}
 	else if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
@@ -556,10 +518,6 @@ bool PinballMaster::SetupTest(uint8_t event)
 			printText("Set", "Ball", 1);
 			delay(300);
 			m_Status = StatusPinball::attractmode;
-			if (m_AttractMode != NULL)
-			{
-				m_AttractMode->Init(m_Status);
-			}
 			return true;
 		}
 		else
@@ -588,13 +546,8 @@ void PinballMaster::StartGame(uint8_t Players)
 
 	m_Status = StatusPinball::playingmode;
 
-	for (uint8_t i = 0; i < m_nPlayers; i++)
-	{
-		m_Players[i]->Init(StatusPinball::playingmode);
-	}
-
 	m_playerPlaying = 0;
-	m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying);
+
 	if(m_TurnFlipperOn != NULL)
 		m_TurnFlipperOn->TurnOn();
 }
@@ -603,70 +556,12 @@ void PinballMaster::StartGame(uint8_t Players)
 void PinballMaster::PlayerLostBall()
 //---------------------------------------------------------------------//
 {
-	if (m_Status == StatusPinball::playingmode)
-	{
-		if (m_OutBall != NULL && !m_OutBall->IsThereAnyBallInGame())
-		{
-			if (m_TurnFlipperOn != NULL)
-				m_TurnFlipperOn->TurnOff();
-
-			m_Players[m_playerPlaying]->LostBall();
-			NextPlayer();
-		}
-		else
-		{
-			//Ball in hole ?
-			if (m_Hole != NULL && m_Hole->IsThereBall())
-			{
-				m_Hole->LanchBall();
-			}
-		}
-
-	}
 }
 
 //---------------------------------------------------------------------//
 void PinballMaster::NextPlayer()
 //---------------------------------------------------------------------//
 {
-	m_playerPlaying++;
-	if (m_playerPlaying >= m_nPlayers)
-		m_playerPlaying = 0;
-
-	bool isAnyPlayerWaiting = false;
-	uint8_t player = m_playerPlaying;
-	do
-	{
-		player++;
-
-		if (player >= m_nPlayers)
-			player = 0;
-
-		if (m_Players[player]->GetStatus() == StatusPlayer::waiting)
-		{
-			isAnyPlayerWaiting = true;
-			m_playerPlaying = player;
-			break;
-		}
-	} while(player == m_playerPlaying);
-
-	if (isAnyPlayerWaiting)
-	{
-		if (m_Players[m_playerPlaying]->SetCurrentPlayer(m_playerPlaying))
-		{
-			if (m_TurnFlipperOn != NULL)
-				m_TurnFlipperOn->TurnOn();
-		}
-	}
-	else
-	{
-		//GameOver
-		Init(StatusPinball::attractmode);
-		if (m_AttractMode != NULL)
-		{
-			m_AttractMode->InitGameOver();
-		}
-	}
 }
 
 
@@ -713,10 +608,6 @@ bool PinballMaster::Loop(uint8_t value)
 	{
 		case StatusPinball::attractmode:
 		{
-			if (m_LedControl != NULL)
-			{
-				m_LedControl->AttractModeLoop();
-			}
 		}
 		break;
 	}
@@ -1085,19 +976,6 @@ void PinballMaster::playSongWait(char song[])
 			char szMsg[50];
 			sprintf(szMsg, "Error code: %d when trying to play track", result);
 			LogMessage(szMsg);
-		}
-		else
-		{
-			bool turn = false;
-			while (m_MP3player->getState() == playback)
-			{
-				if (m_LedControl != NULL)
-				{
-					m_LedControl->TurnAll(turn);
-					delay(300);
-					turn = !turn;
-				}
-			}
 		}
 	}
 #endif // ARDUINOLIB

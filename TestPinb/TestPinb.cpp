@@ -86,39 +86,39 @@ uint8_t ReadKey()
 
 void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 {
-	LedControl *pLedControl = pPinballMaster->GetLedControl();
-	if (pLedControl != NULL)
-	{
-		ledPrint->printbox(30, (NUM_LEDS / 2) + 2, "Led");
-		ledPrint->m_YInit = 1;
-		ledPrint->m_XInit = 100;
+	//LedControl *pLedControl = pPinballMaster->GetLedControl();
+	//if (pLedControl != NULL)
+	//{
+	//	ledPrint->printbox(30, (NUM_LEDS / 2) + 2, "Led");
+	//	ledPrint->m_YInit = 1;
+	//	ledPrint->m_XInit = 100;
 
-		uint8_t i = 0;
-		for (; i < NUM_LEDS / 2; i++)
-		{
-			char szMsg[30];
-			sprintf(szMsg, "L%d=>%d", i, (pLedControl->IsTurn(i) ? 1 : 0));
-			ledPrint->printone(szMsg);
-		}
+	//	uint8_t i = 0;
+	//	for (; i < NUM_LEDS / 2; i++)
+	//	{
+	//		char szMsg[30];
+	//		sprintf(szMsg, "L%d=>%d", i, (pLedControl->IsTurn(i) ? 1 : 0));
+	//		ledPrint->printone(szMsg);
+	//	}
 
-		ledPrint->ResetLine();
-		ledPrint->m_YInit = 1;
-		ledPrint->m_XInit = 115;
+	//	ledPrint->ResetLine();
+	//	ledPrint->m_YInit = 1;
+	//	ledPrint->m_XInit = 115;
 
-		for (; i < NUM_LEDS; i++)
-		{
-			char szMsg[30];
-			sprintf(szMsg, "L%d=>%d", i, (pLedControl->IsTurn(i) ? 1 : 0));
-			ledPrint->printone(szMsg);
-		}
-	}
+	//	for (; i < NUM_LEDS; i++)
+	//	{
+	//		char szMsg[30];
+	//		sprintf(szMsg, "L%d=>%d", i, (pLedControl->IsTurn(i) ? 1 : 0));
+	//		ledPrint->printone(szMsg);
+	//	}
+	//}
 }
 
 
 uint8_t main()
 {
 	bool firstPrint = true;
-	bool Leds[NUM_LEDS];
+	//bool Leds[NUM_LEDS];
 
 	HardwareSerial *serial = new HardwareSerial();
 	PinballMaster *pPinballMaster = new PinballMaster("Master", serial);
@@ -157,13 +157,13 @@ uint8_t main()
 	inputs->println("HOLE           - 43");
 	inputs->println("ACCBALL1       - 44-47");
 
-	if (pPinballMaster->GetLedControl() != NULL)
-	{
-		for (uint8_t i = 0; i < NUM_LEDS; i++)
-		{
-			Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
-		}
-	}
+	//if (pPinballMaster->GetLedControl() != NULL)
+	//{
+	//	for (uint8_t i = 0; i < NUM_LEDS; i++)
+	//	{
+	//		Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
+	//	}
+	//}
 
 	PrintReadKey();
 
@@ -191,22 +191,22 @@ uint8_t main()
 		}
 		else
 		{
-			if (pPinballMaster->GetLedControl() != NULL)
-			{
-				bool someChange = false;
-				for (uint8_t i = 0; i < NUM_LEDS; i++)
-				{
-					if (Leds[i] != pPinballMaster->GetLedControl()->IsTurn(i))
-					{
-						Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
-						someChange = true;
-					}
-				}
-				if (someChange)
-				{
-					printLeds(pPinballMaster, ledPrint);
-				}
-			}
+			//if (pPinballMaster->GetLedControl() != NULL)
+			//{
+			//	bool someChange = false;
+			//	for (uint8_t i = 0; i < NUM_LEDS; i++)
+			//	{
+			//		if (Leds[i] != pPinballMaster->GetLedControl()->IsTurn(i))
+			//		{
+			//			Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
+			//			someChange = true;
+			//		}
+			//	}
+			//	if (someChange)
+			//	{
+			//		printLeds(pPinballMaster, ledPrint);
+			//	}
+			//}
 		}
 
 		long t1 = Millis();

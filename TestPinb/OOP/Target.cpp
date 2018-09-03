@@ -61,32 +61,32 @@ bool Target::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSe
 	Debug("Target::NotifyEvent");
 	#endif
 
-	LedControl *ledControl = m_pinball->GetLedControl();
-	if (event == EVENT_EDGEPOSITIVE)
-	{
-		m_timerBlinkLed->Disable();
-		if (ledControl != NULL)
-		{
-			ledControl->TurnOn(m_led);
-		}
-		m_hit = true;
-		m_pinball->NotifyEvent(this, event, valueToSend);
-		return true;
-	}
-	else if (event == EVENT_TIMEISOVER)
-	{
-		if (m_pinball->IsPlaying())
-		{
-			if (ledControl != NULL)
-			{
-				if (ledControl->IsTurn(m_led))
-					ledControl->TurnOff(m_led);
-				else
-					ledControl->TurnOn(m_led);
-			}
-		}
-		return true;
-	}
+	//LedControl *ledControl = m_pinball->GetLedControl();
+	//if (event == EVENT_EDGEPOSITIVE)
+	//{
+	//	m_timerBlinkLed->Disable();
+	//	if (ledControl != NULL)
+	//	{
+	//		ledControl->TurnOn(m_led);
+	//	}
+	//	m_hit = true;
+	//	m_pinball->NotifyEvent(this, event, valueToSend);
+	//	return true;
+	//}
+	//else if (event == EVENT_TIMEISOVER)
+	//{
+	//	if (m_pinball->IsPlaying())
+	//	{
+	//		if (ledControl != NULL)
+	//		{
+	//			if (ledControl->IsTurn(m_led))
+	//				ledControl->TurnOff(m_led);
+	//			else
+	//				ledControl->TurnOn(m_led);
+	//		}
+	//	}
+	//	return true;
+	//}
 
 	return false;
 }

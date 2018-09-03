@@ -38,11 +38,11 @@ bool ReturnKickBall::Init(StatusPinball status)
 	{
 		m_returnBallOn = true;
 		m_timerBlinkLed->Disable();
-		LedControl *ledControl = m_pinball->GetLedControl();
-		if (ledControl != NULL)
-		{
-			ledControl->TurnOn(m_led);
-		}
+		//LedControl *ledControl = m_pinball->GetLedControl();
+		//if (ledControl != NULL)
+		//{
+		//	ledControl->TurnOn(m_led);
+		//}
 	}
 	return true;
 }
@@ -72,11 +72,11 @@ void ReturnKickBall::SetReturnBall(bool returnBallOn)
 	else
 	{
 		m_timerBlinkLed->Disable();
-		LedControl *ledControl = m_pinball->GetLedControl();
-		if (ledControl != NULL)
-		{
-			ledControl->TurnOn(m_led);
-		}
+		//LedControl *ledControl = m_pinball->GetLedControl();
+		//if (ledControl != NULL)
+		//{
+		//	ledControl->TurnOn(m_led);
+		//}
 	}
 }
 
@@ -101,14 +101,14 @@ bool ReturnKickBall::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t v
 	{
 		if (m_pinball->IsPlaying())
 		{
-			LedControl *ledControl = m_pinball->GetLedControl();
-			if (ledControl != NULL)
-			{
-				if (ledControl->IsTurn(m_led))
-					ledControl->TurnOff(m_led);
-				else
-					ledControl->TurnOn(m_led);
-			}
+			//LedControl *ledControl = m_pinball->GetLedControl();
+			//if (ledControl != NULL)
+			//{
+			//	if (ledControl->IsTurn(m_led))
+			//		ledControl->TurnOff(m_led);
+			//	else
+			//		ledControl->TurnOn(m_led);
+			//}
 		}
 
 		return true;

@@ -17,7 +17,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "Vector.h"
 #include "PinballObject.h"
-#include "AttractMode.h"
+//#include "AttractMode.h"
 
 #define MAX_INPUTCHANNELS 48
 #define MAX_OUTPUTCHANNELS 32
@@ -63,7 +63,6 @@ protected:
 	HardwareSerial *m_serial;
 
 	StatusPinball m_Status;
-	AttractMode *m_AttractMode;
 };
 
 #endif

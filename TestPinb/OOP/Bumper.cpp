@@ -8,7 +8,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Bumper.h"
 #include "Input.h"
 #include "Output.h"
-#include "LedControl.h"
+//#include "LedControl.h"
 #include "PinballObject.h"
 #include "PinballMaster.h"
 
@@ -46,24 +46,24 @@ bool Bumper::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSe
 	Debug("Bumper::NotifyEvent");
 	#endif
 
-	LedControl *ledControl = m_pinball->GetLedControl();
+	//LedControl *ledControl = m_pinball->GetLedControl();
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
 		m_pinball->NotifyEvent(this, event, valueToSend);
-		if (ledControl != NULL)
-		{
-			ledControl->TurnOn(m_Led);
-		}
+		//if (ledControl != NULL)
+		//{
+		//	ledControl->TurnOn(m_Led);
+		//}
 		m_TimerLed->Start();
 		return true;
 	}
 	else if (event == EVENT_TIMEISOVER)
 	{
-		if (ledControl != NULL)
-		{
-			ledControl->TurnOff(m_Led);
-		}
+		//if (ledControl != NULL)
+		//{
+		//	ledControl->TurnOff(m_Led);
+		//}
 	}
 	return false;
 }

@@ -87,21 +87,6 @@
     <ClInclude Include="OOP\Multiplex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OOP\Stage0.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\StageBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\AttractMode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\LedControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OOP\DefinesMp3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -120,25 +105,7 @@
     <ClInclude Include="OOP\Target.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OOP\Stage1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Stage2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Stage3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Stage4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Stage5.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OOP\Flag.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Stage6.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -203,21 +170,6 @@
     <ClCompile Include="OOP\Multiplex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OOP\Stage0.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\StageBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\AttractMode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\LedControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OOP\SelfTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -231,24 +183,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\Target.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Stage1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Stage2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Stage3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Stage4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Stage5.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Stage6.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

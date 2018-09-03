@@ -146,7 +146,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OOP\AccumulatorBall.h" />
-    <ClInclude Include="OOP\AttractMode.h" />
     <ClInclude Include="OOP\Bumper.h" />
     <ClInclude Include="OOP\defines.h" />
     <ClInclude Include="OOP\DefinesMp3.h" />
@@ -156,7 +155,6 @@
     <ClInclude Include="OOP\ht1632pinball.h" />
     <ClInclude Include="OOP\Input.h" />
     <ClInclude Include="OOP\KickoutHole.h" />
-    <ClInclude Include="OOP\LedControl.h" />
     <ClInclude Include="OOP\Light.h" />
     <ClInclude Include="OOP\Menu.h" />
     <ClInclude Include="OOP\Multiplex.h" />
@@ -166,20 +164,11 @@
     <ClInclude Include="OOP\PinballMaster.h" />
     <ClInclude Include="OOP\PinballObject.h" />
     <ClInclude Include="OOP\PinballSlave.h" />
-    <ClInclude Include="OOP\Player.h" />
     <ClInclude Include="OOP\Port.h" />
     <ClInclude Include="OOP\ReturnKickBall.h" />
     <ClInclude Include="OOP\SelfTest.h" />
     <ClInclude Include="OOP\SequencerLeds.h" />
     <ClInclude Include="OOP\SlingShot.h" />
-    <ClInclude Include="OOP\Stage0.h" />
-    <ClInclude Include="OOP\Stage1.h" />
-    <ClInclude Include="OOP\Stage2.h" />
-    <ClInclude Include="OOP\Stage3.h" />
-    <ClInclude Include="OOP\Stage4.h" />
-    <ClInclude Include="OOP\Stage5.h" />
-    <ClInclude Include="OOP\Stage6.h" />
-    <ClInclude Include="OOP\StageBase.h" />
     <ClInclude Include="OOP\Target.h" />
     <ClInclude Include="OOP\Timer.h" />
     <ClInclude Include="OOP\Utils.h" />
@@ -189,13 +178,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OOP\AccumulatorBall.cpp" />
-    <ClCompile Include="OOP\AttractMode.cpp" />
     <ClCompile Include="OOP\Bumper.cpp" />
     <ClCompile Include="OOP\DropTarget.cpp" />
     <ClCompile Include="OOP\HardwareSerial.cpp" />
     <ClCompile Include="OOP\Input.cpp" />
     <ClCompile Include="OOP\KickoutHole.cpp" />
-    <ClCompile Include="OOP\LedControl.cpp" />
     <ClCompile Include="OOP\Light.cpp" />
     <ClCompile Include="OOP\Menu.cpp" />
     <ClCompile Include="OOP\Multiplex.cpp" />
@@ -205,20 +192,11 @@
     <ClCompile Include="OOP\PinballMaster.cpp" />
     <ClCompile Include="OOP\PinballObject.cpp" />
     <ClCompile Include="OOP\PinballSlave.cpp" />
-    <ClCompile Include="OOP\Player.cpp" />
     <ClCompile Include="OOP\Port.cpp" />
     <ClCompile Include="OOP\ReturnKickBall.cpp" />
     <ClCompile Include="OOP\SelfTest.cpp" />
     <ClCompile Include="OOP\SequencerLeds.cpp" />
     <ClCompile Include="OOP\SlingShot.cpp" />
-    <ClCompile Include="OOP\Stage0.cpp" />
-    <ClCompile Include="OOP\Stage1.cpp" />
-    <ClCompile Include="OOP\Stage2.cpp" />
-    <ClCompile Include="OOP\Stage3.cpp" />
-    <ClCompile Include="OOP\Stage4.cpp" />
-    <ClCompile Include="OOP\Stage5.cpp" />
-    <ClCompile Include="OOP\Stage6.cpp" />
-    <ClCompile Include="OOP\StageBase.cpp" />
     <ClCompile Include="OOP\Target.cpp" />
     <ClCompile Include="OOP\Timer.cpp" />
     <ClCompile Include="OOP\Utils.cpp" />

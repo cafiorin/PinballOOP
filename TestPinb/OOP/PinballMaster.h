@@ -16,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 #include "defines.h"
 #include "Vector.h"
 #include "Pinball.h"
-#include "LedControl.h"
+//#include "LedControl.h"
 
 class PinballObject;
 class HardwareSerial;
@@ -45,7 +45,6 @@ public:
 
 	virtual ~PinballMaster();
 
-	LedControl *GetLedControl() {return m_LedControl;}
 	Multiplex *GetMultiplex() { return m_Multiplex; }
 	Input *GetInput(uint8_t channel)
 	{
@@ -97,11 +96,6 @@ public:
 	DropTarget *GetDropTarget3() { return m_DropTarget3; }
 	DropTarget *GetDropTarget5() { return m_DropTarget5; }
 
-	StageBase *GetStage(uint8_t number)
-	{
-		if (number < MAX_STAGES) return m_Stages[number];
-		return NULL;
-	}
 	uint8_t GetBallsByPlayer() { return m_nBallByPlayer; }
 	void playSongWait(char song[]);
 
@@ -120,14 +114,11 @@ private :
 
 protected:
 	Multiplex *m_Multiplex;
-	LedControl *m_LedControl;
 	Output *m_GI;
 
 	Vector<PinballObject *> m_PinballObjs;
 	Input *m_Inputs[MAX_INPUTCHANNELS];
 	Output *m_Outputs[MAX_OUTPUTCHANNELS];
-	StageBase *m_Stages[MAX_STAGES];
-	Player *m_Players[MAX_PLAYERS];
 	Timer *m_TimerToShowPlayers;
 
 	Menu *m_Menu;
@@ -137,8 +128,7 @@ protected:
 	KickoutHole *m_Hole;
 	DropTarget *m_DropTarget3;
 	DropTarget *m_DropTarget5;
-
-
+	
 	static uint8_t iCountObj;
 };
 

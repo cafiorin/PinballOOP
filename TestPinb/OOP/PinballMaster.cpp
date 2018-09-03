@@ -26,12 +26,12 @@ http://pinballhomemade.blogspot.com.br
 #include "Multiplex.h"
 #include "SelfTest.h"
 #include "Stage0.h"
-//#include "Stage1.h"
-//#include "Stage2.h"
-//#include "Stage3.h"
-//#include "Stage4.h"
-//#include "Stage5.h"
-//#include "Stage6.h"
+#include "Stage1.h"
+#include "Stage2.h"
+#include "Stage3.h"
+#include "Stage4.h"
+#include "Stage5.h"
+#include "Stage6.h"
 #include "Player.h"
 #include "DefinesMp3.h"
 
@@ -250,12 +250,12 @@ void PinballMaster::CreateStages()
 	#endif
 
 	m_Stages[0] = new Stage0(this, 0);
-	//m_Stages[1] = new Stage1(this, 1);
-	//m_Stages[2] = new Stage2(this, 2);
-	//m_Stages[3] = new Stage3(this, 3);
-	//m_Stages[4] = new Stage4(this, 4);
-	//m_Stages[5] = new Stage5(this, 5);
-	//m_Stages[6] = new Stage6(this, 6);
+	m_Stages[1] = new Stage1(this, 1);
+	m_Stages[2] = new Stage2(this, 2);
+	m_Stages[3] = new Stage3(this, 3);
+	m_Stages[4] = new Stage4(this, 4);
+	m_Stages[5] = new Stage5(this, 5);
+	m_Stages[6] = new Stage6(this, 6);
 }
 
 //---------------------------------------------------------------------//

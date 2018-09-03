@@ -999,8 +999,8 @@ void PinballMaster::AddPinballInput(Input *input)
 {
 	if (input != NULL)
 	{
-        #ifdef DEBUGMESSAGES
-        LogMessageValueOut(F("Pinball::AddPinballInput"), input->GetPortNumber());
+        #ifdef DEBUGMESSAGESCREATION
+        LogMessageValueOut(F(":AddPinballInput"), input->GetPortNumber());
         #endif
 
 		uint8_t port = input->GetPortNumber();
@@ -1015,8 +1015,8 @@ void PinballMaster::AddPinballOutput(Output *output)
 {
 	if (output != NULL)
 	{
-        #ifdef DEBUGMESSAGES
-        LogMessageValueOut(F("Pinball::AddPinballOutput"), output->GetPortNumber());
+        #ifdef DEBUGMESSAGESCREATION
+        LogMessageValueOut(F(":AddPinballOutput"), output->GetPortNumber());
         #endif
 
 		uint8_t port = output->GetPortNumber();

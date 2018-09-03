@@ -7,6 +7,8 @@ http://pinballhomemade.blogspot.com.br
 
 #include "PinballObject.h"
 #include "PinballMaster.h"
+#include "Utils.h"
+#include "HardwareSerial.h"
 
 /*---------------------------------------------------------------------*/
 PinballObject::PinballObject(const char *szName, PinballMaster *pinball)
@@ -92,7 +94,8 @@ void PinballObject::LogMessageValueOut(const __FlashStringHelper *szMessage,uint
 		m_pinball->GetSerial()->print(F(":"));
 		m_pinball->GetSerial()->print(szMessage);
 		m_pinball->GetSerial()->print(F(":"));
-		m_pinball->GetSerial()->println(value);
+		m_pinball->GetSerial()->print(value);
+		m_pinball->GetSerial()->println("");
 		m_pinball->GetSerial()->flush();
 		delay(100);
 	}

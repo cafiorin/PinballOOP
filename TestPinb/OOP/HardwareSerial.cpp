@@ -55,11 +55,44 @@ void HardwareSerial::printone(const char *szLog)
 	printf("%-10s", szLog);
 }
 
+/*---------------------------------------------------------------------*/
+void HardwareSerial::print(const char *szLog)
+/*---------------------------------------------------------------------*/
+{
+	setcolor(WHITE);
+
+	strcat(m_strings[m_line], szLog);
+	gotoxy(m_XInit + 2, m_YInit + 1 + m_line);
+	printf("%-50s", m_strings[m_line]);
+}
+
+/*---------------------------------------------------------------------*/
+void HardwareSerial::print(char *szLog)
+/*---------------------------------------------------------------------*/
+{
+	setcolor(WHITE);
+
+	strcat(m_strings[m_line], szLog);
+	gotoxy(m_XInit + 2, m_YInit + 1 + m_line);
+	printf("%-50s", m_strings[m_line]);
+}
+
+/*---------------------------------------------------------------------*/
+void HardwareSerial::print(int value)
+/*---------------------------------------------------------------------*/
+{
+	char sz[10];
+	sprintf(sz,"%d", value);
+	print(sz);
+}
 
 /*---------------------------------------------------------------------*/
 void HardwareSerial::println(const char *szLog)
 /*---------------------------------------------------------------------*/
 {
+	if (strlen(szLog) == 0)
+		return;
+
 	uint8_t x = m_XInit;
 	uint8_t y = m_YInit;
 	setcolor(WHITE);

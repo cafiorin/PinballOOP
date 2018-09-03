@@ -9,8 +9,8 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
-//#define DOS
-#define ARDUINOLIB
+#define DOS
+//#define ARDUINOLIB
 
 // To Show DEBUG messages
 #define DEBUGMESSAGES
@@ -264,7 +264,9 @@ http://pinballhomemade.blogspot.com.br
 
 using namespace std;
 #define DEBOUNCEREAD 0
-
+#define __FlashStringHelper char
+#define F (const char *)
+#define uint8_t int
 #endif // DOS
 
 #endif

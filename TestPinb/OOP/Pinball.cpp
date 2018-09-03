@@ -105,7 +105,8 @@ void Pinball::LogMessageValueOut(const __FlashStringHelper *szMessage, uint8_t v
 	{
 		m_serial->print(szMessage);
 		m_serial->print(F(":"));
-		m_serial->println(value);
+		m_serial->print(value);
+		m_serial->println("");
 		m_serial->flush();
 		delay(100);
     }

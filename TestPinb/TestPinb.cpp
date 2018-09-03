@@ -117,7 +117,7 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 
 uint8_t main()
 {
-	bool firstPruint8_t = true;
+	bool firstPrint = true;
 	bool Leds[NUM_LEDS];
 
 	HardwareSerial *serial = new HardwareSerial();
@@ -126,7 +126,7 @@ uint8_t main()
 	HardwareSerial *serial2 = new HardwareSerial(100);
 	PinballSlave *pPinballSlave = new PinballSlave("Slave", serial2);
 
-	HardwareSerial *ledPruint8_t = new HardwareSerial(100, 1);
+	HardwareSerial *ledPrint = new HardwareSerial(100, 1);
 
 	pPinballSlave->SetPinballMaster(pPinballMaster);
 
@@ -187,7 +187,7 @@ uint8_t main()
 		if (firstPrint)
 		{
 			printLeds(pPinballMaster, ledPrint);
-			firstPruint8_t = false;
+			firstPrint = false;
 		}
 		else
 		{

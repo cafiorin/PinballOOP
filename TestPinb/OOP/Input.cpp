@@ -6,23 +6,24 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Input.h"
-#include "PinballMaster.h"
+#include "Pinball.h"
+#include "Event.h"
 
 //-------------------------------------------------------//
-Input::Input(const char *szName, PinballMaster *pinball, uint8_t portNumber, PinballObject *pinballObject):Port(pinball,szName,portNumber)
+Input::Input(uint8_t portNumber, PinballObject *pinballObjectParent):Port(portNumber)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	DebugOut(F("Input Constructor"));
+	LogMessage(F("Input Constructor"));
 	#endif
 
 	m_debounceRead = DEBOUNCEREAD;
 	m_debounceCount = 0;
 	m_InputValue = false;
 	m_Edge = false;
-	m_pinballObjectParent = pinballObject;
+	m_pinballObjectParent = pinballObjectParent;
 
-	m_pinball->AddPinballInput(this);
+	m_Pinball->AddPinballInput(this);
 }
 
 //-------------------------------------------------------//
@@ -30,7 +31,7 @@ Input::~Input()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug(F("Input Destructor"));
+	LogMessage(F("Input Destructor"));
 	#endif
 }
 
@@ -39,7 +40,7 @@ bool Input::GetInput()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP
-	DebugOut(F("Input::GetInput"));
+	LogMessage(F("Input::GetInput"));
 	#endif
 
 	return m_InputValue;
@@ -50,7 +51,7 @@ void Input::CheckDebounce()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP
-	DebugOut(F("Input::CheckDebounce"));
+	LogMessage(F("Input::CheckDebounce"));
 	#endif
 	if (m_debounceCount > m_debounceRead)
 	{
@@ -60,32 +61,32 @@ void Input::CheckDebounce()
 		if (m_InputValue)
 		{
 			#ifdef DEBUGMESSAGES
-			DebugOut(F("Input::Edge Positive"));
+			LogMessage(F("Input::Edge Positive"));
 			#endif
 
 			if (m_pinballObjectParent != NULL)
 			{
-				m_pinballObjectParent->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
+				m_pinballObjectParent->NotifyEvent(this, &Event(EVENT_EDGEPOSITIVE));
 			}
 			else
 			{
-				m_pinball->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
+				m_Pinball->NotifyEvent(this, &Event(EVENT_EDGEPOSITIVE));
 			}
-			m_pinball->PlaySongToInput(this->m_portNumber);
+			m_Pinball->PlaySongToInput(this->m_portNumber);
 		}
 		else
 		{
 			#ifdef DEBUGMESSAGES
-			DebugOut(F("Input::Edge Negative"));
+			LogMessage(F("Input::Edge Negative"));
 			#endif
 
 			if (m_pinballObjectParent != NULL)
 			{
-				m_pinballObjectParent->NotifyEvent(this, EVENT_EDGENEGATIVE, m_portNumber);
+				m_pinballObjectParent->NotifyEvent(this, &Event(EVENT_EDGENEGATIVE));
 			}
 			else
 			{
-				m_pinball->NotifyEvent(this, EVENT_EDGENEGATIVE, m_portNumber);
+				m_Pinball->NotifyEvent(this, &Event(EVENT_EDGENEGATIVE));
 			}
 		}
 
@@ -97,7 +98,7 @@ bool Input::SetInput (bool value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESLOOP
-	DebugOut(F("Input::SetInput"));
+	LogMessage(F("Input::SetInput"));
 	#endif
 
 	bool newValue = (m_InputValue != value);

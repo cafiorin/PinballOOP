@@ -41,11 +41,11 @@ static const uint8_t _muxChAddress[16][4] =
 };
 
 //-----------------------------------------------
-Multiplex::Multiplex(PinballMaster *pinball, const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIG, const uint8_t OUTSIG, const uint8_t chipSelect1, const uint8_t chipSelect2, const uint8_t chipSelect3, const uint8_t chipSelect4, const uint8_t chipSelect5) : PinballObject("Mult", pinball)
+Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIG, const uint8_t OUTSIG, const uint8_t chipSelect1, const uint8_t chipSelect2, const uint8_t chipSelect3, const uint8_t chipSelect4, const uint8_t chipSelect5) : PinballObject()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage("Multiplex Constructor");
+	LogMessage(F("Multiplex Constructor"));
 	#endif
 
 	_adrsPin[0] = S0;
@@ -68,7 +68,7 @@ void Multiplex::setup()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Multiplex::setup");
+	LogMessage(F("Multiplex::setup"));
 	#endif
 
 	uint8_t i;
@@ -104,7 +104,7 @@ void Multiplex::enableChip(uint8_t chipNumber)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Multiplex::enableChip");
+	LogMessage(F("Multiplex::enableChip"));
 	#endif
 
 	// set all to Disable (HIGH)
@@ -123,7 +123,7 @@ void Multiplex::resetAllOutput()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Multiplex::resetAllOutput");
+	LogMessage(F("Multiplex::resetAllOutput"));
 	#endif
 
 	digitalWrite(_outsig, LOW);
@@ -146,7 +146,7 @@ void Multiplex::writeChannel(uint8_t ch,uint8_t value)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Multiplex::writeChannel");
+	LogMessage(F("Multiplex::writeChannel"));
 	#endif
 
 	if (ch < 0 || ch > 32)
@@ -173,7 +173,7 @@ uint8_t Multiplex::readChannel(uint8_t ch)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("Multiplex::readChannel");
+	LogMessage(F("Multiplex::readChannel"));
 	#endif
 
 	if (ch < 0 || ch > 47)
@@ -205,7 +205,7 @@ void Multiplex::Loop()
 	if (IsEnabled())
 	{
 		#ifdef DEBUGMESSAGESLOOP
-		LogMessage("Multiplex::Loop");
+		LogMessage(F("Multiplex::Loop"));
 		#endif
 
 		digitalWrite(_chipSelect1, HIGH);
@@ -220,7 +220,7 @@ void Multiplex::Loop()
 			digitalWrite(_chipSelect1, LOW);
 			read = digitalRead(_sig);
 			digitalWrite(_chipSelect1, HIGH);
-			Input *input = m_pinball->GetInput(ch);
+			Input *input = m_Pinball->GetInput(ch);
 			if (input != NULL)
 			{
 				input->SetInput(read);
@@ -229,7 +229,7 @@ void Multiplex::Loop()
 			digitalWrite(_chipSelect2, LOW);
 			read = digitalRead(_sig);
 			digitalWrite(_chipSelect2, HIGH);
-			input = m_pinball->GetInput(ch + 16);
+			input = m_Pinball->GetInput(ch + 16);
 			if (input != NULL)
 			{
 				input->SetInput(read);
@@ -238,7 +238,7 @@ void Multiplex::Loop()
 			digitalWrite(_chipSelect3, LOW);
 			read = digitalRead(_sig);
 			digitalWrite(_chipSelect3, HIGH);
-			input = m_pinball->GetInput(ch + 32);
+			input = m_Pinball->GetInput(ch + 32);
 			if (input != NULL)
 			{
 				input->SetInput(read);

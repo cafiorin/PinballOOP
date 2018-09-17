@@ -18,15 +18,15 @@ class Multiplex;
 class Output : public Port
 {
 public:
-	Output(const char *szName, PinballMaster *pinball, uint8_t portNumber);
+	Output(uint8_t portNumber);
 	virtual ~Output();
 
 	bool IsTurnOn(){return m_turnOn;}
 	void TurnOn();
 	void TurnOnByTimer(long time=TIME_COIL_ON);
 	void TurnOff();
-	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
+	virtual bool Init();
+	virtual bool NotifyEvent(Object *sender, Event *event);
 
 protected:
 	bool m_turnOn;

@@ -11,34 +11,35 @@ http://pinballhomemade.blogspot.com.br
 #include "Input.h"
 #include "Output.h"
 #include "Timer.h"
+#include "Event.h"
 
 //-------------------------------------------------------//
-ReturnKickBall::ReturnKickBall(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t led) : PinballObject(szName, pinball)
+ReturnKickBall::ReturnKickBall(uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t led) : PinballObject()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("ReturnKickBall Constructor");
+	LogMessage(F("ReturnKickBall Constructor"));
 	#endif
 
 	m_led = led;
 
-	m_input1 = new Input("ReIn", pinball, portNumberInput,this);
-	m_output = new Output("ReOut", pinball, portNumberOutput);
+	m_input1 = new Input(portNumberInput,this);
+	m_output = new Output(portNumberOutput);
 
 	m_returnBallOn = true;
-	m_timerBlinkLed = new Timer(400, "TTLB", pinball, this, TimerType::continuous);
+	m_timerBlinkLed = new Timer(400, this, TimerType::continuous);
 	m_timerBlinkLed->Disable();
 }
 
 //-------------------------------------------------------//
-bool ReturnKickBall::Init(StatusPinball status)
+bool ReturnKickBall::Init()
 //-------------------------------------------------------//
 {
-	if (status == StatusPinball::playingmode)
+	if (m_Pinball->GetStatus() == StatusPinball::playingmode)
 	{
 		m_returnBallOn = true;
 		m_timerBlinkLed->Disable();
-		//LedControl *ledControl = m_pinball->GetLedControl();
+		//LedControl *ledControl = m_Pinball->GetLedControl();
 		//if (ledControl != NULL)
 		//{
 		//	ledControl->TurnOn(m_led);
@@ -52,7 +53,7 @@ ReturnKickBall::~ReturnKickBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("ReturnKickBall Destructor");
+	LogMessage(F("ReturnKickBall Destructor"));
 	#endif
 	
 	delete m_timerBlinkLed;
@@ -72,7 +73,7 @@ void ReturnKickBall::SetReturnBall(bool returnBallOn)
 	else
 	{
 		m_timerBlinkLed->Disable();
-		//LedControl *ledControl = m_pinball->GetLedControl();
+		//LedControl *ledControl = m_Pinball->GetLedControl();
 		//if (ledControl != NULL)
 		//{
 		//	ledControl->TurnOn(m_led);
@@ -81,27 +82,27 @@ void ReturnKickBall::SetReturnBall(bool returnBallOn)
 }
 
 //-------------------------------------------------------//
-bool ReturnKickBall::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool ReturnKickBall::NotifyEvent(Object *sender, Event *event)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("ReturnKickBall::NotifyEvent");
+	LogMessage(F("ReturnKickBall::NotifyEvent"));
 	#endif
 
-	if (event == EVENT_EDGEPOSITIVE)
+	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
 	{
 		if (m_returnBallOn)
 		{
 			m_output->TurnOnByTimer(TIME_COIL_ON);
 		}
-		m_pinball->NotifyEvent(this, event, valueToSend);
+		m_Pinball->NotifyEvent(sender, event);
 		return true;
 	}
-	else if (event == EVENT_TIMEISOVER)
+	else if (event->GetIdEvent() == EVENT_TIMEISOVER)
 	{
-		if (m_pinball->IsPlaying())
+		if (m_Pinball->IsPlaying())
 		{
-			//LedControl *ledControl = m_pinball->GetLedControl();
+			//LedControl *ledControl = m_Pinball->GetLedControl();
 			//if (ledControl != NULL)
 			//{
 			//	if (ledControl->IsTurn(m_led))

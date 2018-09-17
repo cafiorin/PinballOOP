@@ -10,20 +10,21 @@ http://pinballhomemade.blogspot.com.br
 #include "Output.h"
 //#include "LedControl.h"
 #include "PinballObject.h"
-#include "PinballMaster.h"
+#include "Event.h"
+#include "Pinball.h"
 
 //-------------------------------------------------------//
-Bumper::Bumper(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t LedNumber) : PinballObject(szName, pinball)
+Bumper::Bumper(uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t LedNumber) : PinballObject()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Bumper Constructor");
+	LogMessage(F("Bumper Constructor"));
 	#endif
 
-	m_input = new Input("BperIn", pinball, portNumberInput,this);
-	m_output = new Output("BperOut", pinball, portNumberOutput);
+	m_input = new Input(portNumberInput,this);
+	m_output = new Output(portNumberOutput);
 	m_Led = LedNumber;
-	m_TimerLed = new Timer(200, "TBL", pinball, this, TimerType::once);
+	m_TimerLed = new Timer(200, this, TimerType::once);
 }
 
 //-------------------------------------------------------//
@@ -31,7 +32,7 @@ Bumper::~Bumper()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Bumper Destructor");
+	LogMessage(F("Bumper Destructor"));
 	#endif
 
 	delete m_input;
@@ -39,18 +40,18 @@ Bumper::~Bumper()
 }
 
 //-------------------------------------------------------//
-bool Bumper::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool Bumper::NotifyEvent(Object *sender, Event *event)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Bumper::NotifyEvent");
+	LogMessage(F("Bumper::NotifyEvent"));
 	#endif
 
-	//LedControl *ledControl = m_pinball->GetLedControl();
-	if (event == EVENT_EDGEPOSITIVE)
+	//LedControl *ledControl = m_Pinball->GetLedControl();
+	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
-		m_pinball->NotifyEvent(this, event, valueToSend);
+		m_Pinball->NotifyEvent(sender, event);
 		//if (ledControl != NULL)
 		//{
 		//	ledControl->TurnOn(m_Led);
@@ -58,7 +59,7 @@ bool Bumper::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSe
 		m_TimerLed->Start();
 		return true;
 	}
-	else if (event == EVENT_TIMEISOVER)
+	else if (event->GetIdEvent() == EVENT_TIMEISOVER)
 	{
 		//if (ledControl != NULL)
 		//{

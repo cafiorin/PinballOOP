@@ -108,6 +108,12 @@
     <ClInclude Include="OOP\Flag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OOP\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OOP\Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -183,6 +189,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\Target.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

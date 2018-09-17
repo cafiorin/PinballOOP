@@ -18,11 +18,11 @@ class SequencerLeds;
 class DropTarget : public PinballObject
 {
 public:
-	DropTarget(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberOutput);
-	DropTarget(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberInput4, uint8_t portNumberInput5, uint8_t portNumberOutput);
+	DropTarget(uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberOutput);
+	DropTarget(uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberInput4, uint8_t portNumberInput5, uint8_t portNumberOutput);
 	virtual ~DropTarget();
-	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
+	virtual bool Init();
+	virtual bool NotifyEvent(Object *sender, Event *event);
 
 	void Reset();
 	bool IsAllTargets() { return m_AllTargets; }

@@ -5,22 +5,23 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#if !defined(Port__INCLUDED_)
-#define Port__INCLUDED_
+#if !defined(Event__INCLUDED_)
+#define Event__INCLUDED_
 
 #include "defines.h"
 #include "PinballObject.h"
+#include "SequencerLeds.h"
 
-class Port : public PinballObject
+class Event
 {
-
 public:
-	Port(uint8_t portNumber);
-	virtual ~Port();
-	uint8_t GetPortNumber() { return m_portNumber; }
+	Event(int idEvent) { m_IdEvent = idEvent; }
+	virtual ~Event() {};
+	int GetIdEvent() { return m_IdEvent; }
 
-protected:
-	uint8_t m_portNumber;
-
+private:
+	int m_IdEvent;
 };
-#endif // !defined(Port__INCLUDED_)
+
+
+#endif // !defined(Event__INCLUDED_)

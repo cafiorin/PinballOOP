@@ -12,20 +12,21 @@ http://pinballhomemade.blogspot.com.br
 
 
 #include "OutBall.h"
-#include "PinballMaster.h"
+#include "Event.h"
+#include "Pinball.h"
 
 //-------------------------------------------------------//
-OutBall::OutBall(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberOutput1, uint8_t portNumberInput2, uint8_t portNumberOutput2) : PinballObject(szName, pinball)
+OutBall::OutBall(uint8_t portNumberInput1, uint8_t portNumberOutput1, uint8_t portNumberInput2, uint8_t portNumberOutput2) : PinballObject()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("OutBall Constructor");
+	LogMessage(F("OutBall Constructor"));
 	#endif
 
-	m_input1 = new Input("OBIn1", pinball, portNumberInput1,this);
-	m_output1 = new Output("OBOut1", pinball, portNumberOutput1);
-	m_input2 = new Input("OBIn2", pinball, portNumberInput2,this);
-	m_output2 = new Output("OBOut2", pinball, portNumberOutput2);
+	m_input1 = new Input(portNumberInput1,this);
+	m_output1 = new Output(portNumberOutput1);
+	m_input2 = new Input(portNumberInput2,this);
+	m_output2 = new Output(portNumberOutput2);
 
 	m_nBalls = 4;
 }
@@ -35,7 +36,7 @@ OutBall::~OutBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("OutBall Destructor");
+	LogMessage(F("OutBall Destructor"));
 	#endif
 	
 	delete m_input1;
@@ -45,11 +46,11 @@ OutBall::~OutBall()
 }
 
 //-------------------------------------------------------//
-bool OutBall::Init(StatusPinball status)
+bool OutBall::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("OutBall::Init");
+	LogMessage(F("OutBall::Init"));
 	#endif
 
 	if (m_input1->GetInput() && m_input2->GetInput())
@@ -75,25 +76,25 @@ bool OutBall::Init(StatusPinball status)
 	}
 
 	#ifdef DEBUGMESSAGES
-	Debug("OutBall::Init Error");
+	LogMessage(F("OutBall::Init Error"));
 	#endif
 
 	return false;
 }
 
 //-------------------------------------------------------//
-bool OutBall::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool OutBall::NotifyEvent(Object *sender, Event *event)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("OutBall::NotifyEvent");
+	LogMessage(F("OutBall::NotifyEvent"));
 	#endif
 
-	if (event == EVENT_EDGEPOSITIVE)
+	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
 	{
 		AddBall();
 
-		m_pinball->NotifyEvent(this, EVENT_LOST_BALL, 0);
+		m_Pinball->NotifyEvent(this, &Event(EVENT_LOST_BALL));
 		if (m_input1->GetInput() && !m_input2->GetInput())
 		{
 			m_output1->TurnOnByTimer();
@@ -108,7 +109,7 @@ void OutBall::LanchBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("OutBall::LanchBall");
+	LogMessage(F("OutBall::LanchBall"));
 	#endif
 
 	if (m_nBalls > 0)

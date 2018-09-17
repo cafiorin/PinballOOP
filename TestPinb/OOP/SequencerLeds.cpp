@@ -10,21 +10,22 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballMaster.h"
 #include "PinballObject.h"
 #include "Timer.h"
+#include "Event.h"
 
 // turnOn1by1 : Turn on and turn off last
 // all : Turn on all (turn off all in the last)
 
 //-----------------------------------------------------------
-SequencerLeds::SequencerLeds(PinballMaster *pinball, SequencerType type,long time):PinballObject("SequencerLeds",pinball)
+SequencerLeds::SequencerLeds(SequencerType type,long time):PinballObject()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("SequencerLeds Constructor");
+	LogMessage(F("SequencerLeds Constructor"));
 	#endif
 
-	m_timerSeq = new Timer(time, "TimerSeq", pinball, this, TimerType::continuous);
+	m_timerSeq = new Timer(time, this, TimerType::continuous);
 	m_type = type;
-	m_enabled = false;
+	m_Enabled = false;
 	m_count = 0;
 	m_pos = 0;
 	m_blink = false;
@@ -35,7 +36,7 @@ SequencerLeds::~SequencerLeds()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("SequencerLeds Destructor");
+	LogMessage(F("SequencerLeds Destructor"));
 	#endif
 
 	delete m_timerSeq;
@@ -47,12 +48,12 @@ void SequencerLeds::AddLed(uint8_t led, bool turnOnWithNext)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("SequencerLeds::AddLed");
+	LogMessage(F("SequencerLeds::AddLed"));
 	#endif
 
 	if (m_count < MAXLIGHTS)
 	{
-		//LedControl *ledControl = m_pinball->GetLedControl();
+		//LedControl *ledControl = m_Pinball->GetLedControl();
 		//if (ledControl != NULL)
 		//{
 		//	ledControl->TurnOff(led);
@@ -71,7 +72,7 @@ void SequencerLeds::TurnOnAlwaysLed(uint8_t position,bool turnOn)
 	if (position < m_count)
 	{
 		m_LedsAlwaysTurnOn[position] = turnOn;
-		//LedControl *ledControl = m_pinball->GetLedControl();
+		//LedControl *ledControl = m_Pinball->GetLedControl();
 		//if (ledControl != NULL)
 		//{
 		//	ledControl->TurnOn(m_Leds[position]);
@@ -85,7 +86,7 @@ void SequencerLeds::RemoveLed(uint8_t led)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("SequencerLeds::RemoveLed");
+	LogMessage(F("SequencerLeds::RemoveLed"));
 	#endif
 
 	bool found = false;
@@ -96,7 +97,7 @@ void SequencerLeds::RemoveLed(uint8_t led)
 			if (m_Leds[i] == led)
 			{
 				found = true;
-				//LedControl *ledControl = m_pinball->GetLedControl();
+				//LedControl *ledControl = m_Pinball->GetLedControl();
 				//if (ledControl != NULL)
 				//{
 				//	ledControl->TurnOn(led);
@@ -118,10 +119,10 @@ void SequencerLeds::Start()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("SequencerLeds::Start");
+	LogMessage(F("SequencerLeds::Start"));
 	#endif
 
-	m_enabled = true;
+	m_Enabled = true;
 
 	if (m_count > 0)
 	{
@@ -130,7 +131,7 @@ void SequencerLeds::Start()
 		if (m_type != SequencerType::blinkingAll)
 		{
 			m_pos = 0;
-			//LedControl *ledControl = m_pinball->GetLedControl();
+			//LedControl *ledControl = m_Pinball->GetLedControl();
 			//if (ledControl != NULL)
 			//{
 			//	ledControl->TurnOn(m_Leds[m_pos]);
@@ -151,11 +152,11 @@ void SequencerLeds::End()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("SequencerLeds::End");
+	LogMessage(F("SequencerLeds::End"));
 	#endif
 
 	m_pos = 0;
-	//LedControl *ledControl = m_pinball->GetLedControl();
+	//LedControl *ledControl = m_Pinball->GetLedControl();
 	//if (ledControl != NULL)
 	//{
 	//	for (char i = 0; i < m_count; i++)
@@ -167,17 +168,17 @@ void SequencerLeds::End()
 }
 
 //---------------------------------------------------------------------//
-bool SequencerLeds::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool SequencerLeds::NotifyEvent(Object *sender, Event *event)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("SequencerLeds::NotifyEvent");
+	LogMessage(F("SequencerLeds::NotifyEvent"));
 	#endif
 
 	// -- T I M E R  I S  O V E R --
-	if (event == EVENT_TIMEISOVER)
+	if (event->GetIdEvent() == EVENT_TIMEISOVER)
 	{
-		return TimerIsOver(sender);
+		return TimerIsOver((PinballObject *) sender);
 	}
 
 	return false;
@@ -189,16 +190,16 @@ bool SequencerLeds::TimerIsOver(PinballObject *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("SequencerLeds::TimerIsOver");
+	LogMessage(F("SequencerLeds::TimerIsOver"));
 	#endif
 
-	if (sender == m_timerSeq && m_enabled)
+	if (sender == m_timerSeq && m_Enabled)
 	{
 		#ifdef DEBUGMESSAGES
-		Debug("...Timer is over to seq");
+		LogMessage(F("...Timer is over to seq"));
 		#endif
 
-		//LedControl *pLedControl = m_pinball->GetLedControl();
+		//LedControl *pLedControl = m_Pinball->GetLedControl();
 		//if (pLedControl != NULL)
 		//{
 		//	if (m_type == SequencerType::turnOnAndturnOff_1by1)

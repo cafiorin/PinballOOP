@@ -6,30 +6,30 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "AccumulatorBall.h"
-#include "PinballMaster.h"
+#include "Event.h"
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
-AccumulatorBall::AccumulatorBall(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberInput4, uint8_t portNumberOutput) : PinballObject(szName, pinball)
+AccumulatorBall::AccumulatorBall(uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberInput4, uint8_t portNumberOutput) : PinballObject()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("AccumulatorBall Constructor");
+	LogMessage(F("AccumulatorBall Constructor"));
 	#endif
 
-	m_input1 = new Input("AccIn1", pinball, portNumberInput1,this);
+	m_input1 = new Input(portNumberInput1,this);
 	m_input1->SetDebounceRead(5);
 	
-	m_input2 = new Input("AccIn2", pinball, portNumberInput2, this);
+	m_input2 = new Input(portNumberInput2, this);
 	m_input2->SetDebounceRead(5);
 	
-	m_input3 = new Input("AccIn3", pinball, portNumberInput3, this);
+	m_input3 = new Input(portNumberInput3, this);
 	m_input3->SetDebounceRead(5);
 	
-	m_input4 = new Input("AccIn4", pinball, portNumberInput4, this);
+	m_input4 = new Input(portNumberInput4, this);
 	m_input4->SetDebounceRead(5);
 
-	m_output = new Output("ReOut", pinball, portNumberOutput);
+	m_output = new Output(portNumberOutput);
 
 	m_nBalls = 0;
 }
@@ -39,7 +39,7 @@ AccumulatorBall::~AccumulatorBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("AccumulatorBall Destructor");
+	LogMessage(F("AccumulatorBall Destructor"));
 	#endif
 	
 	delete m_input1;
@@ -51,11 +51,11 @@ AccumulatorBall::~AccumulatorBall()
 }
 
 //-------------------------------------------------------//
-bool AccumulatorBall::Init(StatusPinball status)
+bool AccumulatorBall::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("AccumulatorBall::Init");
+	LogMessage(F("AccumulatorBall::Init"));
 	#endif
 
 	uint8_t nTries = 5;
@@ -76,28 +76,28 @@ bool AccumulatorBall::Init(StatusPinball status)
 
 
 //-------------------------------------------------------//
-bool AccumulatorBall::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool AccumulatorBall::NotifyEvent(Object *sender, Event *event)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("AccumulatorBall::NotifyEvent");
+	LogMessage(F("AccumulatorBall::NotifyEvent"));
 	#endif
 
-	if (event == EVENT_EDGEPOSITIVE)
+	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
 	{
-		if(valueToSend == m_input1->GetPortNumber())
+		if(sender == m_input1)
 		{
 			m_nBalls = 1;
 		}
-		else if (valueToSend == m_input2->GetPortNumber())
+		else if (sender == m_input2)
 		{
 			m_nBalls = 2;
 		}
-		else if (valueToSend == m_input3->GetPortNumber())
+		else if (sender == m_input3)
 		{
 			m_nBalls = 3;
 		}
-		else if (valueToSend == m_input4->GetPortNumber())
+		else if (sender == m_input4)
 		{
 			m_nBalls = 4;
 		}
@@ -112,7 +112,7 @@ void AccumulatorBall::LanchBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("AccumulatorBall::LanchBall");
+	LogMessage(F("AccumulatorBall::LanchBall"));
 	#endif
 
 	if (m_nBalls >= 1)

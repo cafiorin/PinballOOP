@@ -7,22 +7,23 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 #include "SlingShot.h"
-#include "PinballMaster.h"
+#include "Pinball.h"
 #include "PinballObject.h"
 #include "DefinesMp3.h"
+#include "Event.h"
 
 //-------------------------------------------------------//
-SlingShot::SlingShot(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberOutput) : PinballObject(szName, pinball)
+SlingShot::SlingShot(uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberOutput) : PinballObject()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("SlingShot Constructor");
+	LogMessage(F("SlingShot Constructor"));
 	#endif
 
-	m_input1 = new Input("SLIn1", pinball, portNumberInput1, this);
-	m_input2 = new Input("SLIn2", pinball, portNumberInput2, this);
+	m_input1 = new Input(portNumberInput1, this);
+	m_input2 = new Input(portNumberInput2, this);
 	
-	m_output = new Output("SLOut", pinball, portNumberOutput);
+	m_output = new Output(portNumberOutput);
 }
 
 //-------------------------------------------------------//
@@ -30,7 +31,7 @@ SlingShot::~SlingShot()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("SlingShot Destructor");
+	LogMessage(F("SlingShot Destructor"));
 	#endif
 
 	delete m_input1;
@@ -39,11 +40,11 @@ SlingShot::~SlingShot()
 }
 
 //-------------------------------------------------------//
-bool SlingShot::Init(StatusPinball status)
+bool SlingShot::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SlingShot Init");
+	LogMessage(F("SlingShot Init"));
 	#endif
 
 	if (!m_input1->GetInput() && !m_input2->GetInput())
@@ -55,17 +56,17 @@ bool SlingShot::Init(StatusPinball status)
 }
 
 //-------------------------------------------------------//
-bool SlingShot::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool SlingShot::NotifyEvent(Object *sender, Event *event)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Slingshot::NotifyEvent");
+	LogMessage(F("Slingshot::NotifyEvent"));
 	#endif
 
-	if (event == EVENT_EDGEPOSITIVE)
+	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
-		m_pinball->NotifyEvent(this, event, valueToSend);
+		m_Pinball->NotifyEvent(sender, event);
 		return true;
 	}
 	return false;

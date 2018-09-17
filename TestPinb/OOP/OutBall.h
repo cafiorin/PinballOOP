@@ -18,10 +18,10 @@ http://pinballhomemade.blogspot.com.br
 class OutBall : public PinballObject
 {
 public:
-	OutBall(const char *szName, PinballMaster *pinball, uint8_t portNumberInput1, uint8_t portNumberOutput1, uint8_t portNumberInput2, uint8_t portNumberOutput2);
+	OutBall(uint8_t portNumberInput1, uint8_t portNumberOutput1, uint8_t portNumberInput2, uint8_t portNumberOutput2);
 	virtual ~OutBall();
-	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
+	virtual bool Init();
+	virtual bool NotifyEvent(Object *sender, Event *event);
 
 	void LanchBall();
 	uint8_t GetBalls() { return m_nBalls; }

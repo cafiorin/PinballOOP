@@ -16,10 +16,10 @@ http://pinballhomemade.blogspot.com.br
 class KickoutHole : public PinballObject
 {
 public:
-	KickoutHole(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t portNumberOutput);
+	KickoutHole(uint8_t portNumberInput, uint8_t portNumberOutput);
 	virtual ~KickoutHole();
-	virtual bool Init(StatusPinball status);
-	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
+	virtual bool Init();
+	virtual bool NotifyEvent(Object *sender, Event *event);
 
 	void LanchBall();
 	bool IsThereBall() { return m_ball; }

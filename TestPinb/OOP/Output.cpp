@@ -6,20 +6,21 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Output.h"
-#include "PinballMaster.h"
+#include "Pinball.h"
 #include "Multiplex.h"
+#include "Event.h"
 
 //-------------------------------------------------------//
-Output::Output(const char *szName, PinballMaster *pinball, uint8_t port):Port(pinball,szName, port)
+Output::Output(uint8_t port):Port(port)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Output Constructor");
+	LogMessage(F("Output Constructor"));
 	#endif
 
-	m_Multiplex = pinball->GetMultiplex();
-	m_TimerOn = new Timer(100, "TOon", pinball,this,TimerType::once);
-	pinball->AddPinballOutput(this);
+	m_Multiplex = m_Pinball->GetMultiplex();
+	m_TimerOn = new Timer(100, this,TimerType::once);
+	m_Pinball->AddPinballOutput(this);
 
 	//Init();
 }
@@ -29,18 +30,18 @@ Output::~Output()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Output Destructor");
+	LogMessage(F("Output Destructor"));
 	#endif
 
 	delete m_TimerOn;
 }
 
 //-------------------------------------------------------//
-bool Output::Init(StatusPinball status)
+bool Output::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Output::Init");
+	LogMessage(F("Output::Init"));
 	#endif
 
 	TurnOff();
@@ -51,10 +52,10 @@ bool Output::Init(StatusPinball status)
 void Output::TurnOn()
 //-------------------------------------------------------//
 {
-	if(m_enabled)
+	if(m_Enabled)
 	{
 		#ifdef DEBUGMESSAGES
-		Debug("Output::TurnOn");
+		LogMessage(F("Output::TurnOn"));
 		#endif
 
 		m_turnOn = true;
@@ -69,10 +70,10 @@ void Output::TurnOn()
 void Output::TurnOnByTimer(long time)
 //-------------------------------------------------------//
 {
-	if (m_enabled)
+	if (m_Enabled)
 	{
 		#ifdef DEBUGMESSAGES
-		Debug("Output::TurnOnByTime");
+		LogMessage(F("Output::TurnOnByTime"));
 		#endif
 
 		m_timerDelay = time;
@@ -82,14 +83,14 @@ void Output::TurnOnByTimer(long time)
 }
 
 //-------------------------------------------------------//
-bool Output::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool Output::NotifyEvent(Object *sender, Event *event)
 //-------------------------------------------------------//
 {
     #ifdef DEBUGMESSAGES
-    Debug("Output::NotifyEvent");
+    LogMessage(F("Output::NotifyEvent"));
     #endif
 
-	if (event == EVENT_TIMEISOVER)
+	if (event->GetIdEvent() == EVENT_TIMEISOVER)
 	{
 		TurnOff();
 		return true;
@@ -102,10 +103,10 @@ bool Output::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSe
 void Output::TurnOff()
 //-------------------------------------------------------//
 {
-	if(m_enabled)
+	if(m_Enabled)
 	{
 		#ifdef DEBUGMESSAGES
-		Debug("Output::TurnOff");
+		LogMessage(F("Output::TurnOff"));
 		#endif
 
 		m_timerDelay = 0;

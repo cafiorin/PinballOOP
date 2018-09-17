@@ -10,16 +10,17 @@ http://pinballhomemade.blogspot.com.br
 #include "Timer.h"
 #include "Output.h"
 #include "DefinesMp3.h"
+#include "Event.h"
 
 //---------------------------------------------------------------------//
-SelfTest::SelfTest(PinballMaster *pinball) : PinballObject("TEST",pinball)
+SelfTest::SelfTest(PinballMaster *pinball) : PinballObject()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("SelfTest Constructor");
+	LogMessage(F("SelfTest Constructor"));
 	#endif
 
-	m_timerAuto = new Timer(100, "TimerAuto", pinball, this, TimerType::continuous);
+	m_timerAuto = new Timer(100, this, TimerType::continuous);
 }
 
 //---------------------------------------------------------------------//
@@ -27,7 +28,7 @@ SelfTest::~SelfTest()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("SelfTest Destructor");
+	LogMessage(F("SelfTest Destructor"));
 	#endif
 
 	delete m_timerAuto;
@@ -38,7 +39,7 @@ void SelfTest::IncrementTestValue()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest IncrementTestValue");
+	LogMessage(F("SelfTest IncrementTestValue"));
 	#endif
 
 	m_startTestValue++;
@@ -74,7 +75,7 @@ void SelfTest::DecrementTestValue()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest DecrementTestValue");
+	LogMessage(F("SelfTest DecrementTestValue"));
 	#endif
 
 	m_startTestValue--;
@@ -114,7 +115,7 @@ bool SelfTest::EventUpDownButton(PinballObject *sender, bool upButton)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest EventUpDownButton");
+	LogMessage(F("SelfTest EventUpDownButton"));
 	#endif
 
 
@@ -134,7 +135,7 @@ void SelfTest::StartTest(uint8_t event)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest::StartTest");
+	LogMessage(F("SelfTest::StartTest"));
 	#endif
 
 	m_MenuTest = event;
@@ -147,7 +148,7 @@ void SelfTest::DoTest()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest::DoTest");
+	LogMessage(F("SelfTest::DoTest"));
 	#endif
 
 	switch (m_MenuTest)
@@ -219,19 +220,19 @@ void SelfTest::DoSfxOnOff()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest DoSfxOnOff");
+	LogMessage(F("SelfTest DoSfxOnOff"));
 	#endif
 
 
-	if (m_pinball->IsEnabledSFX())
+	if (m_Pinball->IsEnabledSFX())
 	{
-		m_pinball->EnableSFX(false);
-		m_pinball->printText("SFX", "Disable", 0);
+		m_Pinball->EnableSFX(false);
+		m_Pinball->printText("SFX", "Disable", 0);
 	}
 	else
 	{
-		m_pinball->EnableSFX(true);
-		m_pinball->printText("SFX", "Enable", 0);
+		m_Pinball->EnableSFX(true);
+		m_Pinball->printText("SFX", "Enable", 0);
 	}
 }
 
@@ -241,14 +242,14 @@ void SelfTest::DoTestLed()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest::DoTestLed");
+	LogMessage(F("SelfTest::DoTestLed"));
 	#endif
 
-	//LedControl *ledControl = m_pinball->GetLedControl();
+	//LedControl *ledControl = m_Pinball->GetLedControl();
 
 	char szLed[5];
 	sprintf(szLed, "%d", m_startTestValue);
-	m_pinball->printText("Led:", szLed, 0);
+	m_Pinball->printText("Led:", szLed, 0);
 
 	//if (ledControl != NULL)
 	//{
@@ -268,15 +269,15 @@ void SelfTest::DoTestCoin()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest::DoTestCoin");
+	LogMessage(F("SelfTest::DoTestCoin"));
 	#endif
 
 
 	char szCoin[5];
 	sprintf(szCoin, "%d", m_startTestValue);
-	m_pinball->printText("Coin:", szCoin, 0);
+	m_Pinball->printText("Coin:", szCoin, 0);
 
-	Output *pOutput = m_pinball->GetOutput(m_startTestValue + OUTPUT_COINS_INIT);
+	Output *pOutput = m_Pinball->GetOutput(m_startTestValue + OUTPUT_COINS_INIT);
 	if (pOutput != NULL)
 	{
 		pOutput->TurnOnByTimer(200);
@@ -288,14 +289,14 @@ void SelfTest::DoTestOutput()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest::DoTestOutput");
+	LogMessage(F("SelfTest::DoTestOutput"));
 	#endif
 
 	char szOut[5];
 	sprintf(szOut, "%d", m_startTestValue);
-	m_pinball->printText("Output", szOut, 0);
+	m_Pinball->printText("Output", szOut, 0);
 
-	Output *pOutput = m_pinball->GetOutput(m_startTestValue + OUTPUT_LOW_INIT);
+	Output *pOutput = m_Pinball->GetOutput(m_startTestValue + OUTPUT_LOW_INIT);
 	if (pOutput != NULL)
 	{
 		pOutput->TurnOnByTimer(1000);
@@ -308,18 +309,18 @@ void SelfTest::DoPlaySound(bool board)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest::DoPlaySound");
+	LogMessage(F("SelfTest::DoPlaySound"));
 	#endif
 
 	if (board)
 	{
-		m_pinball->playSong(MP3_TESTSOUND);
-		m_pinball->printText("Play", "board1", 0);
+		m_Pinball->playSong(MP3_TESTSOUND);
+		m_Pinball->printText("Play", "board1", 0);
 	}
 	else
 	{
-		m_pinball->sendMessageToAnotherArduino(ADDRESS_SLAVE, COMM_TEST_SOUND);
-		m_pinball->printText("Play", "board2", 0);
+		m_Pinball->sendMessageToAnotherArduino(ADDRESS_SLAVE, COMM_TEST_SOUND);
+		m_Pinball->printText("Play", "board2", 0);
 	}
 }
 
@@ -329,17 +330,17 @@ void SelfTest::FinishTest()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest::FinishTest");
+	LogMessage(F("SelfTest::FinishTest"));
 	#endif
 
-	m_pinball->clearDisplay();
+	m_Pinball->clearDisplay();
 
 	switch (m_MenuTest)
 	{
 		case EVENT_TEST_LED_1BY1:
 		case EVENT_TEST_LED_AUTO:
 		{
-			//LedControl *ledControl = m_pinball->GetLedControl();
+			//LedControl *ledControl = m_Pinball->GetLedControl();
 			//if (ledControl != NULL)
 			//{
 			//	for (uint8_t i = 0; i < MAX_LEDS; i++)
@@ -353,15 +354,15 @@ void SelfTest::FinishTest()
 }
 
 //---------------------------------------------------------------------//
-bool SelfTest::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool SelfTest::NotifyEvent(Object *sender, Event *event)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("SelfTest::NotifyEvent");
+	LogMessage(F("SelfTest::NotifyEvent"));
 	#endif
 
 	// -- T I M E R  I S  O V E R --
-	if (event == EVENT_TIMEISOVER)
+	if (event->GetIdEvent() == EVENT_TIMEISOVER)
 	{
 		DoTest();
 		return true;

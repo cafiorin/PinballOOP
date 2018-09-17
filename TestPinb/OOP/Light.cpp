@@ -6,17 +6,17 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Light.h"
-
+#include "Event.h"
 
 //-------------------------------------------------------//
-Light::Light(const char *szName, PinballMaster *pinball, uint8_t port):Output(szName, pinball, port)
+Light::Light(uint8_t port):Output(port)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Light Constructor");
+	LogMessage(F("Light Constructor"));
 	#endif
 
-	m_timerBlinking = new Timer(700, "TBlink", this->m_pinball,this,TimerType::continuous);
+	m_timerBlinking = new Timer(700, this,TimerType::continuous);
 }
 
 //-------------------------------------------------------//
@@ -24,21 +24,21 @@ Light::~Light()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Light Destructor");
+	LogMessage(F("Light Destructor"));
 	#endif
 
 	delete m_timerBlinking;
 }
 
 //-------------------------------------------------------//
-bool Light::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool Light::NotifyEvent(Object *sender, Event *event)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Light::NotifyEvent");
+	LogMessage(F("Light::NotifyEvent"));
 	#endif
 
-	if (event == EVENT_TIMEISOVER)
+	if (event->GetIdEvent() == EVENT_TIMEISOVER)
 	{
 		if (this->IsTurnOn())
 			TurnOff();
@@ -55,7 +55,7 @@ void Light::StartBlink(long value)
 //-----------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Output::StartBlink");
+	LogMessage(F("Output::StartBlink"));
 	#endif
 
 	m_timerBlinking->ChangeValue(value);
@@ -66,7 +66,7 @@ void Light::EndBlink()
 //-----------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Output::EndBlink");
+	LogMessage(F("Output::EndBlink"));
 	#endif
 
 	m_timerBlinking->Disable();

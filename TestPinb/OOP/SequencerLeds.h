@@ -27,10 +27,10 @@ class Timer;
 class SequencerLeds : public PinballObject
 {
 public:
-	SequencerLeds(PinballMaster *pinball, SequencerType type, long time);
+	SequencerLeds(SequencerType type, long time);
 	virtual ~SequencerLeds();
 
-	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
+	virtual bool NotifyEvent(Object *sender, Event *event);
 
 	bool TimerIsOver(PinballObject *sender);
 	void AddLed(uint8_t led, bool turnOnWithNext = false);

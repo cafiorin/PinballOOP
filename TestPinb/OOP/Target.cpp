@@ -12,17 +12,17 @@ http://pinballhomemade.blogspot.com.br
 #include "Timer.h"
 
 //-------------------------------------------------------//
-Target::Target(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t led) : PinballObject(szName, pinball)
+Target::Target(uint8_t portNumberInput, uint8_t led) : PinballObject()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Target Constructor");
+	LogMessage(F("Target Constructor"));
 	#endif
 
-	m_input = new Input("TIn", pinball, portNumberInput,this);
+	m_input = new Input(portNumberInput,this);
 	m_hit = false;
 	m_led = led;
-	m_timerBlinkLed = new Timer(400, "TTLB", pinball, this, TimerType::continuous);
+	m_timerBlinkLed = new Timer(400, this, TimerType::continuous);
 	m_timerBlinkLed->Disable();
 }
 
@@ -31,7 +31,7 @@ Target::~Target()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Target Destructor");
+	LogMessage(F("Target Destructor"));
 	#endif
 	
 	delete m_timerBlinkLed;
@@ -39,13 +39,13 @@ Target::~Target()
 }
 
 //-------------------------------------------------------//
-bool Target::Init(StatusPinball status)
+bool Target::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Target::Init");
+	LogMessage(F("Target::Init"));
 	#endif
-	if (status == StatusPinball::playingmode)
+	if (m_Pinball->GetStatus() == StatusPinball::playingmode)
 	{
 		m_timerBlinkLed->Start();
 		m_hit = false;
@@ -54,14 +54,14 @@ bool Target::Init(StatusPinball status)
 }
 
 //-------------------------------------------------------//
-bool Target::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool Target::NotifyEvent(Object *sender, Event *event)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Target::NotifyEvent");
+	LogMessage(F("Target::NotifyEvent"));
 	#endif
 
-	//LedControl *ledControl = m_pinball->GetLedControl();
+	//LedControl *ledControl = m_Pinball->GetLedControl();
 	//if (event == EVENT_EDGEPOSITIVE)
 	//{
 	//	m_timerBlinkLed->Disable();
@@ -70,12 +70,12 @@ bool Target::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSe
 	//		ledControl->TurnOn(m_led);
 	//	}
 	//	m_hit = true;
-	//	m_pinball->NotifyEvent(this, event, valueToSend);
+	//	m_Pinball->NotifyEvent(this, event, valueToSend);
 	//	return true;
 	//}
 	//else if (event == EVENT_TIMEISOVER)
 	//{
-	//	if (m_pinball->IsPlaying())
+	//	if (m_Pinball->IsPlaying())
 	//	{
 	//		if (ledControl != NULL)
 	//		{

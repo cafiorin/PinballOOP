@@ -121,10 +121,10 @@ uint8_t main()
 	//bool Leds[NUM_LEDS];
 
 	HardwareSerial *serial = new HardwareSerial();
-	PinballMaster *pPinballMaster = new PinballMaster("Master", serial);
+	PinballMaster *pPinballMaster = new PinballMaster(serial);
 
 	HardwareSerial *serial2 = new HardwareSerial(100);
-	PinballSlave *pPinballSlave = new PinballSlave("Slave", serial2);
+	PinballSlave *pPinballSlave = new PinballSlave(serial2);
 
 	HardwareSerial *ledPrint = new HardwareSerial(100, 1);
 

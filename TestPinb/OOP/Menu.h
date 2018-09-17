@@ -62,7 +62,7 @@ class Menu
 public:
 	Menu(PinballMaster *pinball);
 	virtual ~Menu();
-	virtual bool Init(StatusPinball status);
+	bool Init();
 	void DestroyChildren(MenuString *menuString);
 
 	void PressButtonMenu();

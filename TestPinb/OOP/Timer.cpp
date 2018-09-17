@@ -6,18 +6,19 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Timer.h"
-#include "PinballMaster.h"
+#include "Pinball.h"
+#include "Event.h"
 
 //-------------------------------------------------------//
-Timer::Timer(long time, const char *szName, PinballMaster *pinball, PinballObject *parent, TimerType type) : PinballObject(szName, pinball)
+Timer::Timer(long time, PinballObject *parent, TimerType type) : PinballObject()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Timer Constructor");
+	LogMessage(F("Timer Constructor"));
 	#endif
 
 	m_time = time;
-	m_enabled = false;
+	m_Enabled = false;
 	m_parent = parent;
 	m_type = type;
 }
@@ -27,7 +28,7 @@ Timer::~Timer()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Timer Destructor");
+	LogMessage(F("Timer Destructor"));
 	#endif
 }
 
@@ -36,10 +37,10 @@ void Timer::Start()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("Timer::Start");
+	LogMessage(F("Timer::Start"));
 	#endif
 
-	m_enabled = true;
+	m_Enabled = true;
 	m_lastTime = Millis();
 }
 
@@ -48,10 +49,10 @@ void Timer::Start()
 bool Timer::Check(long time /*=0 default*/)
 //-------------------------------------------------------//
 {
-	if (m_enabled)
+	if (m_Enabled)
 	{
 		#ifdef DEBUGMESSAGESLOOP
-		Debug("Timer::Check");
+		LogMessage(F("Timer::Check"));
 		#endif
 
 		bool ret = false;
@@ -81,26 +82,26 @@ bool Timer::Check(long time /*=0 default*/)
 void Timer::Loop()
 //-------------------------------------------------------//
 {
-	if (m_enabled)
+	if (m_Enabled)
 	{
 		#ifdef DEBUGMESSAGESLOOP
-		Debug("Timer::Loop");
+		LogMessage(F("Timer::Loop"));
 		#endif
 
 		if (Check())
 		{
 			if (m_parent != NULL)
 			{
-				m_parent->NotifyEvent(this, EVENT_TIMEISOVER, 0);
+				m_parent->NotifyEvent(this, &Event(EVENT_TIMEISOVER));
 			}
 			else
 			{
-				m_pinball->NotifyEvent(this, EVENT_TIMEISOVER, 0);
+				m_Pinball->NotifyEvent(this, &Event(EVENT_TIMEISOVER));
 			}
 
 			if (m_type == TimerType::once)
 			{
-				m_enabled = false;
+				m_Enabled = false;
 			}
 
 			m_lastTime = Millis();

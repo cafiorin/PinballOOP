@@ -5,8 +5,8 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
 #include "Pinball.h"
+#include "Object.h"
 #include "PinballObject.h"
 #include "HardwareSerial.h"
 #include "Vector.h"
@@ -18,98 +18,25 @@ http://pinballhomemade.blogspot.com.br
 #include <Wire.h>
 #include <SFEMP3Shield.h>
 
-//---------------------------------------------------------------------//
-Pinball::Pinball()
-//---------------------------------------------------------------------//
-{
-	m_Status = StatusPinball::initializing;
-	m_serial = NULL;
-	m_MP3player = NULL;
-	m_enableSfx = true;
-}
+SFEMP3Shield *Pinball::m_MP3player = NULL;
 #endif
 
-#ifdef DOS
+
 /*---------------------------------------------------------------------*/
-Pinball::Pinball(const char *szName, HardwareSerial *serial)
+Pinball::Pinball() : Object()
 /*---------------------------------------------------------------------*/
 {
-	m_serial = serial;
+	m_Multiplex = NULL;
 	m_Status = StatusPinball::initializing;
 	m_enableSfx = true;
 }
-#endif
 
 /*---------------------------------------------------------------------*/
 Pinball::~Pinball()
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessageOut(F("Pinball Destructor"));
-	#endif
-}
-
-/*---------------------------------------------------------------------*/
-void Pinball::LogMessage(const char *szMessage)
-/*---------------------------------------------------------------------*/
-{
-#ifdef DEBUGMESSAGES
-	if (m_serial != NULL)
-	{
-		m_serial->println(szMessage);
-		m_serial->flush();
-		delay(100);
-	}
-	#endif
-}
-
-/*---------------------------------------------------------------------*/
-void Pinball::LogMessageOut(const __FlashStringHelper *szMessage)
-/*---------------------------------------------------------------------*/
-{
-#ifdef DEBUGMESSAGES
-	if (m_serial != NULL)
-	{
-		m_serial->println(szMessage);
-		m_serial->flush();
-		delay(100);
-	}
-	#endif
-}
-
-/*---------------------------------------------------------------------*/
-void Pinball::LogMessageValue(const char *szMessage, uint8_t value)
-/*---------------------------------------------------------------------*/
-{
-#ifdef DEBUGMESSAGES
-	if (m_serial != NULL)
-	{
-		char szDebug[MAX_SIZE_DEBUG_MESSAGE];
-		if (strlen(szMessage) + 15 < MAX_SIZE_DEBUG_MESSAGE)
-		{
-			sprintf(szDebug, "%s - value:%d", szMessage, value);
-			m_serial->println(szDebug);
-			m_serial->flush();
-			delay(100);
-		}
-}
-	#endif
-}
-
-/*---------------------------------------------------------------------*/
-void Pinball::LogMessageValueOut(const __FlashStringHelper *szMessage, uint8_t value)
-/*---------------------------------------------------------------------*/
-{
-#ifdef DEBUGMESSAGES
-	if (m_serial != NULL)
-	{
-		m_serial->print(szMessage);
-		m_serial->print(F(":"));
-		m_serial->print(value);
-		m_serial->println("");
-		m_serial->flush();
-		delay(100);
-    }
+	LogMessage(F("Pinball Destructor"));
 	#endif
 }
 
@@ -117,13 +44,9 @@ void Pinball::LogMessageValueOut(const __FlashStringHelper *szMessage, uint8_t v
 void Pinball::playSong(char song[], bool priority /*default=true*/)
 //-----------------------------------------------------------------------//
 {
-	char szMsg[50];
-	if (strlen(szMsg) < 50)
-	{
-		sprintf(szMsg, "Play song: %s", song);
-		LogMessage(szMsg);
-	}
-
+	char szMsg[30]; //12 + 10 + 1
+	sprintf(szMsg, "Play song:%s", song);
+	LogMessage(szMsg);
 
 	#ifdef ARDUINOLIB
 	if (song != NULL && m_MP3player != NULL)
@@ -142,20 +65,18 @@ void Pinball::playSong(char song[], bool priority /*default=true*/)
 		}
 	}
 	#endif // ARDUINOLIB
-
 }
-
 
 //-----------------------------------------------------------------------//
 void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 //-----------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessageOut(F("Pinball::ChangeVolume"));
+	LogMessage(F("Pinball::ChangeVolume"));
 	#endif
 
 	#ifdef DOS
-	LogMessage("Change Volume");
+	LogMessage(F("Change Volume"));
 	#endif // DOS
 
 
@@ -189,7 +110,7 @@ void Pinball::sendMessageToAnotherArduino(uint8_t address, char msg)
 //-----------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessageOut(F("Pinball::sendMessageToAnotherArduino"));
+	LogMessage(F("Pinball::sendMessageToAnotherArduino"));
 	#endif
 
 	#ifdef ARDUINOLIB
@@ -203,14 +124,12 @@ void Pinball::sendMessageToAnotherArduino(uint8_t address, char msg)
 	#endif
 }
 
-
-
 //-----------------------------------------------------------------------//
 char Pinball::receiveMessageFromAnotherArduino(uint8_t howMany)
 //-----------------------------------------------------------------------//
 {
 #ifdef DEBUGMESSAGES
-	LogMessageOut(F("Pinball::receiveMessageFromAnotherArduino"));
+	LogMessage(F("Pinball::receiveMessageFromAnotherArduino"));
 #endif
 
 #ifdef ARDUINOLIB
@@ -224,4 +143,57 @@ char Pinball::receiveMessageFromAnotherArduino(uint8_t howMany)
 }
 
 
+/*---------------------------------------------------------------------*/
+void Pinball::AddPinballInput(Input *input)
+/*---------------------------------------------------------------------*/
+{
+	if (input != NULL)
+	{
+		#ifdef DEBUGMESSAGESCREATION
+		LogMessage(F(":AddPinballInput"));
+		#endif
+
+		uint8_t port = input->GetPortNumber();
+		if (port >= 0 && port < MAX_INPUTCHANNELS)
+			m_Inputs[port] = input;
+	}
+}
+
+/*---------------------------------------------------------------------*/
+void Pinball::AddPinballOutput(Output *output)
+/*---------------------------------------------------------------------*/
+{
+	if (output != NULL)
+	{
+		#ifdef DEBUGMESSAGESCREATION
+		LogMessage(F(":AddPinballOutput"));
+		#endif
+
+		uint8_t port = output->GetPortNumber();
+		if (port >= 0 && port < MAX_OUTPUTCHANNELS)
+			m_Outputs[port] = output;
+	}
+}
+
+/*---------------------------------------------------------------------*/
+void Pinball::AddPinballObject(PinballObject *Pinballobj)
+/*---------------------------------------------------------------------*/
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage(F("Pinball::AddPinballObject"));
+	#endif
+
+	m_PinballObjs.push_back(Pinballobj);
+}
+
+/*---------------------------------------------------------------------*/
+void Pinball::RemovePinballObject(PinballObject *Pinballobj)
+/*---------------------------------------------------------------------*/
+{
+#ifdef DEBUGMESSAGES
+	LogMessage(F("Pinball::RemovePinballObject"));
+#endif
+
+	m_PinballObjs.pop_back(Pinballobj);
+}
 

@@ -40,33 +40,15 @@ public:
 #endif
 
 #ifdef DOS
-	PinballMaster(const char *szName, HardwareSerial *serial);
+	PinballMaster(HardwareSerial *serial);
 #endif
 
 	virtual ~PinballMaster();
 
-	Multiplex *GetMultiplex() { return m_Multiplex; }
-	Input *GetInput(uint8_t channel)
-	{
-		if(channel < MAX_INPUTCHANNELS) return m_Inputs[channel];
-		return NULL;
-	}
-
-	Output *GetOutput(uint8_t channel)
-	{
-		if (channel < MAX_OUTPUTCHANNELS) return m_Outputs[channel];
-		return NULL;
-	}
-
-	void AddPinballObject(PinballObject *Pinballobj);
-	void RemovePinballObject(PinballObject *Pinballobj);
-	void AddPinballInput(Input *input);
-	void AddPinballOutput(Output *output);
-
 	void clearDisplay(uint8_t line=0);
 	void printText(char *text1, char *text2, char font);
 
-	bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
+	bool NotifyEvent(PinballObject *sender, Event *event);
 	bool Init(StatusPinball status);
 	bool Loop(uint8_t value);
 	void PlaySongToInput(uint8_t portNumber);
@@ -85,7 +67,6 @@ public:
 	void GetNewBall();
 	void PlayerLostBall();
 	void NextPlayer();
-	bool IsPlaying() { return m_Status == StatusPinball::playingmode; }
 	void CreateStages();
 
 	Menu *GetMenu() { return m_Menu; }
@@ -97,7 +78,6 @@ public:
 	DropTarget *GetDropTarget5() { return m_DropTarget5; }
 
 	uint8_t GetBallsByPlayer() { return m_nBallByPlayer; }
-	void playSongWait(char song[]);
 
 //Events
 private :
@@ -113,12 +93,8 @@ private :
 	void SetBallsByPlayer(uint8_t balls) { m_nBallByPlayer = balls; }
 
 protected:
-	Multiplex *m_Multiplex;
 	Output *m_GI;
 
-	Vector<PinballObject *> m_PinballObjs;
-	Input *m_Inputs[MAX_INPUTCHANNELS];
-	Output *m_Outputs[MAX_OUTPUTCHANNELS];
 	Timer *m_TimerToShowPlayers;
 
 	Menu *m_Menu;

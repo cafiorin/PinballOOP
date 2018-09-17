@@ -20,7 +20,7 @@ public:
 	SelfTest(PinballMaster *pinball);
 	virtual ~SelfTest();
 
-	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
+	virtual bool NotifyEvent(Object *sender, Event *event);
 
 	void IncrementTestValue();
 	void DecrementTestValue();

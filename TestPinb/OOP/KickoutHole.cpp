@@ -6,19 +6,20 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "KickoutHole.h"
-#include "PinballMaster.h"
+#include "Pinball.h"
+#include "Event.h"
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
-KickoutHole::KickoutHole(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t portNumberOutput) : PinballObject(szName, pinball)
+KickoutHole::KickoutHole(uint8_t portNumberInput, uint8_t portNumberOutput) : PinballObject()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("KickoutHole Constructor");
+	LogMessage(F("KickoutHole Constructor"));
 	#endif
 
-	m_input1 = new Input("KHIn", pinball, portNumberInput,this);
-	m_output = new Output("KHOut", pinball, portNumberOutput);
+	m_input1 = new Input(portNumberInput,this);
+	m_output = new Output(portNumberOutput);
 }
 
 //-------------------------------------------------------//
@@ -26,7 +27,7 @@ KickoutHole::~KickoutHole()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("KickoutHole Destructor");
+	LogMessage(F("KickoutHole Destructor"));
 	#endif
 	
 	delete m_input1;
@@ -34,11 +35,11 @@ KickoutHole::~KickoutHole()
 }
 
 //-------------------------------------------------------//
-bool KickoutHole::Init(StatusPinball status)
+bool KickoutHole::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("KickoutHole::Init");
+	LogMessage(F("KickoutHole::Init"));
 	#endif
 
 	m_ball = false;
@@ -51,17 +52,17 @@ bool KickoutHole::Init(StatusPinball status)
 }
 
 //-------------------------------------------------------//
-bool KickoutHole::NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool KickoutHole::NotifyEvent(Object *sender, Event *event)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("KickoutHole::NotifyEvent");
+	LogMessage(F("KickoutHole::NotifyEvent"));
 	#endif
 
-	if (event == EVENT_EDGEPOSITIVE)
+	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
 	{
 		m_ball = true;
-		m_pinball->NotifyEvent(this, event, valueToSend);
+		m_Pinball->NotifyEvent(this, event);
 		return true;
 	}
 	return false;
@@ -73,7 +74,7 @@ void KickoutHole::LanchBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	Debug("KickoutHole::LanchBall");
+	LogMessage(F("KickoutHole::LanchBall"));
 	#endif
 
 	if (m_ball)

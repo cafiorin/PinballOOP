@@ -66,14 +66,15 @@ void PinballSlave::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 
 #ifdef DOS
 /*---------------------------------------------------------------------*/
-PinballSlave::PinballSlave(const char *szName, HardwareSerial *serial) : Pinball(szName, serial)
+PinballSlave::PinballSlave(HardwareSerial *serial) : Pinball()
 /*---------------------------------------------------------------------*/
 {
 	m_PinballMaster = NULL;
 	m_Status = StatusPinball::initializing;
-	
+	m_Serial = serial;
+
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage("PinballSlave Constructor");
+	LogMessage(F("PinballSlave Constructor"));
 	#endif
 }
 #endif
@@ -83,7 +84,7 @@ PinballSlave::~PinballSlave()
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage("PinballSlave Destructor");
+	LogMessage(F("PinballSlave Destructor"));
 	#endif
 }
 
@@ -92,7 +93,7 @@ bool PinballSlave::Init()
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballSlave Init");
+	LogMessage(F("PinballSlave Init"));
 	#endif
 	
 	m_Status = StatusPinball::waitingmessages;
@@ -105,7 +106,7 @@ bool PinballSlave::Loop(uint8_t value)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP
-	LogMessage("PinballSlave::Loop");
+	LogMessage(F("PinballSlave::Loop"));
 	#endif
 
 	return true;
@@ -117,7 +118,7 @@ void PinballSlave::DataReceived(char c)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage("PinballSlave::DataReceived");
+	LogMessage(F("PinballSlave::DataReceived"));
 	#endif
 
 	switch (c)

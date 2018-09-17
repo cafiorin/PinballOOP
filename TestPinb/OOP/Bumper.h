@@ -19,9 +19,9 @@ class Output;
 class Bumper : public PinballObject
 {
 public:
-	Bumper(const char *szName, PinballMaster *pinball, uint8_t portNumberInput, uint8_t portNumberOutput, uint8_t Led);
+	Bumper(uint8_t portNumberInput, uint8_t portNumberOutput, uint8_t Led);
 	virtual ~Bumper();
-	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
+	virtual bool NotifyEvent(Object *sender, Event *event);
 
 protected:
 	Input *m_input;

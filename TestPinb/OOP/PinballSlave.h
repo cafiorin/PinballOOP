@@ -34,7 +34,7 @@ public:
 #endif
 
 #ifdef DOS
-	PinballSlave(const char *szName, HardwareSerial *serial);
+	PinballSlave(HardwareSerial *serial);
 
 	PinballMaster *m_PinballMaster;
 	void SetPinballMaster(PinballMaster *pinball) { m_PinballMaster = pinball; }

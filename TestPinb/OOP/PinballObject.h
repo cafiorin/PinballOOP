@@ -9,46 +9,27 @@ http://pinballhomemade.blogspot.com.br
 #define PinballObject__INCLUDED_
 
 #include "defines.h"
+#include "Object.h"
 
-enum StatusPinball
-{
-	initializing,
-	menusetup,
-	menutest,
-	attractmode,
-	getplayers,
-	playingmode,
-	waitingmessages
-};
+class Pinball;
+class Event;
 
-class PinballMaster;
-
-class PinballObject
+class PinballObject : public Object
 {
 public:
-	PinballObject(const char *szName, PinballMaster *pinball);
+	PinballObject();
 	virtual ~PinballObject();
-	char *getName() { return m_szName; }
-	bool IsEnabled() { return m_enabled; }
-	void Enable() { m_enabled = true; }
-	void Disable() { m_enabled = false; }
-	void DebugOut(const __FlashStringHelper *szMessage);
-	void LogMessage(const char *szMessage);
-    void LogMessageOut(const __FlashStringHelper *szMessage);
-	void LogMessageValue(const char *szMessage, uint8_t value);
-	void LogMessageValueOut(const __FlashStringHelper *szMessage, uint8_t value);
-	void Debug(const char *szMessage);
-	PinballMaster *GetPinball() { return m_pinball; }
 
-//virtual methods
-	virtual bool Init(StatusPinball status);
+	bool IsEnabled() { return m_Enabled; }
+	void Enable() { m_Enabled = true; }
+	void Disable() { m_Enabled = false; }
+
+	//virtual methods
+	virtual bool Init();
 	virtual void Loop();
-	virtual bool NotifyEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
 
 protected:
-	char m_szName[MAX_NAME];
-	bool m_enabled;
-	PinballMaster *m_pinball;
+	bool m_Enabled;
 };
 
 #endif

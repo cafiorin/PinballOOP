@@ -8,15 +8,15 @@ http://pinballhomemade.blogspot.com.br
 #include "Port.h"
 
 //-------------------------------------------------------//
-Port::Port(PinballMaster *pinball, const char *szName, uint8_t portNumber):PinballObject(szName,pinball)
+Port::Port(uint8_t portNumber):PinballObject()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Port Constructor");
+	LogMessage(F("Port Constructor"));
 	#endif
 
 	m_portNumber = portNumber;
-    m_enabled = true;
+    m_Enabled = true;
 }
 
 //-------------------------------------------------------//
@@ -24,6 +24,6 @@ Port::~Port()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("Port Destructor");
+	LogMessage(F("Port Destructor"));
 	#endif
 }

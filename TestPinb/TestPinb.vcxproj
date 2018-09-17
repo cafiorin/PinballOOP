@@ -150,6 +150,7 @@
     <ClInclude Include="OOP\defines.h" />
     <ClInclude Include="OOP\DefinesMp3.h" />
     <ClInclude Include="OOP\DropTarget.h" />
+    <ClInclude Include="OOP\Event.h" />
     <ClInclude Include="OOP\Flag.h" />
     <ClInclude Include="OOP\HardwareSerial.h" />
     <ClInclude Include="OOP\ht1632pinball.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="OOP\Light.h" />
     <ClInclude Include="OOP\Menu.h" />
     <ClInclude Include="OOP\Multiplex.h" />
+    <ClInclude Include="OOP\Object.h" />
     <ClInclude Include="OOP\OutBall.h" />
     <ClInclude Include="OOP\Output.h" />
     <ClInclude Include="OOP\Pinball.h" />
@@ -186,6 +188,7 @@
     <ClCompile Include="OOP\Light.cpp" />
     <ClCompile Include="OOP\Menu.cpp" />
     <ClCompile Include="OOP\Multiplex.cpp" />
+    <ClCompile Include="OOP\Object.cpp" />
     <ClCompile Include="OOP\OutBall.cpp" />
     <ClCompile Include="OOP\Output.cpp" />
     <ClCompile Include="OOP\Pinball.cpp" />

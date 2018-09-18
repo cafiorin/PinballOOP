@@ -6,7 +6,7 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Target.h"
-#include "PinballMaster.h"
+#include "Pinball.h"
 #include "PinballObject.h"
 #include "Input.h"
 #include "Timer.h"

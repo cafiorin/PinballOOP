@@ -22,12 +22,11 @@ public:
 	virtual bool NotifyEvent(Object *sender, Event *event);
 
 	void LanchBall();
-	bool IsThereBall() { return m_ball; }
+	bool IsThereBall() { m_input->GetInput(); }
 
 protected:
-	Input *m_input1;
+	Input *m_input;
 	Output *m_output;
-	bool m_ball;
 
 };
 #endif // !defined(KickoutHole__INCLUDED_)

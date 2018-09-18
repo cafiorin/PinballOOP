@@ -35,9 +35,7 @@ public:
 
 #ifdef DOS
 	PinballSlave(HardwareSerial *serial);
-
-	PinballMaster *m_PinballMaster;
-	void SetPinballMaster(PinballMaster *pinball) { m_PinballMaster = pinball; }
+	void SetPinballMaster(PinballMaster *pinball) { m_Pinball = pinball; }
 #endif
 
 	virtual ~PinballSlave();

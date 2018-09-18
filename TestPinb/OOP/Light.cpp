@@ -58,7 +58,8 @@ void Light::StartBlink(long value)
 	LogMessage(F("Output::StartBlink"));
 	#endif
 
-	m_timerBlinking->ChangeValue(value);
+	m_timerBlinking->ChangeTimerValue(value);
+	m_timerBlinking->Start();
 }
 
 //-----------------------------------------------------//

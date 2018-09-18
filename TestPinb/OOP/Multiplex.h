@@ -38,7 +38,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Arduino.h"
 #endif
 
-class PinballMaster;
 class PinballObject;
 
 class Multiplex : public PinballObject

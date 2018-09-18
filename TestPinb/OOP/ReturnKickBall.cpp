@@ -6,7 +6,7 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "ReturnKickBall.h"
-#include "PinballMaster.h"
+#include "Pinball.h"
 #include "PinballObject.h"
 #include "Input.h"
 #include "Output.h"

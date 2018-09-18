@@ -37,6 +37,7 @@ Bumper::~Bumper()
 
 	delete m_input;
 	delete m_output;
+	delete m_TimerLed;
 }
 
 //-------------------------------------------------------//

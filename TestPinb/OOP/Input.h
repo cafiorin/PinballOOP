@@ -16,7 +16,7 @@ class Input : public Port
 {
 
 public:
-	Input(uint8_t portNumber, PinballObject *pinballObjectParent=NULL);
+	Input(uint8_t portNumber, PinballObject *parent=NULL);
 	virtual ~Input();
 
 	bool GetInput();
@@ -28,7 +28,7 @@ private:
 	uint8_t m_debounceCount;
 	bool m_InputValue;
 	bool m_Edge;
-	PinballObject *m_pinballObjectParent;
+	PinballObject *m_parent;
 
 	void CheckDebounce();
 };

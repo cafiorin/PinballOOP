@@ -16,7 +16,6 @@ Port::Port(uint8_t portNumber):PinballObject()
 	#endif
 
 	m_portNumber = portNumber;
-    m_Enabled = true;
 }
 
 //-------------------------------------------------------//

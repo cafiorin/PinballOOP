@@ -28,10 +28,9 @@ public:
 
 	void Start();
 	bool Check(long time=0);
-	void ChangeValue(long time) 
+	void ChangeTimerValue(long time) 
 	{ 
 		m_time = time; 
-		Start();
 	}
 
 protected:

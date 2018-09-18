@@ -30,8 +30,6 @@ public:
 
 protected:
 	bool m_turnOn;
-	long m_timerDelay;
-	Multiplex *m_Multiplex;
 
 private:
 	Timer *m_TimerOn;

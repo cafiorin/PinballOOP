@@ -38,9 +38,9 @@ void Object::LogMessage(const __FlashStringHelper *szMessage)
 bool Object::NotifyEvent(Object *sender, Event *event)
 //---------------------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	LogMessage(F("PinballObject::NotifyEvent"));
-#endif
+	#endif
 
 	return false;
 }

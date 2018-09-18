@@ -7,7 +7,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 #include "SequencerLeds.h"
-#include "PinballMaster.h"
+#include "Pinball.h"
 #include "PinballObject.h"
 #include "Timer.h"
 #include "Event.h"

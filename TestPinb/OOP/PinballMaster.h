@@ -44,6 +44,7 @@ public:
 #endif
 
 	virtual ~PinballMaster();
+	void InitVars();
 
 	void clearDisplay(uint8_t line=0);
 	void printText(char *text1, char *text2, char font);
@@ -53,10 +54,6 @@ public:
 	bool Loop(uint8_t value);
 	void PlaySongToInput(uint8_t portNumber);
 	virtual void DataReceived(char c);
-
-	#ifdef ARDUINOLIB
-	PinballMaster *m_PinballMaster;
-	#endif
 
 	void StartGame(uint8_t Players);
 

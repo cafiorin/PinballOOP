@@ -18,11 +18,8 @@ Output::Output(uint8_t port):Port(port)
 	LogMessage(F("Output Constructor"));
 	#endif
 
-	m_Multiplex = m_Pinball->GetMultiplex();
-	m_TimerOn = new Timer(100, this,TimerType::once);
+	m_TimerOn = new Timer(100, this, TimerType::once);
 	m_Pinball->AddPinballOutput(this);
-
-	//Init();
 }
 
 //-------------------------------------------------------//
@@ -59,9 +56,10 @@ void Output::TurnOn()
 		#endif
 
 		m_turnOn = true;
-		if (m_Multiplex != NULL)
+		Multiplex *pMultiplex = m_Pinball->GetMultiplex();
+		if (pMultiplex != NULL)
 		{
-			m_Multiplex->writeChannel(m_portNumber, HIGH);
+			pMultiplex->writeChannel(m_portNumber, HIGH);
 		}
 	}
 }
@@ -76,7 +74,7 @@ void Output::TurnOnByTimer(long time)
 		LogMessage(F("Output::TurnOnByTime"));
 		#endif
 
-		m_timerDelay = time;
+		m_TimerOn->ChangeTimerValue(time);
 		m_TimerOn->Start();
 		TurnOn();
 	}
@@ -109,12 +107,11 @@ void Output::TurnOff()
 		LogMessage(F("Output::TurnOff"));
 		#endif
 
-		m_timerDelay = 0;
 		m_turnOn = false;
-
-		if (m_Multiplex != NULL)
+		Multiplex *pMultiplex = m_Pinball->GetMultiplex();
+		if (pMultiplex != NULL)
 		{
-			m_Multiplex->writeChannel(m_portNumber, LOW);
+			pMultiplex->writeChannel(m_portNumber, LOW);
 		}
 	}
 }

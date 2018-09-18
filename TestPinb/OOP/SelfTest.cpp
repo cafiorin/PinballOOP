@@ -6,14 +6,14 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "SelfTest.h"
-#include "PinballMaster.h"
+#include "Pinball.h"
 #include "Timer.h"
 #include "Output.h"
 #include "DefinesMp3.h"
 #include "Event.h"
 
 //---------------------------------------------------------------------//
-SelfTest::SelfTest(PinballMaster *pinball) : PinballObject()
+SelfTest::SelfTest() : PinballObject()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION

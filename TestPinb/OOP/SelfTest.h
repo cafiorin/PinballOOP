@@ -17,7 +17,7 @@ class Timer;
 class SelfTest : public PinballObject
 {
 public:
-	SelfTest(PinballMaster *pinball);
+	SelfTest();
 	virtual ~SelfTest();
 
 	virtual bool NotifyEvent(Object *sender, Event *event);

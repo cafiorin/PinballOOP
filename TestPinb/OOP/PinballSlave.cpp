@@ -69,7 +69,7 @@ void PinballSlave::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 PinballSlave::PinballSlave(HardwareSerial *serial) : Pinball()
 /*---------------------------------------------------------------------*/
 {
-	m_PinballMaster = NULL;
+	m_Pinball = NULL;
 	m_Status = StatusPinball::initializing;
 	m_Serial = serial;
 

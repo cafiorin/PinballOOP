@@ -9,7 +9,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 #include "Utils.h"
-#include "PinballMaster.h"
+#include "Pinball.h"
 #include "Vector.h"
 
 enum ButtonPressed
@@ -57,10 +57,10 @@ private:
 	Vector<MenuString *> m_Children;
 };
 
-class Menu
+class Menu : public PinballObject
 {
 public:
-	Menu(PinballMaster *pinball);
+	Menu();
 	virtual ~Menu();
 	bool Init();
 	void DestroyChildren(MenuString *menuString);
@@ -78,7 +78,5 @@ protected:
 	uint8_t m_subOption;
 	MenuString *m_subOptionSelected;
 	bool m_backSelected;
-
-	PinballMaster *m_PinballMaster;
 };
 #endif // !defined(Menu__INCLUDED_)

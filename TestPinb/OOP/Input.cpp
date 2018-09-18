@@ -10,7 +10,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Event.h"
 
 //-------------------------------------------------------//
-Input::Input(uint8_t portNumber, PinballObject *pinballObjectParent):Port(portNumber)
+Input::Input(uint8_t portNumber, PinballObject *parent):Port(portNumber)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -21,7 +21,7 @@ Input::Input(uint8_t portNumber, PinballObject *pinballObjectParent):Port(portNu
 	m_debounceCount = 0;
 	m_InputValue = false;
 	m_Edge = false;
-	m_pinballObjectParent = pinballObjectParent;
+	m_parent = parent;
 
 	m_Pinball->AddPinballInput(this);
 }
@@ -50,46 +50,49 @@ bool Input::GetInput()
 void Input::CheckDebounce()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGESLOOP
-	LogMessage(F("Input::CheckDebounce"));
-	#endif
-	if (m_debounceCount > m_debounceRead)
+	if (m_Enabled)
 	{
-		m_debounceCount = 0;
-		m_Edge = false;
-
-		if (m_InputValue)
+		#ifdef DEBUGMESSAGESLOOP
+		LogMessage(F("Input::CheckDebounce"));
+		#endif
+		if (m_debounceCount > m_debounceRead)
 		{
-			#ifdef DEBUGMESSAGES
-			LogMessage(F("Input::Edge Positive"));
-			#endif
+			m_debounceCount = 0;
+			m_Edge = false;
 
-			if (m_pinballObjectParent != NULL)
+			if (m_InputValue)
 			{
-				m_pinballObjectParent->NotifyEvent(this, &Event(EVENT_EDGEPOSITIVE));
+				#ifdef DEBUGMESSAGES
+				LogMessage(F("Input::Edge Positive"));
+				#endif
+
+				if (m_parent != NULL)
+				{
+					m_parent->NotifyEvent(this, &Event(EVENT_EDGEPOSITIVE));
+				}
+				else
+				{
+					m_Pinball->NotifyEvent(this, &Event(EVENT_EDGEPOSITIVE));
+				}
+				m_Pinball->PlaySongToInput(this->m_portNumber);
 			}
 			else
 			{
-				m_Pinball->NotifyEvent(this, &Event(EVENT_EDGEPOSITIVE));
-			}
-			m_Pinball->PlaySongToInput(this->m_portNumber);
-		}
-		else
-		{
-			#ifdef DEBUGMESSAGES
-			LogMessage(F("Input::Edge Negative"));
-			#endif
+				#ifdef DEBUGMESSAGES
+				LogMessage(F("Input::Edge Negative"));
+				#endif
 
-			if (m_pinballObjectParent != NULL)
-			{
-				m_pinballObjectParent->NotifyEvent(this, &Event(EVENT_EDGENEGATIVE));
+				if (m_parent != NULL)
+				{
+					m_parent->NotifyEvent(this, &Event(EVENT_EDGENEGATIVE));
+				}
+				else
+				{
+					m_Pinball->NotifyEvent(this, &Event(EVENT_EDGENEGATIVE));
+				}
 			}
-			else
-			{
-				m_Pinball->NotifyEvent(this, &Event(EVENT_EDGENEGATIVE));
-			}
-		}
 
+		}
 	}
 }
 

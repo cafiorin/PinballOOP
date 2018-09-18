@@ -12,8 +12,7 @@ http://pinballhomemade.blogspot.com.br
 #include "SequencerLeds.h"
 
 //-------------------------------------------------------//
-DropTarget::DropTarget( 
-						uint8_t portNumberInput1, 
+DropTarget::DropTarget( uint8_t portNumberInput1, 
 						uint8_t portNumberInput2, 
 						uint8_t portNumberInput3, 
 						uint8_t portNumberOutput) : PinballObject()

@@ -8,6 +8,7 @@ http://pinballhomemade.blogspot.com.br
 #include "AccumulatorBall.h"
 #include "Event.h"
 #include "PinballObject.h"
+#include "Pinball.h"
 
 //-------------------------------------------------------//
 AccumulatorBall::AccumulatorBall(uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberInput4, uint8_t portNumberOutput) : PinballObject()
@@ -58,18 +59,20 @@ bool AccumulatorBall::Init()
 	LogMessage(F("AccumulatorBall::Init"));
 	#endif
 
-	uint8_t nTries = 5;
-	while (m_nBalls > 0 || nTries > 0)
+	if (m_Pinball->GetStatus() == StatusPinball::initializing)
 	{
-		if (m_input1->GetInput())
+		uint8_t nTries = 5;
+		while (m_nBalls > 0 || nTries > 0)
 		{
-			LanchBall();
-			delay(1000);
+			if (m_input1->GetInput())
+			{
+				LanchBall();
+				delay(1000);
+			}
+			nTries--;
 		}
-		nTries--;
+		m_nBalls = 0;
 	}
-
-	m_nBalls = 0;
 
 	return true;
 }
@@ -85,23 +88,12 @@ bool AccumulatorBall::NotifyEvent(Object *sender, Event *event)
 
 	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
 	{
-		if(sender == m_input1)
-		{
-			m_nBalls = 1;
-		}
-		else if (sender == m_input2)
-		{
-			m_nBalls = 2;
-		}
-		else if (sender == m_input3)
-		{
-			m_nBalls = 3;
-		}
-		else if (sender == m_input4)
-		{
-			m_nBalls = 4;
-		}
+		bool input1 = m_input1->GetInput();
+		bool input2 = m_input2->GetInput();
+		bool input3 = m_input3->GetInput();
+		bool input4 = m_input4->GetInput();
 
+		m_nBalls = (int)input1 + (int)input2 + (int)input3 + (int)input4;
 		return true;
 	}
 	return false;

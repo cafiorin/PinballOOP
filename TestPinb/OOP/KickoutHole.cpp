@@ -18,7 +18,7 @@ KickoutHole::KickoutHole(uint8_t portNumberInput, uint8_t portNumberOutput) : Pi
 	LogMessage(F("KickoutHole Constructor"));
 	#endif
 
-	m_input1 = new Input(portNumberInput,this);
+	m_input = new Input(portNumberInput,this);
 	m_output = new Output(portNumberOutput);
 }
 
@@ -30,7 +30,7 @@ KickoutHole::~KickoutHole()
 	LogMessage(F("KickoutHole Destructor"));
 	#endif
 	
-	delete m_input1;
+	delete m_input;
 	delete m_output;
 }
 
@@ -42,12 +42,7 @@ bool KickoutHole::Init()
 	LogMessage(F("KickoutHole::Init"));
 	#endif
 
-	m_ball = false;
-	if (m_input1->GetInput())
-	{
-		m_output->TurnOnByTimer();
-	}
-
+	LanchBall();
 	return true;
 }
 
@@ -61,7 +56,6 @@ bool KickoutHole::NotifyEvent(Object *sender, Event *event)
 
 	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
 	{
-		m_ball = true;
 		m_Pinball->NotifyEvent(this, event);
 		return true;
 	}
@@ -77,9 +71,8 @@ void KickoutHole::LanchBall()
 	LogMessage(F("KickoutHole::LanchBall"));
 	#endif
 
-	if (m_ball)
+	if (m_input->GetInput())
 	{
-		m_ball = false;
 		m_output->TurnOnByTimer(TIME_COIL_ON);
 	}
 }

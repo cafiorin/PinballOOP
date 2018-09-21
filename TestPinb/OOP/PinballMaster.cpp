@@ -26,7 +26,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Multiplex.h"
 #include "SelfTest.h"
 #include "DefinesMp3.h"
-#include "Event.h"
 #include "LedControl.h"
 
 #ifdef ARDUINOLIB
@@ -36,7 +35,7 @@ http://pinballhomemade.blogspot.com.br
 PinballMaster *gPinballMaster = NULL;
 
 //-----------------------------------------------------------------------//
-void receiveMessageFromAnotherArduinoMaster(uint8_t howMany)
+void receiveMessageFromAnotherArduinoMaster(int howMany)
 //-----------------------------------------------------------------------//
 {
 	if (gPinballMaster != NULL)
@@ -250,14 +249,12 @@ bool PinballMaster::Init(StatusPinball status)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::NotifyEvent(Object *sender, Event *eventObj)
+bool PinballMaster::NotifyEvent(Object *sender, uint8_t event, uint8_t valueToSend)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("PinballMaster::NotifyEvent"));
 	#endif
-
-	int event = eventObj->GetIdEvent();
 
 	if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
@@ -272,50 +269,45 @@ bool PinballMaster::NotifyEvent(Object *sender, Event *eventObj)
 		#ifdef DEBUGMESSAGES
 		LogMessage(F("PinballMaster::NotifyEvent edge Positive"));
 		#endif
-		Input *input = dynamic_cast<Input *>(sender);
-		if (input != NULL)
+
+		// -- E D G E  P O S I T I V E --
+		switch (valueToSend)
 		{
-			int valueToSend = input->GetPortNumber();
+		case INPUT_START_BUTTON:
+		{
+			return EventStartButton(sender);
+		}
+		break;
 
-			// -- E D G E  P O S I T I V E --
-			switch (valueToSend)
-			{
-			case INPUT_START_BUTTON:
-			{
-				return EventStartButton(sender);
-			}
-			break;
+		case INPUT_MENU_BUTTON:
+		{
+			return EventMenuButton(sender);
+		}
+		break;
 
-			case INPUT_MENU_BUTTON:
-			{
-				return EventMenuButton(sender);
-			}
-			break;
+		case INPUT_UP_BUTTON:
+		{
+			return EventUpDownButton(sender, true);
+		}
+		break;
 
-			case INPUT_UP_BUTTON:
-			{
-				return EventUpDownButton(sender, true);
-			}
-			break;
-
-			case INPUT_DOWN_BUTTON:
-			{
-				return EventUpDownButton(sender, false);
-			}
-			break;
-			case INPUT_ENTER_BUTTON:
-			{
-				return EventEnterButton(sender);
-			}
-			break;
-			}
+		case INPUT_DOWN_BUTTON:
+		{
+			return EventUpDownButton(sender, false);
+		}
+		break;
+		case INPUT_ENTER_BUTTON:
+		{
+			return EventEnterButton(sender);
+		}
+		break;
+		}
 
 
-			// -- P L A Y F I E L D --
-			if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
-			{
-				return PlayfieldEvent(sender, eventObj);
-			}
+		// -- P L A Y F I E L D --
+		if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
+		{
+			return PlayfieldEvent(sender, event, valueToSend);
 		}
 
 		return true;
@@ -323,7 +315,7 @@ bool PinballMaster::NotifyEvent(Object *sender, Event *eventObj)
 	// -- D R O P  T A R G E T --
 	else if (event == EVENT_DROPTARGETDOWN)
 	{
-		return PlayfieldEvent(sender, eventObj);
+		return PlayfieldEvent(sender, event,valueToSend);
 	}
 	// -- T I M E R  I S  O V E R --
 	else if (event == EVENT_TIMEISOVER)
@@ -461,7 +453,7 @@ bool PinballMaster::EventUpDownButton(Object *sender, bool upButton)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::PlayfieldEvent(Object *sender, Event *event)
+bool PinballMaster::PlayfieldEvent(Object *sender, uint8_t event, uint8_t value)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

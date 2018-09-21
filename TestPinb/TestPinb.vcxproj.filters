@@ -108,9 +108,6 @@
     <ClInclude Include="OOP\Flag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OOP\Event.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OOP\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>

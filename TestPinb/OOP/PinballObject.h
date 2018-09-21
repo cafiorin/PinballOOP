@@ -12,7 +12,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Object.h"
 
 class Pinball;
-class Event;
 
 class PinballObject : public Object
 {

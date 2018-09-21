@@ -20,7 +20,7 @@ public:
 
 	virtual ~AccumulatorBall();
 	virtual bool Init();
-	virtual bool NotifyEvent(Object *sender, Event *);
+	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 	uint8_t GetNumberBalls() {return m_nBalls;}
 	void LanchBall();
 

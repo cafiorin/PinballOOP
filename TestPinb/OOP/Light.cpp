@@ -6,7 +6,6 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "Light.h"
-#include "Event.h"
 
 //-------------------------------------------------------//
 Light::Light(uint8_t port):Output(port)
@@ -31,14 +30,14 @@ Light::~Light()
 }
 
 //-------------------------------------------------------//
-bool Light::NotifyEvent(Object *sender, Event *event)
+bool Light::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("Light::NotifyEvent"));
 	#endif
 
-	if (event->GetIdEvent() == EVENT_TIMEISOVER)
+	if (event == EVENT_TIMEISOVER)
 	{
 		if (this->IsTurnOn())
 			TurnOff();

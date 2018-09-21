@@ -11,7 +11,6 @@ http://pinballhomemade.blogspot.com.br
 #include "defines.h"
 class HardwareSerial;
 class Pinball;
-class Event;
 
 class Object
 {
@@ -22,7 +21,7 @@ public:
 	int getId() { return m_Id; }
 
 	void LogMessage(const __FlashStringHelper *szMessage);
-	virtual bool NotifyEvent(Object *sender, Event *event);
+	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 
 	bool operator==(Object& Obj) 
 	{ 

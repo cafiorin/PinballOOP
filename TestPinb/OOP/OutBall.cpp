@@ -12,7 +12,6 @@ http://pinballhomemade.blogspot.com.br
 
 
 #include "OutBall.h"
-#include "Event.h"
 #include "Pinball.h"
 
 //-------------------------------------------------------//
@@ -84,18 +83,18 @@ bool OutBall::Init()
 }
 
 //-------------------------------------------------------//
-bool OutBall::NotifyEvent(Object *sender, Event *event)
+bool OutBall::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("OutBall::NotifyEvent"));
 	#endif
 
-	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
+	if (event == EVENT_EDGEPOSITIVE)
 	{
 		AddBall();
 
-		m_Pinball->NotifyEvent(this, &Event(EVENT_LOST_BALL));
+		m_Pinball->NotifyEvent(this, EVENT_LOST_BALL,0);
 		if (m_input1->GetInput() && !m_input2->GetInput())
 		{
 			m_output1->TurnOnByTimer();

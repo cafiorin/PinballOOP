@@ -22,7 +22,7 @@ public:
 	ReturnKickBall(uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t led);
 	virtual ~ReturnKickBall();
 	virtual bool Init();
-	virtual bool NotifyEvent(Object *sender, Event *event);
+	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 	void SetReturnBall(bool returnBallOn);
 
 protected:

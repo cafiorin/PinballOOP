@@ -30,7 +30,7 @@ public:
 	SequencerLeds(SequencerType type, long time);
 	virtual ~SequencerLeds();
 
-	virtual bool NotifyEvent(Object *sender, Event *event);
+	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 
 	bool TimerIsOver(Object *sender);
 	void AddLed(uint8_t led, bool turnOnWithNext = false);

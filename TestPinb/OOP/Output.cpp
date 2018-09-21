@@ -8,7 +8,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Output.h"
 #include "Pinball.h"
 #include "Multiplex.h"
-#include "Event.h"
 
 //-------------------------------------------------------//
 Output::Output(uint8_t port):Port(port)
@@ -81,14 +80,14 @@ void Output::TurnOnByTimer(long time)
 }
 
 //-------------------------------------------------------//
-bool Output::NotifyEvent(Object *sender, Event *event)
+bool Output::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //-------------------------------------------------------//
 {
     #ifdef DEBUGMESSAGES
     LogMessage(F("Output::NotifyEvent"));
     #endif
 
-	if (event->GetIdEvent() == EVENT_TIMEISOVER)
+	if (event == EVENT_TIMEISOVER)
 	{
 		TurnOff();
 		return true;

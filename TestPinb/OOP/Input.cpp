@@ -7,7 +7,6 @@ http://pinballhomemade.blogspot.com.br
 
 #include "Input.h"
 #include "Pinball.h"
-#include "Event.h"
 
 //-------------------------------------------------------//
 Input::Input(uint8_t portNumber, PinballObject *parent):Port(portNumber)
@@ -68,11 +67,11 @@ void Input::CheckDebounce()
 
 				if (m_parent != NULL)
 				{
-					m_parent->NotifyEvent(this, &Event(EVENT_EDGEPOSITIVE));
+					m_parent->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
 				}
 				else
 				{
-					m_Pinball->NotifyEvent(this, &Event(EVENT_EDGEPOSITIVE));
+					m_Pinball->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
 				}
 				m_Pinball->PlaySongToInput(this->m_portNumber);
 			}
@@ -84,11 +83,11 @@ void Input::CheckDebounce()
 
 				if (m_parent != NULL)
 				{
-					m_parent->NotifyEvent(this, &Event(EVENT_EDGENEGATIVE));
+					m_parent->NotifyEvent(this, EVENT_EDGENEGATIVE, m_portNumber);
 				}
 				else
 				{
-					m_Pinball->NotifyEvent(this, &Event(EVENT_EDGENEGATIVE));
+					m_Pinball->NotifyEvent(this, EVENT_EDGENEGATIVE, m_portNumber);
 				}
 			}
 

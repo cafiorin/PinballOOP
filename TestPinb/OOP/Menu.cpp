@@ -7,7 +7,6 @@ http://pinballhomemade.blogspot.com.br
 
 #include "Menu.h"
 #include "Pinball.h"
-#include "Event.h"
 
 //-------------------------------------------------------//
 Menu::Menu() : PinballObject()
@@ -114,7 +113,7 @@ void Menu::PressButtonMenu()
 	else
 	{
 		//Exit menu
-		m_Pinball->NotifyEvent(NULL, &Event(EVENT_TEST_EXIT_MENU));
+		m_Pinball->NotifyEvent(this, EVENT_TEST_EXIT_MENU,0);
 		m_isShowing = false;
 	}
 }
@@ -128,13 +127,13 @@ void Menu::PressButtonEnter()
 	{
 		if (m_backSelected && m_menuOptionSelected->GetParent() == NULL)
 		{
-			m_Pinball->NotifyEvent(NULL, &Event(EVENT_TEST_EXIT_MENU));
+			m_Pinball->NotifyEvent(this, EVENT_TEST_EXIT_MENU,0);
 			m_isShowing = false;
 		}
 		//Action
 		else if (m_subOptionSelected->GetAction() != -1 && !m_backSelected)
 		{
-			m_Pinball->NotifyEvent(this, &Event(m_subOptionSelected->GetAction()));
+			m_Pinball->NotifyEvent(this, m_subOptionSelected->GetAction(),0);
 			m_isShowing = false;
 		}
 		else

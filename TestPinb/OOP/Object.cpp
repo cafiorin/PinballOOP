@@ -35,7 +35,7 @@ void Object::LogMessage(const __FlashStringHelper *szMessage)
 }
 
 //---------------------------------------------------------------------//
-bool Object::NotifyEvent(Object *sender, Event *event)
+bool Object::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

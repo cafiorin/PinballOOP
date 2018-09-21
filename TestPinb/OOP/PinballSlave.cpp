@@ -21,13 +21,13 @@ http://pinballhomemade.blogspot.com.br
 
 #ifdef ARDUINOLIB
 #include <Wire.h>
-PinballSlave *m_PinballSlave = NULL;
+PinballSlave *gPinballSlave = NULL;
 
 //-----------------------------------------------------------------------//
-void receiveMessageFromAnotherArduinoSlave(uint8_t howMany)
+void receiveMessageFromAnotherArduinoSlave(int howMany)
 //-----------------------------------------------------------------------//
 {
-	m_PinballSlave->receiveMessageFromAnotherArduino(howMany);
+	gPinballSlave->receiveMessageFromAnotherArduino(howMany);
 }
 
 //-----------------------------------------------------------------------//
@@ -50,7 +50,7 @@ void SetupWire()
 PinballSlave::PinballSlave()
 /*---------------------------------------------------------------------*/
 {
-	m_PinballSlave = this;
+	gPinballSlave = this;
 	SetupWire();
 }
 
@@ -58,7 +58,7 @@ PinballSlave::PinballSlave()
 void PinballSlave::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 /*---------------------------------------------------------------------*/
 {
-	m_serial = serial;
+	m_Serial = serial;
 	m_Pinball = this;
 	m_MP3player = MP3player;
 }

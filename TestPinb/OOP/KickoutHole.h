@@ -19,7 +19,7 @@ public:
 	KickoutHole(uint8_t portNumberInput, uint8_t portNumberOutput);
 	virtual ~KickoutHole();
 	virtual bool Init();
-	virtual bool NotifyEvent(Object *sender, Event *event);
+	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 
 	void LanchBall();
 	bool IsThereBall() { m_input->GetInput(); }

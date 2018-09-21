@@ -6,7 +6,6 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "AccumulatorBall.h"
-#include "Event.h"
 #include "PinballObject.h"
 #include "Pinball.h"
 
@@ -81,14 +80,14 @@ bool AccumulatorBall::Init()
 
 
 //-------------------------------------------------------//
-bool AccumulatorBall::NotifyEvent(Object *sender, Event *event)
+bool AccumulatorBall::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("AccumulatorBall::NotifyEvent"));
 	#endif
 
-	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
+	if (event == EVENT_EDGEPOSITIVE)
 	{
 		bool input1 = m_input1->GetInput();
 		bool input2 = m_input2->GetInput();

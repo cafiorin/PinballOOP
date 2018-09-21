@@ -9,7 +9,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Object.h"
 #include "Pinball.h"
 #include "Utils.h"
-#include "Event.h"
 
 /*---------------------------------------------------------------------*/
 PinballObject::PinballObject() : Object()

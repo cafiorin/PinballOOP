@@ -8,7 +8,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 #include "DropTarget.h"
 #include "Output.h"
-#include "Event.h"
 #include "SequencerLeds.h"
 
 //-------------------------------------------------------//
@@ -118,14 +117,14 @@ void DropTarget::AddLeds(uint8_t led1, uint8_t led2, uint8_t led3, uint8_t led4,
 }
 
 //-------------------------------------------------------//
-bool DropTarget::NotifyEvent(Object *sender, Event *event)
+bool DropTarget::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("DropTarget::NotifyEvent"));
 	#endif
 
-	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
+	if (event == EVENT_EDGEPOSITIVE)
 	{
 		uint8_t totalTargets = 0;
 		for (uint8_t i = 0; i < m_sizeInputs; i++)
@@ -143,7 +142,7 @@ bool DropTarget::NotifyEvent(Object *sender, Event *event)
 
 		if (totalTargets == m_sizeInputs)
 		{
-			m_Pinball->NotifyEvent(this, &Event(EVENT_DROPTARGETDOWN));
+			m_Pinball->NotifyEvent(this, EVENT_DROPTARGETDOWN,0);
 			//Reset();
 			return true;
 		}

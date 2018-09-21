@@ -10,7 +10,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Output.h"
 #include "LedControl.h"
 #include "PinballObject.h"
-#include "Event.h"
 #include "Pinball.h"
 
 //-------------------------------------------------------//
@@ -43,7 +42,7 @@ Bumper::~Bumper()
 }
 
 //-------------------------------------------------------//
-bool Bumper::NotifyEvent(Object *sender, Event *event)
+bool Bumper::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -51,10 +50,10 @@ bool Bumper::NotifyEvent(Object *sender, Event *event)
 	#endif
 
 	LedControl *pLedControl = m_Pinball->GetLedControl();
-	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
+	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
-		m_Pinball->NotifyEvent(sender, event);
+		m_Pinball->NotifyEvent(sender, event, value);
 		if (pLedControl != NULL)
 		{
 			pLedControl->TurnOn(m_Led);
@@ -62,7 +61,7 @@ bool Bumper::NotifyEvent(Object *sender, Event *event)
 		m_TimerLed->Start();
 		return true;
 	}
-	else if (event->GetIdEvent() == EVENT_TIMEISOVER)
+	else if (event == EVENT_TIMEISOVER)
 	{
 		if (pLedControl != NULL)
 		{

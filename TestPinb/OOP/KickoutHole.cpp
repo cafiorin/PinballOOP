@@ -7,7 +7,6 @@ http://pinballhomemade.blogspot.com.br
 
 #include "KickoutHole.h"
 #include "Pinball.h"
-#include "Event.h"
 #include "PinballObject.h"
 
 //-------------------------------------------------------//
@@ -51,16 +50,16 @@ bool KickoutHole::Init()
 }
 
 //-------------------------------------------------------//
-bool KickoutHole::NotifyEvent(Object *sender, Event *event)
+bool KickoutHole::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("KickoutHole::NotifyEvent"));
 	#endif
 
-	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
+	if (event == EVENT_EDGEPOSITIVE)
 	{
-		m_Pinball->NotifyEvent(this, event);
+		m_Pinball->NotifyEvent(this, event, value);
 		return true;
 	}
 	return false;

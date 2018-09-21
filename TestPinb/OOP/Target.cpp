@@ -10,7 +10,6 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 #include "Input.h"
 #include "Timer.h"
-#include "Event.h"
 #include "LedControl.h"
 
 //-------------------------------------------------------//
@@ -58,7 +57,7 @@ bool Target::Init()
 }
 
 //-------------------------------------------------------//
-bool Target::NotifyEvent(Object *sender, Event *event)
+bool Target::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -66,7 +65,7 @@ bool Target::NotifyEvent(Object *sender, Event *event)
 	#endif
 
 	LedControl *ledControl = m_Pinball->GetLedControl();
-	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
+	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_timerBlinkLed->Disable();
 		if (ledControl != NULL)
@@ -74,10 +73,10 @@ bool Target::NotifyEvent(Object *sender, Event *event)
 			ledControl->TurnOn(m_led);
 		}
 		m_hit = true;
-		m_Pinball->NotifyEvent(this, event);
+		m_Pinball->NotifyEvent(this, event, value);
 		return true;
 	}
-	else if (event->GetIdEvent() == EVENT_TIMEISOVER)
+	else if (event == EVENT_TIMEISOVER)
 	{
 		if (m_Pinball->IsPlaying())
 		{

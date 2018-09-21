@@ -7,7 +7,6 @@ http://pinballhomemade.blogspot.com.br
 
 #include "Timer.h"
 #include "Pinball.h"
-#include "Event.h"
 
 //-------------------------------------------------------//
 Timer::Timer(long time, PinballObject *parent, TimerType type) : PinballObject()
@@ -92,11 +91,11 @@ void Timer::Loop()
 		{
 			if (m_parent != NULL)
 			{
-				m_parent->NotifyEvent(this, &Event(EVENT_TIMEISOVER));
+				m_parent->NotifyEvent(this, EVENT_TIMEISOVER,0);
 			}
 			else
 			{
-				m_Pinball->NotifyEvent(this, &Event(EVENT_TIMEISOVER));
+				m_Pinball->NotifyEvent(this, EVENT_TIMEISOVER,0);
 			}
 
 			if (m_type == TimerType::once)

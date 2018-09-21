@@ -10,7 +10,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 #include "PinballObject.h"
 #include "DefinesMp3.h"
-#include "Event.h"
 
 //-------------------------------------------------------//
 SlingShot::SlingShot(uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberOutput) : PinballObject()
@@ -58,17 +57,17 @@ bool SlingShot::Init()
 }
 
 //-------------------------------------------------------//
-bool SlingShot::NotifyEvent(Object *sender, Event *event)
+bool SlingShot::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("Slingshot::NotifyEvent"));
 	#endif
 
-	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
+	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
-		m_Pinball->NotifyEvent(sender, event);
+		m_Pinball->NotifyEvent(sender, event, value);
 		return true;
 	}
 	return false;

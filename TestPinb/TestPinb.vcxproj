@@ -150,7 +150,6 @@
     <ClInclude Include="OOP\defines.h" />
     <ClInclude Include="OOP\DefinesMp3.h" />
     <ClInclude Include="OOP\DropTarget.h" />
-    <ClInclude Include="OOP\Event.h" />
     <ClInclude Include="OOP\Flag.h" />
     <ClInclude Include="OOP\HardwareSerial.h" />
     <ClInclude Include="OOP\ht1632pinball.h" />

@@ -26,7 +26,7 @@ public:
 	void TurnOnByTimer(long time=TIME_COIL_ON);
 	void TurnOff();
 	virtual bool Init();
-	virtual bool NotifyEvent(Object *sender, Event *event);
+	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 
 protected:
 	bool m_turnOn;

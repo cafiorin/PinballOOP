@@ -22,7 +22,7 @@ public:
 	DropTarget(uint8_t portNumberInput1, uint8_t portNumberInput2, uint8_t portNumberInput3, uint8_t portNumberInput4, uint8_t portNumberInput5, uint8_t portNumberOutput);
 	virtual ~DropTarget();
 	virtual bool Init();
-	virtual bool NotifyEvent(Object *sender, Event *event);
+	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 
 	void Reset();
 	bool IsAllTargets() { return m_AllTargets; }

@@ -10,7 +10,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Timer.h"
 #include "Output.h"
 #include "DefinesMp3.h"
-#include "Event.h"
 #include "LedControl.h"
 
 //---------------------------------------------------------------------//
@@ -354,7 +353,7 @@ void SelfTest::FinishTest()
 }
 
 //---------------------------------------------------------------------//
-bool SelfTest::NotifyEvent(Object *sender, Event *event)
+bool SelfTest::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -362,7 +361,7 @@ bool SelfTest::NotifyEvent(Object *sender, Event *event)
 	#endif
 
 	// -- T I M E R  I S  O V E R --
-	if (event->GetIdEvent() == EVENT_TIMEISOVER)
+	if (event == EVENT_TIMEISOVER)
 	{
 		DoTest();
 		return true;

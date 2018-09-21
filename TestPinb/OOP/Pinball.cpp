@@ -56,9 +56,11 @@ Pinball::~Pinball()
 void Pinball::playSong(char song[], bool priority /*default=true*/)
 //-----------------------------------------------------------------------//
 {
+	#ifdef DOS
 	char szMsg[30]; //12 + 10 + 1
 	sprintf(szMsg, "Play song:%s", song);
 	LogMessage(szMsg);
+	#endif
 
 	#ifdef ARDUINOLIB
 	if (song != NULL && m_MP3player != NULL)
@@ -71,9 +73,11 @@ void Pinball::playSong(char song[], bool priority /*default=true*/)
 		int8_t result = m_MP3player->playMP3(song);
 		if (result != 0)
 		{
+			#ifdef DOS
 			char szMsg[50];
 			sprintf(szMsg, "Error code: %d when trying to play track", result);
 			LogMessage(szMsg);
+			#endif	
 		}
 	}
 	#endif // ARDUINOLIB

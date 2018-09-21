@@ -20,7 +20,7 @@ public:
 	SelfTest();
 	virtual ~SelfTest();
 
-	virtual bool NotifyEvent(Object *sender, Event *event);
+	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 
 	void IncrementTestValue();
 	void DecrementTestValue();

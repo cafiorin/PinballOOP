@@ -10,7 +10,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 #include "PinballObject.h"
 #include "Timer.h"
-#include "Event.h"
 #include "LedControl.h"
 
 // turnOn1by1 : Turn on and turn off last
@@ -169,7 +168,7 @@ void SequencerLeds::End()
 }
 
 //---------------------------------------------------------------------//
-bool SequencerLeds::NotifyEvent(Object *sender, Event *event)
+bool SequencerLeds::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -177,7 +176,7 @@ bool SequencerLeds::NotifyEvent(Object *sender, Event *event)
 	#endif
 
 	// -- T I M E R  I S  O V E R --
-	if (event->GetIdEvent() == EVENT_TIMEISOVER)
+	if (event == EVENT_TIMEISOVER)
 	{
 		return TimerIsOver(sender);
 	}

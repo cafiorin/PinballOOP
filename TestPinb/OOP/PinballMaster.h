@@ -48,7 +48,7 @@ public:
 	void clearDisplay(uint8_t line=0);
 	void printText(char *text1, char *text2, char font);
 
-	bool NotifyEvent(Object *sender, Event *event);
+	bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 	bool Init(StatusPinball status);
 	bool Loop(uint8_t value);
 	void PlaySongToInput(uint8_t portNumber);
@@ -83,7 +83,7 @@ private :
 	bool EventEnterButton(Object *sender);
 	bool EventMenuButton(Object *sender);
 	bool TimerIsOver(Object *sender);
-	bool PlayfieldEvent(Object *sender, Event *event);
+	bool PlayfieldEvent(Object *sender, uint8_t event, uint8_t value);
 	bool EventUpDownButton(Object *sender,bool upButton);
 	bool SetupTest(uint8_t event);
 

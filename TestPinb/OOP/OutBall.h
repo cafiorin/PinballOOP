@@ -21,7 +21,7 @@ public:
 	OutBall(uint8_t portNumberInput1, uint8_t portNumberOutput1, uint8_t portNumberInput2, uint8_t portNumberOutput2);
 	virtual ~OutBall();
 	virtual bool Init();
-	virtual bool NotifyEvent(Object *sender, Event *event);
+	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 
 	void LanchBall();
 	uint8_t GetBalls() { return m_nBalls; }

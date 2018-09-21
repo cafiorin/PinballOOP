@@ -11,7 +11,6 @@ http://pinballhomemade.blogspot.com.br
 #include "Input.h"
 #include "Output.h"
 #include "Timer.h"
-#include "Event.h"
 #include "LedControl.h"
 
 //-------------------------------------------------------//
@@ -84,23 +83,23 @@ void ReturnKickBall::SetReturnBall(bool returnBallOn)
 }
 
 //-------------------------------------------------------//
-bool ReturnKickBall::NotifyEvent(Object *sender, Event *event)
+bool ReturnKickBall::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("ReturnKickBall::NotifyEvent"));
 	#endif
 
-	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
+	if (event == EVENT_EDGEPOSITIVE)
 	{
 		if (m_returnBallOn)
 		{
 			m_output->TurnOnByTimer(TIME_COIL_ON);
 		}
-		m_Pinball->NotifyEvent(sender, event);
+		m_Pinball->NotifyEvent(sender, event, value);
 		return true;
 	}
-	else if (event->GetIdEvent() == EVENT_TIMEISOVER)
+	else if (event == EVENT_TIMEISOVER)
 	{
 		if (m_Pinball->IsPlaying())
 		{

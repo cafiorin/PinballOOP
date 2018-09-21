@@ -49,7 +49,7 @@ public:
 	void clearDisplay(uint8_t line=0);
 	void printText(char *text1, char *text2, char font);
 
-	bool NotifyEvent(PinballObject *sender, Event *event);
+	bool NotifyEvent(Object *sender, Event *event);
 	bool Init(StatusPinball status);
 	bool Loop(uint8_t value);
 	void PlaySongToInput(uint8_t portNumber);
@@ -64,10 +64,8 @@ public:
 	void GetNewBall();
 	void PlayerLostBall();
 	void NextPlayer();
-	void CreateStages();
 
 	Menu *GetMenu() { return m_Menu; }
-	SelfTest *GetSelfTest() { return m_SelfTest; }
 	OutBall *GetOutBall() { return m_OutBall; }
 	Output *GetTurnFlipperOn() { return m_TurnFlipperOn; }
 	KickoutHole *GetKickoutHole() { return m_Hole; }
@@ -78,16 +76,17 @@ public:
 
 //Events
 private :
-	void CreateObjects();
-	bool EventStartButton(PinballObject *sender);
-	bool EventEnterButton(PinballObject *sender);
-	bool EventMenuButton(PinballObject *sender);
-	bool TimerIsOver(PinballObject *sender);
-	bool PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend);
-	bool EventUpDownButton(PinballObject *sender,bool upButton);
-	bool SetupTest(uint8_t event);
 	uint8_t  m_nBallByPlayer;
+
 	void SetBallsByPlayer(uint8_t balls) { m_nBallByPlayer = balls; }
+	void CreateObjects();
+	bool EventStartButton(Object *sender);
+	bool EventEnterButton(Object *sender);
+	bool EventMenuButton(Object *sender);
+	bool TimerIsOver(Object *sender);
+	bool PlayfieldEvent(Object *sender, Event *event);
+	bool EventUpDownButton(Object *sender,bool upButton);
+	bool SetupTest(uint8_t event);
 
 protected:
 	Output *m_GI;

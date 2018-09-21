@@ -28,7 +28,7 @@ void Object::LogMessage(const __FlashStringHelper *szMessage)
 	if (m_Serial != NULL)
 	{
 		m_Serial->print(m_Id);
-		m_Serial->print(F(":"));
+		m_Serial->print(F(" : "));
 		m_Serial->println(szMessage);
 		m_Serial->flush();
 	}
@@ -39,7 +39,7 @@ bool Object::NotifyEvent(Object *sender, Event *event)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("PinballObject::NotifyEvent"));
+	LogMessage(F("Object::NotifyEvent"));
 	#endif
 
 	return false;

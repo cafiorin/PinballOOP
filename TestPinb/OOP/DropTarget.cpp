@@ -69,6 +69,7 @@ DropTarget::~DropTarget()
 	LogMessage(F("DropTarget Destructor"));
 	#endif
 
+	/*
 	delete m_SequencerLeds;
 
 	for (uint8_t i = 0; i < m_sizeInputs; i++)
@@ -77,6 +78,7 @@ DropTarget::~DropTarget()
 	} 
 
 	delete m_output;
+	*/
 }
 
 //-------------------------------------------------------//

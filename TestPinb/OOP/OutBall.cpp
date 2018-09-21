@@ -38,11 +38,12 @@ OutBall::~OutBall()
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage(F("OutBall Destructor"));
 	#endif
-	
+	/*
 	delete m_input1;
 	delete m_input2;
 	delete m_output1;
 	delete m_output2;
+	*/
 }
 
 //-------------------------------------------------------//

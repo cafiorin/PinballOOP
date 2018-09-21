@@ -55,10 +55,11 @@ ReturnKickBall::~ReturnKickBall()
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage(F("ReturnKickBall Destructor"));
 	#endif
-	
+	/*
 	delete m_timerBlinkLed;
 	delete m_input1;
 	delete m_output;
+	*/
 }
 
 //-------------------------------------------------------//

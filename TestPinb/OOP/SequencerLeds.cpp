@@ -39,7 +39,7 @@ SequencerLeds::~SequencerLeds()
 	LogMessage(F("SequencerLeds Destructor"));
 	#endif
 
-	delete m_timerSeq;
+	//delete m_timerSeq;
 }
 
 
@@ -178,7 +178,7 @@ bool SequencerLeds::NotifyEvent(Object *sender, Event *event)
 	// -- T I M E R  I S  O V E R --
 	if (event->GetIdEvent() == EVENT_TIMEISOVER)
 	{
-		return TimerIsOver((PinballObject *) sender);
+		return TimerIsOver(sender);
 	}
 
 	return false;
@@ -186,7 +186,7 @@ bool SequencerLeds::NotifyEvent(Object *sender, Event *event)
 
 
 //---------------------------------------------------------------------//
-bool SequencerLeds::TimerIsOver(PinballObject *sender)
+bool SequencerLeds::TimerIsOver(Object *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

@@ -109,41 +109,13 @@ void Menu::PressButtonMenu()
 		m_subOptionSelected = m_pMenu->GetChildren()[0];
 		m_backSelected = false;
 
-		PrintMenu(ButtonPressed::start);
+		PrintMenu(ButtonPressed::menu);
 	}
 	else
 	{
 		//Exit menu
-		if (m_backSelected && m_menuOptionSelected->GetParent() == NULL)
-		{
-			m_Pinball->NotifyEvent(NULL, &Event(EVENT_TEST_EXIT_MENU));
-			m_isShowing = false;
-		}
-		//Action
-		else if (m_subOptionSelected->GetAction() != -1 && !m_backSelected)
-		{
-			m_Pinball->NotifyEvent(NULL, &Event(m_subOptionSelected->GetAction()));
-			m_isShowing = false;
-		}
-		else
-		{
-			//Option Pressed
-			if (!m_backSelected)
-			{
-				m_menuOptionSelected = m_subOptionSelected;
-				m_subOption = 0;
-				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
-			}
-			else
-			{
-				//Pressed Back
-				m_menuOptionSelected = m_menuOptionSelected->GetParent();
-				m_subOption = 0;
-				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
-				m_backSelected = false;
-			}
-			PrintMenu(ButtonPressed::start);
-		}
+		m_Pinball->NotifyEvent(NULL, &Event(EVENT_TEST_EXIT_MENU));
+		m_isShowing = false;
 	}
 }
 
@@ -152,22 +124,11 @@ void Menu::PressButtonMenu()
 void Menu::PressButtonEnter()
 //-------------------------------------------------------//
 {
-	if (!m_isShowing)
+	if (m_isShowing)
 	{
-		m_isShowing = true;
-		m_menuOptionSelected = m_pMenu;
-		m_subOption = 0;
-		m_subOptionSelected = m_pMenu->GetChildren()[0];
-		m_backSelected = false;
-
-		PrintMenu(ButtonPressed::start);
-	}
-	else
-	{
-		//Exit menu
 		if (m_backSelected && m_menuOptionSelected->GetParent() == NULL)
 		{
-			m_Pinball->NotifyEvent(this, &Event(EVENT_TEST_EXIT_MENU));
+			m_Pinball->NotifyEvent(NULL, &Event(EVENT_TEST_EXIT_MENU));
 			m_isShowing = false;
 		}
 		//Action
@@ -193,7 +154,7 @@ void Menu::PressButtonEnter()
 				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
 				m_backSelected = false;
 			}
-			PrintMenu(ButtonPressed::start);
+			PrintMenu(ButtonPressed::menu);
 		}
 	}
 }
@@ -232,7 +193,7 @@ bool Menu::PressUpDownButton(bool upButton)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_PinballMaster->LogMessage(F("Menu::PressButton"));
+	m_Pinball->LogMessage(F("Menu::PressButton"));
 	#endif
 
 	if (upButton)

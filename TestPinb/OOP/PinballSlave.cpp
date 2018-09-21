@@ -59,6 +59,7 @@ void PinballSlave::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 /*---------------------------------------------------------------------*/
 {
 	m_serial = serial;
+	m_Pinball = this;
 	m_MP3player = MP3player;
 }
 
@@ -69,9 +70,9 @@ void PinballSlave::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 PinballSlave::PinballSlave(HardwareSerial *serial) : Pinball()
 /*---------------------------------------------------------------------*/
 {
-	m_Pinball = NULL;
 	m_Status = StatusPinball::initializing;
 	m_Serial = serial;
+	m_Pinball = this;
 
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage(F("PinballSlave Constructor"));

@@ -43,12 +43,14 @@ AccumulatorBall::~AccumulatorBall()
 	LogMessage(F("AccumulatorBall Destructor"));
 	#endif
 	
+	/*
 	delete m_input1;
 	delete m_input2;
 	delete m_input3;
 	delete m_input4;
 
 	delete m_output;
+	*/
 }
 
 //-------------------------------------------------------//

@@ -35,9 +35,11 @@ Bumper::~Bumper()
 	LogMessage(F("Bumper Destructor"));
 	#endif
 
+	/*
 	delete m_input;
 	delete m_output;
 	delete m_TimerLed;
+	*/
 }
 
 //-------------------------------------------------------//

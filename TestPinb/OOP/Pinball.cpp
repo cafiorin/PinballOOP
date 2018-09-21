@@ -29,6 +29,17 @@ Pinball::Pinball() : Object()
 	m_Multiplex = NULL;
 	m_Status = StatusPinball::initializing;
 	m_enableSfx = true;
+
+	for (uint8_t ch = 0; ch < MAX_INPUTCHANNELS; ch++)
+	{
+		m_Inputs[ch] = NULL;
+	}
+
+	for (uint8_t ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
+	{
+		m_Outputs[ch] = NULL;
+	}
+
 }
 
 /*---------------------------------------------------------------------*/

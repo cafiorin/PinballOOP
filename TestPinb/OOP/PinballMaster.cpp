@@ -103,18 +103,17 @@ PinballMaster::PinballMaster(HardwareSerial *serial) : Pinball()
 PinballMaster::~PinballMaster()
 /*---------------------------------------------------------------------*/
 {
-#ifdef DEBUGMESSAGESCREATION
+	#ifdef DEBUGMESSAGESCREATION
 	LogMessage(F("PinballMaster Destructor"));
-#endif
+	#endif
 
-	for (uint8_t i = 0; i < m_PinballObjs.size(); i++)
+	for (uint8_t i = m_PinballObjs.size()-1; i >=0 ; i--)
 	{
 		delete m_PinballObjs[i];
 	}
 }
 
 //---------------------------------------------------------------------//
-//Create all objects to Arduino Master
 void PinballMaster::InitVars()
 //---------------------------------------------------------------------//
 {
@@ -132,23 +131,12 @@ void PinballMaster::InitVars()
 	m_SelfTest = NULL;
 	m_Menu = NULL;
 	m_TimerToShowPlayers = NULL;
-	m_Multiplex = NULL;
 	m_OutBall = NULL;
 	m_Hole = NULL;
 	m_TurnFlipperOn = NULL;
 	m_DropTarget5 = NULL;
 	m_DropTarget3 = NULL;
 	m_GI = NULL;
-
-	for (uint8_t ch = 0; ch < MAX_INPUTCHANNELS; ch++)
-	{
-		m_Inputs[ch] = NULL;
-	}
-
-	for (uint8_t ch = 0; ch < MAX_OUTPUTCHANNELS; ch++)
-	{
-		m_Outputs[ch] = NULL;
-	}
 }
 
 
@@ -233,15 +221,6 @@ void PinballMaster::CreateObjects()
 }
 
 //---------------------------------------------------------------------//
-void PinballMaster::CreateStages()
-//---------------------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	LogMessage(F("PinballMaster::CreateStages"));
-	#endif
-}
-
-//---------------------------------------------------------------------//
 bool PinballMaster::Init(StatusPinball status)
 //---------------------------------------------------------------------//
 {
@@ -268,7 +247,7 @@ bool PinballMaster::Init(StatusPinball status)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::NotifyEvent(PinballObject *sender, Event *eventObj)
+bool PinballMaster::NotifyEvent(Object *sender, Event *eventObj)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -332,7 +311,7 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, Event *eventObj)
 			// -- P L A Y F I E L D --
 			if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
 			{
-				return PlayfieldEvent(sender, event, valueToSend);
+				return PlayfieldEvent(sender, eventObj);
 			}
 		}
 
@@ -341,7 +320,7 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, Event *eventObj)
 	// -- D R O P  T A R G E T --
 	else if (event == EVENT_DROPTARGETDOWN)
 	{
-		//TODO: return PlayfieldEvent(sender, event, valueToSend);
+		return PlayfieldEvent(sender, eventObj);
 	}
 	// -- T I M E R  I S  O V E R --
 	else if (event == EVENT_TIMEISOVER)
@@ -358,7 +337,7 @@ bool PinballMaster::NotifyEvent(PinballObject *sender, Event *eventObj)
 
 //Start Button pressed
 //---------------------------------------------------------------------//
-bool PinballMaster::EventStartButton(PinballObject *sender)
+bool PinballMaster::EventStartButton(Object *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -397,7 +376,7 @@ bool PinballMaster::EventStartButton(PinballObject *sender)
 
 //Menu Button pressed
 //---------------------------------------------------------------------//
-bool PinballMaster::EventMenuButton(PinballObject *sender)
+bool PinballMaster::EventMenuButton(Object *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -423,17 +402,15 @@ bool PinballMaster::EventMenuButton(PinballObject *sender)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::EventEnterButton(PinballObject *sender)
+bool PinballMaster::EventEnterButton(Object *sender)
 //---------------------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	LogMessage(F("PinballMaster::EventMenuButton"));
-#endif
+	#endif
 
-
-	if (m_Status == StatusPinball::attractmode || m_Status == StatusPinball::menusetup)
+	if (m_Status == StatusPinball::menusetup)
 	{
-		m_Status = StatusPinball::menusetup;
 		if (m_Menu != NULL)
 		{
 			m_Menu->PressButtonEnter();
@@ -445,12 +422,12 @@ bool PinballMaster::EventEnterButton(PinballObject *sender)
 		SetupTest(EVENT_TEST_EXIT_MENU);
 	}
 
+
 	return false;
 }
 
-
 //---------------------------------------------------------------------//
-bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
+bool PinballMaster::EventUpDownButton(Object *sender, bool upButton)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -481,7 +458,7 @@ bool PinballMaster::EventUpDownButton(PinballObject *sender, bool upButton)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t valueToSend)
+bool PinballMaster::PlayfieldEvent(Object *sender, Event *event)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -490,14 +467,14 @@ bool PinballMaster::PlayfieldEvent(PinballObject *sender, uint8_t event, uint8_t
 
 	if (m_Status == StatusPinball::playingmode && m_playerPlaying> 0 && m_playerPlaying < MAX_PLAYERS)
 	{
-		//m_Players[m_playerPlaying]->NotifyEvent(sender, event, valueToSend);
+		//TODO: m_Players[m_playerPlaying]->NotifyEvent(sender, event, valueToSend);
 	}
 
 	return true;
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::TimerIsOver(PinballObject *sender)
+bool PinballMaster::TimerIsOver(Object *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -721,9 +698,9 @@ void PinballMaster::PlaySongToInput(uint8_t portNumber)
 		switch (portNumber)
 		{
 		case INPUT_SW_OUTBALL1:
+		case INPUT_SW_OUTBALL2:
 			playSong(MP3_OUTBALL);
 			break;
-		//case INPUT_SW_OUTBALL2:
 
 		case INPUT_SW_SLINGSHOT_LEFT1:
 		case INPUT_SW_SLINGSHOT_LEFT2:

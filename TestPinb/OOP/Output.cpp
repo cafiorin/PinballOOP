@@ -30,7 +30,7 @@ Output::~Output()
 	LogMessage(F("Output Destructor"));
 	#endif
 
-	delete m_TimerOn;
+	//delete m_TimerOn;
 }
 
 //-------------------------------------------------------//

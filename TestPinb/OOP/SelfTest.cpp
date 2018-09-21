@@ -31,7 +31,7 @@ SelfTest::~SelfTest()
 	LogMessage(F("SelfTest Destructor"));
 	#endif
 
-	delete m_timerAuto;
+	//delete m_timerAuto;
 }
 
 //---------------------------------------------------------------------//
@@ -111,7 +111,7 @@ void SelfTest::DecrementTestValue()
 
 
 //---------------------------------------------------------------------//
-bool SelfTest::EventUpDownButton(PinballObject *sender, bool upButton)
+bool SelfTest::EventUpDownButton(Object *sender, bool upButton)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

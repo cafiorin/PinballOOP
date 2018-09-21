@@ -123,16 +123,11 @@ uint8_t main()
 	HardwareSerial *serial = new HardwareSerial();
 	PinballMaster *pPinballMaster = new PinballMaster(serial);
 
-	HardwareSerial *serial2 = new HardwareSerial(100);
-	PinballSlave *pPinballSlave = new PinballSlave(serial2);
-
 	HardwareSerial *ledPrint = new HardwareSerial(100, 1);
 
-	pPinballSlave->SetPinballMaster(pPinballMaster);
-
 	HardwareSerial *inputs = new HardwareSerial(1, 30);
-	inputs->println("Menu/Up/Down   - 0,1,2");
-	inputs->println("=>Start Button - 3");
+	inputs->println("Menu/Up/Down/Enter - 0,1,2,3");
+	inputs->println("=>Start Button - 4");
 	inputs->println("OUTBALL1/2     - 4,5");
 	inputs->println("LAUNCHBALL     - 6");
 	inputs->println("SLINGSHOT L1/L2- 7,8");
@@ -220,12 +215,12 @@ uint8_t main()
 			PrintReadKey();
 		}
 
-		pPinballSlave->Loop(0);
+		//pPinballSlave->Loop(0);
 
 	} while (ch != -2);
 
 	delete  pPinballMaster;
-	delete  pPinballSlave;
+	//delete  pPinballSlave;
 	delete ledPrint;
     return 0;
 }

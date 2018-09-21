@@ -27,7 +27,7 @@ Light::~Light()
 	LogMessage(F("Light Destructor"));
 	#endif
 
-	delete m_timerBlinking;
+	//delete m_timerBlinking;
 }
 
 //-------------------------------------------------------//

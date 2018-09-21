@@ -32,7 +32,7 @@ public:
 
 	virtual bool NotifyEvent(Object *sender, Event *event);
 
-	bool TimerIsOver(PinballObject *sender);
+	bool TimerIsOver(Object *sender);
 	void AddLed(uint8_t led, bool turnOnWithNext = false);
 	void RemoveLed(uint8_t led);
 	void Start();

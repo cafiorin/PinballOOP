@@ -34,9 +34,11 @@ SlingShot::~SlingShot()
 	LogMessage(F("SlingShot Destructor"));
 	#endif
 
+	/*
 	delete m_input1;
 	delete m_input2;
 	delete m_output;
+	*/
 }
 
 //-------------------------------------------------------//

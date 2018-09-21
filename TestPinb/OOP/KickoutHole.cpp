@@ -18,8 +18,10 @@ KickoutHole::KickoutHole(uint8_t portNumberInput, uint8_t portNumberOutput) : Pi
 	LogMessage(F("KickoutHole Constructor"));
 	#endif
 
+	
 	m_input = new Input(portNumberInput,this);
 	m_output = new Output(portNumberOutput);
+	
 }
 
 //-------------------------------------------------------//
@@ -30,8 +32,10 @@ KickoutHole::~KickoutHole()
 	LogMessage(F("KickoutHole Destructor"));
 	#endif
 	
+	/*
 	delete m_input;
 	delete m_output;
+	*/
 }
 
 //-------------------------------------------------------//

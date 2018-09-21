@@ -25,7 +25,7 @@ public:
 	void IncrementTestValue();
 	void DecrementTestValue();
 
-	bool EventUpDownButton(PinballObject *sender, bool upButton);
+	bool EventUpDownButton(Object *sender, bool upButton);
 	void StartTest(uint8_t event);
 	void DoTest();
 	void DoTestLed();

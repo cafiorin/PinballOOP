@@ -34,8 +34,10 @@ Target::~Target()
 	LogMessage(F("Target Destructor"));
 	#endif
 	
+	/*
 	delete m_timerBlinkLed;
 	delete m_input;
+	*/
 }
 
 //-------------------------------------------------------//

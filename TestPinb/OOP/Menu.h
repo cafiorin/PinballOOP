@@ -14,7 +14,7 @@ http://pinballhomemade.blogspot.com.br
 
 enum ButtonPressed
 {
-	start,
+	menu,
 	up,
 	down,
 	enter

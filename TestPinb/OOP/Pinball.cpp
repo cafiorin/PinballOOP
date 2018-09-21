@@ -27,6 +27,7 @@ Pinball::Pinball() : Object()
 /*---------------------------------------------------------------------*/
 {
 	m_Multiplex = NULL;
+	m_LedControl = NULL;
 	m_Status = StatusPinball::initializing;
 	m_enableSfx = true;
 

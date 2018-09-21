@@ -38,6 +38,7 @@ class Output;
 class SFEMP3Shield;
 class Object;
 class Multiplex;
+class LedControl;
 
 class Pinball : public Object
 {
@@ -65,6 +66,7 @@ public:
 	}
 
 	Multiplex *GetMultiplex() { return m_Multiplex; }
+	LedControl *GetLedControl() { return m_LedControl; }
 
 	void playSong(char song[], bool priority=true);
 	void ChangeVolume(bool plus, uint8_t delta = 5);
@@ -94,6 +96,7 @@ protected:
 	Output *m_Outputs[MAX_OUTPUTCHANNELS];
 
 	Multiplex *m_Multiplex;
+	LedControl *m_LedControl;
 };
 
 #endif

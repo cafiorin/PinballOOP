@@ -11,6 +11,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Output.h"
 #include "DefinesMp3.h"
 #include "Event.h"
+#include "LedControl.h"
 
 //---------------------------------------------------------------------//
 SelfTest::SelfTest() : PinballObject()
@@ -245,23 +246,22 @@ void SelfTest::DoTestLed()
 	LogMessage(F("SelfTest::DoTestLed"));
 	#endif
 
-	//LedControl *ledControl = m_Pinball->GetLedControl();
-
 	char szLed[5];
 	sprintf(szLed, "%d", m_startTestValue);
 	m_Pinball->printText("Led:", szLed, 0);
 
-	//if (ledControl != NULL)
-	//{
-	//	if (ledControl->IsTurn(m_startTestValue))
-	//	{
-	//		ledControl->TurnOff(m_startTestValue);
-	//	}
-	//	else
-	//	{
-	//		ledControl->TurnOn(m_startTestValue);
-	//	}
-	//}
+	LedControl *ledControl = m_Pinball->GetLedControl();
+	if (ledControl != NULL)
+	{
+		if (ledControl->IsTurn(m_startTestValue))
+		{
+			ledControl->TurnOff(m_startTestValue);
+		}
+		else
+		{
+			ledControl->TurnOn(m_startTestValue);
+		}
+	}
 }
 
 //---------------------------------------------------------------------//
@@ -340,14 +340,14 @@ void SelfTest::FinishTest()
 		case EVENT_TEST_LED_1BY1:
 		case EVENT_TEST_LED_AUTO:
 		{
-			//LedControl *ledControl = m_Pinball->GetLedControl();
-			//if (ledControl != NULL)
-			//{
-			//	for (uint8_t i = 0; i < MAX_LEDS; i++)
-			//	{
-			//		ledControl->TurnOff(i);
-			//	}
-			//}
+			LedControl *ledControl = m_Pinball->GetLedControl();
+			if (ledControl != NULL)
+			{
+				for (uint8_t i = 0; i < MAX_LEDS; i++)
+				{
+					ledControl->TurnOff(i);
+				}
+			}
 		}
 		break;
 	}

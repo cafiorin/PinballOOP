@@ -27,6 +27,7 @@ http://pinballhomemade.blogspot.com.br
 #include "SelfTest.h"
 #include "DefinesMp3.h"
 #include "Event.h"
+#include "LedControl.h"
 
 #ifdef ARDUINOLIB
 #include <Wire.h>
@@ -149,9 +150,11 @@ void PinballMaster::CreateObjects()
 	LogMessage(F("PinballMaster::CreateObjects"));
 	#endif
 
+	m_Multiplex = new Multiplex(23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
+	m_LedControl = new LedControl();
+
 	m_Menu = new Menu();
 	m_SelfTest = new SelfTest();
-	m_Multiplex = new Multiplex(23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
 
 	m_TimerToShowPlayers = new Timer(1000, NULL, TimerType::continuous);
 

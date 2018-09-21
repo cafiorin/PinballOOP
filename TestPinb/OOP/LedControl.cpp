@@ -16,16 +16,16 @@ http://pinballhomemade.blogspot.com.br
 
 
 //-----------------------------------------------------------
-LedControl::LedControl(PinballMaster *pinball):PinballObject("LedControl",pinball)
+LedControl::LedControl():PinballObject()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("LedControl Constructor");
+	LogMessage(("LedControl Constructor"));
 	#endif
 
-	m_enabled = false;
+	m_Enabled = false;
 	
-	if (m_enabled)
+	if (m_Enabled)
 	{
 		#ifdef ARDUINOLIB
 		FastLED.addLeds<WS2812B, DATA_STRIP_LED, GRB>(m_leds, LED_LAST);
@@ -43,7 +43,7 @@ LedControl::~LedControl()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Debug("LedControl Destructor");
+	LogMessage(F("LedControl Destructor"));
 	#endif
 
 }
@@ -53,20 +53,20 @@ void LedControl::TurnAll(bool turnOn)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	Debug("LedControl::TurnOnAll");
+	LogMessage(F("LedControl::TurnOnAll"));
 	#endif
 
 	for (uint8_t i = LED_FIRST; i <= LED_LAST; i++)
 	{
 		m_ledsValue[i] = turnOn;
-		if (m_enabled)
+		if (m_Enabled)
 		{
 			#ifdef ARDUINOLIB
 			m_leds[i] = turnOn ? CRGB::White : CRGB::Black;
 			#endif
 		}
 	}
-	if (m_enabled)
+	if (m_Enabled)
 	{
 		#ifdef ARDUINOLIB
 		FastLED.show();
@@ -80,14 +80,14 @@ void LedControl::TurnOn(uint8_t Led)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	Debug("LedControl::TurnOn");
+	LogMessage(F("LedControl::TurnOn"));
 	#endif
 	
 	if (Led < NUM_LEDS)
 	{
 		m_ledsValue[Led] = true;
 
-		if (m_enabled)
+		if (m_Enabled)
 		{
 			#ifdef ARDUINOLIB
 			m_leds[Led] = CRGB::White;
@@ -102,13 +102,13 @@ void LedControl::TurnOff(uint8_t Led)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	Debug("LedControl::TurnOff");
+	LogMessage(F("LedControl::TurnOff"));
 	#endif
 	if (Led < NUM_LEDS)
 	{
 		m_ledsValue[Led] = false;
 
-		if (m_enabled)
+		if (m_Enabled)
 		{
 			#ifdef ARDUINOLIB
 			m_leds[Led] = CRGB::Black;
@@ -127,7 +127,7 @@ void LedControl::AttractModeLoop()
 	Debug("LedControl::AttractModeLoop");
 	#endif
 
-	if (m_enabled)
+	if (m_Enabled)
 	{
 		#ifdef ARDUINOLIB
 		static uint8_t hue;

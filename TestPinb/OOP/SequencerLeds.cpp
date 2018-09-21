@@ -11,6 +11,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 #include "Timer.h"
 #include "Event.h"
+#include "LedControl.h"
 
 // turnOn1by1 : Turn on and turn off last
 // all : Turn on all (turn off all in the last)
@@ -53,11 +54,11 @@ void SequencerLeds::AddLed(uint8_t led, bool turnOnWithNext)
 
 	if (m_count < MAXLIGHTS)
 	{
-		//LedControl *ledControl = m_Pinball->GetLedControl();
-		//if (ledControl != NULL)
-		//{
-		//	ledControl->TurnOff(led);
-		//}
+		LedControl *ledControl = m_Pinball->GetLedControl();
+		if (ledControl != NULL)
+		{
+			ledControl->TurnOff(led);
+		}
 		m_Leds[m_count] = led;
 		m_LedsTurnOnWithNext[m_count] = turnOnWithNext;
 		m_LedsAlwaysTurnOn[m_count] = false;
@@ -72,11 +73,11 @@ void SequencerLeds::TurnOnAlwaysLed(uint8_t position,bool turnOn)
 	if (position < m_count)
 	{
 		m_LedsAlwaysTurnOn[position] = turnOn;
-		//LedControl *ledControl = m_Pinball->GetLedControl();
-		//if (ledControl != NULL)
-		//{
-		//	ledControl->TurnOn(m_Leds[position]);
-		//}
+		LedControl *ledControl = m_Pinball->GetLedControl();
+		if (ledControl != NULL)
+		{
+			ledControl->TurnOn(m_Leds[position]);
+		}
 	}
 }
 
@@ -97,11 +98,11 @@ void SequencerLeds::RemoveLed(uint8_t led)
 			if (m_Leds[i] == led)
 			{
 				found = true;
-				//LedControl *ledControl = m_Pinball->GetLedControl();
-				//if (ledControl != NULL)
-				//{
-				//	ledControl->TurnOn(led);
-				//}
+				LedControl *ledControl = m_Pinball->GetLedControl();
+				if (ledControl != NULL)
+				{
+					ledControl->TurnOn(led);
+				}
 			}
 
 			if (found && (i + 1 < m_count))
@@ -131,16 +132,16 @@ void SequencerLeds::Start()
 		if (m_type != SequencerType::blinkingAll)
 		{
 			m_pos = 0;
-			//LedControl *ledControl = m_Pinball->GetLedControl();
-			//if (ledControl != NULL)
-			//{
-			//	ledControl->TurnOn(m_Leds[m_pos]);
-			//	if (m_LedsTurnOnWithNext[m_pos])
-			//	{
-			//		m_pos = GetNext(m_pos);
-			//		ledControl->TurnOn(m_Leds[m_pos]);
-			//	}
-			//}
+			LedControl *ledControl = m_Pinball->GetLedControl();
+			if (ledControl != NULL)
+			{
+				ledControl->TurnOn(m_Leds[m_pos]);
+				if (m_LedsTurnOnWithNext[m_pos])
+				{
+					m_pos = GetNext(m_pos);
+					ledControl->TurnOn(m_Leds[m_pos]);
+				}
+			}
 		}
 
 		m_timerSeq->Start();
@@ -156,14 +157,14 @@ void SequencerLeds::End()
 	#endif
 
 	m_pos = 0;
-	//LedControl *ledControl = m_Pinball->GetLedControl();
-	//if (ledControl != NULL)
-	//{
-	//	for (char i = 0; i < m_count; i++)
-	//	{
-	//		ledControl->TurnOff(m_Leds[i]);
-	//	}
-	//}
+	LedControl *ledControl = m_Pinball->GetLedControl();
+	if (ledControl != NULL)
+	{
+		for (char i = 0; i < m_count; i++)
+		{
+			ledControl->TurnOff(m_Leds[i]);
+		}
+	}
 
 }
 
@@ -199,64 +200,64 @@ bool SequencerLeds::TimerIsOver(Object *sender)
 		LogMessage(F("...Timer is over to seq"));
 		#endif
 
-		//LedControl *pLedControl = m_Pinball->GetLedControl();
-		//if (pLedControl != NULL)
-		//{
-		//	if (m_type == SequencerType::turnOnAndturnOff_1by1)
-		//	{
-		//		pLedControl->TurnOff(m_Leds[m_pos]);
-		//		uint8_t posPrev = GetPrev(m_pos);
-		//		if (m_LedsTurnOnWithNext[posPrev])
-		//		{
-		//			pLedControl->TurnOff(m_Leds[posPrev]);
-		//		}
+		LedControl *pLedControl = m_Pinball->GetLedControl();
+		if (pLedControl != NULL)
+		{
+			if (m_type == SequencerType::turnOnAndturnOff_1by1)
+			{
+				pLedControl->TurnOff(m_Leds[m_pos]);
+				uint8_t posPrev = GetPrev(m_pos);
+				if (m_LedsTurnOnWithNext[posPrev])
+				{
+					pLedControl->TurnOff(m_Leds[posPrev]);
+				}
 
-		//		m_pos = GetNext(m_pos);
-		//		pLedControl->TurnOn(m_Leds[m_pos]);
-		//		if (m_LedsTurnOnWithNext[m_pos])
-		//		{
-		//			m_pos = GetNext(m_pos);
-		//			pLedControl->TurnOn(m_Leds[m_pos]);
-		//		}
-		//	}
-		//	else if (m_type == SequencerType::turnOn1by1_AndTurnOffAll)
-		//	{
-		//		m_pos = GetNext(m_pos);
-		//		if (m_pos == 0)
-		//		{
-		//			Start();
-		//		}
-		//		else
-		//		{
-		//			pLedControl->TurnOn(m_Leds[m_pos]);
-		//			if (m_LedsTurnOnWithNext[m_pos])
-		//			{
-		//				m_pos = GetNext(m_pos);
-		//				pLedControl->TurnOn(m_Leds[m_pos]);
-		//			}
-		//		}
-		//	}
-		//	else if (m_type == SequencerType::blinkingAll)
-		//	{
-		//		for (uint8_t i = 0; i < m_count; i++)
-		//		{
-		//			if (!m_LedsAlwaysTurnOn[i])
-		//			{
-		//				if (m_blink)
-		//				{
-		//					pLedControl->TurnOff(m_Leds[i]);
-		//				}
-		//				else
-		//				{
-		//					pLedControl->TurnOn(m_Leds[i]);
-		//				}
-		//			}
-		//		}
-		//		m_blink = !m_blink;
-		//	}
+				m_pos = GetNext(m_pos);
+				pLedControl->TurnOn(m_Leds[m_pos]);
+				if (m_LedsTurnOnWithNext[m_pos])
+				{
+					m_pos = GetNext(m_pos);
+					pLedControl->TurnOn(m_Leds[m_pos]);
+				}
+			}
+			else if (m_type == SequencerType::turnOn1by1_AndTurnOffAll)
+			{
+				m_pos = GetNext(m_pos);
+				if (m_pos == 0)
+				{
+					Start();
+				}
+				else
+				{
+					pLedControl->TurnOn(m_Leds[m_pos]);
+					if (m_LedsTurnOnWithNext[m_pos])
+					{
+						m_pos = GetNext(m_pos);
+						pLedControl->TurnOn(m_Leds[m_pos]);
+					}
+				}
+			}
+			else if (m_type == SequencerType::blinkingAll)
+			{
+				for (uint8_t i = 0; i < m_count; i++)
+				{
+					if (!m_LedsAlwaysTurnOn[i])
+					{
+						if (m_blink)
+						{
+							pLedControl->TurnOff(m_Leds[i]);
+						}
+						else
+						{
+							pLedControl->TurnOn(m_Leds[i]);
+						}
+					}
+				}
+				m_blink = !m_blink;
+			}
 
-			//return true;
-		//}
+			return true;
+		}
 	}
 
 	return false;

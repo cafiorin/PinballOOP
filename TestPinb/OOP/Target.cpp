@@ -10,6 +10,8 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 #include "Input.h"
 #include "Timer.h"
+#include "Event.h"
+#include "LedControl.h"
 
 //-------------------------------------------------------//
 Target::Target(uint8_t portNumberInput, uint8_t led) : PinballObject()
@@ -63,32 +65,32 @@ bool Target::NotifyEvent(Object *sender, Event *event)
 	LogMessage(F("Target::NotifyEvent"));
 	#endif
 
-	//LedControl *ledControl = m_Pinball->GetLedControl();
-	//if (event == EVENT_EDGEPOSITIVE)
-	//{
-	//	m_timerBlinkLed->Disable();
-	//	if (ledControl != NULL)
-	//	{
-	//		ledControl->TurnOn(m_led);
-	//	}
-	//	m_hit = true;
-	//	m_Pinball->NotifyEvent(this, event, valueToSend);
-	//	return true;
-	//}
-	//else if (event == EVENT_TIMEISOVER)
-	//{
-	//	if (m_Pinball->IsPlaying())
-	//	{
-	//		if (ledControl != NULL)
-	//		{
-	//			if (ledControl->IsTurn(m_led))
-	//				ledControl->TurnOff(m_led);
-	//			else
-	//				ledControl->TurnOn(m_led);
-	//		}
-	//	}
-	//	return true;
-	//}
+	LedControl *ledControl = m_Pinball->GetLedControl();
+	if (event->GetIdEvent() == EVENT_EDGEPOSITIVE)
+	{
+		m_timerBlinkLed->Disable();
+		if (ledControl != NULL)
+		{
+			ledControl->TurnOn(m_led);
+		}
+		m_hit = true;
+		m_Pinball->NotifyEvent(this, event);
+		return true;
+	}
+	else if (event->GetIdEvent() == EVENT_TIMEISOVER)
+	{
+		if (m_Pinball->IsPlaying())
+		{
+			if (ledControl != NULL)
+			{
+				if (ledControl->IsTurn(m_led))
+					ledControl->TurnOff(m_led);
+				else
+					ledControl->TurnOn(m_led);
+			}
+		}
+		return true;
+	}
 
 	return false;
 }

@@ -16,7 +16,6 @@ http://pinballhomemade.blogspot.com.br
 #include "defines.h"
 #include "Vector.h"
 #include "Pinball.h"
-//#include "LedControl.h"
 
 class PinballObject;
 class HardwareSerial;

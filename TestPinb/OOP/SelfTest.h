@@ -14,7 +14,7 @@ http://pinballhomemade.blogspot.com.br
 class PinballMaster;
 class Timer;
 
-class SelfTest : public PinballObject
+class SelfTest : public Object
 {
 public:
 	SelfTest();
@@ -35,6 +35,7 @@ public:
 	void DoSfxOnOff();
 
 	void FinishTest();
+	void Loop();
 
 protected:
 	uint8_t m_MenuTest;

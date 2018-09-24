@@ -12,6 +12,8 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 #include "Vector.h"
 
+class SelfTest;
+
 enum ButtonPressed
 {
 	menu,
@@ -57,7 +59,7 @@ private:
 	Vector<MenuString *> m_Children;
 };
 
-class Menu : public PinballObject
+class Menu : public Object
 {
 public:
 	Menu();
@@ -69,11 +71,17 @@ public:
 	bool PressUpDownButton(bool upButton);
 	void PressButtonEnter();
 
+	void EventUpDownButton(Object *sender, bool upButton);
+	void StartTest(uint8_t event);
+	void FinishTest();
+	void Loop();
+
 protected:
 	MenuString *m_pMenu;
 	void PrintMenu(ButtonPressed button);
 
 	bool m_isShowing;
+	SelfTest * m_SelfTest;
 	MenuString *m_menuOptionSelected;
 	uint8_t m_subOption;
 	MenuString *m_subOptionSelected;

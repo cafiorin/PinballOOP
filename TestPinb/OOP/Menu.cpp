@@ -7,15 +7,16 @@ http://pinballhomemade.blogspot.com.br
 
 #include "Menu.h"
 #include "Pinball.h"
+#include "SelfTest.h"
 
 //-------------------------------------------------------//
-Menu::Menu() : PinballObject()
+Menu::Menu() 
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("Menu Constructor"));
 	#endif
-
+	m_SelfTest = new SelfTest();
 	m_isShowing = false;
 
 	//Menu
@@ -67,6 +68,7 @@ Menu::~Menu()
 	#endif
 
 	DestroyChildren(m_pMenu);
+	delete m_SelfTest;
 }
 
 //-------------------------------------------------------//
@@ -192,7 +194,7 @@ bool Menu::PressUpDownButton(bool upButton)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_Pinball->LogMessage(F("Menu::PressButton"));
+	LogMessage(F("Menu::PressButton"));
 	#endif
 
 	if (upButton)
@@ -211,3 +213,48 @@ bool Menu::PressUpDownButton(bool upButton)
 	return false;
 }
 
+//-------------------------------------------------------//
+void Menu::EventUpDownButton(Object *sender, bool upButton)
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage(F("Menu::EventUpDownButton"));
+	#endif
+	
+	m_SelfTest->EventUpDownButton(sender, upButton);
+}
+
+//-------------------------------------------------------//
+void Menu::StartTest(uint8_t event)
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage(F("Menu::StartTest"));
+	#endif
+
+	if (m_SelfTest != NULL)
+	{
+		m_SelfTest->StartTest(event);
+	}
+}
+
+//-------------------------------------------------------//
+void Menu::FinishTest()
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	m_Pinball->LogMessage(F("Menu::FinishTest"));
+	#endif
+
+	if (m_SelfTest != NULL)
+	{
+		m_SelfTest->FinishTest();
+	}
+}
+
+//---------------------------------------------------------------------//
+void Menu::Loop()
+//---------------------------------------------------------------------//
+{
+	m_SelfTest->Loop();
+}

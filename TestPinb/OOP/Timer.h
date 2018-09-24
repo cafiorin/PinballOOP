@@ -20,10 +20,10 @@ enum TimerType
 class Timer : public PinballObject
 {
 public:
-	Timer(long time, PinballObject *parent=NULL, TimerType type=TimerType::once);
+	Timer(long time, Object *parent=NULL, TimerType type=TimerType::once, bool addToListPinball=true);
 	virtual ~Timer();
 	virtual void Loop();
-	PinballObject *m_parent;
+	Object *m_parent;
 	TimerType m_type;
 
 	void Start();

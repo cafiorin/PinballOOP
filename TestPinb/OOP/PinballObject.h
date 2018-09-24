@@ -16,7 +16,7 @@ class Pinball;
 class PinballObject : public Object
 {
 public:
-	PinballObject();
+	PinballObject(bool AddToListPinball=true);
 	virtual ~PinballObject();
 
 	bool IsEnabled() { return m_Enabled; }
@@ -29,6 +29,7 @@ public:
 
 protected:
 	bool m_Enabled;
+	bool m_AddToListPinball;
 };
 
 #endif

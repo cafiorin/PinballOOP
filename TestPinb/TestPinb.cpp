@@ -118,10 +118,13 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 
 uint8_t main()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
+
 	bool firstPrint = true;
 	bool Leds[NUM_LEDS];
 
-	HardwareSerial *serial = new HardwareSerial();
+	HardwareSerial *serial = new HardwareSerial(0,0);
 	PinballMaster *pPinballMaster = new PinballMaster(serial);
 	HardwareSerial *ledPrint = new HardwareSerial(100, 1);
 
@@ -217,7 +220,11 @@ uint8_t main()
 
 	} while (ch != -2);
 
-	delete  pPinballMaster;
+	//CheckMemoryLeak();
+
+	//delete serial;
+	delete inputs;
+	delete pPinballMaster;
 	delete ledPrint;
     return 0;
 }

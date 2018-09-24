@@ -13,14 +13,13 @@ http://pinballhomemade.blogspot.com.br
 #include "LedControl.h"
 
 //---------------------------------------------------------------------//
-SelfTest::SelfTest() : PinballObject()
+SelfTest::SelfTest()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage(F("SelfTest Constructor"));
 	#endif
-
-	m_timerAuto = new Timer(100, this, TimerType::continuous);
+	m_timerAuto = new Timer(100, this, TimerType::continuous,false);
 }
 
 //---------------------------------------------------------------------//
@@ -31,7 +30,7 @@ SelfTest::~SelfTest()
 	LogMessage(F("SelfTest Destructor"));
 	#endif
 
-	//delete m_timerAuto;
+	delete m_timerAuto; //can delete because (bool addToListPinball=false)
 }
 
 //---------------------------------------------------------------------//
@@ -368,4 +367,11 @@ bool SelfTest::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 	}
 
 	return false;
+}
+
+//---------------------------------------------------------------------//
+void SelfTest::Loop()
+//---------------------------------------------------------------------//
+{
+	m_timerAuto->Loop();
 }

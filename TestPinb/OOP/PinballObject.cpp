@@ -11,12 +11,13 @@ http://pinballhomemade.blogspot.com.br
 #include "Utils.h"
 
 /*---------------------------------------------------------------------*/
-PinballObject::PinballObject() : Object()
+PinballObject::PinballObject(bool AddToListPinball/*=true*/) : Object()
 /*---------------------------------------------------------------------*/
 {
 	m_Enabled = true;
+	m_AddToListPinball = AddToListPinball;
 
-	if (m_Pinball != NULL)
+	if (m_Pinball != NULL && m_AddToListPinball)
 	{
 		m_Pinball->AddPinballObject(this);
 	}
@@ -30,8 +31,10 @@ PinballObject::~PinballObject()
 	LogMessage(F("PinballObject Destructor"));
 	#endif
 
-	if (m_Pinball != NULL)
+	if (m_Pinball != NULL && m_AddToListPinball)
+	{
 		m_Pinball->RemovePinballObject(this);
+	}
 }
 
 /*---------------------------------------------------------------------*/

@@ -93,7 +93,6 @@ protected:
 	Timer *m_TimerToShowPlayers;
 
 	Menu *m_Menu;
-	SelfTest *m_SelfTest;
 	OutBall *m_OutBall;
 	Output *m_TurnFlipperOn;
 	KickoutHole *m_Hole;

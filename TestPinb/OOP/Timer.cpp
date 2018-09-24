@@ -9,7 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 
 //-------------------------------------------------------//
-Timer::Timer(long time, PinballObject *parent, TimerType type) : PinballObject()
+Timer::Timer(long time, Object *parent, TimerType type,bool addToListPinball/*=true*/) : PinballObject(addToListPinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION

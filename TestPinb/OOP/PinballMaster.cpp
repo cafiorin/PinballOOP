@@ -24,7 +24,6 @@ http://pinballhomemade.blogspot.com.br
 #include "OutBall.h"
 #include "Menu.h"
 #include "Multiplex.h"
-#include "SelfTest.h"
 #include "DefinesMp3.h"
 #include "LedControl.h"
 
@@ -128,7 +127,6 @@ void PinballMaster::InitVars()
 	m_enableSfx = true;
 	m_nSecondsTimerToShowPlayers = 5;
 
-	m_SelfTest = NULL;
 	m_Menu = NULL;
 	m_TimerToShowPlayers = NULL;
 	m_OutBall = NULL;
@@ -151,9 +149,6 @@ void PinballMaster::CreateObjects()
 
 	m_Multiplex = new Multiplex(23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
 	m_LedControl = new LedControl();
-
-	m_Menu = new Menu();
-	m_SelfTest = new SelfTest();
 
 	m_TimerToShowPlayers = new Timer(1000, NULL, TimerType::continuous);
 
@@ -379,18 +374,25 @@ bool PinballMaster::EventMenuButton(Object *sender)
 	#endif
 
 
-	if (m_Status == StatusPinball::attractmode || m_Status == StatusPinball::menusetup)
+	if (m_Status == StatusPinball::attractmode)
 	{
-		m_Status = StatusPinball::menusetup;
-		if (m_Menu != NULL)
+		if (m_Menu == NULL)
 		{
-			m_Menu->PressButtonMenu();
+			m_Menu = new Menu();
 		}
-		return true;
+		m_Status = StatusPinball::menusetup;
+		m_Menu->PressButtonMenu();
 	}
-	else if (m_Status == StatusPinball::menutest)
+	else if (m_Status == StatusPinball::menutest || 
+			 m_Status == StatusPinball::menusetup)
 	{
 		SetupTest(EVENT_TEST_EXIT_MENU);
+
+		if (m_Menu != NULL)
+		{
+			delete m_Menu;
+			m_Menu = NULL;
+		}
 	}
 
 	return false;
@@ -401,7 +403,7 @@ bool PinballMaster::EventEnterButton(Object *sender)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("PinballMaster::EventMenuButton"));
+	LogMessage(F("PinballMaster::EventEnterButton"));
 	#endif
 
 	if (m_Status == StatusPinball::menusetup)
@@ -415,6 +417,12 @@ bool PinballMaster::EventEnterButton(Object *sender)
 	else if (m_Status == StatusPinball::menutest)
 	{
 		SetupTest(EVENT_TEST_EXIT_MENU);
+		if (m_Menu != NULL)
+		{
+			delete m_Menu;
+			m_Menu = NULL;
+		}
+
 	}
 
 
@@ -439,9 +447,9 @@ bool PinballMaster::EventUpDownButton(Object *sender, bool upButton)
 	}
 	else if (m_Status == StatusPinball::menutest)
 	{
-		if (m_SelfTest != NULL)
+		if (m_Menu != NULL)
 		{
-			m_SelfTest->EventUpDownButton(sender, upButton);
+			m_Menu->EventUpDownButton(sender, upButton);
 		}
 	}
 	else
@@ -501,9 +509,10 @@ bool PinballMaster::SetupTest(uint8_t event)
 
 	if (event == EVENT_TEST_EXIT_MENU)
 	{
-		if (m_SelfTest != NULL)
+		if (m_Menu != NULL)
 		{
-			m_SelfTest->FinishTest();
+			m_Menu->FinishTest();
+			m_Pinball->printText("Pinball", "OK", 0);
 		}
 		m_Status = StatusPinball::attractmode;
 	}
@@ -520,9 +529,9 @@ bool PinballMaster::SetupTest(uint8_t event)
 		else
 		{
 			Init(StatusPinball::menutest);
-			if (m_SelfTest != NULL)
+			if (m_Menu != NULL)
 			{
-				m_SelfTest->StartTest(event);
+				m_Menu->StartTest(event);
 			}
 		}
 	}
@@ -605,6 +614,15 @@ bool PinballMaster::Loop(uint8_t value)
 	{
 		case StatusPinball::attractmode:
 		{
+		}
+
+		case StatusPinball::menusetup:
+		case StatusPinball::menutest:
+		{
+			if (m_Menu != NULL)
+			{
+				m_Menu->Loop();
+			}
 		}
 		break;
 	}
@@ -876,7 +894,9 @@ void PinballMaster::PlaySongToInput(uint8_t portNumber)
 		case INPUT_ENTER_BUTTON:
 			playSong(MP3_MENU_BUTTON);
 			break;
-
+		default:
+			playSong(MP3_STARTBUTTONPORT);
+			break;
 		}
 	}
 }

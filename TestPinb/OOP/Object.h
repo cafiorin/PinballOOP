@@ -18,29 +18,39 @@ public:
 	Object();
 	virtual ~Object() {};
 
+#ifdef DEBUGMESSAGES
+
 	int getId() { return m_Id; }
-
-	void LogMessage(const __FlashStringHelper *szMessage);
-	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
-
-	bool operator==(Object& Obj) 
-	{ 
-		if(&Obj != NULL)
+	bool operator==(Object& Obj)
+	{
+		if (&Obj != NULL)
 			return (Obj.m_Id == static_cast<const Object&>(*this).m_Id);
 	}
 
-	bool operator!=(const Object& Obj) 
-	{ 
-		return !(Obj.m_Id != static_cast<const Object&>(*this).m_Id); 
+	bool operator!=(const Object& Obj)
+	{
+		return !(Obj.m_Id != static_cast<const Object&>(*this).m_Id);
 	}
 
+	void LogMessage(const __FlashStringHelper *szMessage);
+
+#endif // DEBUGMESSAGES
+
+
+	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
+
+
 protected:
-	int m_Id;
+#ifdef DEBUGMESSAGES
+	uint8_t m_Id;
+#endif
 	static HardwareSerial *m_Serial;
 	static Pinball *m_Pinball;
 
+#ifdef DEBUGMESSAGES
 private:
-	static int m_Ids;
+	static uint8_t m_Ids;
+#endif
 };
 
 #endif

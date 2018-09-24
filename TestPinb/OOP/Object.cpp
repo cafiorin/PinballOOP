@@ -10,7 +10,11 @@ http://pinballhomemade.blogspot.com.br
 #include "HardwareSerial.h"
 
 //Statics init
-int Object::m_Ids = 0;
+#ifdef DEBUGMESSAGES
+uint8_t Object::m_Ids = 0;
+#endif // DEBUGMESSAGES
+
+
 HardwareSerial *Object::m_Serial = NULL;
 Pinball *Object::m_Pinball = NULL;
 
@@ -18,9 +22,12 @@ Pinball *Object::m_Pinball = NULL;
 Object::Object()  
 //-------------------------------------------------------//
 {
+#ifdef DEBUGMESSAGES
 	m_Id = m_Ids++;
+#endif
 }
 
+#ifdef DEBUGMESSAGES
 //-------------------------------------------------------//
 void Object::LogMessage(const __FlashStringHelper *szMessage)
 //-------------------------------------------------------//
@@ -33,6 +40,8 @@ void Object::LogMessage(const __FlashStringHelper *szMessage)
 		m_Serial->flush();
 	}
 }
+#endif
+
 
 //---------------------------------------------------------------------//
 bool Object::NotifyEvent(Object *sender, uint8_t event, uint8_t value)

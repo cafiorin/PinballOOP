@@ -57,9 +57,11 @@ void Pinball::playSong(char song[], bool priority /*default=true*/)
 //-----------------------------------------------------------------------//
 {
 	#ifdef DOS
+	#ifdef DEBUGMESSAGES
 	char szMsg[30]; //12 + 10 + 1
 	sprintf(szMsg, "Play song:%s", song);
 	LogMessage(szMsg);
+	#endif 
 	#endif
 
 	#ifdef ARDUINOLIB
@@ -89,12 +91,8 @@ void Pinball::ChangeVolume(bool plus, uint8_t delta /*default = 5*/)
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("Pinball::ChangeVolume"));
-	#endif
-
-	#ifdef DOS
 	LogMessage(F("Change Volume"));
-	#endif // DOS
-
+#endif
 
 #ifdef ARDUINOLIB
 	if (m_MP3player != NULL)

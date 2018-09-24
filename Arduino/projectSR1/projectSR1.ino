@@ -7,6 +7,7 @@
 #include <PinballMaster.h>
 #include <ctype.h>
 #include <Wire.h>
+//#include <MemoryFree.h>
 
 SdFat sd;
 SdFile myFile;
@@ -54,5 +55,7 @@ void loop()
 	#endif
   
   m_pinball.Loop(0);
+    
+  //Serial.print(F("freeMemory()="));
+  //Serial.println(freeMemory());  
 }
-

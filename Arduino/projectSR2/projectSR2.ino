@@ -5,21 +5,23 @@
 #include <SdFat.h>
 #include <SdFatUtil.h>
 #include <SFEMP3Shield.h>
-#include <PinballSR2.h>
+#include <PinballSlave.h>
 #include <ctype.h>
 #include <Wire.h>
+
+#define ADDRESS_MASTER 4
 
 SdFat sd;
 SdFile myFile;
 SFEMP3Shield MP3player;
-PinballSR2 m_pinball;
+PinballSlave m_pinball;
 
 void setup()  
 {
 	Serial.begin(115200);
 	Serial.print(F("Iniciando 2...")); 
 
-	Wire.begin(4);
+	SetupWire();
 
 	//SdCard.
 	if (!sd.begin(SD_SEL, SPI_HALF_SPEED)) sd.initErrorHalt();
@@ -51,6 +53,16 @@ void loop()
 		  MP3player.available();
 	#endif
   
-  m_pinball.loop();
+  m_pinball.Loop(0);
 }
 
+void SetupWire()
+{
+	Wire.begin(ADDRESS_MASTER); // join I2C bus using this address
+	Wire.onReceive(receiveMessage); // register event to handle requests
+}
+
+void receiveMessage(int howMany)
+{
+	m_pinball.receiveMessageFromAnotherArduino(howMany);
+}

@@ -40,7 +40,6 @@ public:
 	virtual ~PinballSlave();
 
 	virtual bool Loop(uint8_t value);
-	virtual bool Init();
 	virtual void DataReceived(char c);
 };
 

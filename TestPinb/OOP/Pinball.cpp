@@ -17,8 +17,6 @@ http://pinballhomemade.blogspot.com.br
 #ifdef ARDUINOLIB
 #include <Wire.h>
 #include <SFEMP3Shield.h>
-
-SFEMP3Shield *Pinball::m_MP3player = NULL;
 #endif
 
 
@@ -26,6 +24,10 @@ SFEMP3Shield *Pinball::m_MP3player = NULL;
 Pinball::Pinball() : Object()
 /*---------------------------------------------------------------------*/
 {
+	#ifdef ARDUINOLIB
+	m_MP3player = NULL;
+	#endif
+
 	m_Multiplex = NULL;
 	m_LedControl = NULL;
 	m_Status = StatusPinball::initializing;

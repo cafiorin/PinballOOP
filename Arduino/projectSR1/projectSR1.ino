@@ -9,6 +9,8 @@
 #include <Wire.h>
 //#include <MemoryFree.h>
 
+#define ADDRESS_MASTER 4
+
 SdFat sd;
 SdFile myFile;
 SFEMP3Shield MP3player;
@@ -22,7 +24,7 @@ void setup()
 	Serial.println(F("Iniciando...")); 
 	Serial.println(F("########################")); 
 
-	Wire.begin();
+	SetupWireToMaster();
 
 	//SdCard.
 	if (!sd.begin(SD_SEL, SPI_HALF_SPEED)) sd.initErrorHalt();
@@ -58,4 +60,15 @@ void loop()
     
   //Serial.print(F("freeMemory()="));
   //Serial.println(freeMemory());  
+}
+
+void SetupWireToMaster()
+{
+	Wire.begin(ADDRESS_MASTER); // join I2C bus using this address
+	Wire.onReceive(receiveMessage); // register event to handle requests
+}
+
+void receiveMessage(int howMany)
+{
+	m_pinball.receiveMessageFromAnotherArduino(howMany);
 }

@@ -31,32 +31,10 @@ http://pinballhomemade.blogspot.com.br
 #include <Wire.h>
 #include "ht1632pinball.h"
 
-PinballMaster *gPinballMaster = NULL;
-
-//-----------------------------------------------------------------------//
-void receiveMessageFromAnotherArduinoMaster(int howMany)
-//-----------------------------------------------------------------------//
-{
-	if (gPinballMaster != NULL)
-	{
-		gPinballMaster->receiveMessageFromAnotherArduino(howMany);
-	}
-}
-
-//-----------------------------------------------------------------------//
-void SetupWireToMaster()
-//-----------------------------------------------------------------------//
-{
-	Wire.begin(ADDRESS_MASTER); // join I2C bus using this address
-	Wire.onReceive(receiveMessageFromAnotherArduinoMaster); // register event to handle requests
-}
-
 /*---------------------------------------------------------------------*/
 PinballMaster::PinballMaster()
 /*---------------------------------------------------------------------*/
 {
-	gPinballMaster = this;
-	SetupWireToMaster();
 }
 
 /*---------------------------------------------------------------------*/

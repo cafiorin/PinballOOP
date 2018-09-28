@@ -88,7 +88,7 @@ public:
 
 protected:
 	#ifdef ARDUINOLIB
-	static SFEMP3Shield *m_MP3player;
+	SFEMP3Shield *m_MP3player;
 	#endif // ARDUINOLIB
 	StatusPinball m_Status;
 	Vector<PinballObject *> m_PinballObjs;

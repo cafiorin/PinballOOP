@@ -21,37 +21,11 @@ http://pinballhomemade.blogspot.com.br
 
 #ifdef ARDUINOLIB
 #include <Wire.h>
-PinballSlave *gPinballSlave = NULL;
 
-//-----------------------------------------------------------------------//
-void receiveMessageFromAnotherArduinoSlave(int howMany)
-//-----------------------------------------------------------------------//
-{
-	gPinballSlave->receiveMessageFromAnotherArduino(howMany);
-}
-
-//-----------------------------------------------------------------------//
-void SetupWire()
-//-----------------------------------------------------------------------//
-{
-	Wire.begin(ADDRESS_SLAVE); // join I2C bus using this address
-	Wire.onReceive(receiveMessageFromAnotherArduinoSlave); // register event to handle requests
-}
-
-#endif // ARDUINOLIB
-
-
-/*---------------------------------------------------------------------*/
-//							C L A S S
-/*---------------------------------------------------------------------*/
-
-#ifdef ARDUINOLIB
 /*---------------------------------------------------------------------*/
 PinballSlave::PinballSlave()
 /*---------------------------------------------------------------------*/
 {
-	gPinballSlave = this;
-	SetupWire();
 }
 
 /*---------------------------------------------------------------------*/
@@ -61,6 +35,11 @@ void PinballSlave::Setup(SFEMP3Shield *MP3player, HardwareSerial *serial)
 	m_Serial = serial;
 	m_Pinball = this;
 	m_MP3player = MP3player;
+	m_Status = StatusPinball::waitingmessages;
+
+	m_Multiplex = NULL;
+	m_LedControl = NULL;
+	m_enableSfx = false;
 }
 
 #endif
@@ -88,19 +67,6 @@ PinballSlave::~PinballSlave()
 	LogMessage(F("PinballSlave Destructor"));
 	#endif
 }
-
-/*---------------------------------------------------------------------*/
-bool PinballSlave::Init()
-/*---------------------------------------------------------------------*/
-{
-	#ifdef DEBUGMESSAGES
-	LogMessage(F("PinballSlave Init"));
-	#endif
-	
-	m_Status = StatusPinball::waitingmessages;
-	return true;
-}
-
 
 /*---------------------------------------------------------------------*/
 bool PinballSlave::Loop(uint8_t value)

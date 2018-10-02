@@ -13,6 +13,7 @@ http://pinballhomemade.blogspot.com.br
 #define ARDUINOLIB
 
 // To Show DEBUG messages
+#define DEBUGINPUTS
 //#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 //#define DEBUGMESSAGESCREATION

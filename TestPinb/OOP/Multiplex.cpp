@@ -11,6 +11,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Output.h"
 #include "PinballObject.h"
 #include "Multiplex.h"
+#include "HardwareSerial.h"
 
 #ifdef ARDUINOLIB
 #include <Arduino.h>
@@ -244,6 +245,27 @@ void Multiplex::Loop()
 				input->SetInput(read);
 			}
 		}
+
+		#ifdef DEBUGINPUTS
+		if (m_Serial != NULL)
+		{
+			m_Serial->println(F("Portas ... "));
+
+			for (uint8_t ch = 0; ch < 48; ch++)
+			{
+				Input *input = m_Pinball->GetInput(ch);
+				if (input != NULL)
+				{
+					m_Serial->print(F("Porta "));
+					m_Serial->print(ch);
+					m_Serial->print(F("==>"));
+					m_Serial->print((int)input->GetInput());
+					m_Serial->println(F("<=="));
+				}
+			}
+		}
+		#endif
+
 	}
 }
 

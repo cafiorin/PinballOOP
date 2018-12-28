@@ -154,6 +154,7 @@
     <ClInclude Include="OOP\HardwareSerial.h" />
     <ClInclude Include="OOP\ht1632pinball.h" />
     <ClInclude Include="OOP\Input.h" />
+    <ClInclude Include="OOP\InputArduino.h" />
     <ClInclude Include="OOP\KickoutHole.h" />
     <ClInclude Include="OOP\LedControl.h" />
     <ClInclude Include="OOP\Light.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="OOP\DropTarget.cpp" />
     <ClCompile Include="OOP\HardwareSerial.cpp" />
     <ClCompile Include="OOP\Input.cpp" />
+    <ClCompile Include="OOP\InputArduino.cpp" />
     <ClCompile Include="OOP\KickoutHole.cpp" />
     <ClCompile Include="OOP\LedControl.cpp" />
     <ClCompile Include="OOP\Light.cpp" />

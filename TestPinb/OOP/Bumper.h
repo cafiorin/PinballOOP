@@ -26,8 +26,6 @@ public:
 protected:
 	Input *m_input;
 	Output *m_output;
-	uint8_t m_Led;
-	Timer *m_TimerLed;
-
+	Output *m_Led;
 };
 #endif // !defined(SlingShot__INCLUDED_)

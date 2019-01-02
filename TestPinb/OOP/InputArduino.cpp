@@ -26,9 +26,9 @@ InputArduino::InputArduino(uint8_t portNumber, PinballObject *parent):Port(portN
 	m_Edge = false;
 	m_parent = parent;
 
-#ifdef ARDUINOLIB
+	#ifdef ARDUINOLIB
 	pinMode(portNumber, INPUT);
-#endif
+	#endif
 
 }
 

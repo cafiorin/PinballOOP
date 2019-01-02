@@ -12,6 +12,8 @@ http://pinballhomemade.blogspot.com.br
 #include "Utils.h"
 
 #include "Input.h"
+#include "InputArduino.h"
+//#include "OutputArduino.h"
 #include "Timer.h"
 #include "Output.h"
 #include "SlingShot.h"
@@ -112,7 +114,6 @@ void PinballMaster::InitVars()
 	m_TurnFlipperOn = NULL;
 	m_DropTarget5 = NULL;
 	m_DropTarget3 = NULL;
-	m_GI = NULL;
 }
 
 
@@ -130,14 +131,21 @@ void PinballMaster::CreateObjects()
 
 	m_TimerToShowPlayers = new Timer(1000, NULL, TimerType::continuous);
 
-	m_GI = new Output(OUTPUT_GI_ON_12V);
-	m_GI->TurnOn();
+	new InputArduino(INPUT_START_BUTTON);
+	new InputArduino(INPUT_MENU_BUTTON);
+	new InputArduino(INPUT_UP_BUTTON);
+	new InputArduino(INPUT_DOWN_BUTTON);
+	new InputArduino(INPUT_ENTER_BUTTON);
 
-	new Input(INPUT_START_BUTTON);
-	new Input(INPUT_MENU_BUTTON);
-	new Input(INPUT_UP_BUTTON);
-	new Input(INPUT_DOWN_BUTTON);
-	new Input(INPUT_ENTER_BUTTON);
+	m_MotorSR = new Output(OUTPUT_MOTOR_SR);
+	m_MotorRX = new Output(OUTPUT_MOTOR_RX);
+
+	m_LedRamp = new Output(OUTPUT_LED_RAMP);
+
+	m_HEADLIGHT_SR = new Output(OUTPUT_SR_HEADLIGHT);
+	m_HEADLIGHT_RX = new Output(OUTPUT_RX_HEADLIGHT);
+	m_LockRampOn   =  new Output(OUTPUT_RAMP_LOCK_ON);
+	m_LockRampOff  = new Output(OUTPUT_RAMP_LOCK_OFF);
 
 	m_TurnFlipperOn = new Output(OUTPUT_FLIPPER_ON_5V);
 	m_OutBall = new OutBall(INPUT_SW_OUTBALL1, OUTPUT_OUTBALL1_48V, INPUT_SW_OUTBALL2, OUTPUT_OUTBALL2_48V);

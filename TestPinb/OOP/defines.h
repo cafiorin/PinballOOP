@@ -11,6 +11,9 @@ http://pinballhomemade.blogspot.com.br
 //-----------------------
 #define DOS
 //#define ARDUINOLIB
+#define A2 2
+#define A1 1
+#define A0 0
 
 // To Show DEBUG messages
 #define DEBUGINPUTS
@@ -71,11 +74,11 @@ http://pinballhomemade.blogspot.com.br
 //END - Events
 
 //Inputs
-#define INPUT_MENU_BUTTON 45
-#define INPUT_UP_BUTTON 46
-#define INPUT_DOWN_BUTTON 47
-#define INPUT_ENTER_BUTTON 48
-#define INPUT_START_BUTTON 49
+#define INPUT_MENU_BUTTON 33
+#define INPUT_UP_BUTTON 35
+#define INPUT_DOWN_BUTTON A2
+#define INPUT_ENTER_BUTTON A1
+#define INPUT_START_BUTTON A0
 #define INPUT_PLAYFIELD_INIT 0
 #define INPUT_SW_OUTBALL1 0 //conector 3C - pin 10
 #define INPUT_SW_OUTBALL2 1 //conector 3C - pin 9
@@ -95,13 +98,13 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_SW_TARGET_GREEN2 26 //conector 4D - pin 1 
 #define INPUT_SW_TARGET_YELLOW2 25 //conector 4D - pin 13
 #define INPUT_SW_DROPTARGET_51 34 //conector 5E - pin 1
-#define INPUT_SW_DROPTARGET_52 38 //conector 5E - pin 2
-#define INPUT_SW_DROPTARGET_53 42 //conector 5E - pin 3
-#define INPUT_SW_DROPTARGET_54 37 //conector 5E - pin 4
+#define INPUT_SW_DROPTARGET_52 37 //conector 5E - pin 2
+#define INPUT_SW_DROPTARGET_53 41 //conector 5E - pin 3
+#define INPUT_SW_DROPTARGET_54 36 //conector 5E - pin 4
 #define INPUT_SW_DROPTARGET_55 33 //conector 5E - pin 11
-#define INPUT_SW_DROPTARGET_31 39 //conector 5E - pin 12
-#define INPUT_SW_DROPTARGET_32 40 //conector 5E - pin 13 
-#define INPUT_SW_DROPTARGET_33 41 //conector 5E - pin 14
+#define INPUT_SW_DROPTARGET_31 38 //conector 5E - pin 12
+#define INPUT_SW_DROPTARGET_32 39 //conector 5E - pin 13 
+#define INPUT_SW_DROPTARGET_33 40 //conector 5E - pin 14
 #define INPUT_SW_ROLLOVER_STAR_GREEN 30 //conector 4D - pin 16
 #define INPUT_SW_ROLLOVER_STAR_RED1 21 //conector 4D - pin 14
 #define INPUT_SW_ROLLOVER_STAR_RED2 22 //conector 4D - pin 11
@@ -111,9 +114,9 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_SW_BUMPER_LEFT 24 //conector 4D - pin 8 
 #define INPUT_SW_BUMPER_CENTER 27 //conector 4D - pin 9 
 #define INPUT_SW_BUMPER_RIGHT 14 //conector 4D - pin 10 
-#define INPUT_SW_RAMP_IN 36 //conector 5E - pin 15
-#define INPUT_SW_RAMP_OUT1 43 //conector 5E - pin 16
-#define INPUT_SW_RAMP_OUT2 44 //conector 5E - pin 6
+#define INPUT_SW_RAMP_IN 35 //conector 5E - pin 15
+#define INPUT_SW_RAMP_OUT1 42 //conector 5E - pin 16
+#define INPUT_SW_RAMP_OUT2 43 //conector 5E - pin 6
 #define INPUT_SW_SPINNER 12 //conector 3C - pin 17 
 #define INPUT_SW_HOLE 19 //conector 4D - pin 6 
 #define INPUT_SW_ACCBALL1 29 //conector 4D - pin 19
@@ -121,27 +124,27 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_SW_ACCBALL3 23 //conector 4D - pin 17
 #define INPUT_SW_ACCBALL4 31 //conector 4D - pin 15
 #define INPUT_SW_ACCJUMP  16 //conector 4D - pin 20
-#define INPUT_PLAYFIELD_FINISH 44 //<==Last
+#define INPUT_PLAYFIELD_FINISH 43 //<==Last
 
 //Outputs Low Energy
-#define OUTPUT_LOW_INIT 0
-#define OUTPUT_FLIPPER_ON_5V 0
-#define OUTPUT_MOTOR_SR 1
-#define OUTPUT_LED_RAMP 2
-#define OUTPUT_MOTOR_RX 3
-#define OUTPUT_LED_BUMPER_LEFT 4
-#define OUTPUT_LED_BUMPER_CENTER 5
-#define OUTPUT_LED_BUMPER_RIGHT 6
+#define OUTPUT_LOW_INIT 0 //output in 5V
+#define OUTPUT_MOTOR_SR 0
+#define OUTPUT_LED_RAMP 1
+#define OUTPUT_MOTOR_RX 2
+#define OUTPUT_LED_BUMPER_LEFT 3
+#define OUTPUT_LED_BUMPER_CENTER 4
+#define OUTPUT_LED_BUMPER_RIGHT 5
+#define OUTPUT_FLIPPER_ON_5V 6
 #define OUTPUT_LOW_7 7
-#define OUTPUT_GI_ON_12V 8 //12V
-#define OUTPUT_LOW_9 9
-#define OUTPUT_LOW_10 10
-#define OUTPUT_LOW_11 11
+#define OUTPUT_SR_HEADLIGHT 8 //output in 12V
+#define OUTPUT_RX_HEADLIGHT 9
+#define OUTPUT_RAMP_LOCK_ON 10
+#define OUTPUT_RAMP_LOCK_OFF 11
 #define OUTPUT_LOW_12 12
 #define OUTPUT_LOW_13 13
 #define OUTPUT_LOW_14 14
 #define OUTPUT_LOW_15 15
-#define OUTPUT_LOW_FINISH 15
+#define OUTPUT_LOW_FINISH 11
 
 //Outputs high energy
 #define OUTPUT_COINS_INIT 16

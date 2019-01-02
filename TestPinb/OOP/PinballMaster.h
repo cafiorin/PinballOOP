@@ -88,8 +88,6 @@ private :
 	bool SetupTest(uint8_t event);
 
 protected:
-	Output *m_GI;
-
 	Timer *m_TimerToShowPlayers;
 
 	Menu *m_Menu;
@@ -99,6 +97,14 @@ protected:
 	DropTarget *m_DropTarget3;
 	DropTarget *m_DropTarget5;
 	
+	Output *m_MotorSR;
+	Output *m_MotorRX;
+	Output *m_LedRamp;
+	Output *m_HEADLIGHT_SR;
+	Output *m_HEADLIGHT_RX;
+	Output *m_LockRampOn;
+	Output *m_LockRampOff;
+
 	static uint8_t iCountObj;
 };
 

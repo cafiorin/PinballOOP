@@ -163,6 +163,7 @@
     <ClInclude Include="OOP\Object.h" />
     <ClInclude Include="OOP\OutBall.h" />
     <ClInclude Include="OOP\Output.h" />
+    <ClInclude Include="OOP\OutputArduino.h" />
     <ClInclude Include="OOP\Pinball.h" />
     <ClInclude Include="OOP\PinballMaster.h" />
     <ClInclude Include="OOP\PinballObject.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="OOP\Object.cpp" />
     <ClCompile Include="OOP\OutBall.cpp" />
     <ClCompile Include="OOP\Output.cpp" />
+    <ClCompile Include="OOP\OutputArduino.cpp" />
     <ClCompile Include="OOP\Pinball.cpp" />
     <ClCompile Include="OOP\PinballMaster.cpp" />
     <ClCompile Include="OOP\PinballObject.cpp" />

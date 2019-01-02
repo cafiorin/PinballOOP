@@ -11,9 +11,6 @@ http://pinballhomemade.blogspot.com.br
 //-----------------------
 #define DOS
 //#define ARDUINOLIB
-#define A2 2
-#define A1 1
-#define A0 0
 
 // To Show DEBUG messages
 #define DEBUGINPUTS
@@ -265,6 +262,11 @@ using namespace std;
 #define __FlashStringHelper char
 #define F (const char *)
 #define uint8_t int
+
+#define A2 2
+#define A1 1
+#define A0 0
+
 #endif // DOS
 
 #endif

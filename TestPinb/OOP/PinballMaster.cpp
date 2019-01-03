@@ -131,11 +131,11 @@ void PinballMaster::CreateObjects()
 
 	m_TimerToShowPlayers = new Timer(1000, NULL, TimerType::continuous);
 
-	new InputArduino(INPUT_START_BUTTON);
-	new InputArduino(INPUT_MENU_BUTTON);
-	new InputArduino(INPUT_UP_BUTTON);
-	new InputArduino(INPUT_DOWN_BUTTON);
-	new InputArduino(INPUT_ENTER_BUTTON);
+	m_MenuButton = new InputArduino(INPUT_MENU_BUTTON);
+	m_UpButton = new InputArduino(INPUT_UP_BUTTON);
+	m_DownButton = new InputArduino(INPUT_DOWN_BUTTON);
+	m_EnterButton = new InputArduino(INPUT_ENTER_BUTTON);
+	m_StartButton = new InputArduino(INPUT_START_BUTTON);
 
 	m_MotorSR = new Output(OUTPUT_MOTOR_SR);
 	m_MotorRX = new Output(OUTPUT_MOTOR_RX);
@@ -498,7 +498,7 @@ bool PinballMaster::SetupTest(uint8_t event)
 		if (m_Menu != NULL)
 		{
 			m_Menu->FinishTest();
-			m_Pinball->printText("Pinball", "OK", 0);
+			printText("Pinball", "OK", 0);
 		}
 		m_Status = StatusPinball::attractmode;
 	}
@@ -536,7 +536,9 @@ void PinballMaster::StartGame(uint8_t Players)
 
 	m_nPlayers = Players;
 
+	printText("Player", "0", 0);
 	m_Status = StatusPinball::playingmode;
+	GetNewBall();
 
 	m_playerPlaying = 0;
 
@@ -548,6 +550,7 @@ void PinballMaster::StartGame(uint8_t Players)
 void PinballMaster::PlayerLostBall()
 //---------------------------------------------------------------------//
 {
+	GetNewBall();
 }
 
 //---------------------------------------------------------------------//

@@ -29,6 +29,7 @@ class OutBall;
 class Output;
 class KickoutHole;
 class DropTarget;
+class InputArduino;
 
 class PinballMaster : public Pinball
 {
@@ -72,6 +73,12 @@ public:
 	DropTarget *GetDropTarget5() { return m_DropTarget5; }
 
 	uint8_t GetBallsByPlayer() { return m_nBallByPlayer; }
+	
+	InputArduino *m_StartButton; 
+	InputArduino *m_MenuButton; 
+	InputArduino *m_UpButton; 
+	InputArduino *m_DownButton; 
+	InputArduino *m_EnterButton;
 
 //Events
 private :

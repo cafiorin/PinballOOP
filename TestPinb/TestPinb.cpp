@@ -14,6 +14,7 @@ http://pinballhomemade.blogspot.com.br
 #include "OOP\HardwareSerial.h"
 #include "OOP\Utils.h"
 #include "OOP\Input.h"
+#include "OOP\InputArduino.h"
 #include "OOP\LedControl.h"
 
 uint8_t ikeyCount = 0;
@@ -115,6 +116,30 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 	}
 }
 
+InputArduino* GetInputArduino(PinballMaster *pPinballMaster, int port)
+{
+	switch (port)
+	{
+	case INPUT_MENU_BUTTON:
+		return pPinballMaster->m_MenuButton;
+		break;
+	case INPUT_UP_BUTTON:
+		return pPinballMaster->m_UpButton;
+		break;
+	case INPUT_DOWN_BUTTON:
+		return pPinballMaster->m_DownButton;
+		break;
+	case INPUT_ENTER_BUTTON:
+		return pPinballMaster->m_EnterButton;
+		break;
+	case INPUT_START_BUTTON:
+		return pPinballMaster->m_StartButton;
+		break;
+	}
+
+	return NULL;
+}
+
 
 uint8_t main()
 {
@@ -129,31 +154,31 @@ uint8_t main()
 	HardwareSerial *ledPrint = new HardwareSerial(100, 1);
 
 	HardwareSerial *inputs = new HardwareSerial(1, 30);
-	inputs->println("Menu/Up/Down/Enter - 0,1,2,3");
-	inputs->println("=>Start Button - 4");
-	inputs->println("OUTBALL1/2     - 5,6");
-	inputs->println("LAUNCHBALL     - 7");
-	inputs->println("SLINGSHOT L1/L2- 8,9");
-	inputs->println("SLINGSHOT R1/R2- 10,11");
-	inputs->println("OUTLANE_L/R    - 12,13");
-	inputs->println("RETURNBALL_L/R - 14,15");
-	inputs->println("TARGET_RED1    - 16");
-	inputs->println("TARGET_GREEN1  - 17");
-	inputs->println("TARGET_YELLOW1 - 18");
-	inputs->println("TARGET_RED2    - 19");
-	inputs->println("TARGET_GREEN2  - 20");
-	inputs->println("TARGET_YELLOW2 - 21");
-	inputs->println("DTARGET_51-55  - 22-26");
-	inputs->println("DTARGET_31-33  - 27-29");
-	inputs->println("STAR G R1/R2   - 30,31,32");
-	inputs->println("=> ROVER_L/C/R - 33,34,35");
-	inputs->println("BUMPER_L/C/R   - 36,37,38");
-	inputs->println("TARGET_HIGHER  - 39");
-	inputs->println("RAMP_IN        - 40");
-	inputs->println("RAMP_OUT1,2    - 41,42");
-	inputs->println("SPINNER        - 43");
-	inputs->println("HOLE           - 44");
-	inputs->println("ACCBALL1       - 45-48");
+	inputs->println("Menu/Up/Down/Enter - 44,45,46,37");
+	inputs->println("=>Start Button - 48");
+	inputs->println("OUTBALL1/2     - 0,1");
+	inputs->println("LAUNCHBALL     - 2");
+	inputs->println("SLINGSHOT L1/L2- 3,4");
+	inputs->println("SLINGSHOT R1/R2- 5,6");
+	inputs->println("OUTLANE_L/R    - 7,8");
+	inputs->println("RETURNBALL_L/R - 9,10");
+	inputs->println("TARGET_RED1    - 11");
+	inputs->println("TARGET_GREEN1  - 12");
+	inputs->println("TARGET_YELLOW1 - 13");
+	inputs->println("TARGET_RED2    - 14");
+	inputs->println("TARGET_GREEN2  - 15");
+	inputs->println("TARGET_YELLOW2 - 16");
+	inputs->println("DTARGET_51-55  - 17-21");
+	inputs->println("DTARGET_31-33  - 22-24");
+	inputs->println("STAR G R1/R2   - 25,26,27");
+	inputs->println("=> ROVER_L/C/R - 28,29,30");
+	inputs->println("BUMPER_L/C/R   - 31,32,33");
+	inputs->println("TARGET_HIGHER  - 34");
+	inputs->println("RAMP_IN        - 35");
+	inputs->println("RAMP_OUT1,2    - 36,37");
+	inputs->println("SPINNER        - 38");
+	inputs->println("HOLE           - 39");
+	inputs->println("ACCBALL1       - 40-44");
 
 	if (pPinballMaster->GetLedControl() != NULL)
 	{
@@ -172,13 +197,24 @@ uint8_t main()
 		ch = ReadKey();
 		if (ch != -2 && ch != -1)
 		{
-			Input *input = pPinballMaster->GetInput(ch);
-			if (input != NULL)
+			if (ch < INPUT_MENU_BUTTON)
 			{
-				bool value = input->GetInput();
-				input->SetInput(!value);
-
-				gotoxy(72 + 10 + ikeyCount, 21);
+				Input *input = pPinballMaster->GetInput(ch);
+				if (input != NULL)
+				{
+					bool value = input->GetInput();
+					input->SetInput(!value);
+					gotoxy(72 + 10 + ikeyCount, 21);
+				}
+			}
+			else
+			{
+				InputArduino* pButton = GetInputArduino(pPinballMaster, ch);
+				if (pButton != NULL)
+				{
+					bool value = pButton->GetInput();
+					pButton->SetInput(!value);
+				}
 			}
 		}
 		
@@ -222,9 +258,9 @@ uint8_t main()
 
 	//CheckMemoryLeak();
 
-	//delete serial;
 	delete inputs;
 	delete pPinballMaster;
 	delete ledPrint;
-    return 0;
+	//delete serial;
+	return 0;
 }

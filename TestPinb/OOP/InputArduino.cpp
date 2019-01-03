@@ -85,6 +85,10 @@ void InputArduino::CheckDebounce()
 					m_Pinball->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
 				}
 				m_Pinball->PlaySongToInput(this->m_portNumber);
+				
+				#ifdef DOS
+				m_InputValue = 0;
+				#endif
 			}
 			else
 			{

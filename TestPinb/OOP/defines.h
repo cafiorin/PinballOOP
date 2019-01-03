@@ -13,8 +13,8 @@ http://pinballhomemade.blogspot.com.br
 //#define ARDUINOLIB
 
 // To Show DEBUG messages
-#define DEBUGINPUTS
-//#define DEBUGMESSAGES
+// #define DEBUGINPUTS
+#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 //#define DEBUGMESSAGESCREATION
 //-----------------------
@@ -71,11 +71,6 @@ http://pinballhomemade.blogspot.com.br
 //END - Events
 
 //Inputs
-#define INPUT_MENU_BUTTON 33
-#define INPUT_UP_BUTTON 35
-#define INPUT_DOWN_BUTTON A2
-#define INPUT_ENTER_BUTTON A1
-#define INPUT_START_BUTTON A0
 #define INPUT_PLAYFIELD_INIT 0
 #define INPUT_SW_OUTBALL1 0 //conector 3C - pin 10
 #define INPUT_SW_OUTBALL2 1 //conector 3C - pin 9
@@ -244,6 +239,13 @@ http://pinballhomemade.blogspot.com.br
 #include "Arduino.h"
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #define DEBOUNCEREAD 5
+
+#define INPUT_MENU_BUTTON 33
+#define INPUT_UP_BUTTON 35
+#define INPUT_DOWN_BUTTON A2
+#define INPUT_ENTER_BUTTON A1
+#define INPUT_START_BUTTON A0
+
 #endif //ARDUINOLIB
 
 #ifdef DOS
@@ -263,9 +265,11 @@ using namespace std;
 #define F (const char *)
 #define uint8_t int
 
-#define A2 2
-#define A1 1
-#define A0 0
+#define INPUT_MENU_BUTTON 44
+#define INPUT_UP_BUTTON 45
+#define INPUT_DOWN_BUTTON 46
+#define INPUT_ENTER_BUTTON 47
+#define INPUT_START_BUTTON 48
 
 #endif // DOS
 

@@ -454,9 +454,12 @@ bool PinballMaster::PlayfieldEvent(Object *sender, uint8_t event, uint8_t value)
 	LogMessage(F("PinballMaster::PlayfieldEvent"));
 	#endif
 
-	if (m_Status == StatusPinball::playingmode && m_playerPlaying> 0 && m_playerPlaying < MAX_PLAYERS)
+	if (m_Status == StatusPinball::playingmode && m_playerPlaying>= 0 && m_playerPlaying < MAX_PLAYERS)
 	{
 		//TODO: m_Players[m_playerPlaying]->NotifyEvent(sender, event, valueToSend);
+		char szEvent[15];
+		sprintf(szEvent, "Action %d", event);
+		printText("field", szEvent, 0);
 	}
 
 	return true;

@@ -43,7 +43,7 @@ class PinballObject;
 class Multiplex : public PinballObject
 {
  public:
-	 Multiplex(const uint8_t S0, const uint8_t S1, const uint8_t S2, const uint8_t S3, const uint8_t SIG, const uint8_t OUTSIG, const uint8_t chipSelect1, const uint8_t chipSelect2, const uint8_t chipSelect3, const uint8_t chipSelect4, const uint8_t chipSelect5);
+	 Multiplex(const uint8_t S0, const uint8_t S1, const uint8_t S2, const uint8_t S3, const uint8_t SIG, const uint8_t OUTSIG, const uint8_t SIG1, const uint8_t SIG2, const uint8_t chipSelect1, const uint8_t chipSelect2, const uint8_t chipSelect3, const uint8_t chipSelect4, const uint8_t chipSelect5);
 	 void 		setup();
 	 void		enableChip(uint8_t chipNumber);
 	 uint8_t 	readChannel(uint8_t ch);
@@ -55,6 +55,8 @@ class Multiplex : public PinballObject
  private:
 	 int		_adrsPin[4];
 	 uint8_t 	_sig;
+	 uint8_t 	_sig1;
+	 uint8_t 	_sig2;
 	 uint8_t 	_outsig;
 
 	 uint8_t 	_chipSelect1;

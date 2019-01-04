@@ -42,7 +42,7 @@ static const uint8_t _muxChAddress[16][4] =
 };
 
 //-----------------------------------------------
-Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIG, const uint8_t OUTSIG, const uint8_t chipSelect1, const uint8_t chipSelect2, const uint8_t chipSelect3, const uint8_t chipSelect4, const uint8_t chipSelect5) : PinballObject()
+Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIG, const uint8_t OUTSIG, const uint8_t SIG1, const uint8_t SIG2, const uint8_t chipSelect1, const uint8_t chipSelect2, const uint8_t chipSelect3, const uint8_t chipSelect4, const uint8_t chipSelect5) : PinballObject()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -55,6 +55,8 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	_adrsPin[3] = S3;
 
 	_sig = SIG;
+	_sig1= SIG1;
+	_sig2= SIG2;
 	_outsig = OUTSIG;
 
 	_chipSelect1 = chipSelect1;
@@ -75,6 +77,8 @@ void Multiplex::setup()
 	uint8_t i;
 
 	pinMode(_sig, INPUT);
+	pinMode(_sig1, INPUT);
+	pinMode(_sig2, INPUT);
 	pinMode(_outsig, OUTPUT);
 
 	pinMode(_chipSelect1, OUTPUT);
@@ -183,20 +187,19 @@ uint8_t Multiplex::readChannel(uint8_t ch)
 	if (ch < 16)
 	{
 		enableChip(_chipSelect1);
+		_addressing(ch);
+		return digitalRead(_sig);
 	}
 	else if (ch >= 16 && ch < 32)
 	{
-		ch -= 16;
 		enableChip(_chipSelect2);
-	}
-	else if (ch >= 32)
-	{
-		ch -= 32;
-		enableChip(_chipSelect3);
+		_addressing(ch-16);
+		return digitalRead(_sig1);
 	}
 
-	_addressing(ch);
-	return digitalRead(_sig);
+	enableChip(_chipSelect3);
+	_addressing(ch-32);
+	return digitalRead(_sig2);
 }
 
 //-----------------------------------------------
@@ -228,7 +231,7 @@ void Multiplex::Loop()
 			}
 
 			digitalWrite(_chipSelect2, LOW);
-			read = digitalRead(_sig);
+			read = digitalRead(_sig1);
 			digitalWrite(_chipSelect2, HIGH);
 			input = m_Pinball->GetInput(ch + 16);
 			if (input != NULL)
@@ -237,7 +240,7 @@ void Multiplex::Loop()
 			}
 
 			digitalWrite(_chipSelect3, LOW);
-			read = digitalRead(_sig);
+			read = digitalRead(_sig2);
 			digitalWrite(_chipSelect3, HIGH);
 			input = m_Pinball->GetInput(ch + 32);
 			if (input != NULL)
@@ -277,11 +280,7 @@ void Multiplex::_addressing(uint8_t ch)
 	uint8_t i;
 	for (i = 0; i < 4; i ++)
 	{
-		#if defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MKL26Z64__)
-			digitalWriteFast(_adrsPin[i],_muxChAddress[ch][i]);
-		#else
-			digitalWrite(_adrsPin[i],_muxChAddress[ch][i]);
-		#endif
+		digitalWrite(_adrsPin[i],_muxChAddress[ch][i]);
 	}
 }
 

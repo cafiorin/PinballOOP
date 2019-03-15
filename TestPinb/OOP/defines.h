@@ -120,22 +120,22 @@ http://pinballhomemade.blogspot.com.br
 
 //Outputs Low Energy
 #define OUTPUT_LOW_INIT 0 //output in 5V
-#define OUTPUT_MOTOR_SR 0
-#define OUTPUT_LED_RAMP 1
-#define OUTPUT_MOTOR_RX 2
-#define OUTPUT_LED_BUMPER_LEFT 3
-#define OUTPUT_LED_BUMPER_CENTER 4
-#define OUTPUT_LED_BUMPER_RIGHT 5
-#define OUTPUT_FLIPPER_ON_5V 6
-#define OUTPUT_LOW_7 7
-#define OUTPUT_SR_HEADLIGHT 8 //output in 12V
-#define OUTPUT_RX_HEADLIGHT 9
-#define OUTPUT_RAMP_LOCK_ON 10
-#define OUTPUT_RAMP_LOCK_OFF 11
-#define OUTPUT_LOW_12 12
-#define OUTPUT_LOW_13 13
-#define OUTPUT_LOW_14 14
-#define OUTPUT_LOW_15 15
+#define OUTPUT_MOTOR_SR 8
+#define OUTPUT_LED_RAMP 9
+#define OUTPUT_MOTOR_RX 10
+#define OUTPUT_LED_BUMPER_LEFT 11
+#define OUTPUT_LED_BUMPER_CENTER 12
+#define OUTPUT_LED_BUMPER_RIGHT 13
+#define OUTPUT_FLIPPER_ON_5V 14
+#define OUTPUT_LOW_7 15
+#define OUTPUT_SR_HEADLIGHT 0 //output in 12V
+#define OUTPUT_RX_HEADLIGHT 1
+#define OUTPUT_RAMP_LOCK_ON 2
+#define OUTPUT_RAMP_LOCK_OFF 3
+#define OUTPUT_LOW_12 4
+#define OUTPUT_LOW_13 5
+#define OUTPUT_LOW_14 6
+#define OUTPUT_LOW_15 7
 #define OUTPUT_LOW_FINISH 11
 
 //Outputs high energy

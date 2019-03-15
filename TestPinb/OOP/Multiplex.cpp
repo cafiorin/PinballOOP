@@ -42,7 +42,7 @@ static const uint8_t _muxChAddress[16][4] =
 };
 
 //-----------------------------------------------
-Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIG, const uint8_t OUTSIG, const uint8_t SIG1, const uint8_t SIG2, const uint8_t chipSelect1, const uint8_t chipSelect2, const uint8_t chipSelect3, const uint8_t chipSelect4, const uint8_t chipSelect5) : PinballObject()
+Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIGINPUT1, const uint8_t SIGINPUT2, const uint8_t SIGINPUT3, const uint8_t SIGOUTPUT1, const uint8_t SIGOUTPUT2) : PinballObject()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -54,73 +54,31 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	_adrsPin[2] = S2;
 	_adrsPin[3] = S3;
 
-	_sig = SIG;
-	_sig1= SIG1;
-	_sig2= SIG2;
-	_outsig = OUTSIG;
+	_sigInput1 = SIGINPUT1;
+	_sigInput2 = SIGINPUT2;
+	_sigInput3 = SIGINPUT3;
 
-	_chipSelect1 = chipSelect1;
-	_chipSelect2 = chipSelect2;
-	_chipSelect3 = chipSelect3;
-	_chipSelect4 = chipSelect4;
-	_chipSelect5 = chipSelect5;
-}
-
-//-----------------------------------------------
-void Multiplex::setup()
-//-----------------------------------------------
-{
-	#ifdef DEBUGMESSAGES
-	LogMessage(F("Multiplex::setup"));
-	#endif
+	_sigOutput1 = SIGOUTPUT1;
+	_sigOutput2 = SIGOUTPUT2;
 
 	uint8_t i;
-
-	pinMode(_sig, INPUT);
-	pinMode(_sig1, INPUT);
-	pinMode(_sig2, INPUT);
-	pinMode(_outsig, OUTPUT);
-
-	pinMode(_chipSelect1, OUTPUT);
-	digitalWrite(_chipSelect1, HIGH);
-
-	pinMode(_chipSelect2, OUTPUT);
-	digitalWrite(_chipSelect2, HIGH);
-
-	pinMode(_chipSelect3, OUTPUT);
-	digitalWrite(_chipSelect3, HIGH);
-
-	pinMode(_chipSelect4, OUTPUT);
-	digitalWrite(_chipSelect4, HIGH);
-
-	pinMode(_chipSelect5, OUTPUT);
-	digitalWrite(_chipSelect5, HIGH);
-
 	for (i = 0; i < 4; i++)
 	{
 		pinMode(_adrsPin[i], OUTPUT);
-		digitalWrite(_adrsPin[i],LOW);
+		digitalWrite(_adrsPin[i], LOW);
 	}
 
-}
+	pinMode(_sigInput1, INPUT);
+	pinMode(_sigInput2, INPUT);
+	pinMode(_sigInput3, INPUT);
 
-//-----------------------------------------------
-void Multiplex::enableChip(uint8_t chipNumber)
-//-----------------------------------------------
-{
-	#ifdef DEBUGMESSAGES
-	LogMessage(F("Multiplex::enableChip"));
-	#endif
+	pinMode(_sigOutput1, OUTPUT);
+	pinMode(_sigOutput2, OUTPUT);
 
-	// set all to Disable (HIGH)
-	digitalWrite(_chipSelect1, HIGH);
-	digitalWrite(_chipSelect2, HIGH);
-	digitalWrite(_chipSelect3, HIGH);
-	digitalWrite(_chipSelect4, HIGH);
-	digitalWrite(_chipSelect5, HIGH);
+	digitalWrite(_sigOutput1, LOW);
+	digitalWrite(_sigOutput2, LOW);
 
-	//Enable only one
-	digitalWrite(chipNumber, LOW);
+	resetAllOutput();
 }
 
 //-----------------------------------------------
@@ -131,18 +89,12 @@ void Multiplex::resetAllOutput()
 	LogMessage(F("Multiplex::resetAllOutput"));
 	#endif
 
-	digitalWrite(_outsig, LOW);
-
-	digitalWrite(_chipSelect4, LOW);
-	digitalWrite(_chipSelect5, LOW);
-
+	digitalWrite(_sigOutput1, LOW);
+	digitalWrite(_sigOutput2, LOW);
 	for (uint8_t i = 0; i < 16; i++)
 	{
 		_addressing(i);
 	}
-
-	digitalWrite(_chipSelect4, HIGH);
-	digitalWrite(_chipSelect5, HIGH);
 }
 
 
@@ -154,21 +106,18 @@ void Multiplex::writeChannel(uint8_t ch,uint8_t value)
 	LogMessage(F("Multiplex::writeChannel"));
 	#endif
 
-	if (ch < 0 || ch > 32)
-		return ;
-
-	digitalWrite(_outsig, value);
-
-	if (ch < 16)
+	if (ch >= 0 && ch < 32)
 	{
-		_addressing(ch);
-		enableChip(_chipSelect4);
-	}
-	else
-	{
-		ch -= 16;
-		_addressing(ch);
-		enableChip(_chipSelect5);
+		if (ch < 16)
+		{
+			_addressing(ch);
+			digitalWrite(_sigOutput1, value);
+		}
+		else
+		{
+			_addressing(ch-16);
+			digitalWrite(_sigOutput2, value);
+		}
 	}
 }
 
@@ -181,25 +130,26 @@ uint8_t Multiplex::readChannel(uint8_t ch)
 	LogMessage(F("Multiplex::readChannel"));
 	#endif
 
-	if (ch < 0 || ch > 47)
-		return 0;
-
-	if (ch < 16)
+	if (ch >= 0 && ch < 48)
 	{
-		enableChip(_chipSelect1);
-		_addressing(ch);
-		return digitalRead(_sig);
-	}
-	else if (ch >= 16 && ch < 32)
-	{
-		enableChip(_chipSelect2);
-		_addressing(ch-16);
-		return digitalRead(_sig1);
+		if (ch < 16)
+		{
+			_addressing(ch);
+			return digitalRead(_sigInput1);
+		}
+		else if (ch >= 16 && ch < 32)
+		{
+			_addressing(ch-16);
+			return digitalRead(_sigInput2);
+		}
+		else if (ch > 32)
+		{
+			_addressing(ch-32);
+			return digitalRead(_sigInput2);
+		}
 	}
 
-	enableChip(_chipSelect3);
-	_addressing(ch-32);
-	return digitalRead(_sig2);
+	return 0;
 }
 
 //-----------------------------------------------
@@ -212,37 +162,32 @@ void Multiplex::Loop()
 		LogMessage(F("Multiplex::Loop"));
 		#endif
 
-		digitalWrite(_chipSelect1, HIGH);
-		digitalWrite(_chipSelect2, HIGH);
-		digitalWrite(_chipSelect3, HIGH);
+		uint8_t read = 0;
+		Input *input = NULL;
 
 		for (uint8_t ch = 0; ch < 16; ch++)
 		{
 			_addressing(ch);
 
-			uint8_t read;
-			digitalWrite(_chipSelect1, LOW);
-			read = digitalRead(_sig);
-			digitalWrite(_chipSelect1, HIGH);
-			Input *input = m_Pinball->GetInput(ch);
+			//channel 0-15
+			read = digitalRead(_sigInput1);
+			input = m_Pinball->GetInput(ch);
 			if (input != NULL)
 			{
 				input->SetInput(read);
 			}
 
-			digitalWrite(_chipSelect2, LOW);
-			read = digitalRead(_sig1);
-			digitalWrite(_chipSelect2, HIGH);
-			input = m_Pinball->GetInput(ch + 16);
+			//channel 16-31
+			read = digitalRead(_sigInput2);
+			input = m_Pinball->GetInput(ch+16);
 			if (input != NULL)
 			{
 				input->SetInput(read);
 			}
 
-			digitalWrite(_chipSelect3, LOW);
-			read = digitalRead(_sig2);
-			digitalWrite(_chipSelect3, HIGH);
-			input = m_Pinball->GetInput(ch + 32);
+			//channel 32-47
+			read = digitalRead(_sigInput3);
+			input = m_Pinball->GetInput(ch+32);
 			if (input != NULL)
 			{
 				input->SetInput(read);
@@ -277,11 +222,12 @@ void Multiplex::Loop()
 void Multiplex::_addressing(uint8_t ch)
 //-----------------------------------------------
 {
-	uint8_t i;
-	for (i = 0; i < 4; i ++)
+	if (ch < 16)
 	{
-		digitalWrite(_adrsPin[i],_muxChAddress[ch][i]);
+		uint8_t i;
+		for (i = 0; i < 4; i++)
+		{
+			digitalWrite(_adrsPin[i], _muxChAddress[ch][i]);
+		}
 	}
 }
-
-

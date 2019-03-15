@@ -13,7 +13,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 
 //-------------------------------------------------------//
-Bumper::Bumper(uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t LedNumber) : PinballObject()
+Bumper::Bumper(uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t portLed) : PinballObject()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -22,8 +22,7 @@ Bumper::Bumper(uint8_t portNumberInput, uint8_t portNumberOutput,uint8_t LedNumb
 
 	m_input = new Input(portNumberInput,this);
 	m_output = new Output(portNumberOutput);
-	m_Led = LedNumber;
-	m_TimerLed = new Timer(200, this, TimerType::once);
+	m_Led = new Output(portLed);
 }
 
 //-------------------------------------------------------//
@@ -37,6 +36,7 @@ Bumper::~Bumper()
 	/*
 	delete m_input;
 	delete m_output;
+	delete m_Led;
 	delete m_TimerLed;
 	*/
 }
@@ -49,24 +49,12 @@ bool Bumper::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 	LogMessage(F("Bumper::NotifyEvent"));
 	#endif
 
-	LedControl *pLedControl = m_Pinball->GetLedControl();
 	if (event == EVENT_EDGEPOSITIVE)
 	{
 		m_output->TurnOnByTimer(TIME_COIL_ON);
 		m_Pinball->NotifyEvent(sender, event, value);
-		if (pLedControl != NULL)
-		{
-			pLedControl->TurnOn(m_Led);
-		}
-		m_TimerLed->Start();
+		m_Led->TurnOnByTimer(1000);
 		return true;
-	}
-	else if (event == EVENT_TIMEISOVER)
-	{
-		if (pLedControl != NULL)
-		{
-			pLedControl->TurnOff(m_Led);
-		}
 	}
 	return false;
 }

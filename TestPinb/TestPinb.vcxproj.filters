@@ -114,6 +114,12 @@
     <ClInclude Include="OOP\LedControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OOP\InputArduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OOP\OutputArduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -195,6 +201,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\LedControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\InputArduino.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOP\OutputArduino.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

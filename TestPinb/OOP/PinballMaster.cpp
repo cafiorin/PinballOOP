@@ -12,6 +12,8 @@ http://pinballhomemade.blogspot.com.br
 #include "Utils.h"
 
 #include "Input.h"
+#include "InputArduino.h"
+//#include "OutputArduino.h"
 #include "Timer.h"
 #include "Output.h"
 #include "SlingShot.h"
@@ -112,7 +114,6 @@ void PinballMaster::InitVars()
 	m_TurnFlipperOn = NULL;
 	m_DropTarget5 = NULL;
 	m_DropTarget3 = NULL;
-	m_GI = NULL;
 }
 
 
@@ -130,14 +131,21 @@ void PinballMaster::CreateObjects()
 
 	m_TimerToShowPlayers = new Timer(1000, NULL, TimerType::continuous);
 
-	m_GI = new Output(OUTPUT_GI_ON_12V);
-	m_GI->TurnOn();
+	m_MenuButton = new InputArduino(INPUT_MENU_BUTTON);
+	m_UpButton = new InputArduino(INPUT_UP_BUTTON);
+	m_DownButton = new InputArduino(INPUT_DOWN_BUTTON);
+	m_EnterButton = new InputArduino(INPUT_ENTER_BUTTON);
+	m_StartButton = new InputArduino(INPUT_START_BUTTON);
 
-	new Input(INPUT_START_BUTTON);
-	new Input(INPUT_MENU_BUTTON);
-	new Input(INPUT_UP_BUTTON);
-	new Input(INPUT_DOWN_BUTTON);
-	new Input(INPUT_ENTER_BUTTON);
+	m_MotorSR = new Output(OUTPUT_MOTOR_SR);
+	m_MotorRX = new Output(OUTPUT_MOTOR_RX);
+
+	m_LedRamp = new Output(OUTPUT_LED_RAMP);
+
+	m_HEADLIGHT_SR = new Output(OUTPUT_SR_HEADLIGHT);
+	m_HEADLIGHT_RX = new Output(OUTPUT_RX_HEADLIGHT);
+	m_LockRampOn   =  new Output(OUTPUT_RAMP_LOCK_ON);
+	m_LockRampOff  = new Output(OUTPUT_RAMP_LOCK_OFF);
 
 	m_TurnFlipperOn = new Output(OUTPUT_FLIPPER_ON_5V);
 	m_OutBall = new OutBall(INPUT_SW_OUTBALL1, OUTPUT_OUTBALL1_48V, INPUT_SW_OUTBALL2, OUTPUT_OUTBALL2_48V);
@@ -167,9 +175,9 @@ void PinballMaster::CreateObjects()
 
 	new Input(INPUT_SW_TARGET_YELLOW1);
 
-	new Bumper(INPUT_SW_BUMPER_LEFT, OUTPUT_BUMPER_LEFT_48V,LED_BUMPER_LEFT);
-	new Bumper(INPUT_SW_BUMPER_CENTER, OUTPUT_BUMPER_CENTER_48V, LED_BUMPER_CENTER);
-	new Bumper(INPUT_SW_BUMPER_RIGHT, OUTPUT_BUMPER_RIGHT_48V, LED_BUMPER_RIGHT);
+	new Bumper(INPUT_SW_BUMPER_LEFT, OUTPUT_BUMPER_LEFT_48V, OUTPUT_LED_BUMPER_LEFT);
+	new Bumper(INPUT_SW_BUMPER_CENTER, OUTPUT_BUMPER_CENTER_48V, OUTPUT_LED_BUMPER_CENTER);
+	new Bumper(INPUT_SW_BUMPER_RIGHT, OUTPUT_BUMPER_RIGHT_48V, OUTPUT_LED_BUMPER_RIGHT);
 
 	new Input(INPUT_SW_ROLLOVER_STAR_GREEN);
 
@@ -490,7 +498,7 @@ bool PinballMaster::SetupTest(uint8_t event)
 		if (m_Menu != NULL)
 		{
 			m_Menu->FinishTest();
-			m_Pinball->printText("Pinball", "OK", 0);
+			printText("Pinball", "OK", 0);
 		}
 		m_Status = StatusPinball::attractmode;
 	}
@@ -528,7 +536,9 @@ void PinballMaster::StartGame(uint8_t Players)
 
 	m_nPlayers = Players;
 
+	printText("Player", "0", 0);
 	m_Status = StatusPinball::playingmode;
+	GetNewBall();
 
 	m_playerPlaying = 0;
 
@@ -540,6 +550,7 @@ void PinballMaster::StartGame(uint8_t Players)
 void PinballMaster::PlayerLostBall()
 //---------------------------------------------------------------------//
 {
+	GetNewBall();
 }
 
 //---------------------------------------------------------------------//

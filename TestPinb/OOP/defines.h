@@ -9,12 +9,12 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
-//#define DOS
-#define ARDUINOLIB
+#define DOS
+//#define ARDUINOLIB
 
 // To Show DEBUG messages
-#define DEBUGINPUTS
-//#define DEBUGMESSAGES
+// #define DEBUGINPUTS
+#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 //#define DEBUGMESSAGESCREATION
 //-----------------------
@@ -27,7 +27,7 @@ http://pinballhomemade.blogspot.com.br
 #define LAST_STAGE 5
 
 #define MAX_NAME 15
-#define MAX_LEDS 66
+#define MAX_LEDS 58
 #define MAX_BALLS 3
 #define MAX_PLAYERS 8
 #define MAX_STAGES 1
@@ -44,8 +44,6 @@ http://pinballhomemade.blogspot.com.br
 #define COMM_INIT_THEME_STAGE3 5
 #define COMM_INIT_THEME_STAGE4 6
 #define COMM_INIT_THEME_STAGE5 7
-
-
 
 //Events
 #define EVENT_EDGEPOSITIVE 1
@@ -73,76 +71,72 @@ http://pinballhomemade.blogspot.com.br
 //END - Events
 
 //Inputs
-#define INPUT_MENU_BUTTON 0
-#define INPUT_UP_BUTTON 1
-#define INPUT_DOWN_BUTTON 2
-#define INPUT_ENTER_BUTTON 3
-#define INPUT_START_BUTTON 4
-#define INPUT_PLAYFIELD_INIT 5
-#define INPUT_SW_OUTBALL1 5
-#define INPUT_SW_OUTBALL2 6
-#define INPUT_SW_LAUNCHBALL 7
-#define INPUT_SW_SLINGSHOT_LEFT1 8
-#define INPUT_SW_SLINGSHOT_LEFT2 9
-#define INPUT_SW_SLINGSHOT_RIGHT1 10
-#define INPUT_SW_SLINGSHOT_RIGHT2 11
-#define INPUT_SW_OUTLANE_LEFT 12
-#define INPUT_SW_OUTLANE_RIGHT 13
-#define INPUT_SW_RETURNBALL_LEFT 14
-#define INPUT_SW_RETURNBALL_RIGHT 15
-#define INPUT_SW_TARGET_RED1 16
-#define INPUT_SW_TARGET_GREEN1 17
-#define INPUT_SW_TARGET_YELLOW1 18
-#define INPUT_SW_TARGET_RED2 19
-#define INPUT_SW_TARGET_GREEN2 20
-#define INPUT_SW_TARGET_YELLOW2 21
-#define INPUT_SW_DROPTARGET_51 22
-#define INPUT_SW_DROPTARGET_52 23
-#define INPUT_SW_DROPTARGET_53 24
-#define INPUT_SW_DROPTARGET_54 25
-#define INPUT_SW_DROPTARGET_55 26
-#define INPUT_SW_DROPTARGET_31 27
-#define INPUT_SW_DROPTARGET_32 28
-#define INPUT_SW_DROPTARGET_33 29
-#define INPUT_SW_ROLLOVER_STAR_GREEN 30
-#define INPUT_SW_ROLLOVER_STAR_RED1 31
-#define INPUT_SW_ROLLOVER_STAR_RED2 32
-#define INPUT_SW_ROLLOVER_LEFT 33
-#define INPUT_SW_ROLLOVER_CENTER 34
-#define INPUT_SW_ROLLOVER_RIGHT 35
-#define INPUT_SW_BUMPER_LEFT 36
-#define INPUT_SW_BUMPER_CENTER 37
-#define INPUT_SW_BUMPER_RIGHT 38
-#define INPUT_SW_RAMP_IN 39
-#define INPUT_SW_RAMP_OUT1 40
-#define INPUT_SW_RAMP_OUT2 41
-#define INPUT_SW_SPINNER 42
-#define INPUT_SW_HOLE 43
-#define INPUT_SW_ACCBALL1 44
-#define INPUT_SW_ACCBALL2 45
-#define INPUT_SW_ACCBALL3 46
-#define INPUT_SW_ACCBALL4 47
-#define INPUT_PLAYFIELD_FINISH 48 //<==Last
+#define INPUT_PLAYFIELD_INIT 0
+#define INPUT_SW_OUTBALL1 0 //conector 3C - pin 10
+#define INPUT_SW_OUTBALL2 1 //conector 3C - pin 9
+#define INPUT_SW_LAUNCHBALL 2 //conector 3C - pin 8
+#define INPUT_SW_SLINGSHOT_LEFT1 4 //conector 3C - pin 6 
+#define INPUT_SW_SLINGSHOT_LEFT2 6 //conector 3C - pin 4 
+#define INPUT_SW_SLINGSHOT_RIGHT1 8 //conector 3C - pin 1 
+#define INPUT_SW_SLINGSHOT_RIGHT2 7 //conector 3C - pin 2 
+#define INPUT_SW_OUTLANE_LEFT 9 //conector 3C - pin 20 
+#define INPUT_SW_OUTLANE_RIGHT 5 //conector 3C - pin 5
+#define INPUT_SW_RETURNBALL_LEFT 3 //conector 3C - pin 7
+#define INPUT_SW_RETURNBALL_RIGHT 10 //conector 3C - pin 19 
+#define INPUT_SW_TARGET_RED1 13 //conector 3C - pin 16 
+#define INPUT_SW_TARGET_GREEN1 11 //conector 3C - pin 18 
+#define INPUT_SW_TARGET_YELLOW1 28 //conector 4D - pin 7 
+#define INPUT_SW_TARGET_RED2 18 //conector 4D - pin 12 
+#define INPUT_SW_TARGET_GREEN2 26 //conector 4D - pin 1 
+#define INPUT_SW_TARGET_YELLOW2 25 //conector 4D - pin 13
+#define INPUT_SW_DROPTARGET_51 34 //conector 5E - pin 1
+#define INPUT_SW_DROPTARGET_52 37 //conector 5E - pin 2
+#define INPUT_SW_DROPTARGET_53 41 //conector 5E - pin 3
+#define INPUT_SW_DROPTARGET_54 36 //conector 5E - pin 4
+#define INPUT_SW_DROPTARGET_55 33 //conector 5E - pin 11
+#define INPUT_SW_DROPTARGET_31 38 //conector 5E - pin 12
+#define INPUT_SW_DROPTARGET_32 39 //conector 5E - pin 13 
+#define INPUT_SW_DROPTARGET_33 40 //conector 5E - pin 14
+#define INPUT_SW_ROLLOVER_STAR_GREEN 30 //conector 4D - pin 16
+#define INPUT_SW_ROLLOVER_STAR_RED1 21 //conector 4D - pin 14
+#define INPUT_SW_ROLLOVER_STAR_RED2 22 //conector 4D - pin 11
+#define INPUT_SW_ROLLOVER_LEFT 17 //conector 4D - pin 2 
+#define INPUT_SW_ROLLOVER_CENTER 20 //conector 4D - pin 4 
+#define INPUT_SW_ROLLOVER_RIGHT 15 //conector 4D - pin 5 
+#define INPUT_SW_BUMPER_LEFT 24 //conector 4D - pin 8 
+#define INPUT_SW_BUMPER_CENTER 27 //conector 4D - pin 9 
+#define INPUT_SW_BUMPER_RIGHT 14 //conector 4D - pin 10 
+#define INPUT_SW_RAMP_IN 35 //conector 5E - pin 15
+#define INPUT_SW_RAMP_OUT1 42 //conector 5E - pin 16
+#define INPUT_SW_RAMP_OUT2 43 //conector 5E - pin 6
+#define INPUT_SW_SPINNER 12 //conector 3C - pin 17 
+#define INPUT_SW_HOLE 19 //conector 4D - pin 6 
+#define INPUT_SW_ACCBALL1 29 //conector 4D - pin 19
+#define INPUT_SW_ACCBALL2 32 //conector 4D - pin 18 
+#define INPUT_SW_ACCBALL3 23 //conector 4D - pin 17
+#define INPUT_SW_ACCBALL4 31 //conector 4D - pin 15
+#define INPUT_SW_ACCJUMP  16 //conector 4D - pin 20
+#define INPUT_PLAYFIELD_FINISH 43 //<==Last
 
 //Outputs Low Energy
-#define OUTPUT_LOW_INIT 0
-#define OUTPUT_FLIPPER_ON_5V 0
-#define OUTPUT_LOW_1 1
-#define OUTPUT_LOW_2 2
-#define OUTPUT_LOW_3 3
-#define OUTPUT_LOW_4 4
-#define OUTPUT_LOW_5 5
-#define OUTPUT_LOW_6 6
+#define OUTPUT_LOW_INIT 0 //output in 5V
+#define OUTPUT_MOTOR_SR 0
+#define OUTPUT_LED_RAMP 1
+#define OUTPUT_MOTOR_RX 2
+#define OUTPUT_LED_BUMPER_LEFT 3
+#define OUTPUT_LED_BUMPER_CENTER 4
+#define OUTPUT_LED_BUMPER_RIGHT 5
+#define OUTPUT_FLIPPER_ON_5V 6
 #define OUTPUT_LOW_7 7
-#define OUTPUT_GI_ON_12V 8 //12V
-#define OUTPUT_LOW_9 9
-#define OUTPUT_LOW_10 10
-#define OUTPUT_LOW_11 11
+#define OUTPUT_SR_HEADLIGHT 8 //output in 12V
+#define OUTPUT_RX_HEADLIGHT 9
+#define OUTPUT_RAMP_LOCK_ON 10
+#define OUTPUT_RAMP_LOCK_OFF 11
 #define OUTPUT_LOW_12 12
 #define OUTPUT_LOW_13 13
 #define OUTPUT_LOW_14 14
 #define OUTPUT_LOW_15 15
-#define OUTPUT_LOW_FINISH 15
+#define OUTPUT_LOW_FINISH 11
 
 //Outputs high energy
 #define OUTPUT_COINS_INIT 16
@@ -160,7 +154,7 @@ http://pinballhomemade.blogspot.com.br
 #define OUTPUT_ACCBALL_48V 27
 #define OUTPUT_COINS_FINISH 27
 
-//LEDS
+//LEDS (STRIP)
 #define LED_FIRST 0
 #define LED_LAUNCHBALL 0
 
@@ -198,47 +192,42 @@ http://pinballhomemade.blogspot.com.br
 #define LED_RAMP_B2 27
 #define LED_RAMP_A1 28
 #define LED_RAMP_A2 29
-#define LED_RAMP 30
 
-#define LED_DROPTARGET_51 31
-#define LED_DROPTARGET_52 32
-#define LED_DROPTARGET_53 33
-#define LED_DROPTARGET_54 34
-#define LED_DROPTARGET_55 35
+#define LED_DROPTARGET_51 30
+#define LED_DROPTARGET_52 31
+#define LED_DROPTARGET_53 32
+#define LED_DROPTARGET_54 33
+#define LED_DROPTARGET_55 34
 
-#define LED_TARGET_GREEN2 36 //LED_DROPTARGET_32
-#define LED_TARGET_YELLOW2 37 //LED_DROPTARGET_33
-#define LED_TARGET_RED2 38 //LED_DROPTARGET_31
+#define LED_TARGET_GREEN2 35 //LED_DROPTARGET_32
+#define LED_TARGET_YELLOW2 36 //LED_DROPTARGET_33
+#define LED_TARGET_RED2 37 //LED_DROPTARGET_31
 
-#define LED_LOOP_B1 39
-#define LED_LOOP_B2 40
-#define LED_LOOP_A1 41
-#define LED_LOOP_A2 42
+#define LED_LOOP_B1 38
+#define LED_LOOP_B2 39
+#define LED_LOOP_A1 40
+#define LED_LOOP_A2 41
 
-#define LED_BUMPER_LEFT 43
-#define LED_BUMPER_CENTER 44
-#define LED_BUMPER_RIGHT 45
+#define LED_HOLE_B1 42
+#define LED_HOLE_B2 43
+#define LED_HOLE_A1 44
+#define LED_HOLE_A2 45
 
-#define LED_HOLE_B1 46
-#define LED_HOLE_B2 47
-#define LED_HOLE_A1 48
-#define LED_HOLE_A2 49
+#define LED_TARGET_YELLOW1_B1 46
+#define LED_TARGET_YELLOW1_B2 47
+#define LED_TARGET_YELLOW1_A1 48
+#define LED_TARGET_YELLOW1_A2 49
 
-#define LED_TARGET_YELLOW1_B1 50
-#define LED_TARGET_YELLOW1_B2 51
-#define LED_TARGET_YELLOW1_A1 52
-#define LED_TARGET_YELLOW1_A2 53
+#define LED_ROLLOVER_LEFT 50
+#define LED_ROLLOVER_CENTER 51
+#define LED_ROLLOVER_RIGHT 52
 
-#define LED_ROLLOVER_LEFT 54
-#define LED_ROLLOVER_CENTER 55
-#define LED_ROLLOVER_RIGHT 56
-
-#define LED_TARGET_HIGHER_B1 57
-#define LED_TARGET_HIGHER_B2 58
-#define LED_TARGET_HIGHER_B3 59
-#define LED_TARGET_HIGHER_A1 60
-#define LED_TARGET_HIGHER_A2 61
-#define LED_LAST 61
+#define LED_TARGET_HIGHER_B1 53
+#define LED_TARGET_HIGHER_B2 54
+#define LED_TARGET_HIGHER_B3 55
+#define LED_TARGET_HIGHER_A1 56
+#define LED_TARGET_HIGHER_A2 57
+#define LED_LAST 57
 
 //POINTS - SCORE
 #define SCORE_DEFAULT 1
@@ -250,6 +239,13 @@ http://pinballhomemade.blogspot.com.br
 #include "Arduino.h"
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #define DEBOUNCEREAD 5
+
+#define INPUT_MENU_BUTTON 33
+#define INPUT_UP_BUTTON 35
+#define INPUT_DOWN_BUTTON A2
+#define INPUT_ENTER_BUTTON A1
+#define INPUT_START_BUTTON A0
+
 #endif //ARDUINOLIB
 
 #ifdef DOS
@@ -268,6 +264,13 @@ using namespace std;
 #define __FlashStringHelper char
 #define F (const char *)
 #define uint8_t int
+
+#define INPUT_MENU_BUTTON 44
+#define INPUT_UP_BUTTON 45
+#define INPUT_DOWN_BUTTON 46
+#define INPUT_ENTER_BUTTON 47
+#define INPUT_START_BUTTON 48
+
 #endif // DOS
 
 #endif

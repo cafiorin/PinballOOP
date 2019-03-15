@@ -369,7 +369,7 @@ bool PinballMaster::EventMenuButton(Object *sender)
 		m_Status = StatusPinball::menusetup;
 		m_Menu->PressButtonMenu();
 	}
-	else if (m_Status == StatusPinball::menutest || 
+	else if (m_Status == StatusPinball::menutest ||
 			 m_Status == StatusPinball::menusetup)
 	{
 		SetupTest(EVENT_TEST_EXIT_MENU);
@@ -454,8 +454,11 @@ bool PinballMaster::PlayfieldEvent(Object *sender, uint8_t event, uint8_t value)
 	LogMessage(F("PinballMaster::PlayfieldEvent"));
 	#endif
 
-	if (m_Status == StatusPinball::playingmode && m_playerPlaying> 0 && m_playerPlaying < MAX_PLAYERS)
+	if (m_Status == StatusPinball::playingmode && m_playerPlaying>= 0 && m_playerPlaying < MAX_PLAYERS)
 	{
+	    char szValue[6];
+	    sprintf(szValue, "%d", value);
+        printText("Event", szValue, 0);
 		//TODO: m_Players[m_playerPlaying]->NotifyEvent(sender, event, valueToSend);
 	}
 

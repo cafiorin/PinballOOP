@@ -42,7 +42,7 @@ static const uint8_t _muxChAddress[16][4] =
 };
 
 //-----------------------------------------------
-Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIGINPUT1, const uint8_t SIGINPUT2, const uint8_t SIGINPUT3, const uint8_t SIGOUTPUT1, const uint8_t SIGOUTPUT2) : PinballObject()
+Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIGINPUT1, const uint8_t SIGINPUT2, const uint8_t SIGINPUT3, const uint8_t SIGOUTPUT1, const uint8_t SIGOUTPUT2, const uint8_t ENABLEOUTPUT1, const uint8_t ENABLEOUTPUT2) : PinballObject()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -61,6 +61,9 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	_sigOutput1 = SIGOUTPUT1;
 	_sigOutput2 = SIGOUTPUT2;
 
+	_enableOutput1 = ENABLEOUTPUT1;
+	_enableOutput2 = ENABLEOUTPUT2;
+
 	uint8_t i;
 	for (i = 0; i < 4; i++)
 	{
@@ -75,8 +78,8 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	pinMode(_sigOutput1, OUTPUT);
 	pinMode(_sigOutput2, OUTPUT);
 
-	digitalWrite(_sigOutput1, LOW);
-	digitalWrite(_sigOutput2, LOW);
+	pinMode(_enableOutput1, OUTPUT);
+	pinMode(_enableOutput2, OUTPUT);
 
 	resetAllOutput();
 }
@@ -89,12 +92,21 @@ void Multiplex::resetAllOutput()
 	LogMessage(F("Multiplex::resetAllOutput"));
 	#endif
 
+	digitalWrite(_enableOutput1, LOW);
+	digitalWrite(_enableOutput2, LOW);
+
 	digitalWrite(_sigOutput1, LOW);
 	digitalWrite(_sigOutput2, LOW);
+
 	for (uint8_t i = 0; i < 16; i++)
 	{
 		_addressing(i);
+		delay(25);
 	}
+
+	digitalWrite(_enableOutput1, HIGH);
+	digitalWrite(_enableOutput2, HIGH);
+
 }
 
 
@@ -110,13 +122,22 @@ void Multiplex::writeChannel(uint8_t ch,uint8_t value)
 	{
 		if (ch < 16)
 		{
+			digitalWrite(_enableOutput1, LOW);
 			_addressing(ch);
+			delay(25);
+
 			digitalWrite(_sigOutput1, value);
+			digitalWrite(_enableOutput1, HIGH);
+
 		}
 		else
 		{
+			digitalWrite(_enableOutput2, LOW);
 			_addressing(ch-16);
+			delay(25);
+
 			digitalWrite(_sigOutput2, value);
+			digitalWrite(_enableOutput2, HIGH);
 		}
 	}
 }

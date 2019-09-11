@@ -126,7 +126,7 @@ void PinballMaster::CreateObjects()
 	LogMessage(F("PinballMaster::CreateObjects"));
 	#endif
 
-	m_Multiplex = new Multiplex(23, 25, 27, 29, 22, 34, 36, 24, 41);
+	m_Multiplex = new Multiplex(/*S0*/23, /*S1*/25, /*S2*/27,/*S3*/29, /*SIn0*/22, /*SIn1*/34, /*SIn2*/36, /*SOut0*/24, /*SOut1*/41,/*enableOut0*/1,/*enableOut1*/2);
 	m_LedControl = new LedControl();
 
 	m_TimerToShowPlayers = new Timer(1000, NULL, TimerType::continuous);

@@ -154,7 +154,7 @@ uint8_t main()
 	HardwareSerial *ledPrint = new HardwareSerial(100, 1);
 
 	HardwareSerial *inputs = new HardwareSerial(1, 30);
-	inputs->println("Menu/Up/Down/Enter - 44,45,46,37");
+	inputs->println("Menu/Up/Down/Enter - 44,45,46,47");
 	inputs->println("=>Start Button - 48");
 	inputs->println("OUTBALL1/2     - 0,1");
 	inputs->println("LAUNCHBALL     - 2");

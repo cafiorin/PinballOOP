@@ -40,3 +40,7 @@ x64/Debug/TestPinb.pdb
 TestPinb/TestPinb.layout
 TestPinb/TestPinb.cbp
 TestPinb/TestPinb.cscope_file_list
+*.db
+*.ipch
+*.opendb
+*.suo

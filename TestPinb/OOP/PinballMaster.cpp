@@ -126,7 +126,7 @@ void PinballMaster::CreateObjects()
 	LogMessage(F("PinballMaster::CreateObjects"));
 	#endif
 
-	m_Multiplex = new Multiplex(23, 25, 27, 29, 22, 24, 26, 28, 30, 31, 32);
+	m_Multiplex = new Multiplex(/*S0*/23, /*S1*/25, /*S2*/27,/*S3*/29, /*SIn0*/22, /*SIn1*/34, /*SIn2*/36, /*SOut0*/24, /*SOut1*/41,/*enableOut0*/1,/*enableOut1*/2);
 	m_LedControl = new LedControl();
 
 	m_TimerToShowPlayers = new Timer(1000, NULL, TimerType::continuous);
@@ -454,9 +454,12 @@ bool PinballMaster::PlayfieldEvent(Object *sender, uint8_t event, uint8_t value)
 	LogMessage(F("PinballMaster::PlayfieldEvent"));
 	#endif
 
-	if (m_Status == StatusPinball::playingmode && m_playerPlaying> 0 && m_playerPlaying < MAX_PLAYERS)
+	if (m_Status == StatusPinball::playingmode && m_playerPlaying>= 0 && m_playerPlaying < MAX_PLAYERS)
 	{
 		//TODO: m_Players[m_playerPlaying]->NotifyEvent(sender, event, valueToSend);
+		char szEvent[15];
+		sprintf(szEvent, "%d", event);
+		printText("event", szEvent, 0);
 	}
 
 	return true;

@@ -38,5 +38,9 @@ x64/Debug/lnk{E27513BD-0240-449C-9B64-2E8E8BE5288C}.tmp
 x64/Debug/TestPinb.ilk
 x64/Debug/TestPinb.pdb
 TestPinb/TestPinb.layout
-TestPinb/TestPinb.cscope_file_list
 TestPinb/TestPinb.cbp
+TestPinb/TestPinb.cscope_file_list
+*.db
+*.ipch
+*.opendb
+*.suo

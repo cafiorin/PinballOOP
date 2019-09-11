@@ -102,6 +102,10 @@ bool Menu::Init()
 void Menu::PressButtonMenu()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage(F("Menu::PressButtonMenu"));
+	#endif
+
 	if (!m_isShowing)
 	{
 		m_isShowing = true;
@@ -125,18 +129,30 @@ void Menu::PressButtonMenu()
 void Menu::PressButtonEnter()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGES
+	LogMessage(F("Menu::PressButtonEnter"));
+	#endif
+
 	if (m_isShowing)
 	{
 		if (m_backSelected && m_menuOptionSelected->GetParent() == NULL)
 		{
 			m_Pinball->NotifyEvent(this, EVENT_TEST_EXIT_MENU,0);
 			m_isShowing = false;
+
+			#ifdef DEBUGMESSAGES
+			LogMessage(F("Menu::PressButtonEnter 1"));
+			#endif
 		}
 		//Action
 		else if (m_subOptionSelected->GetAction() != -1 && !m_backSelected)
 		{
 			m_Pinball->NotifyEvent(this, m_subOptionSelected->GetAction(),0);
 			m_isShowing = false;
+			
+			#ifdef DEBUGMESSAGES
+			LogMessage(F("Menu::PressButtonEnter 2"));
+			#endif
 		}
 		else
 		{
@@ -146,6 +162,11 @@ void Menu::PressButtonEnter()
 				m_menuOptionSelected = m_subOptionSelected;
 				m_subOption = 0;
 				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
+
+				#ifdef DEBUGMESSAGES
+				LogMessage(F("Menu::PressButtonEnter 3"));
+				#endif
+
 			}
 			else
 			{
@@ -154,6 +175,11 @@ void Menu::PressButtonEnter()
 				m_subOption = 0;
 				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
 				m_backSelected = false;
+
+				#ifdef DEBUGMESSAGES
+				LogMessage(F("Menu::PressButtonEnter 4"));
+				#endif
+
 			}
 			PrintMenu(ButtonPressed::menu);
 		}

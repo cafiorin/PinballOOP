@@ -20,15 +20,15 @@ enum TimerType
 class Timer : public PinballObject
 {
 public:
-	Timer(long time, Object *parent=NULL, TimerType type=TimerType::once, bool addToListPinball=true);
+	Timer(unsigned long time, Object *parent=NULL, TimerType type=TimerType::once, bool addToListPinball=true);
 	virtual ~Timer();
 	virtual void Loop();
 	Object *m_parent;
 	TimerType m_type;
 
 	void Start();
-	bool Check(long time=0);
-	void ChangeTimerValue(long time) 
+	bool Check(unsigned long time=0);
+	void ChangeTimerValue(unsigned long time) 
 	{ 
 		m_time = time; 
 	}
@@ -40,8 +40,8 @@ protected:
 	#endif
 	
 	#ifdef ARDUINOLIB
-	long m_time;
-	long m_lastTime;  // the last time
+	unsigned long m_time;
+	unsigned long m_lastTime;  // the last time
 	#endif
 };
 #endif // !defined(Timer__INCLUDED_)

@@ -101,7 +101,7 @@ void Multiplex::resetAllOutput()
 	for (uint8_t i = 0; i < 16; i++)
 	{
 		_addressing(i);
-		delay(25);
+		delay(100);
 	}
 
 	digitalWrite(_enableOutput1, HIGH);
@@ -124,7 +124,7 @@ void Multiplex::writeChannel(uint8_t ch,uint8_t value)
 		{
 			digitalWrite(_enableOutput1, LOW);
 			_addressing(ch);
-			delay(25);
+			delay(100);
 
 			digitalWrite(_sigOutput1, value);
 			digitalWrite(_enableOutput1, HIGH);

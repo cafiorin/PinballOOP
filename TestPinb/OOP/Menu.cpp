@@ -20,19 +20,19 @@ Menu::Menu()
 	m_isShowing = false;
 
 	//Menu
-	m_pMenu = new MenuString(NULL, -1, "Menu");
-	MenuString *pTest = new MenuString(m_pMenu, -1, "Test");
-	MenuString *pConfig = new MenuString(m_pMenu, -1, "Config");
+	m_pMenu = new MenuString(NULL, EVENT_NULL, "Menu");
+	MenuString *pTest = new MenuString(m_pMenu, EVENT_NULL, "Test");
+	MenuString *pConfig = new MenuString(m_pMenu, EVENT_NULL, "Config");
 
 	//Test
-	MenuString *pLed = new MenuString(pTest, -1, "Led");
-	MenuString *pCoin = new MenuString(pTest, -1, "Coin");
-	MenuString *pOutput = new MenuString(pTest, -1, "Output");
-	MenuString *pSound = new MenuString(pTest, -1, "Sound");
+	MenuString *pLed = new MenuString(pTest, EVENT_NULL, "Led");
+	MenuString *pCoin = new MenuString(pTest, EVENT_NULL, "Coin");
+	MenuString *pOutput = new MenuString(pTest, EVENT_NULL, "Output");
+	MenuString *pSound = new MenuString(pTest, EVENT_NULL, "Sound");
 
 	//Config
-	MenuString *pSfx = new MenuString(pConfig, -1, "SFX");
-	MenuString *pNBalls = new MenuString(pConfig, -1, "Balls");
+	MenuString *pSfx = new MenuString(pConfig, EVENT_NULL, "SFX");
+	MenuString *pNBalls = new MenuString(pConfig, EVENT_NULL, "Balls");
 
 	//Led
 	new MenuString(pLed, EVENT_TEST_LED_1BY1, "1 a 1");
@@ -139,20 +139,12 @@ void Menu::PressButtonEnter()
 		{
 			m_Pinball->NotifyEvent(this, EVENT_TEST_EXIT_MENU,0);
 			m_isShowing = false;
-
-			#ifdef DEBUGMESSAGES
-			LogMessage(F("Menu::PressButtonEnter 1"));
-			#endif
 		}
 		//Action
-		else if (m_subOptionSelected->GetAction() != -1 && !m_backSelected)
+		else if (m_subOptionSelected->GetAction() != EVENT_NULL && !m_backSelected)
 		{
 			m_Pinball->NotifyEvent(this, m_subOptionSelected->GetAction(),0);
 			m_isShowing = false;
-			
-			#ifdef DEBUGMESSAGES
-			LogMessage(F("Menu::PressButtonEnter 2"));
-			#endif
 		}
 		else
 		{
@@ -162,11 +154,6 @@ void Menu::PressButtonEnter()
 				m_menuOptionSelected = m_subOptionSelected;
 				m_subOption = 0;
 				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
-
-				#ifdef DEBUGMESSAGES
-				LogMessage(F("Menu::PressButtonEnter 3"));
-				#endif
-
 			}
 			else
 			{
@@ -175,12 +162,8 @@ void Menu::PressButtonEnter()
 				m_subOption = 0;
 				m_subOptionSelected = m_subOptionSelected->GetChildren()[0];
 				m_backSelected = false;
-
-				#ifdef DEBUGMESSAGES
-				LogMessage(F("Menu::PressButtonEnter 4"));
-				#endif
-
 			}
+
 			PrintMenu(ButtonPressed::menu);
 		}
 	}

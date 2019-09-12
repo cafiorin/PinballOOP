@@ -290,13 +290,13 @@ void SelfTest::DoTestOutput()
 	LogMessage(F("SelfTest::DoTestOutput"));
 	#endif
 
-	char szOut[5];
-	sprintf(szOut, "%d", m_startTestValue);
-	m_Pinball->printText("Output", szOut, 0);
-
 	Output *pOutput = m_Pinball->GetOutput(m_startTestValue + OUTPUT_LOW_INIT);
 	if (pOutput != NULL)
 	{
+	  char szOut[5];
+	  sprintf(szOut, "%d", m_startTestValue);
+	  m_Pinball->printText("Output", szOut, 0);
+		
 		pOutput->TurnOnByTimer(1000);
 	}
 }

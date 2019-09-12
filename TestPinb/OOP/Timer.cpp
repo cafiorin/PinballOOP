@@ -9,7 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 
 //-------------------------------------------------------//
-Timer::Timer(long time, Object *parent, TimerType type,bool addToListPinball/*=true*/) : PinballObject(addToListPinball)
+Timer::Timer(unsigned long time, Object *parent, TimerType type,bool addToListPinball/*=true*/) : PinballObject(addToListPinball)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -45,7 +45,7 @@ void Timer::Start()
 
 
 //-------------------------------------------------------//
-bool Timer::Check(long time /*=0 default*/)
+bool Timer::Check(unsigned long time /*=0 default*/)
 //-------------------------------------------------------//
 {
 	if (m_Enabled)

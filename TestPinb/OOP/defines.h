@@ -14,7 +14,7 @@ http://pinballhomemade.blogspot.com.br
 
 // To Show DEBUG messages
 // #define DEBUGINPUTS
-//#define DEBUGMESSAGES
+#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 //#define DEBUGMESSAGESCREATION
 //-----------------------
@@ -46,6 +46,7 @@ http://pinballhomemade.blogspot.com.br
 #define COMM_INIT_THEME_STAGE5 7
 
 //Events
+#define EVENT_NULL 0
 #define EVENT_EDGEPOSITIVE 1
 #define EVENT_EDGENEGATIVE 2
 #define EVENT_DROPTARGETDOWN 3
@@ -136,7 +137,7 @@ http://pinballhomemade.blogspot.com.br
 #define OUTPUT_LOW_13 5
 #define OUTPUT_LOW_14 6
 #define OUTPUT_LOW_15 7
-#define OUTPUT_LOW_FINISH 11
+#define OUTPUT_LOW_FINISH 15
 
 //Outputs high energy
 #define OUTPUT_COINS_INIT 16
@@ -243,7 +244,7 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_MENU_BUTTON 33
 #define INPUT_UP_BUTTON 35
 #define INPUT_DOWN_BUTTON A2
-#define INPUT_ENTER_BUTTON A1
+#define INPUT_ENTER_BUTTON A7
 #define INPUT_START_BUTTON A0
 
 #endif //ARDUINOLIB

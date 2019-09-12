@@ -27,7 +27,7 @@ class Timer;
 class SequencerLeds : public PinballObject
 {
 public:
-	SequencerLeds(SequencerType type, long time);
+	SequencerLeds(SequencerType type, unsigned long time);
 	virtual ~SequencerLeds();
 
 	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
@@ -42,8 +42,8 @@ public:
 	bool m_LedsTurnOnWithNext[MAXLIGHTS];
 	bool m_LedsAlwaysTurnOn[MAXLIGHTS];
 	bool m_blink;
-	char m_count;
-	char m_pos;
+	uint8_t m_count;
+	uint8_t m_pos;
 	SequencerType m_type;
 
 	uint8_t GetPrev(uint8_t pos)

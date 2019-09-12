@@ -23,7 +23,7 @@ public:
 
 	bool IsTurnOn(){return m_turnOn;}
 	void TurnOn();
-	void TurnOnByTimer(long time=TIME_COIL_ON);
+	void TurnOnByTimer(unsigned long time=TIME_COIL_ON);
 	void TurnOff();
 	virtual bool Init();
 	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);

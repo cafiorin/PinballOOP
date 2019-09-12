@@ -20,7 +20,7 @@ public:
 	virtual ~Light();
 	virtual bool NotifyEvent(Object *sender, uint8_t event, uint8_t value);
 
-	void StartBlink(long value=700);
+	void StartBlink(unsigned long value=700);
 	void EndBlink();
 
 protected:

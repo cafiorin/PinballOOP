@@ -122,21 +122,24 @@ void Multiplex::writeChannel(uint8_t ch,uint8_t value)
 	{
 		if (ch < 16)
 		{
-			digitalWrite(_enableOutput1, LOW);
+			digitalWrite(_enableOutput2, HIGH);
 			_addressing(ch);
-			delay(100);
-
 			digitalWrite(_sigOutput1, value);
-			digitalWrite(_enableOutput1, HIGH);
+			delay(25);
 
+			digitalWrite(_enableOutput1, LOW);
+			delay(50);
+			digitalWrite(_enableOutput1, HIGH);
 		}
 		else
 		{
-			digitalWrite(_enableOutput2, LOW);
+			digitalWrite(_enableOutput1, HIGH);
 			_addressing(ch-16);
+			digitalWrite(_sigOutput2, value);
 			delay(25);
 
-			digitalWrite(_sigOutput2, value);
+			digitalWrite(_enableOutput2, LOW);
+			delay(50);
 			digitalWrite(_enableOutput2, HIGH);
 		}
 	}

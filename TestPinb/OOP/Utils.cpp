@@ -26,7 +26,7 @@ void myStrcpy(char *str1, const char *str2)
 }
 
 #ifdef ARDUINOLIB
-long Millis()
+unsigned long Millis()
 {
 	return millis();
 }
@@ -59,7 +59,7 @@ void gotoxy(uint8_t x, uint8_t y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void getCursorXY(uint8_t &x, int&y)
+void getCursorXY(uint8_t &x, uint8_t &y)
 {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 

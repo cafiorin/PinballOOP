@@ -34,7 +34,7 @@ void PrintReadKey()
 	printf("Read Key :");
 }
 
-void PrintTime(long time)
+void PrintTime(unsigned long time)
 {
 	uint8_t x = 70;
 	uint8_t y = 40;
@@ -191,7 +191,7 @@ uint8_t main()
 	PrintReadKey();
 
 	uint8_t ch = 0;
-	long lastTime = 0;
+	unsigned long lastTime = 0;
 	do
 	{
 		ch = ReadKey();
@@ -243,9 +243,9 @@ uint8_t main()
 			}
 		}
 
-		long t1 = Millis();
+		unsigned long t1 = Millis();
 		pPinballMaster->Loop(0);
-		long t2 = Millis() - t1;
+		unsigned long t2 = Millis() - t1;
 		if (lastTime < t2)
 		{
 			PrintTime(Millis() - t1);

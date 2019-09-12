@@ -64,7 +64,7 @@ void Output::TurnOn()
 }
 
 //-------------------------------------------------------//
-void Output::TurnOnByTimer(long time)
+void Output::TurnOnByTimer(unsigned long time)
 //-------------------------------------------------------//
 {
 	if (m_Enabled)

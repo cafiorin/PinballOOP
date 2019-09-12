@@ -19,7 +19,7 @@ SelfTest::SelfTest()
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage(F("SelfTest Constructor"));
 	#endif
-	m_timerAuto = new Timer(100, this, TimerType::continuous,false);
+	m_timerAuto = new Timer(1000, this, TimerType::continuous,false);
 }
 
 //---------------------------------------------------------------------//
@@ -289,12 +289,20 @@ void SelfTest::DoTestOutput()
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("SelfTest::DoTestOutput"));
 	#endif
+	Output* pOutput = NULL;
+	while (pOutput == NULL)
+	{
+		pOutput = m_Pinball->GetOutput(m_startTestValue + OUTPUT_LOW_INIT);
+		if (pOutput == NULL)
+		{
+			IncrementTestValue();
+		}
+	}
 
-	Output *pOutput = m_Pinball->GetOutput(m_startTestValue + OUTPUT_LOW_INIT);
 	if (pOutput != NULL)
 	{
 	  char szOut[5];
-	  sprintf(szOut, "%d", m_startTestValue);
+	  sprintf(szOut, "%d", pOutput->GetPortNumber());
 	  m_Pinball->printText("Output", szOut, 0);
 		
 		pOutput->TurnOnByTimer(1000);

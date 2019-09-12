@@ -9,12 +9,12 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
-//#define DOS
-#define ARDUINOLIB
+#define DOS
+//#define ARDUINOLIB
 
 // To Show DEBUG messages
 // #define DEBUGINPUTS
-#define DEBUGMESSAGES
+//#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 //#define DEBUGMESSAGESCREATION
 //-----------------------
@@ -264,13 +264,14 @@ using namespace std;
 #define DEBOUNCEREAD 0
 #define __FlashStringHelper char
 #define F (const char *)
-#define uint8_t int
+#define uint8_t unsigned int
 
 #define INPUT_MENU_BUTTON 44
 #define INPUT_UP_BUTTON 45
 #define INPUT_DOWN_BUTTON 46
 #define INPUT_ENTER_BUTTON 47
 #define INPUT_START_BUTTON 48
+#define A8 100
 
 #endif // DOS
 

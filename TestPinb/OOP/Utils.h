@@ -14,7 +14,7 @@ http://pinballhomemade.blogspot.com.br
 void myStrcpy(char *str1, const char *str2);
 
 #ifdef ARDUINOLIB
-long Millis();
+unsigned long Millis();
 #endif
 
 #ifdef DOS
@@ -43,7 +43,7 @@ long Millis();
 clock_t Millis();
 long timediff(clock_t t2, clock_t t1);
 void gotoxy(uint8_t x, uint8_t y);
-void getCursorXY(uint8_t &x, int&y);
+void getCursorXY(uint8_t &x, uint8_t &y);
 void setcolor(WORD color);
 void clrscr();
 void box(unsigned x, unsigned y, unsigned sx, unsigned sy, unsigned char col, unsigned char col2, char text_[]);

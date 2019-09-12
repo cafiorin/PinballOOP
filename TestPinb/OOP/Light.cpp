@@ -50,7 +50,7 @@ bool Light::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 }
 
 //-----------------------------------------------------//
-void Light::StartBlink(long value)
+void Light::StartBlink(unsigned long value)
 //-----------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

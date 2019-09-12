@@ -16,7 +16,7 @@ http://pinballhomemade.blogspot.com.br
 // all : Turn on all (turn off all in the last)
 
 //-----------------------------------------------------------
-SequencerLeds::SequencerLeds(SequencerType type,long time):PinballObject()
+SequencerLeds::SequencerLeds(SequencerType type, unsigned long time):PinballObject()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -92,7 +92,7 @@ void SequencerLeds::RemoveLed(uint8_t led)
 	bool found = false;
 	if (m_count > 0)
 	{
-		for (char i = 0; i < m_count; i++)
+		for (uint8_t i = 0; i < m_count; i++)
 		{
 			if (m_Leds[i] == led)
 			{
@@ -159,7 +159,7 @@ void SequencerLeds::End()
 	LedControl *ledControl = m_Pinball->GetLedControl();
 	if (ledControl != NULL)
 	{
-		for (char i = 0; i < m_count; i++)
+		for (uint8_t i = 0; i < m_count; i++)
 		{
 			ledControl->TurnOff(m_Leds[i]);
 		}

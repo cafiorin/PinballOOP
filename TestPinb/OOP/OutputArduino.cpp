@@ -69,7 +69,7 @@ void OutputArduino::TurnOn()
 }
 
 //-------------------------------------------------------//
-void OutputArduino::TurnOnByTimer(long time)
+void OutputArduino::TurnOnByTimer(unsigned long time)
 //-------------------------------------------------------//
 {
 	if (m_Enabled)

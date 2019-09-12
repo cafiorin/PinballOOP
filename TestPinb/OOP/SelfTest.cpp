@@ -305,7 +305,7 @@ void SelfTest::DoTestOutput()
 	  sprintf(szOut, "%d", pOutput->GetPortNumber());
 	  m_Pinball->printText("Output", szOut, 0);
 		
-		pOutput->TurnOnByTimer(1000);
+		pOutput->TurnOnByTimer(500);
 	}
 }
 

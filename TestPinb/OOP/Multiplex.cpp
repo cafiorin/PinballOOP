@@ -42,7 +42,10 @@ static const uint8_t _muxChAddress[16][4] =
 };
 
 //-----------------------------------------------
-Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,const uint8_t SIGINPUT1, const uint8_t SIGINPUT2, const uint8_t SIGINPUT3, const uint8_t SIGOUTPUT1, const uint8_t SIGOUTPUT2, const uint8_t ENABLEOUTPUT1, const uint8_t ENABLEOUTPUT2) : PinballObject()
+Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,
+	const uint8_t SIGINPUT1, const uint8_t SIGINPUT2, const uint8_t SIGINPUT3, 
+	const uint8_t SIGOUTPUT1, const uint8_t Sout00, const uint8_t Sout01, const uint8_t Sout02, const uint8_t Sout03,
+	const uint8_t SIGOUTPUT2, const uint8_t Sout10, const uint8_t Sout11, const uint8_t Sout12, const uint8_t Sout13) : PinballObject()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -54,6 +57,16 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	_adrsPin[2] = S2;
 	_adrsPin[3] = S3;
 
+	_S0adrsPin[0] = Sout00;
+	_S0adrsPin[1] = Sout01;
+	_S0adrsPin[2] = Sout02;
+	_S0adrsPin[3] = Sout03;
+
+	_S1adrsPin[0] = Sout10;
+	_S1adrsPin[1] = Sout11;
+	_S1adrsPin[2] = Sout12;
+	_S1adrsPin[3] = Sout13;
+
 	_sigInput1 = SIGINPUT1;
 	_sigInput2 = SIGINPUT2;
 	_sigInput3 = SIGINPUT3;
@@ -61,14 +74,18 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	_sigOutput1 = SIGOUTPUT1;
 	_sigOutput2 = SIGOUTPUT2;
 
-	_enableOutput1 = ENABLEOUTPUT1;
-	_enableOutput2 = ENABLEOUTPUT2;
-
 	uint8_t i;
 	for (i = 0; i < 4; i++)
 	{
 		pinMode(_adrsPin[i], OUTPUT);
 		digitalWrite(_adrsPin[i], LOW);
+
+		pinMode(_S0adrsPin[i], OUTPUT);
+		digitalWrite(_S0adrsPin[i], LOW);
+
+		pinMode(_S1adrsPin[i], OUTPUT);
+		digitalWrite(_S1adrsPin[i], LOW);
+
 	}
 
 	pinMode(_sigInput1, INPUT);
@@ -77,9 +94,6 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 
 	pinMode(_sigOutput1, OUTPUT);
 	pinMode(_sigOutput2, OUTPUT);
-
-	pinMode(_enableOutput1, OUTPUT);
-	pinMode(_enableOutput2, OUTPUT);
 
 	resetAllOutput();
 }
@@ -92,21 +106,15 @@ void Multiplex::resetAllOutput()
 	LogMessage(F("Multiplex::resetAllOutput"));
 	#endif
 
-	digitalWrite(_enableOutput1, LOW);
-	digitalWrite(_enableOutput2, LOW);
-
 	digitalWrite(_sigOutput1, LOW);
 	digitalWrite(_sigOutput2, LOW);
 
 	for (uint8_t i = 0; i < 16; i++)
 	{
-		_addressing(i);
+		_addressingS0(i);
+		_addressingS1(i);
 		delay(100);
 	}
-
-	digitalWrite(_enableOutput1, HIGH);
-	digitalWrite(_enableOutput2, HIGH);
-
 }
 
 
@@ -122,25 +130,15 @@ void Multiplex::writeChannel(uint8_t ch,uint8_t value)
 	{
 		if (ch < 16)
 		{
-			digitalWrite(_enableOutput2, HIGH);
-			_addressing(ch);
+			_addressingS0(ch);
 			digitalWrite(_sigOutput1, value);
 			delay(25);
-
-			digitalWrite(_enableOutput1, LOW);
-			delay(50);
-			digitalWrite(_enableOutput1, HIGH);
 		}
 		else
 		{
-			digitalWrite(_enableOutput1, HIGH);
-			_addressing(ch-16);
+			_addressingS1(ch-16);
 			digitalWrite(_sigOutput2, value);
 			delay(25);
-
-			digitalWrite(_enableOutput2, LOW);
-			delay(50);
-			digitalWrite(_enableOutput2, HIGH);
 		}
 	}
 }
@@ -252,6 +250,34 @@ void Multiplex::_addressing(uint8_t ch)
 		for (i = 0; i < 4; i++)
 		{
 			digitalWrite(_adrsPin[i], _muxChAddress[ch][i]);
+		}
+	}
+}
+
+//-----------------------------------------------
+void Multiplex::_addressingS0(uint8_t ch)
+//-----------------------------------------------
+{
+	if (ch < 16)
+	{
+		uint8_t i;
+		for (i = 0; i < 4; i++)
+		{
+			digitalWrite(_S0adrsPin[i], _muxChAddress[ch][i]);
+		}
+	}
+}
+
+//-----------------------------------------------
+void Multiplex::_addressingS1(uint8_t ch)
+//-----------------------------------------------
+{
+	if (ch < 16)
+	{
+		uint8_t i;
+		for (i = 0; i < 4; i++)
+		{
+			digitalWrite(_S1adrsPin[i], _muxChAddress[ch][i]);
 		}
 	}
 }

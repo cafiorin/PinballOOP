@@ -272,6 +272,13 @@ using namespace std;
 #define INPUT_ENTER_BUTTON 47
 #define INPUT_START_BUTTON 48
 #define A8 100
+#define A9 101
+#define A10 102
+#define A11 103
+#define A12 104
+#define A13 105
+#define A14 106
+#define A15 107
 
 #endif // DOS
 

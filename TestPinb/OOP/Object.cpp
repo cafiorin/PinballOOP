@@ -40,6 +40,20 @@ void Object::LogMessage(const __FlashStringHelper *szMessage)
 		m_Serial->flush();
 	}
 }
+
+//-------------------------------------------------------//
+void Object::LogMessageToConstChar(const char *szMessage)
+//-------------------------------------------------------//
+{
+	if (m_Serial != NULL)
+	{
+		m_Serial->print(m_Id);
+		m_Serial->print(F(" : "));
+		m_Serial->println(szMessage);
+		m_Serial->flush();
+	}
+}
+
 #endif
 
 

@@ -1,4 +1,4 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+﻿/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 * BSD 3-Clause License
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Code by Cassius Fiorin - cafiorin@gmail.com
@@ -44,7 +44,7 @@ static const uint8_t _muxChAddress[16][4] =
 //-----------------------------------------------
 Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const uint8_t S3,
 	const uint8_t SIGINPUT1, const uint8_t SIGINPUT2, const uint8_t SIGINPUT3, 
-	const uint8_t SIGOUTPUT1, const uint8_t Sout00, const uint8_t Sout01, const uint8_t Sout02, const uint8_t Sout03,
+	const uint8_t latchPin, const uint8_t clockPin, const uint8_t dataPin,
 	const uint8_t SIGOUTPUT2, const uint8_t Sout10, const uint8_t Sout11, const uint8_t Sout12, const uint8_t Sout13) : PinballObject()
 //-----------------------------------------------
 {
@@ -57,11 +57,6 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	_adrsPin[2] = S2;
 	_adrsPin[3] = S3;
 
-	_S0adrsPin[0] = Sout00;
-	_S0adrsPin[1] = Sout01;
-	_S0adrsPin[2] = Sout02;
-	_S0adrsPin[3] = Sout03;
-
 	_S1adrsPin[0] = Sout10;
 	_S1adrsPin[1] = Sout11;
 	_S1adrsPin[2] = Sout12;
@@ -71,8 +66,12 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	_sigInput2 = SIGINPUT2;
 	_sigInput3 = SIGINPUT3;
 
-	_sigOutput1 = SIGOUTPUT1;
 	_sigOutput2 = SIGOUTPUT2;
+
+	_latchPin = latchPin;
+	_clockPin = clockPin;
+	_dataPin = dataPin;
+
 
 	uint8_t i;
 	for (i = 0; i < 4; i++)
@@ -80,20 +79,19 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 		pinMode(_adrsPin[i], OUTPUT);
 		digitalWrite(_adrsPin[i], LOW);
 
-		pinMode(_S0adrsPin[i], OUTPUT);
-		digitalWrite(_S0adrsPin[i], LOW);
-
 		pinMode(_S1adrsPin[i], OUTPUT);
 		digitalWrite(_S1adrsPin[i], LOW);
-
 	}
 
 	pinMode(_sigInput1, INPUT);
 	pinMode(_sigInput2, INPUT);
 	pinMode(_sigInput3, INPUT);
 
-	pinMode(_sigOutput1, OUTPUT);
 	pinMode(_sigOutput2, OUTPUT);
+
+	pinMode(latchPin, OUTPUT);
+	pinMode(clockPin, OUTPUT);
+	pinMode(dataPin, OUTPUT);
 
 	resetAllOutput();
 }
@@ -106,41 +104,121 @@ void Multiplex::resetAllOutput()
 	LogMessage(F("Multiplex::resetAllOutput"));
 	#endif
 
-	digitalWrite(_sigOutput1, LOW);
 	digitalWrite(_sigOutput2, LOW);
 
 	for (uint8_t i = 0; i < 16; i++)
 	{
-		_addressingS0(i);
 		_addressingS1(i);
-		delay(100);
+		delay(25);
 	}
 }
 
 
 //-----------------------------------------------
-void Multiplex::writeChannel(uint8_t ch,uint8_t value)
+void Multiplex::writeChannel(uint8_t ch, uint8_t value)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("Multiplex::writeChannel"));
 	#endif
 
-	if (ch >= 0 && ch < 32)
+	if (ch < 16)
 	{
-		if (ch < 16)
-		{
-			_addressingS0(ch);
-			digitalWrite(_sigOutput1, value);
-			delay(25);
-		}
-		else
-		{
-			_addressingS1(ch-16);
-			digitalWrite(_sigOutput2, value);
-			delay(25);
-		}
+		writeChannelLatch(ch, value);
 	}
+	else if (ch < 32)
+	{
+		digitalWrite(_sigOutput2, value);
+		delay(100);
+		_addressingS1(ch - 16);
+		delay(100);
+	}
+}
+
+//-----------------------------------------------
+void Multiplex::writeChannelLatch(uint8_t ch, uint8_t value)
+//-----------------------------------------------
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage(F("Multiplex::writeChannelLatch"));
+	#endif
+
+	if (ch < 16)
+	{
+		bool out1[8];
+		bool out2[8];
+		for(uint8_t i=0; i < 8; i++)
+		{
+			Output* pOutput1 = m_Pinball->GetOutput(i);
+			if (pOutput1 != NULL)
+			{
+				out1[i] = pOutput1->IsTurnOn();
+			}
+			else
+			{
+				out1[i] = false;
+			}
+
+
+			Output* pOutput2 = m_Pinball->GetOutput(i+8);
+			if (pOutput2 != NULL)
+			{
+				out2[i] = pOutput2->IsTurnOn();
+			}
+			else
+			{
+				out2[i] = false;
+			}
+		}
+		byte LSB = ToByte(out1);
+		byte MSB = ToByte(out2);
+		
+		#ifdef DEBUGMESSAGES
+		const char szNumber[20];
+		sprintf(szNumber, "%x e %x", LSB, MSB);
+		LogMessageToConstChar(szNumber);
+		#endif
+
+		digitalWrite(_latchPin, 0);
+		shiftOut(MSB);
+		shiftOut(LSB);
+		digitalWrite(_latchPin, 1);
+	}
+}
+
+//-----------------------------------------------
+void Multiplex::shiftOut(byte myDataOut)
+//-----------------------------------------------
+{
+	int i = 0;
+	int pinState;
+
+	digitalWrite(_dataPin, 0);
+	digitalWrite(_clockPin, 0);
+
+	for (i = 7; i >= 0; i--) 
+	{
+		digitalWrite(_clockPin, 0);
+
+		if (myDataOut & (1 << i)) 
+		{
+			pinState = 1;
+		}
+		else 
+		{
+			pinState = 0;
+		}
+
+		//Sets the pin to HIGH or LOW depending on pinState
+		digitalWrite(_dataPin, pinState);
+		//register shifts bits on upstroke of clock pin  
+		digitalWrite(_clockPin, 1);
+		//zero the data pin after shift to prevent bleed through
+		digitalWrite(_dataPin, 0);
+	}
+
+	//stop shifting
+	digitalWrite(_clockPin, 0);
 }
 
 
@@ -250,20 +328,6 @@ void Multiplex::_addressing(uint8_t ch)
 		for (i = 0; i < 4; i++)
 		{
 			digitalWrite(_adrsPin[i], _muxChAddress[ch][i]);
-		}
-	}
-}
-
-//-----------------------------------------------
-void Multiplex::_addressingS0(uint8_t ch)
-//-----------------------------------------------
-{
-	if (ch < 16)
-	{
-		uint8_t i;
-		for (i = 0; i < 4; i++)
-		{
-			digitalWrite(_S0adrsPin[i], _muxChAddress[ch][i]);
 		}
 	}
 }

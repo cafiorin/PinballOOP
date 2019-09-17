@@ -33,6 +33,7 @@ public:
 	}
 
 	void LogMessage(const __FlashStringHelper *szMessage);
+	void LogMessageToConstChar(const char *szMessage);
 
 #endif // DEBUGMESSAGES
 

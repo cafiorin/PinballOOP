@@ -43,11 +43,12 @@ class Multiplex : public PinballObject
  public:
 	 Multiplex(const uint8_t S0, const uint8_t S1, const uint8_t S2, const uint8_t S3, 
 		 const uint8_t SIGINPUT1, const uint8_t SIGINPUT2, const uint8_t SIGINPUT3, 
-		 const uint8_t SIGOUTPUT1, const uint8_t Sout00, const uint8_t Sout01, const uint8_t Sout02, const uint8_t Sout03,
+		 const uint8_t latchPin, const uint8_t clockPin, const uint8_t dataPin,
 		 const uint8_t SIGOUTPUT2, const uint8_t Sout10, const uint8_t Sout11, const uint8_t Sout12, const uint8_t Sout13);
 
 	 uint8_t 	readChannel(uint8_t ch);
 	 void		writeChannel(uint8_t ch, uint8_t value);
+	 void		writeChannelLatch(uint8_t ch, uint8_t value);
 
 	 void		resetAllOutput();
 
@@ -55,18 +56,30 @@ class Multiplex : public PinballObject
 
  private:
 	 int		_adrsPin[4];
-	 int		_S0adrsPin[4];
 	 int		_S1adrsPin[4];
 
 	 uint8_t 	_sigInput1;
 	 uint8_t 	_sigInput2;
 	 uint8_t 	_sigInput3;
 
-	 uint8_t 	_sigOutput1;
 	 uint8_t 	_sigOutput2;
+	 
+	 uint8_t	_latchPin;
+	 uint8_t	_clockPin;
+	 uint8_t	_dataPin;
 
 	 void 		_addressing(uint8_t ch);
-	 void 		_addressingS0(uint8_t ch);
 	 void 		_addressingS1(uint8_t ch);
+	 void		shiftOut(byte myDataOut);
+
+	 byte ToByte(bool b[8])
+	 {
+		 byte c = 0;
+		 for (int i = 0; i < 8; ++i)
+			 if (b[i])
+				 c |= 1 << i;
+		 return c;
+	 }
+
 };
 #endif

@@ -45,6 +45,15 @@ bool Output::Init()
 }
 
 //-------------------------------------------------------//
+void Output::TurnOnByDelay(unsigned long time)
+//-------------------------------------------------------//
+{
+	TurnOn();
+	delay(time);
+	TurnOff();
+}
+
+//-------------------------------------------------------//
 void Output::TurnOn()
 //-------------------------------------------------------//
 {
@@ -80,7 +89,7 @@ void Output::TurnOnByTimer(unsigned long time)
 }
 
 //-------------------------------------------------------//
-bool Output::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
+bool Output::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t /*value*/)
 //-------------------------------------------------------//
 {
     #ifdef DEBUGMESSAGES

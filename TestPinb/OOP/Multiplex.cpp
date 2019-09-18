@@ -12,6 +12,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballObject.h"
 #include "Multiplex.h"
 #include "HardwareSerial.h"
+#include "Utils.h"
 
 #ifdef ARDUINOLIB
 #include <Arduino.h>
@@ -128,15 +129,16 @@ void Multiplex::writeChannel(uint8_t ch, uint8_t value)
 	}
 	else if (ch < 32)
 	{
-		digitalWrite(_sigOutput2, value);
-		delay(100);
 		_addressingS1(ch - 16);
-		delay(100);
+		delay(10); //TODO: Validate this values
+
+		digitalWrite(_sigOutput2, value);
+		delay(25); // TODO: Validate this values
 	}
 }
 
 //-----------------------------------------------
-void Multiplex::writeChannelLatch(uint8_t ch, uint8_t value)
+void Multiplex::writeChannelLatch(uint8_t ch, uint8_t /*value*/)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES

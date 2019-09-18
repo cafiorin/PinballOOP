@@ -30,7 +30,7 @@ Light::~Light()
 }
 
 //-------------------------------------------------------//
-bool Light::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
+bool Light::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

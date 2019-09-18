@@ -117,7 +117,7 @@ void DropTarget::AddLeds(uint8_t led1, uint8_t led2, uint8_t led3, uint8_t led4,
 }
 
 //-------------------------------------------------------//
-bool DropTarget::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
+bool DropTarget::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

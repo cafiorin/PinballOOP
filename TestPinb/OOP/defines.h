@@ -9,12 +9,12 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
-//#define DOS
-#define ARDUINOLIB
+#define DOS
+//#define ARDUINOLIB
 
 // To Show DEBUG messages
 // #define DEBUGINPUTS
-#define DEBUGMESSAGES
+//#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 //#define DEBUGMESSAGESCREATION
 //-----------------------
@@ -66,12 +66,15 @@ http://pinballhomemade.blogspot.com.br
 #define EVENT_TEST_NBALLS5 210
 #define EVENT_TEST_OUTPUTS_1BY1 211
 #define EVENT_TEST_OUTPUTS_AUTO 212
-#define EVENT_TEST_EXIT_MENU 213
-#define EVENT_TEST_FINISH 213
+#define EVENT_TEST_INPUTS_1BY1 213
+#define EVENT_TEST_INPUTS_AUTO 214
+#define EVENT_TEST_EXIT_MENU 215
+#define EVENT_TEST_FINISH 215
 
 //END - Events
 
 //Inputs
+#define INPUT_TEST_INIT 0 //<==Last
 #define INPUT_PLAYFIELD_INIT 0
 #define INPUT_SW_OUTBALL1 0 //conector 3C - pin 10
 #define INPUT_SW_OUTBALL2 1 //conector 3C - pin 9
@@ -118,6 +121,7 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_SW_ACCBALL4 31 //conector 4D - pin 15
 #define INPUT_SW_ACCJUMP  16 //conector 4D - pin 20
 #define INPUT_PLAYFIELD_FINISH 43 //<==Last
+#define INPUT_TEST_FINISH 47 //<==Last
 
 //Outputs Low Energy
 #define OUTPUT_LOW_INIT 0 //output in 5V
@@ -271,14 +275,17 @@ using namespace std;
 #define INPUT_DOWN_BUTTON 46
 #define INPUT_ENTER_BUTTON 47
 #define INPUT_START_BUTTON 48
-#define A8 100
-#define A9 101
-#define A10 102
-#define A11 103
-#define A12 104
-#define A13 105
-#define A14 106
-#define A15 107
+#define A3 100
+#define A4 101
+#define A5 102
+#define A8 103
+#define A9 104
+#define A10 105
+#define A11 106
+#define A12 107
+#define A13 108
+#define A14 109
+#define A15 110
 
 #endif // DOS
 

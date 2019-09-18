@@ -290,7 +290,14 @@ bool PinballMaster::NotifyEvent(Object *sender, uint8_t event, uint8_t valueToSe
 		// -- P L A Y F I E L D --
 		if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
 		{
-			return PlayfieldEvent(sender, event, valueToSend);
+			if (m_Status == StatusPinball::menutest)
+			{
+				m_Menu->EventToInput(sender, event, valueToSend);
+			}
+			else
+			{
+				return PlayfieldEvent(sender, event, valueToSend);
+			}
 		}
 
 		return true;
@@ -688,7 +695,7 @@ void PinballMaster::printText(char *text1, char *text2, char font)
 }
 
 //---------------------------------------------------------------------//
-void PinballMaster::DataReceived(char c)
+void PinballMaster::DataReceived(char /*c*/)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

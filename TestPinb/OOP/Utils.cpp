@@ -9,6 +9,16 @@ http://pinballhomemade.blogspot.com.br
 
 #pragma execution_character_set("utf-8") 
 
+byte ToByte(bool b[8])
+{
+	byte c = 0;
+	for (int i = 0; i < 8; ++i)
+		if (b[i])
+			c |= 1 << i;
+	return c;
+}
+
+
 void myStrcpy(char *str1, const char *str2)
 {
 	uint8_t bufsize = sizeof(str1);

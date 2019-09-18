@@ -69,7 +69,7 @@ PinballSlave::~PinballSlave()
 }
 
 /*---------------------------------------------------------------------*/
-bool PinballSlave::Loop(uint8_t value)
+bool PinballSlave::Loop(uint8_t /*value*/)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP

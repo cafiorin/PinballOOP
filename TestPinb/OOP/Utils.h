@@ -12,6 +12,7 @@ http://pinballhomemade.blogspot.com.br
 #include "defines.h"
 
 void myStrcpy(char *str1, const char *str2);
+byte ToByte(bool b[8]);
 
 #ifdef ARDUINOLIB
 unsigned long Millis();

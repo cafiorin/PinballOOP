@@ -63,7 +63,7 @@ bool OutBall::Init()
 		uint8_t nTries = 0;
 		while (m_input1->GetInput() && !m_input2->GetInput() && nTries < 5)
 		{
-			m_output1->TurnOnByTimer();
+			m_output1->TurnOnByDelay();
 			delay(1000);
 			nTries++;
 		}
@@ -83,7 +83,7 @@ bool OutBall::Init()
 }
 
 //-------------------------------------------------------//
-bool OutBall::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
+bool OutBall::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -119,7 +119,6 @@ void OutBall::LanchBall()
 
 		if (m_input1->GetInput() && !m_input2->GetInput())
 		{
-			delay(50);
 			m_output1->TurnOnByTimer();
 		}
 	}

@@ -72,6 +72,7 @@ public:
 	void PressButtonEnter();
 
 	void EventUpDownButton(Object *sender, bool upButton);
+	void EventToInput(Object* sender, uint8_t event, uint8_t valueToSend);
 	void StartTest(uint8_t event);
 	void FinishTest();
 	void Loop();

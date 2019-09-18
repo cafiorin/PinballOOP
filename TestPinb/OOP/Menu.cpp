@@ -28,6 +28,7 @@ Menu::Menu()
 	MenuString *pLed = new MenuString(pTest, EVENT_NULL, "Led");
 	MenuString *pCoin = new MenuString(pTest, EVENT_NULL, "Coin");
 	MenuString *pOutput = new MenuString(pTest, EVENT_NULL, "Output");
+	MenuString* pInput = new MenuString(pTest, EVENT_NULL, "Input");
 	MenuString *pSound = new MenuString(pTest, EVENT_NULL, "Sound");
 
 	//Config
@@ -45,6 +46,10 @@ Menu::Menu()
 	//Output
 	new MenuString(pOutput, EVENT_TEST_OUTPUTS_1BY1, "1 a 1");
 	new MenuString(pOutput, EVENT_TEST_OUTPUTS_AUTO, "Auto");
+
+	//Input
+	new MenuString(pInput, EVENT_TEST_INPUTS_1BY1, "1 a 1");
+	new MenuString(pInput, EVENT_TEST_INPUTS_AUTO, "Auto");
 
 	//Sound
 	new MenuString(pSound, EVENT_TEST_SOUND_BOARD1, "Board 1");
@@ -210,16 +215,14 @@ bool Menu::PressUpDownButton(bool upButton)
 	{
 		m_subOption++;
 		PrintMenu(ButtonPressed::up);
-		return true;
 	}
 	else
 	{
 		m_subOption--;
 		PrintMenu(ButtonPressed::down);
-		return true;
 	}
 
-	return false;
+	return true;
 }
 
 //-------------------------------------------------------//
@@ -266,4 +269,11 @@ void Menu::Loop()
 //---------------------------------------------------------------------//
 {
 	m_SelfTest->Loop();
+}
+
+//---------------------------------------------------------------------//
+void Menu::EventToInput(Object* sender, uint8_t event, uint8_t valueToSend)
+//---------------------------------------------------------------------//
+{
+	m_SelfTest->EventToInput(sender, event, valueToSend);
 }

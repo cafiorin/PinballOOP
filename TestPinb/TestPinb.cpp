@@ -47,7 +47,7 @@ void PrintTime(unsigned long time)
 }
 
 
-uint8_t ReadKey()
+int ReadKey()
 {
 	if (_kbhit())
 	{
@@ -158,27 +158,26 @@ uint8_t main()
 	inputs->println("=>Start Button - 48");
 	inputs->println("OUTBALL1/2     - 0,1");
 	inputs->println("LAUNCHBALL     - 2");
-	inputs->println("SLINGSHOT L1/L2- 3,4");
-	inputs->println("SLINGSHOT R1/R2- 5,6");
-	inputs->println("OUTLANE_L/R    - 7,8");
-	inputs->println("RETURNBALL_L/R - 9,10");
-	inputs->println("TARGET_RED1    - 11");
-	inputs->println("TARGET_GREEN1  - 12");
-	inputs->println("TARGET_YELLOW1 - 13");
-	inputs->println("TARGET_RED2    - 14");
-	inputs->println("TARGET_GREEN2  - 15");
-	inputs->println("TARGET_YELLOW2 - 16");
-	inputs->println("DTARGET_51-55  - 17-21");
-	inputs->println("DTARGET_31-33  - 22-24");
-	inputs->println("STAR G R1/R2   - 25,26,27");
-	inputs->println("=> ROVER_L/C/R - 28,29,30");
-	inputs->println("BUMPER_L/C/R   - 31,32,33");
-	inputs->println("TARGET_HIGHER  - 34");
+	inputs->println("SLINGSHOT L1/L2- 4,6");
+	inputs->println("SLINGSHOT R1/R2- 7,8");
+	inputs->println("OUTLANE_L/R    - 5,9");
+	inputs->println("RETURNBALL_L/R - 3,10");
+	inputs->println("TARGET_RED1    - 13");
+	inputs->println("TARGET_GREEN1  - 11");
+	inputs->println("TARGET_YELLOW1 - 28");
+	inputs->println("TARGET_RED2    - 18");
+	inputs->println("TARGET_GREEN2  - 26");
+	inputs->println("TARGET_YELLOW2 - 25");
+	inputs->println("DTARGET_51-55  - 34,37,41,36,33");
+	inputs->println("DTARGET_31-33  - 38,39,40");
+	inputs->println("STAR G R1/R2   - 30,21,22");
+	inputs->println("ROVER L/C/R    - 17,20,15");
+	inputs->println("BUMPER_L/C/R   - 24,27,14");
 	inputs->println("RAMP_IN        - 35");
-	inputs->println("RAMP_OUT1,2    - 36,37");
-	inputs->println("SPINNER        - 38");
-	inputs->println("HOLE           - 39");
-	inputs->println("ACCBALL1       - 40-44");
+	inputs->println("RAMP_OUT1,2    - 42,43");
+	inputs->println("SPINNER        - 12");
+	inputs->println("HOLE           - 19");
+	inputs->println("ACCBALL1       - 29,32,23,31,16");
 
 	if (pPinballMaster->GetLedControl() != NULL)
 	{
@@ -190,7 +189,7 @@ uint8_t main()
 
 	PrintReadKey();
 
-	uint8_t ch = 0;
+	int ch = 0;
 	unsigned long lastTime = 0;
 	do
 	{

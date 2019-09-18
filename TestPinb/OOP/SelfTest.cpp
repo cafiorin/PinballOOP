@@ -9,8 +9,10 @@ http://pinballhomemade.blogspot.com.br
 #include "Pinball.h"
 #include "Timer.h"
 #include "Output.h"
+#include "Input.h"
 #include "DefinesMp3.h"
 #include "LedControl.h"
+#include "Utils.h"
 
 //---------------------------------------------------------------------//
 SelfTest::SelfTest()
@@ -52,6 +54,7 @@ void SelfTest::IncrementTestValue()
 					m_startTestValue = 0;
 			}
 			break;
+
 		case EVENT_TEST_COIN_1BY1:
 		case EVENT_TEST_COIN_AUTO:
 		{
@@ -59,10 +62,19 @@ void SelfTest::IncrementTestValue()
 				m_startTestValue = 0;
 		}
 		break;
+
 		case EVENT_TEST_OUTPUTS_1BY1:
 		case EVENT_TEST_OUTPUTS_AUTO:
 		{
 			if (m_startTestValue >= OUTPUT_LOW_FINISH - OUTPUT_LOW_INIT + 1)
+				m_startTestValue = 0;
+		}
+		break;
+
+		case EVENT_TEST_INPUTS_1BY1:
+		case EVENT_TEST_INPUTS_AUTO:
+		{
+			if (m_startTestValue >= INPUT_PLAYFIELD_FINISH - INPUT_PLAYFIELD_INIT + 1)
 				m_startTestValue = 0;
 		}
 		break;
@@ -110,7 +122,7 @@ void SelfTest::DecrementTestValue()
 
 
 //---------------------------------------------------------------------//
-bool SelfTest::EventUpDownButton(Object *sender, bool upButton)
+bool SelfTest::EventUpDownButton(Object * /*sender*/, bool upButton)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -120,7 +132,8 @@ bool SelfTest::EventUpDownButton(Object *sender, bool upButton)
 
 	if (m_MenuTest == EVENT_TEST_LED_1BY1 || 
 		m_MenuTest == EVENT_TEST_COIN_1BY1 ||
-		m_MenuTest == EVENT_TEST_OUTPUTS_1BY1)
+		m_MenuTest == EVENT_TEST_OUTPUTS_1BY1 ||
+		m_MenuTest == EVENT_TEST_INPUTS_1BY1)
 	{
 		upButton ? IncrementTestValue() : DecrementTestValue();
 	}
@@ -191,6 +204,18 @@ void SelfTest::DoTest()
 			m_timerAuto->Start();
 			DoTestOutput();
 			IncrementTestValue();
+		}
+		break;
+
+		case EVENT_TEST_INPUTS_1BY1:
+		{
+			DoTestInput();
+		}
+		break;
+
+		case EVENT_TEST_INPUTS_AUTO:
+		{
+			DisplayInput(0);
 		}
 		break;
 
@@ -289,6 +314,7 @@ void SelfTest::DoTestOutput()
 	#ifdef DEBUGMESSAGES
 	LogMessage(F("SelfTest::DoTestOutput"));
 	#endif
+
 	Output* pOutput = NULL;
 	while (pOutput == NULL)
 	{
@@ -309,6 +335,81 @@ void SelfTest::DoTestOutput()
 	}
 }
 
+//---------------------------------------------------------------------//
+void SelfTest::DoTestInput()
+//---------------------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage(F("SelfTest::DoTestInput"));
+	#endif
+	
+	Input* pInput = m_Pinball->GetInput(m_startTestValue + INPUT_PLAYFIELD_INIT);
+	if (pInput != NULL)
+	{
+		char szOut[15];
+		sprintf(szOut, "In%d : %d", pInput->GetPortNumber(), pInput->GetInput());
+		m_Pinball->printText("Input", szOut, 0);
+	}
+}
+
+//---------------------------------------------------------------------//
+void SelfTest::DisplayInput(uint8_t valueToSend)
+//---------------------------------------------------------------------//
+{
+	if (m_MenuTest == EVENT_TEST_INPUTS_AUTO)
+	{
+		#ifdef DEBUGMESSAGES
+		LogMessage(F("SelfTest::EventToInput"));
+		#endif
+
+		bool values[8];
+		byte bytes[6];
+
+		uint8_t j = 0, z = 0;
+		for (uint8_t i = INPUT_TEST_INIT; i <= INPUT_TEST_FINISH; i++)
+		{
+			bool value = false;
+			Input* pInput = m_Pinball->GetInput(i);
+			if (pInput != NULL)
+			{
+				value = pInput->GetInput();
+			}
+			values[j] = value;
+			j++;
+			if (j == 8)
+			{
+				j = 0;
+				bytes[z] = ToByte(values);
+				z++;
+			}
+		}
+
+		Input* pInput = m_Pinball->GetInput(valueToSend);
+		bool turnOn = false;
+		if (pInput != NULL)
+		{
+			turnOn = pInput->GetInput();
+		}
+
+		char szOut[15];
+		sprintf(szOut, "In%d : %d", valueToSend, turnOn);
+
+		char szHexa[20];
+		sprintf(szHexa, "%02x%02x%02x%02x%02x%02x", bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5]);
+
+		m_Pinball->printText(szHexa, szOut, 0);
+
+	}
+
+}
+
+
+//---------------------------------------------------------------------//
+void SelfTest::EventToInput(Object* /*sender*/, uint8_t /*event*/, uint8_t valueToSend)
+//---------------------------------------------------------------------//
+{
+	DisplayInput(valueToSend);
+}
 
 //---------------------------------------------------------------------//
 void SelfTest::DoPlaySound(bool board)
@@ -360,7 +461,7 @@ void SelfTest::FinishTest()
 }
 
 //---------------------------------------------------------------------//
-bool SelfTest::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
+bool SelfTest::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t /*value*/)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -382,4 +483,8 @@ void SelfTest::Loop()
 //---------------------------------------------------------------------//
 {
 	m_timerAuto->Loop();
+	if (m_MenuTest == EVENT_TEST_INPUTS_1BY1)
+	{
+		DoTest();
+	}
 }

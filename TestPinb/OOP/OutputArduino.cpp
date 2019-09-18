@@ -85,7 +85,7 @@ void OutputArduino::TurnOnByTimer(unsigned long time)
 }
 
 //-------------------------------------------------------//
-bool OutputArduino::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
+bool OutputArduino::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t /*value*/)
 //-------------------------------------------------------//
 {
     #ifdef DEBUGMESSAGES

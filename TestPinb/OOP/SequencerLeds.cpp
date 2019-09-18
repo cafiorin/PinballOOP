@@ -168,7 +168,7 @@ void SequencerLeds::End()
 }
 
 //---------------------------------------------------------------------//
-bool SequencerLeds::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
+bool SequencerLeds::NotifyEvent(Object *sender, uint8_t event, uint8_t /*value*/)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

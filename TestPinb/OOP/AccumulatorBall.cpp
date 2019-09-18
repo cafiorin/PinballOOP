@@ -80,7 +80,7 @@ bool AccumulatorBall::Init()
 
 
 //-------------------------------------------------------//
-bool AccumulatorBall::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
+bool AccumulatorBall::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -111,6 +111,6 @@ void AccumulatorBall::LanchBall()
 	if (m_nBalls >= 1)
 	{
 		m_nBalls--;
-		m_output->TurnOnByTimer(TIME_COIL_ON);
+		m_output->TurnOnByDelay();
 	}
 }

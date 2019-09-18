@@ -54,7 +54,7 @@ class Multiplex : public PinballObject
 
 	 virtual void Loop();
 
- private:
+private:
 	 int		_adrsPin[4];
 	 int		_S1adrsPin[4];
 
@@ -71,15 +71,5 @@ class Multiplex : public PinballObject
 	 void 		_addressing(uint8_t ch);
 	 void 		_addressingS1(uint8_t ch);
 	 void		shiftOut(byte myDataOut);
-
-	 byte ToByte(bool b[8])
-	 {
-		 byte c = 0;
-		 for (int i = 0; i < 8; ++i)
-			 if (b[i])
-				 c |= 1 << i;
-		 return c;
-	 }
-
 };
 #endif

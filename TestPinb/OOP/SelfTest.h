@@ -31,6 +31,9 @@ public:
 	void DoTestLed();
 	void DoTestCoin();
 	void DoTestOutput();
+	void DoTestInput();
+	void EventToInput(Object* sender, uint8_t event, uint8_t valueToSend);
+	void DisplayInput(uint8_t valueToSend);
 	void DoPlaySound(bool board);
 	void DoSfxOnOff();
 

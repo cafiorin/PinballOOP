@@ -33,10 +33,10 @@ public:
 	void print(char *szLog);
 	void print(int value);
 
-	uint8_t m_line;
+	int m_line;
 	char m_strings[MAX_STRINGS][50];
-	uint8_t m_XInit;
-	uint8_t m_YInit;
+	int m_XInit;
+	int m_YInit;
 
 };
 #endif

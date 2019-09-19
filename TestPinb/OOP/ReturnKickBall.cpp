@@ -94,9 +94,8 @@ bool ReturnKickBall::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 	{
 		if (m_returnBallOn)
 		{
-			m_output->TurnOnByTimer(TIME_COIL_ON);
+			m_output->Pulse();
 		}
-		m_Pinball->NotifyEvent(sender, event, value);
 		return true;
 	}
 	else if (event == EVENT_TIMEISOVER)

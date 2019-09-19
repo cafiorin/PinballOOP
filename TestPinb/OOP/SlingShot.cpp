@@ -66,8 +66,7 @@ bool SlingShot::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 
 	if (event == EVENT_EDGEPOSITIVE)
 	{
-		m_output->TurnOnByTimer(TIME_COIL_ON);
-		m_Pinball->NotifyEvent(sender, event, value);
+		m_output->Pulse();
 		return true;
 	}
 	return false;

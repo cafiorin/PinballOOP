@@ -51,9 +51,9 @@ bool Bumper::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
 
 	if (event == EVENT_EDGEPOSITIVE)
 	{
-		m_output->TurnOnByTimer(TIME_COIL_ON);
+		m_output->Pulse();
 		m_Pinball->NotifyEvent(sender, event, value);
-		m_Led->TurnOnByTimer(1000);
+		m_Led->TurnOnByTimer(500);
 		return true;
 	}
 	return false;

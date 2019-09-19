@@ -16,7 +16,6 @@ KickoutHole::KickoutHole(uint8_t portNumberInput, uint8_t portNumberOutput) : Pi
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage(F("KickoutHole Constructor"));
 	#endif
-
 	
 	m_input = new Input(portNumberInput,this);
 	m_output = new Output(portNumberOutput);
@@ -57,11 +56,6 @@ bool KickoutHole::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t value)
 	LogMessage(F("KickoutHole::NotifyEvent"));
 	#endif
 
-	if (event == EVENT_EDGEPOSITIVE)
-	{
-		m_Pinball->NotifyEvent(this, event, value);
-		return true;
-	}
 	return false;
 }
 
@@ -76,6 +70,6 @@ void KickoutHole::LanchBall()
 
 	if (m_input->GetInput())
 	{
-		m_output->TurnOnByTimer(TIME_COIL_ON);
+		m_output->Pulse();
 	}
 }

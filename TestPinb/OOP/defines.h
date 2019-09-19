@@ -13,7 +13,7 @@ http://pinballhomemade.blogspot.com.br
 //#define ARDUINOLIB
 
 // To Show DEBUG messages
-// #define DEBUGINPUTS
+//#define DEBUGINPUTS
 //#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 //#define DEBUGMESSAGESCREATION
@@ -79,20 +79,20 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_SW_OUTBALL1 0 //conector 3C - pin 10
 #define INPUT_SW_OUTBALL2 1 //conector 3C - pin 9
 #define INPUT_SW_LAUNCHBALL 2 //conector 3C - pin 8
-#define INPUT_SW_SLINGSHOT_LEFT1 4 //conector 3C - pin 6 
-#define INPUT_SW_SLINGSHOT_LEFT2 6 //conector 3C - pin 4 
-#define INPUT_SW_SLINGSHOT_RIGHT1 8 //conector 3C - pin 1 
-#define INPUT_SW_SLINGSHOT_RIGHT2 7 //conector 3C - pin 2 
-#define INPUT_SW_OUTLANE_LEFT 9 //conector 3C - pin 20 
-#define INPUT_SW_OUTLANE_RIGHT 5 //conector 3C - pin 5
+#define INPUT_SW_SLINGSHOT_RIGHT1 4 //conector 3C - pin 6 
+#define INPUT_SW_SLINGSHOT_RIGHT2 6 //conector 3C - pin 4 
+#define INPUT_SW_SLINGSHOT_LEFT1 8 //conector 3C - pin 1 
+#define INPUT_SW_SLINGSHOT_LEFT2 7 //conector 3C - pin 2 
+#define INPUT_SW_OUTLANE_RIGHT 9 //conector 3C - pin 20 
+#define INPUT_SW_OUTLANE_LEFT 5 //conector 3C - pin 5
 #define INPUT_SW_RETURNBALL_LEFT 3 //conector 3C - pin 7
 #define INPUT_SW_RETURNBALL_RIGHT 10 //conector 3C - pin 19 
 #define INPUT_SW_TARGET_RED1 13 //conector 3C - pin 16 
 #define INPUT_SW_TARGET_GREEN1 11 //conector 3C - pin 18 
 #define INPUT_SW_TARGET_YELLOW1 28 //conector 4D - pin 7 
 #define INPUT_SW_TARGET_RED2 18 //conector 4D - pin 12 
-#define INPUT_SW_TARGET_GREEN2 26 //conector 4D - pin 1 
-#define INPUT_SW_TARGET_YELLOW2 25 //conector 4D - pin 13
+#define INPUT_SW_TARGET_YELLOW2 26 //conector 4D - pin 13
+#define INPUT_SW_TARGET_GREEN2 25 //conector 4D - pin 1 
 #define INPUT_SW_DROPTARGET_51 34 //conector 5E - pin 1
 #define INPUT_SW_DROPTARGET_52 37 //conector 5E - pin 2
 #define INPUT_SW_DROPTARGET_53 41 //conector 5E - pin 3
@@ -104,14 +104,14 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_SW_ROLLOVER_STAR_GREEN 30 //conector 4D - pin 16
 #define INPUT_SW_ROLLOVER_STAR_RED1 21 //conector 4D - pin 14
 #define INPUT_SW_ROLLOVER_STAR_RED2 22 //conector 4D - pin 11
-#define INPUT_SW_ROLLOVER_LEFT 17 //conector 4D - pin 2 
+#define INPUT_SW_ROLLOVER_RIGHT 17 //conector 4D - pin 2 
 #define INPUT_SW_ROLLOVER_CENTER 20 //conector 4D - pin 4 
-#define INPUT_SW_ROLLOVER_RIGHT 15 //conector 4D - pin 5 
+#define INPUT_SW_ROLLOVER_LEFT 15 //conector 4D - pin 5 
 #define INPUT_SW_BUMPER_LEFT 24 //conector 4D - pin 8 
 #define INPUT_SW_BUMPER_CENTER 27 //conector 4D - pin 9 
 #define INPUT_SW_BUMPER_RIGHT 14 //conector 4D - pin 10 
-#define INPUT_SW_RAMP_IN 35 //conector 5E - pin 15
-#define INPUT_SW_RAMP_OUT1 42 //conector 5E - pin 16
+#define INPUT_SW_RAMP_IN 42 //conector 5E - pin 15
+#define INPUT_SW_RAMP_OUT1 35 //conector 5E - pin 16
 #define INPUT_SW_RAMP_OUT2 43 //conector 5E - pin 6
 #define INPUT_SW_SPINNER 12 //conector 3C - pin 17 
 #define INPUT_SW_HOLE 19 //conector 4D - pin 6 
@@ -145,15 +145,15 @@ http://pinballhomemade.blogspot.com.br
 
 //Outputs high energy
 #define OUTPUT_COINS_INIT 16
-#define OUTPUT_OUTBALL1_48V 16
+#define OUTPUT_HOLE_48V 16 //0
 #define OUTPUT_OUTBALL2_48V 17
 #define OUTPUT_BUMPER_LEFT_48V 18
-#define OUTPUT_BUMPER_CENTER_48V 19
-#define OUTPUT_BUMPER_RIGHT_48V 20
-#define OUTPUT_SLINGSHOTLEFT_48V 21
-#define OUTPUT_SLINGSHOTRIGHT_48V 22
-#define OUTPUT_HOLE_48V 23
-#define OUTPUT_DROPTARGET3_48V 24
+#define OUTPUT_SLINGSHOTLEFT_48V 19
+#define OUTPUT_SLINGSHOTRIGHT_48V 20
+#define OUTPUT_BUMPER_CENTER_48V 21
+#define OUTPUT_BUMPER_RIGHT_48V 22
+#define OUTPUT_DROPTARGET3_48V 23
+#define OUTPUT_OUTBALL1_48V 24 // 8
 #define OUTPUT_DROPTARGET5_48V 25
 #define OUTPUT_RETURNBALL_48V 26
 #define OUTPUT_ACCBALL_48V 27

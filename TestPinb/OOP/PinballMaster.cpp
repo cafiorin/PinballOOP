@@ -170,6 +170,11 @@ void PinballMaster::CreateObjects()
 	m_DropTarget3 = new DropTarget(INPUT_SW_DROPTARGET_31, INPUT_SW_DROPTARGET_32, INPUT_SW_DROPTARGET_33, OUTPUT_DROPTARGET3_48V);
 	m_DropTarget3->AddLeds(LED_TARGET_GREEN2, LED_TARGET_YELLOW2, LED_TARGET_RED2);
 
+	new Input(INPUT_SW_LAUNCHBALL);
+	new Input(INPUT_SW_ACCJUMP);
+
+
+
 	new Input(INPUT_SW_ROLLOVER_STAR_RED1);
 	new Input(INPUT_SW_TARGET_RED2);
 	new Input(INPUT_SW_TARGET_YELLOW2);
@@ -254,39 +259,6 @@ bool PinballMaster::NotifyEvent(Object *sender, uint8_t event, uint8_t valueToSe
 		#endif
 
 		// -- E D G E  P O S I T I V E --
-		switch (valueToSend)
-		{
-		case INPUT_START_BUTTON:
-		{
-			return EventStartButton(sender);
-		}
-		break;
-
-		case INPUT_MENU_BUTTON:
-		{
-			return EventMenuButton(sender);
-		}
-		break;
-
-		case INPUT_UP_BUTTON:
-		{
-			return EventUpDownButton(sender, true);
-		}
-		break;
-
-		case INPUT_DOWN_BUTTON:
-		{
-			return EventUpDownButton(sender, false);
-		}
-		break;
-		case INPUT_ENTER_BUTTON:
-		{
-			return EventEnterButton(sender);
-		}
-		break;
-		}
-
-
 		// -- P L A Y F I E L D --
 		if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
 		{
@@ -299,7 +271,41 @@ bool PinballMaster::NotifyEvent(Object *sender, uint8_t event, uint8_t valueToSe
 				return PlayfieldEvent(sender, event, valueToSend);
 			}
 		}
+		else
+		{
 
+			switch (valueToSend)
+			{
+			case INPUT_START_BUTTON:
+			{
+				return EventStartButton(sender);
+			}
+			break;
+
+			case INPUT_MENU_BUTTON:
+			{
+				return EventMenuButton(sender);
+			}
+			break;
+
+			case INPUT_UP_BUTTON:
+			{
+				return EventUpDownButton(sender, true);
+			}
+			break;
+
+			case INPUT_DOWN_BUTTON:
+			{
+				return EventUpDownButton(sender, false);
+			}
+			break;
+			case INPUT_ENTER_BUTTON:
+			{
+				return EventEnterButton(sender);
+			}
+			break;
+			}
+		}
 		return true;
 	}
 	// -- D R O P  T A R G E T --
@@ -463,12 +469,15 @@ bool PinballMaster::PlayfieldEvent(Object *sender, uint8_t event, uint8_t value)
 	LogMessage(F("PinballMaster::PlayfieldEvent"));
 	#endif
 
-	if (m_Status == StatusPinball::playingmode && m_playerPlaying>= 0 && m_playerPlaying < MAX_PLAYERS)
+	if (m_Status == StatusPinball::playingmode)
 	{
 		//TODO: m_Players[m_playerPlaying]->NotifyEvent(sender, event, valueToSend);
-		char szEvent[15];
-		sprintf(szEvent, "%d", event);
-		printText("event", szEvent, 0);
+		
+		char szEventLabel[15];
+		char szEventValue[15];
+		sprintf(szEventLabel, "Ev %d", event);
+		sprintf(szEventValue, "val %d", value);
+		printText(szEventLabel, szEventValue, 0);
 	}
 
 	return true;

@@ -160,6 +160,6 @@ void DropTarget::Reset()
 	#endif
 
 	m_AllTargets = false;
-	m_output->TurnOnByTimer(TIME_COIL_ON);
+	m_output->Pulse();
 	m_SequencerLeds->Start();
 }

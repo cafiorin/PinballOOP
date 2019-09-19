@@ -42,7 +42,7 @@ public:
 
 protected:
 	uint8_t m_MenuTest;
-	uint8_t m_startTestValue;
+	int m_startTestValue;
 	Timer *m_timerAuto;
 
 };

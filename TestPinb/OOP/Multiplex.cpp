@@ -53,6 +53,10 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	LogMessage(F("Multiplex Constructor"));
 	#endif
 
+	_sigOutput2 = SIGOUTPUT2;
+	pinMode(_sigOutput2, OUTPUT);
+	digitalWrite(_sigOutput2, LOW);
+
 	_adrsPin[0] = S0;
 	_adrsPin[1] = S1;
 	_adrsPin[2] = S2;
@@ -66,8 +70,6 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	_sigInput1 = SIGINPUT1;
 	_sigInput2 = SIGINPUT2;
 	_sigInput3 = SIGINPUT3;
-
-	_sigOutput2 = SIGOUTPUT2;
 
 	_latchPin = latchPin;
 	_clockPin = clockPin;
@@ -87,8 +89,6 @@ Multiplex::Multiplex(const uint8_t S0,const uint8_t S1,const uint8_t S2,const ui
 	pinMode(_sigInput1, INPUT);
 	pinMode(_sigInput2, INPUT);
 	pinMode(_sigInput3, INPUT);
-
-	pinMode(_sigOutput2, OUTPUT);
 
 	pinMode(latchPin, OUTPUT);
 	pinMode(clockPin, OUTPUT);
@@ -129,11 +129,19 @@ void Multiplex::writeChannel(uint8_t ch, uint8_t value)
 	}
 	else if (ch < 32)
 	{
+		digitalWrite(_sigOutput2, LOW);
+		delay(10);
 		_addressingS1(ch - 16);
-		delay(10); //TODO: Validate this values
+		delay(10);
 
-		digitalWrite(_sigOutput2, value);
-		delay(25); // TODO: Validate this values
+		if (value == HIGH)
+		{
+			//pulse
+			digitalWrite(_sigOutput2, HIGH);
+			delay(50);
+			digitalWrite(_sigOutput2, LOW);
+			delay(10);
+		}
 	}
 }
 
@@ -176,7 +184,7 @@ void Multiplex::writeChannelLatch(uint8_t ch, uint8_t /*value*/)
 		byte MSB = ToByte(out2);
 		
 		#ifdef DEBUGMESSAGES
-		const char szNumber[20];
+		char szNumber[20];
 		sprintf(szNumber, "%x e %x", LSB, MSB);
 		LogMessageToConstChar(szNumber);
 		#endif

@@ -18,16 +18,9 @@ AccumulatorBall::AccumulatorBall(uint8_t portNumberInput1, uint8_t portNumberInp
 	#endif
 
 	m_input1 = new Input(portNumberInput1,this);
-	m_input1->SetDebounceRead(5);
-	
 	m_input2 = new Input(portNumberInput2, this);
-	m_input2->SetDebounceRead(5);
-	
 	m_input3 = new Input(portNumberInput3, this);
-	m_input3->SetDebounceRead(5);
-	
 	m_input4 = new Input(portNumberInput4, this);
-	m_input4->SetDebounceRead(5);
 
 	m_output = new Output(portNumberOutput);
 
@@ -111,6 +104,6 @@ void AccumulatorBall::LanchBall()
 	if (m_nBalls >= 1)
 	{
 		m_nBalls--;
-		m_output->TurnOnByDelay();
+		m_output->Pulse();
 	}
 }

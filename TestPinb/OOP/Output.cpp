@@ -54,6 +54,27 @@ void Output::TurnOnByDelay(unsigned long time)
 }
 
 //-------------------------------------------------------//
+void Output::Pulse()
+//-------------------------------------------------------//
+{
+	if (m_Enabled)
+	{
+		#ifdef DEBUGMESSAGES
+		LogMessage(F("Output::Pulse"));
+		#endif
+
+		m_turnOn = true;
+		Multiplex* pMultiplex = m_Pinball->GetMultiplex();
+		if (pMultiplex != NULL)
+		{
+			pMultiplex->writeChannel(m_portNumber, HIGH);
+		}
+		m_turnOn = false;
+	}
+}
+
+
+//-------------------------------------------------------//
 void Output::TurnOn()
 //-------------------------------------------------------//
 {

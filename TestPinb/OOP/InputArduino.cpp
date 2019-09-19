@@ -79,6 +79,7 @@ void InputArduino::CheckDebounce()
 				if (m_parent != NULL)
 				{
 					m_parent->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
+					m_Pinball->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
 				}
 				else
 				{
@@ -99,6 +100,7 @@ void InputArduino::CheckDebounce()
 				if (m_parent != NULL)
 				{
 					m_parent->NotifyEvent(this, EVENT_EDGENEGATIVE, m_portNumber);
+					m_Pinball->NotifyEvent(this, EVENT_EDGENEGATIVE, m_portNumber);
 				}
 				else
 				{

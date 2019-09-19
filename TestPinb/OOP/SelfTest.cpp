@@ -271,7 +271,7 @@ void SelfTest::DoTestLed()
 
 	char szLed[5];
 	sprintf(szLed, "%d", m_startTestValue);
-	m_Pinball->printText("Led:", szLed, 0);
+	m_Pinball->printText("Led", szLed, 0);
 
 	LedControl *ledControl = m_Pinball->GetLedControl();
 	if (ledControl != NULL)
@@ -297,13 +297,13 @@ void SelfTest::DoTestCoin()
 
 
 	char szCoin[5];
-	sprintf(szCoin, "%d", m_startTestValue);
-	m_Pinball->printText("Coin:", szCoin, 0);
+	sprintf(szCoin, "%d", m_startTestValue + OUTPUT_COINS_INIT);
+	m_Pinball->printText("Coin", szCoin, 0);
 
 	Output *pOutput = m_Pinball->GetOutput(m_startTestValue + OUTPUT_COINS_INIT);
 	if (pOutput != NULL)
 	{
-		pOutput->TurnOnByTimer(200);
+		pOutput->TurnOn();
 	}
 }
 
@@ -331,7 +331,7 @@ void SelfTest::DoTestOutput()
 	  sprintf(szOut, "%d", pOutput->GetPortNumber());
 	  m_Pinball->printText("Output", szOut, 0);
 		
-	  pOutput->TurnOnByTimer(500);
+	  pOutput->TurnOnByTimer(1000);
 	}
 }
 

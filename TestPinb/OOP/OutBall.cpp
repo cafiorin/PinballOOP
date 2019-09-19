@@ -63,8 +63,8 @@ bool OutBall::Init()
 		uint8_t nTries = 0;
 		while (m_input1->GetInput() && !m_input2->GetInput() && nTries < 5)
 		{
-			m_output1->TurnOnByDelay();
-			delay(1000);
+			m_output1->Pulse();
+			delay(500);
 			nTries++;
 		}
 
@@ -83,7 +83,7 @@ bool OutBall::Init()
 }
 
 //-------------------------------------------------------//
-bool OutBall::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t /*value*/)
+bool OutBall::NotifyEvent(Object *sender, uint8_t event, uint8_t /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -92,14 +92,17 @@ bool OutBall::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t /*value*/)
 
 	if (event == EVENT_EDGEPOSITIVE)
 	{
-		AddBall();
-
-		m_Pinball->NotifyEvent(this, EVENT_LOST_BALL,0);
-		if (m_input1->GetInput() && !m_input2->GetInput())
+		if (sender == m_input1)
 		{
-			m_output1->TurnOnByTimer();
+			AddBall();
+
+			m_Pinball->NotifyEvent(this, EVENT_LOST_BALL, 0);
+			if (m_input1->GetInput() && !m_input2->GetInput())
+			{
+				m_output1->Pulse();
+			}
+			return true;
 		}
-		return true;
 	}
 	return false;
 }
@@ -115,11 +118,11 @@ void OutBall::LanchBall()
 	if (m_nBalls > 0)
 	{
 		RemoveBall();
-		m_output2->TurnOnByTimer();
-
+		m_output2->Pulse();
+		delay(700);
 		if (m_input1->GetInput() && !m_input2->GetInput())
 		{
-			m_output1->TurnOnByTimer();
+			m_output1->Pulse();
 		}
 	}
 

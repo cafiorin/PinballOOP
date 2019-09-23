@@ -118,7 +118,7 @@ void OutBall::LanchBall()
 	if (m_nBalls > 0)
 	{
 		RemoveBall();
-		m_output2->Pulse();
+		m_output2->Pulse(800);
 		delay(700);
 		if (m_input1->GetInput() && !m_input2->GetInput())
 		{

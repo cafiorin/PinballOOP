@@ -47,7 +47,7 @@ class Multiplex : public PinballObject
 		 const uint8_t SIGOUTPUT2, const uint8_t Sout10, const uint8_t Sout11, const uint8_t Sout12, const uint8_t Sout13);
 
 	 uint8_t 	readChannel(uint8_t ch);
-	 void		writeChannel(uint8_t ch, uint8_t value);
+	 void		writeChannel(uint8_t ch, uint8_t value, unsigned long time = TIME_COIL_ON);
 	 void		writeChannelLatch(uint8_t ch, uint8_t value);
 
 	 void		resetAllOutput();

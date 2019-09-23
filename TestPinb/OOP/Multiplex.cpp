@@ -116,7 +116,7 @@ void Multiplex::resetAllOutput()
 
 
 //-----------------------------------------------
-void Multiplex::writeChannel(uint8_t ch, uint8_t value)
+void Multiplex::writeChannel(uint8_t ch, uint8_t value, unsigned long time /*= TIME_COIL_ON*/)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
@@ -138,7 +138,7 @@ void Multiplex::writeChannel(uint8_t ch, uint8_t value)
 		{
 			//pulse
 			digitalWrite(_sigOutput2, HIGH);
-			delay(50);
+			delay(time);
 			digitalWrite(_sigOutput2, LOW);
 			delay(10);
 		}

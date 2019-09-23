@@ -259,6 +259,38 @@ bool PinballMaster::NotifyEvent(Object *sender, uint8_t event, uint8_t valueToSe
 		#endif
 
 		// -- E D G E  P O S I T I V E --
+		switch (valueToSend)
+		{
+		case INPUT_START_BUTTON:
+		{
+			return EventStartButton(sender);
+		}
+		break;
+
+		case INPUT_MENU_BUTTON:
+		{
+			return EventMenuButton(sender);
+		}
+		break;
+
+		case INPUT_UP_BUTTON:
+		{
+			return EventUpDownButton(sender, true);
+		}
+		break;
+
+		case INPUT_DOWN_BUTTON:
+		{
+			return EventUpDownButton(sender, false);
+		}
+		break;
+		case INPUT_ENTER_BUTTON:
+		{
+			return EventEnterButton(sender);
+		}
+		break;
+		}
+		
 		// -- P L A Y F I E L D --
 		if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
 		{
@@ -271,41 +303,7 @@ bool PinballMaster::NotifyEvent(Object *sender, uint8_t event, uint8_t valueToSe
 				return PlayfieldEvent(sender, event, valueToSend);
 			}
 		}
-		else
-		{
 
-			switch (valueToSend)
-			{
-			case INPUT_START_BUTTON:
-			{
-				return EventStartButton(sender);
-			}
-			break;
-
-			case INPUT_MENU_BUTTON:
-			{
-				return EventMenuButton(sender);
-			}
-			break;
-
-			case INPUT_UP_BUTTON:
-			{
-				return EventUpDownButton(sender, true);
-			}
-			break;
-
-			case INPUT_DOWN_BUTTON:
-			{
-				return EventUpDownButton(sender, false);
-			}
-			break;
-			case INPUT_ENTER_BUTTON:
-			{
-				return EventEnterButton(sender);
-			}
-			break;
-			}
-		}
 		return true;
 	}
 	// -- D R O P  T A R G E T --

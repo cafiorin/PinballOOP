@@ -26,8 +26,11 @@ DropTarget::DropTarget( uint8_t portNumberInput1,
 
 	m_sizeInputs = 3;
 	m_input[0] = new Input(portNumberInput1,this);
+	m_input[0]->SetDebounceRead(5);
 	m_input[1] = new Input(portNumberInput2, this);
+	m_input[1]->SetDebounceRead(5);
 	m_input[2] = new Input(portNumberInput3, this);
+	m_input[2]->SetDebounceRead(5);
 
 	m_output = new Output(portNumberOutput);
 }
@@ -51,11 +54,16 @@ DropTarget::DropTarget(
 
 	m_sizeInputs = 5;
 	m_input[0] = new Input(portNumberInput1, this);
+	m_input[0]->SetDebounceRead(5);
 	m_input[1] = new Input(portNumberInput2, this);
+	m_input[1]->SetDebounceRead(5);
 	m_input[2] = new Input(portNumberInput3, this);
+	m_input[2]->SetDebounceRead(5);
 	m_input[3] = new Input(portNumberInput4, this);
+	m_input[3]->SetDebounceRead(5);
 	m_input[4] = new Input(portNumberInput5, this);
-
+	m_input[4]->SetDebounceRead(5);
+	   
 	m_output = new Output(portNumberOutput);
 }
 

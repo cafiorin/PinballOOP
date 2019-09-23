@@ -54,7 +54,7 @@ void Output::TurnOnByDelay(unsigned long time)
 }
 
 //-------------------------------------------------------//
-void Output::Pulse()
+void Output::Pulse(unsigned long time)
 //-------------------------------------------------------//
 {
 	if (m_Enabled)
@@ -67,7 +67,7 @@ void Output::Pulse()
 		Multiplex* pMultiplex = m_Pinball->GetMultiplex();
 		if (pMultiplex != NULL)
 		{
-			pMultiplex->writeChannel(m_portNumber, HIGH);
+			pMultiplex->writeChannel(m_portNumber, HIGH, time);
 		}
 		m_turnOn = false;
 	}

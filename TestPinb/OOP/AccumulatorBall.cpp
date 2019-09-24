@@ -104,6 +104,7 @@ void AccumulatorBall::LanchBall()
 	if (m_nBalls >= 1)
 	{
 		m_nBalls--;
-		m_output->Pulse();
 	}
+
+	m_output->Pulse();
 }

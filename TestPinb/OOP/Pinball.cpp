@@ -141,7 +141,7 @@ void Pinball::sendMessageToAnotherArduino(uint8_t address, char msg)
 }
 
 //-----------------------------------------------------------------------//
-char Pinball::receiveMessageFromAnotherArduino(uint8_t howMany)
+char Pinball::receiveMessageFromAnotherArduino(uint8_t /*howMany*/)
 //-----------------------------------------------------------------------//
 {
 #ifdef DEBUGMESSAGES

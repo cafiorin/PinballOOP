@@ -58,7 +58,7 @@ void Object::LogMessageToConstChar(const char *szMessage)
 
 
 //---------------------------------------------------------------------//
-bool Object::NotifyEvent(Object * /*sender*/, uint8_t /*event*/, uint8_t value)
+bool Object::NotifyEvent(Object * /*sender*/, uint8_t /*event*/, uint8_t /*value*/)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

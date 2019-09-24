@@ -83,7 +83,7 @@ void ReturnKickBall::SetReturnBall(bool returnBallOn)
 }
 
 //-------------------------------------------------------//
-bool ReturnKickBall::NotifyEvent(Object *sender, uint8_t event, uint8_t value)
+bool ReturnKickBall::NotifyEvent(Object* /*sender*/, uint8_t event, uint8_t /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

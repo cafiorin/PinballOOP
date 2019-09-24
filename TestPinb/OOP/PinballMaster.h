@@ -30,6 +30,7 @@ class Output;
 class KickoutHole;
 class DropTarget;
 class InputArduino;
+class AccumulatorBall;
 
 class PinballMaster : public Pinball
 {
@@ -86,9 +87,9 @@ private :
 
 	void SetBallsByPlayer(uint8_t balls) { m_nBallByPlayer = balls; }
 	void CreateObjects();
-	bool EventStartButton(Object *sender);
-	bool EventEnterButton(Object *sender);
-	bool EventMenuButton(Object *sender);
+	bool EventStartButton();
+	bool EventEnterButton();
+	bool EventMenuButton();
 	bool TimerIsOver(Object *sender);
 	bool PlayfieldEvent(Object *sender, uint8_t event, uint8_t value);
 	bool EventUpDownButton(Object *sender,bool upButton);
@@ -111,6 +112,7 @@ protected:
 	Output *m_HEADLIGHT_RX;
 	Output *m_LockRampOn;
 	Output *m_LockRampOff;
+	AccumulatorBall *m_Accumulator;
 
 	static uint8_t iCountObj;
 };

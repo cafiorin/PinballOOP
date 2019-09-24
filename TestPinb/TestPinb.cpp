@@ -51,7 +51,7 @@ int ReadKey()
 {
 	if (_kbhit())
 	{
-		char  ch = _getch();
+		int  ch = _getch();
 		if (ch >= '0' && ch <= '9')
 		{
 			szKey[ikeyCount] = ch;

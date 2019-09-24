@@ -114,6 +114,7 @@ void PinballMaster::InitVars()
 	m_TurnFlipperOn = NULL;
 	m_DropTarget5 = NULL;
 	m_DropTarget3 = NULL;
+	m_Accumulator = NULL;
 }
 
 
@@ -173,8 +174,6 @@ void PinballMaster::CreateObjects()
 	new Input(INPUT_SW_LAUNCHBALL);
 	new Input(INPUT_SW_ACCJUMP);
 
-
-
 	new Input(INPUT_SW_ROLLOVER_STAR_RED1);
 	new Input(INPUT_SW_TARGET_RED2);
 	new Input(INPUT_SW_TARGET_YELLOW2);
@@ -200,7 +199,7 @@ void PinballMaster::CreateObjects()
 	new Input(INPUT_SW_RAMP_OUT2);
 
 	new ReturnKickBall(INPUT_SW_OUTLANE_LEFT, OUTPUT_RETURNBALL_48V, LED_OUTLANE_LEFT);
-	new AccumulatorBall(INPUT_SW_ACCBALL1, INPUT_SW_ACCBALL2, INPUT_SW_ACCBALL3, INPUT_SW_ACCBALL4, OUTPUT_ACCBALL_48V);
+	m_Accumulator = new AccumulatorBall(INPUT_SW_ACCBALL1, INPUT_SW_ACCBALL2, INPUT_SW_ACCBALL3, INPUT_SW_ACCBALL4, OUTPUT_ACCBALL_48V);
 
 	Init(StatusPinball::initializing);
 
@@ -263,13 +262,13 @@ bool PinballMaster::NotifyEvent(Object *sender, uint8_t event, uint8_t valueToSe
 		{
 		case INPUT_START_BUTTON:
 		{
-			return EventStartButton(sender);
+			return EventStartButton();
 		}
 		break;
 
 		case INPUT_MENU_BUTTON:
 		{
-			return EventMenuButton(sender);
+			return EventMenuButton();
 		}
 		break;
 
@@ -286,7 +285,7 @@ bool PinballMaster::NotifyEvent(Object *sender, uint8_t event, uint8_t valueToSe
 		break;
 		case INPUT_ENTER_BUTTON:
 		{
-			return EventEnterButton(sender);
+			return EventEnterButton();
 		}
 		break;
 		}
@@ -326,7 +325,7 @@ bool PinballMaster::NotifyEvent(Object *sender, uint8_t event, uint8_t valueToSe
 
 //Start Button pressed
 //---------------------------------------------------------------------//
-bool PinballMaster::EventStartButton(Object *sender)
+bool PinballMaster::EventStartButton()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -365,7 +364,7 @@ bool PinballMaster::EventStartButton(Object *sender)
 
 //Menu Button pressed
 //---------------------------------------------------------------------//
-bool PinballMaster::EventMenuButton(Object *sender)
+bool PinballMaster::EventMenuButton()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -398,7 +397,7 @@ bool PinballMaster::EventMenuButton(Object *sender)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::EventEnterButton(Object *sender)
+bool PinballMaster::EventEnterButton()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -460,7 +459,7 @@ bool PinballMaster::EventUpDownButton(Object *sender, bool upButton)
 }
 
 //---------------------------------------------------------------------//
-bool PinballMaster::PlayfieldEvent(Object *sender, uint8_t event, uint8_t value)
+bool PinballMaster::PlayfieldEvent(Object* /*sender*/, uint8_t event, uint8_t value)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
@@ -476,6 +475,22 @@ bool PinballMaster::PlayfieldEvent(Object *sender, uint8_t event, uint8_t value)
 		sprintf(szEventLabel, "Ev %d", event);
 		sprintf(szEventValue, "val %d", value);
 		printText(szEventLabel, szEventValue, 0);
+
+		if (event == EVENT_EDGEPOSITIVE)
+		{
+			switch (value)
+			{
+			case INPUT_SW_HOLE:
+				if (m_Hole != NULL)
+				{
+					m_Hole->LanchBall();
+				}
+				break;
+
+			default:
+				break;
+			}
+		}
 	}
 
 	return true;
@@ -569,6 +584,13 @@ void PinballMaster::StartGame(uint8_t Players)
 void PinballMaster::PlayerLostBall()
 //---------------------------------------------------------------------//
 {
+	//Only test
+	if (m_Accumulator != NULL)
+	{
+		m_Accumulator->LanchBall();
+		delay(100);
+	}
+
 	GetNewBall();
 }
 
@@ -606,7 +628,7 @@ void PinballMaster::ShowChooseNumberOfPlayers()
 }
 
 /*---------------------------------------------------------------------*/
-bool PinballMaster::Loop(uint8_t value)
+bool PinballMaster::Loop(uint8_t /*value*/)
 /*---------------------------------------------------------------------*/
 {
 	#ifdef DEBUGMESSAGESLOOP

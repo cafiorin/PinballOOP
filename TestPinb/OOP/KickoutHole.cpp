@@ -49,7 +49,7 @@ bool KickoutHole::Init()
 }
 
 //-------------------------------------------------------//
-bool KickoutHole::NotifyEvent(Object * /*sender*/, uint8_t event, uint8_t value)
+bool KickoutHole::NotifyEvent(Object * /*sender*/, uint8_t /*event*/, uint8_t value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

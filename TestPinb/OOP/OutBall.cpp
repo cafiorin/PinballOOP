@@ -63,7 +63,7 @@ bool OutBall::Init()
 		uint8_t nTries = 0;
 		while (m_input1->GetInput() && !m_input2->GetInput() && nTries < 5)
 		{
-			m_output1->Pulse(20);
+			m_output1->Pulse(40);
 			delay(500);
 			nTries++;
 		}
@@ -99,7 +99,7 @@ bool OutBall::NotifyEvent(Object *sender, uint8_t event, uint8_t /*value*/)
 			m_Pinball->NotifyEvent(this, EVENT_LOST_BALL, 0);
 			if (m_input1->GetInput() && !m_input2->GetInput())
 			{
-				m_output1->Pulse(20);
+				m_output1->Pulse(40);
 			}
 			return true;
 		}
@@ -122,7 +122,7 @@ void OutBall::LanchBall()
 		delay(300);
 		if (m_input1->GetInput() && !m_input2->GetInput())
 		{
-			m_output1->Pulse(20);
+			m_output1->Pulse(40);
 		}
 	}
 

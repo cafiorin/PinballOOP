@@ -12,6 +12,8 @@ http://pinballhomemade.blogspot.com.br
 #include "Utils.h"
 #include "Port.h"
 
+class Timer;
+
 class Input : public Port
 {
 
@@ -25,11 +27,17 @@ public:
 
 private:
 	uint8_t m_debounceRead;    // the debounce time; increase if the output flickers
-	uint8_t m_debounceCount;
+	uint8_t m_inputWithSameValueCount;
+	uint8_t m_QuantDebouncePerSecond;
+	uint8_t m_NumberTriesDebounce;
 	bool m_InputValue;
 	bool m_Edge;
+	Timer* m_timer;
 	PinballObject *m_parent;
 
 	void CheckDebounce();
+
+protected:
+	bool NotifyEvent(Object* /*sender*/, uint8_t event, uint8_t /*value*/);
 };
 #endif // !defined(_Input__INCLUDED_)

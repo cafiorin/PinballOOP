@@ -9,8 +9,8 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
-//#define DOS
-#define ARDUINOLIB
+#define DOS
+//#define ARDUINOLIB
 
 // To Show DEBUG messages
 //#define DEBUGINPUTS
@@ -18,6 +18,9 @@ http://pinballhomemade.blogspot.com.br
 //#define DEBUGMESSAGESLOOP
 //#define DEBUGMESSAGESCREATION
 //-----------------------
+
+#define MAX_DEBOUNCE_PER_SECOND 5
+#define MAX_TRY_DEBOUNCES 10
 
 #define ADDRESS_MASTER 4
 #define ADDRESS_SLAVE  5

@@ -26,7 +26,7 @@ public:
 
 private:
 	uint8_t m_debounceRead;    // the debounce time; increase if the output flickers
-	uint8_t m_debounceCount;
+	uint8_t m_inputWithSameValueCount;
 	bool m_InputValue;
 	bool m_Edge;
 	PinballObject *m_parent;

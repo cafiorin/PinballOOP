@@ -7,6 +7,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "Input.h"
 #include "Pinball.h"
+#include "Timer.h"
 
 //-------------------------------------------------------//
 Input::Input(uint8_t portNumber, PinballObject *parent):Port(portNumber)
@@ -17,10 +18,14 @@ Input::Input(uint8_t portNumber, PinballObject *parent):Port(portNumber)
 	#endif
 
 	m_debounceRead = DEBOUNCEREAD;
-	m_debounceCount = 0;
+	m_inputWithSameValueCount = 0;
+	m_QuantDebouncePerSecond = 0;
+	m_NumberTriesDebounce = 0;
 	m_InputValue = false;
 	m_Edge = false;
 	m_parent = parent;
+	m_timer = new Timer(1000, this, TimerType::continuous, true);
+	m_timer->Enable();
 
 	m_Pinball->AddPinballInput(this);
 }
@@ -54,9 +59,9 @@ void Input::CheckDebounce()
 		#ifdef DEBUGMESSAGESLOOP
 		LogMessage(F("Input::CheckDebounce"));
 		#endif
-		if (m_debounceCount > m_debounceRead)
+		if (m_inputWithSameValueCount > m_debounceRead)
 		{
-			m_debounceCount = 0;
+			m_inputWithSameValueCount = 0;
 			m_Edge = false;
 
 			if (m_InputValue)
@@ -69,6 +74,10 @@ void Input::CheckDebounce()
 				{
 					m_parent->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
 					//m_Pinball->NotifyEvent(this, EVENT_EDGEPOSITIVE, m_portNumber);
+					if (m_timer->IsEnabled())
+					{
+						m_QuantDebouncePerSecond++;
+					}
 				}
 				else
 				{
@@ -109,15 +118,46 @@ bool Input::SetInput (bool value)
 	if (newValue)
 	{
 		m_InputValue = value;
-		m_debounceCount = 0;
+		m_inputWithSameValueCount = 0;
 		m_Edge = true;
 	}
 
 	if(m_Edge)
 	{
-		m_debounceCount++;
+		m_inputWithSameValueCount++;
 		CheckDebounce();
 	}
 
 	return newValue;
+}
+
+//-------------------------------------------------------//
+bool Input::NotifyEvent(Object* /*sender*/, uint8_t event, uint8_t /*value*/)
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage(F("Light::NotifyEvent"));
+	#endif
+
+	if (event == EVENT_TIMEISOVER)
+	{
+		if (m_QuantDebouncePerSecond >= MAX_DEBOUNCE_PER_SECOND)
+		{ 
+			m_Enabled = false; // Yes disable it! This input with error input
+			m_timer->Disable();
+		}
+		else
+		{
+			m_QuantDebouncePerSecond = 0;
+			m_NumberTriesDebounce++;
+		}
+
+		if (m_NumberTriesDebounce >= MAX_TRY_DEBOUNCES)
+		{
+			m_timer->Disable();
+		}
+		return true;
+	}
+
+	return false;
 }

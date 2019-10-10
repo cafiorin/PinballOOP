@@ -21,7 +21,7 @@ InputArduino::InputArduino(uint8_t portNumber, PinballObject *parent):Port(portN
 	#endif
 
 	m_debounceRead = DEBOUNCEREAD;
-	m_debounceCount = 0;
+	m_inputWithSameValueCount = 0;
 	m_InputValue = false;
 	m_Edge = false;
 	m_parent = parent;
@@ -65,9 +65,9 @@ void InputArduino::CheckDebounce()
 		#ifdef DEBUGMESSAGESLOOP
 		LogMessage(F("InputArduino::CheckDebounce"));
 		#endif
-		if (m_debounceCount > m_debounceRead)
+		if (m_inputWithSameValueCount > m_debounceRead)
 		{
-			m_debounceCount = 0;
+			m_inputWithSameValueCount = 0;
 			m_Edge = false;
 
 			if (m_InputValue)
@@ -124,13 +124,13 @@ bool InputArduino::SetInput (bool value)
 	if (newValue)
 	{
 		m_InputValue = value;
-		m_debounceCount = 0;
+		m_inputWithSameValueCount = 0;
 		m_Edge = true;
 	}
 
 	if(m_Edge)
 	{
-		m_debounceCount++;
+		m_inputWithSameValueCount++;
 		CheckDebounce();
 	}
 

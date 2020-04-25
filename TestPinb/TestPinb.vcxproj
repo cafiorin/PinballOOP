@@ -167,7 +167,6 @@
     <ClInclude Include="OOP\Pinball.h" />
     <ClInclude Include="OOP\PinballMaster.h" />
     <ClInclude Include="OOP\PinballObject.h" />
-    <ClInclude Include="OOP\PinballSlave.h" />
     <ClInclude Include="OOP\Port.h" />
     <ClInclude Include="OOP\ReturnKickBall.h" />
     <ClInclude Include="OOP\SelfTest.h" />
@@ -177,6 +176,7 @@
     <ClInclude Include="OOP\Timer.h" />
     <ClInclude Include="OOP\Utils.h" />
     <ClInclude Include="OOP\Vector.h" />
+    <ClInclude Include="PinballMachine.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -199,7 +199,6 @@
     <ClCompile Include="OOP\Pinball.cpp" />
     <ClCompile Include="OOP\PinballMaster.cpp" />
     <ClCompile Include="OOP\PinballObject.cpp" />
-    <ClCompile Include="OOP\PinballSlave.cpp" />
     <ClCompile Include="OOP\Port.cpp" />
     <ClCompile Include="OOP\ReturnKickBall.cpp" />
     <ClCompile Include="OOP\SelfTest.cpp" />
@@ -208,6 +207,7 @@
     <ClCompile Include="OOP\Target.cpp" />
     <ClCompile Include="OOP\Timer.cpp" />
     <ClCompile Include="OOP\Utils.cpp" />
+    <ClCompile Include="PinballMachine.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TestPinb.cpp" />
   </ItemGroup>

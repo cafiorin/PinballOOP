@@ -78,9 +78,6 @@
     <ClInclude Include="OOP\PinballMaster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OOP\PinballSlave.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OOP\Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -118,6 +115,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OOP\OutputArduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -173,9 +173,6 @@
     <ClCompile Include="OOP\PinballMaster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OOP\PinballSlave.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OOP\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -207,6 +204,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OOP\OutputArduino.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

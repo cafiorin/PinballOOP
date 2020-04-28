@@ -3,14 +3,17 @@
 
 class PinballMachine
 {
-	//Porta com botoes
+	//Door with buttons
 	//Display
 	//Playfield
-	//lista de Jogadores (Max 8)
 	//Som
 	
-	//Display debug e botoes debug
-	//Saida serial debug
+	//Display debug e buttons debug
+	//Serial output debug
+
+	//PinballGame
+	//Players
+
 
 };
 

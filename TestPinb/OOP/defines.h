@@ -272,6 +272,8 @@ using namespace std;
 #define __FlashStringHelper char
 #define F (const char *)
 #define uint8_t unsigned int
+#define LOW 0
+#define HIGH 1
 
 #define INPUT_MENU_BUTTON 44
 #define INPUT_UP_BUTTON 45

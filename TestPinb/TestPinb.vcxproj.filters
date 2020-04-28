@@ -117,7 +117,28 @@
     <ClInclude Include="OOP\OutputArduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PinballMachine.h">
+    <ClInclude Include="PinballClasses\Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Observer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\PinballMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Runnable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Subject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\EventType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\MultiplexInputs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\BitInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -206,7 +227,25 @@
     <ClCompile Include="OOP\OutputArduino.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PinballMachine.cpp">
+    <ClCompile Include="PinballClasses\Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\Observer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\PinballMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\Runnable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\Subject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\MultiplexInputs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\BitInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

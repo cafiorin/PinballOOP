@@ -141,6 +141,21 @@
     <ClInclude Include="PinballClasses\BitInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PinballClasses\MultiplexOutputs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\LatchOutputs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\BitOutput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Initializable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\NewTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -246,6 +261,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PinballClasses\BitInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\MultiplexOutputs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\LatchOutputs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\BitOutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\Initializable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\NewTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

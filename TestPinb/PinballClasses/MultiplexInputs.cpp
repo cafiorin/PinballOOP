@@ -12,7 +12,10 @@ http://pinballhomemade.blogspot.com.br
 #include <Arduino.h>
 #endif
 
-static const byte _muxChAddress[16][4] =
+#define MAX_MUXINPUTS 48
+#define INPUTS_BY_CHIP 16
+
+static const byte _muxChAddress[INPUTS_BY_CHIP][4] =
 {
 	{0,0,0,0}, //channel 0
 	{1,0,0,0}, //channel 1
@@ -31,6 +34,16 @@ static const byte _muxChAddress[16][4] =
 	{0,1,1,1}, //channel 14
 	{1,1,1,1}  //channel 15
 };
+
+MultiplexInputs* MultiplexInputs::instance = NULL;
+
+//-----------------------------------------------
+MultiplexInputs* MultiplexInputs::CreateInstance()
+//-----------------------------------------------
+{
+	return new MultiplexInputs(/*S0*/23, /*S1*/25, /*S2*/27,/*S3*/29, /*SIn0*/22, /*SIn1*/34, /*SIn2*/36);
+}
+
 
 //-----------------------------------------------
 MultiplexInputs::MultiplexInputs(const byte S0, const byte S1, const byte S2, const byte S3,
@@ -60,7 +73,7 @@ MultiplexInputs::MultiplexInputs(const byte S0, const byte S1, const byte S2, co
 	pinMode(_sigInput2, INPUT);
 	pinMode(_sigInput3, INPUT);
 
-	for (byte i = 0; i < 48; i++)
+	for (byte i = 0; i < MAX_MUXINPUTS; i++)
 	{
 		inputs[i] = new BitInput(i);
 	}
@@ -74,22 +87,22 @@ byte MultiplexInputs::readChannel(byte ch)
 	LogMessage(F("Multiplex::readChannel"));
 	#endif
 
-	if (ch >= 0 && ch < 48)
+	if (ch < MAX_MUXINPUTS)
 	{
-		if (ch < 16)
+		if (ch < INPUTS_BY_CHIP)
 		{
 			_addressing(ch);
 			return (byte) digitalRead(_sigInput1);
 		}
-		else if (ch >= 16 && ch < 32)
+		else if (ch >= INPUTS_BY_CHIP && ch < INPUTS_BY_CHIP*2)
 		{
-			_addressing(ch - 16);
+			_addressing(ch - INPUTS_BY_CHIP);
 			return (byte) digitalRead(_sigInput2);
 		}
-		else if (ch > 32)
+		else if (ch > INPUTS_BY_CHIP*2)
 		{
-			_addressing(ch - 32);
-			return (byte) digitalRead(_sigInput2);
+			_addressing(ch - INPUTS_BY_CHIP*2);
+			return (byte) digitalRead(_sigInput3);
 		}
 	}
 
@@ -105,7 +118,7 @@ void MultiplexInputs::loop()
 	#endif
 
 	byte read = 0;
-	for (byte ch = 0; ch < 16; ch++)
+	for (byte ch = 0; ch < INPUTS_BY_CHIP; ch++)
 	{
 		_addressing(ch);
 
@@ -115,11 +128,11 @@ void MultiplexInputs::loop()
 
 		//channel 16-31
 		read = (byte) digitalRead(_sigInput2);
-		inputs[ch + 16]->SetInput(read);
+		inputs[ch + INPUTS_BY_CHIP]->SetInput(read);
 
 		//channel 32-47
 		read = (byte) digitalRead(_sigInput3);
-		inputs[ch + 32]->SetInput(read);
+		inputs[ch + INPUTS_BY_CHIP*2]->SetInput(read);
 	}
 
 	#ifdef DEBUGINPUTS
@@ -156,6 +169,16 @@ void MultiplexInputs::_addressing(byte ch)
 		{
 			digitalWrite(_adrsPin[i], _muxChAddress[ch][i]);
 		}
+	}
+}
+
+//-----------------------------------------------
+void MultiplexInputs::AddInputObserverToEdgePositive(byte ch, Observer* observer)
+//-----------------------------------------------
+{
+	if (ch < MAX_MUXINPUTS)
+	{
+		this->inputs[ch]->AddObserverToEdgePositive(observer);
 	}
 }
 

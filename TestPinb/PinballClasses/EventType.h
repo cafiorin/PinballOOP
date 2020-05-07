@@ -1,10 +1,13 @@
-#if !defined(EventType__INCLUDED_)
+#ifndef EventType__INCLUDED_
 #define EventType__INCLUDED_
 
 enum EventType 
 {
 	EdgePositive,
-	EdgeNegative
+	EdgeNegative,
+	TurnOn,
+	TurnOff,
+	TimeIsOver
 };
 
 #endif

@@ -1,4 +1,4 @@
-#if !defined(Button__INCLUDED_)
+#ifndef Button__INCLUDED_
 #define Button__INCLUDED_
 
 #include "Runnable.h"

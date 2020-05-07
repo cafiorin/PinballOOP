@@ -5,7 +5,7 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#if !defined(_BitInput__INCLUDED_)
+#ifndef _BitInput__INCLUDED_
 #define _BitInput__INCLUDED_
 
 #include "..\\OOP\defines.h"
@@ -23,6 +23,7 @@ public:
 	bool GetInput();
 	void SetInput(bool value) { m_inputValue = value; }
 	void loop();
+	void AddObserverToEdgePositive(Observer* observer);
 
 private:
 	bool m_inputValue;
@@ -30,6 +31,6 @@ private:
 	unsigned long buttonDownMs;
 
 	Subject* m_EventEdgePositive;
-	void AddObserverToEdgePositive(Observer* observer);
 };
-#endif // !defined(_Input__INCLUDED_)
+#endif 
+

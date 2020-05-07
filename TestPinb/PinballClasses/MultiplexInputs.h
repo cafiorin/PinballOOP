@@ -38,19 +38,33 @@ http://pinballhomemade.blogspot.com.br
 #include "Arduino.h"
 #endif
 
-class PinballObject;
+class Observer;
 
 class MultiplexInputs : public Runnable
 {
 public:
-	MultiplexInputs(const byte S0, const byte S1, const byte S2, const byte S3,
-		const byte SIGINPUT1, const byte SIGINPUT2, const byte SIGINPUT3);
+	static MultiplexInputs* GetInstance() 
+	{
+		if (instance == NULL)
+		{
+			instance = CreateInstance();
+		}
+		return instance;
+	};
+
 
 	byte 	readChannel(byte ch);
 
 	void loop();
+	void AddInputObserverToEdgePositive(byte ch, Observer* observer);
 
 private:
+	static MultiplexInputs* instance;
+	static MultiplexInputs* CreateInstance();
+
+	MultiplexInputs(const byte S0, const byte S1, const byte S2, const byte S3,
+		const byte SIGINPUT1, const byte SIGINPUT2, const byte SIGINPUT3);
+
 	byte _adrsPin[4];
 	byte _sigInput1;
 	byte _sigInput2;

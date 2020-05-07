@@ -10,6 +10,8 @@ http://pinballhomemade.blogspot.com.br
 #include "Observer.h"
 #include "Subject.h"
 
+#define DEBOUNCE_TO_EDGE 50
+
 //-------------------------------------------------------//
 BitInput::BitInput(byte portNumber)
 //-------------------------------------------------------//
@@ -62,11 +64,7 @@ void BitInput::loop()
 	}
 	else if (prevState == LOW && m_inputValue == HIGH)
 	{
-		if (Millis() - buttonDownMs < 50)
-		{
-			// ignore this for debounce
-		}
-		else if (m_EventEdgePositive != NULL)
+		if (Millis() - buttonDownMs > DEBOUNCE_TO_EDGE)
 		{
 			m_EventEdgePositive->notifyObserver();
 		}

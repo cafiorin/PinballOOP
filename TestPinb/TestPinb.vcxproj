@@ -145,6 +145,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PinballClasses\BitOutput.h" />
+    <ClInclude Include="PinballClasses\Initializable.h" />
+    <ClInclude Include="PinballClasses\LatchOutputs.h" />
+    <ClInclude Include="PinballClasses\MultiplexOutputs.h" />
     <ClInclude Include="PinballClasses\BitInput.h" />
     <ClInclude Include="PinballClasses\MultiplexInputs.h" />
     <ClInclude Include="PinballClasses\EventType.h" />
@@ -180,6 +184,7 @@
     <ClInclude Include="OOP\Utils.h" />
     <ClInclude Include="OOP\Vector.h" />
     <ClInclude Include="PinballClasses\Button.h" />
+    <ClInclude Include="PinballClasses\NewTimer.h" />
     <ClInclude Include="PinballClasses\Observer.h" />
     <ClInclude Include="PinballClasses\PinballMachine.h" />
     <ClInclude Include="PinballClasses\Runnable.h" />
@@ -188,6 +193,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PinballClasses\BitOutput.cpp" />
+    <ClCompile Include="PinballClasses\Initializable.cpp" />
+    <ClCompile Include="PinballClasses\LatchOutputs.cpp" />
+    <ClCompile Include="PinballClasses\MultiplexOutputs.cpp" />
     <ClCompile Include="PinballClasses\BitInput.cpp" />
     <ClCompile Include="PinballClasses\MultiplexInputs.cpp" />
     <ClCompile Include="OOP\AccumulatorBall.cpp" />
@@ -217,6 +226,7 @@
     <ClCompile Include="OOP\Timer.cpp" />
     <ClCompile Include="OOP\Utils.cpp" />
     <ClCompile Include="PinballClasses\Button.cpp" />
+    <ClCompile Include="PinballClasses\NewTimer.cpp" />
     <ClCompile Include="PinballClasses\Observer.cpp" />
     <ClCompile Include="PinballClasses\PinballMachine.cpp" />
     <ClCompile Include="PinballClasses\Runnable.cpp" />

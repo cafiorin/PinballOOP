@@ -1,8 +1,13 @@
 #ifndef PinballMachine__INCLUDED_
 #define PinballMachine__INCLUDED_
 
+class MultiplexInputs;
+
 class PinballMachine
 {
+public :
+	static MultiplexInputs* muxInputs;
+
 	//Door with buttons
 	//Display
 	//Playfield

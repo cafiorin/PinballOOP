@@ -9,6 +9,7 @@ class Observer
 {
 public:
     Observer();
+    virtual ~Observer() {}
     void attachSubject(Subject* subject);
     virtual void onNotifySubject(const Subject* , EventType event, byte value) = 0;
     Observer* nextObserver;

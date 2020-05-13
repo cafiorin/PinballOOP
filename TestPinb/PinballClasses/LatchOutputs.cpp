@@ -12,9 +12,9 @@
 LatchOutputs::LatchOutputs(const byte latchPin, const byte clockPin, const byte dataPin)
 //-----------------------------------------------
 {
-#ifdef DEBUGMESSAGESCREATION
+	#ifdef DEBUGMESSAGESCREATION
 	LogMessage(F("LatchOutputs Constructor"));
-#endif
+	#endif
 
 	_latchPin = latchPin;
 	_clockPin = clockPin;
@@ -24,61 +24,94 @@ LatchOutputs::LatchOutputs(const byte latchPin, const byte clockPin, const byte 
 	pinMode(clockPin, OUTPUT);
 	pinMode(dataPin, OUTPUT);
 
-	resetAllOutput();
-
 	for (byte i = 0; i < MAX_OUTPUTS; i++)
 	{
 		outputs[i] = new BitOutput(this, i);
 	}
+
+	resetAllOutput();
 }
+
+//-----------------------------------------------
+LatchOutputs::~LatchOutputs()
+//-----------------------------------------------
+{
+	#ifdef DEBUGMESSAGESCREATION
+	LogMessage(F("LatchOutputs Destructor"));
+	#endif
+	for (byte i = 0; i < MAX_OUTPUTS; i++)
+	{
+		delete outputs[i];
+	}
+}
+
 
 //-----------------------------------------------
 void LatchOutputs::resetAllOutput()
 //-----------------------------------------------
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	LogMessage(F("LatchOutputs::resetAllOutput"));
-#endif
+	#endif
+
+	for (byte i = 0; i < MAX_OUTPUTS; i++)
+	{
+		outputs[i]->TurnOff();
+	}
 }
 
 //-----------------------------------------------
-void LatchOutputs::writeChannelLatch(byte ch, byte /*value*/)
+void LatchOutputs::writeAllOutput()
 //-----------------------------------------------
 {
-#ifdef DEBUGMESSAGES
-	LogMessage(F("LatchOutputs::writeChannelLatch"));
-#endif
+	#ifdef DEBUGMESSAGES
+	LogMessage(F("LatchOutputs::writeAllOutput"));
+	#endif
 
-	bool out1[8];
-	bool out2[8];
-	bool out3[8];
-	bool out4[8];
+	bool outLsb[8];
+	bool outMsb[8];
 
 	for (byte i = 0; i < 8; i++)
 	{
-		out1[i] = outputs[i]->IsTurnOn();
-		out2[i] = outputs[i + 8]->IsTurnOn();
-		out3[i] = outputs[i + 16]->IsTurnOn();
-		out4[i] = outputs[i + 24]->IsTurnOn();
+		outLsb[i] = outputs[i]->IsTurnOn();
+		outMsb[i] = outputs[i + 8]->IsTurnOn();
 	}
-	byte LSB1 = ToByte(out1);
-	byte LSB2 = ToByte(out2);
-	byte MSB1 = ToByte(out3);
-	byte MSB2 = ToByte(out4);
+	byte LSB = ToByte(outLsb);
+	byte MSB = ToByte(outMsb);
 
 	#ifdef DEBUGMESSAGES
 	char szNumber[20];
-	sprintf(szNumber, "%x %x %x %x", LSB1, LSB2, MSB1, MSB2);
+	sprintf(szNumber, "%x %x", LSB, MSB);
 	LogMessageToConstChar(szNumber);
 	#endif
 
 	digitalWrite(_latchPin, 0);
-	shiftOut(MSB2);
-	shiftOut(MSB1);
-	shiftOut(LSB2);
-	shiftOut(LSB1);
+	shiftOut(MSB);
+	shiftOut(LSB);
 	digitalWrite(_latchPin, 1);
 }
+
+//-----------------------------------------------
+BitOutput* LatchOutputs::GetOuput(byte ch)
+//-----------------------------------------------
+{
+	if (ch < MAX_OUTPUTS)
+	{
+		return outputs[ch];
+	}
+	return NULL;
+}
+
+//-----------------------------------------------
+void LatchOutputs::AddOutputObserverToTurnOn(byte ch, Observer* observer)
+//-----------------------------------------------
+{
+	if (ch < MAX_OUTPUTS)
+	{
+		this->outputs[ch]->AddObserverToTurnOn(observer);
+	}
+}
+
 
 //-----------------------------------------------
 void LatchOutputs::shiftOut(byte myDataOut)

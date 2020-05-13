@@ -6,22 +6,35 @@
 Subject::Subject(EventType event, byte value)
 //-------------------------------------------------------//
 {
-    headObserver = nullptr;
+    headObserver = NULL;
     m_eventType = event;
     m_value = value;
+}
+
+//-------------------------------------------------------//
+Subject::~Subject()
+//-------------------------------------------------------//
+{
+    Observer* observer = headObserver;
+    while (observer != NULL)
+    {
+        Observer* next = observer->nextObserver;
+        delete observer;
+        observer = next;
+    }
 }
 
 //-------------------------------------------------------//
 void Subject::registerObserver(Observer* observer)
 //-------------------------------------------------------//
 {
-    if (headObserver == nullptr)
+    if (headObserver == NULL)
     {
         headObserver = observer;
     }
     else
     {
-        headObserver->nextObserver = headObserver;
+        observer->nextObserver = headObserver;
         headObserver = observer;
     }
 }

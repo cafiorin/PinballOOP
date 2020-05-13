@@ -16,23 +16,37 @@ http://pinballhomemade.blogspot.com.br
 BitInput::BitInput(byte portNumber)
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGESCREATION
+	LogMessage(F("BitInput Constructor"));
+	#endif
+
 	m_portNumber = portNumber;
 	m_inputValue = HIGH;
 	m_EventEdgePositive = NULL;
 
-#ifdef ARDUINOLIB
+	#ifdef ARDUINOLIB
 	pinMode(m_portNumber, INPUT_PULLUP);
 	m_inputValue = digitalRead(pin);
-#endif
+	#endif
+}
+//-------------------------------------------------------//
+BitInput::~BitInput()
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGESCREATION
+	LogMessage(F("BitInput Destructor"));
+	#endif
+
+	delete m_EventEdgePositive;
 }
 
 //------------------------------------------------//
 bool BitInput::GetInput()
 //------------------------------------------------//
 {
-#ifdef ARDUINOLIB
+	#ifdef ARDUINOLIB
 	m_inputValue = digitalRead(m_portNumber);
-#endif
+	#endif
 
 	return m_inputValue;
 }

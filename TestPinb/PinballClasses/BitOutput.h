@@ -19,6 +19,7 @@ class BitOutput : public Initializable, public Observer
 {
 public:
 	BitOutput(LatchOutputs* latch, byte portNumber);
+	~BitOutput();
 
 	bool IsTurnOn(){return m_turnOn;}
 	void TurnOn();

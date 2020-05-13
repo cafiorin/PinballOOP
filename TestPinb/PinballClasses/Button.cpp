@@ -1,19 +1,35 @@
 #include "..\\OOP\\defines.h"
 #include "..\\OOP\\utils.h"
 #include "Button.h"
+#include "Observer.h"
+#include "Subject.h"
 
 //------------------------------------------------//
 Button::Button(byte attachTo)
 //------------------------------------------------//
 {
     m_pin = attachTo;
-    m_state = HIGH;
+    m_state = LOW;
+    m_EventPressed = NULL;
 
     #ifdef ARDUINOLIB
     pinMode(m_pin, INPUT_PULLUP);
     m_state = digitalRead(pin);
     #endif
 }
+
+//------------------------------------------------//
+void Button::AddObserverToEdgePositive(Observer* observer)
+//------------------------------------------------//
+{
+    if (m_EventPressed == NULL)
+    {
+        m_EventPressed = new Subject(EventType::Pressed, m_pin);
+    }
+
+    m_EventPressed->registerObserver(observer);
+}
+
 
 //------------------------------------------------//
 int Button::GetInput()
@@ -31,6 +47,9 @@ int Button::GetInput()
 void Button::loop()
 //------------------------------------------------//
 {
+    if (m_EventPressed == NULL)
+        return;
+
       int prevState = m_state;
       m_state = GetInput();
       if (prevState == HIGH && m_state == LOW) 
@@ -39,17 +58,13 @@ void Button::loop()
       }
       else if (prevState == LOW && m_state == HIGH) 
       {
-            if (Millis() - buttonDownMs < 50) 
+            if (Millis() - buttonDownMs < 250) 
             {
               // ignore this for debounce
             }
-            else if (Millis() - buttonDownMs < 250) 
+            else 
             {
-              shortClick();
-            }
-            else  
-            {
-              longClick();
+                m_EventPressed->notifyObserver();
             }
       }
 }

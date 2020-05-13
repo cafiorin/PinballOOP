@@ -35,16 +35,6 @@ static const byte _muxChAddress[INPUTS_BY_CHIP][4] =
 	{1,1,1,1}  //channel 15
 };
 
-MultiplexInputs* MultiplexInputs::instance = NULL;
-
-//-----------------------------------------------
-MultiplexInputs* MultiplexInputs::CreateInstance()
-//-----------------------------------------------
-{
-	return new MultiplexInputs(/*S0*/23, /*S1*/25, /*S2*/27,/*S3*/29, /*SIn0*/22, /*SIn1*/34, /*SIn2*/36);
-}
-
-
 //-----------------------------------------------
 MultiplexInputs::MultiplexInputs(const byte S0, const byte S1, const byte S2, const byte S3,
 					 const byte SIGINPUT1, const byte SIGINPUT2, const byte SIGINPUT3) : Runnable()
@@ -78,6 +68,21 @@ MultiplexInputs::MultiplexInputs(const byte S0, const byte S1, const byte S2, co
 		inputs[i] = new BitInput(i);
 	}
 }
+
+//-----------------------------------------------
+MultiplexInputs::~MultiplexInputs()
+//-----------------------------------------------
+{
+	#ifdef DEBUGMESSAGESCREATION
+	LogMessage(F("Multiplex Destructor"));
+	#endif
+
+	for (byte i = 0; i < MAX_MUXINPUTS; i++)
+	{
+		delete inputs[i];
+	}
+}
+
 
 //-----------------------------------------------
 byte MultiplexInputs::readChannel(byte ch)
@@ -138,14 +143,14 @@ void MultiplexInputs::loop()
 	#ifdef DEBUGINPUTS
 	if (m_Serial != NULL)
 	{
-		m_Serial->println(F("Portas ... "));
+		m_Serial->println(F("Ports ... "));
 
 		for (byte ch = 0; ch < 48; ch++)
 		{
 			Input* input = m_Pinball->GetInput(ch);
 			if (input != NULL)
 			{
-				m_Serial->print(F("Porta "));
+				m_Serial->print(F("Port "));
 				m_Serial->print(ch);
 				m_Serial->print(F("==>"));
 				m_Serial->print((int)input->GetInput());
@@ -180,5 +185,16 @@ void MultiplexInputs::AddInputObserverToEdgePositive(byte ch, Observer* observer
 	{
 		this->inputs[ch]->AddObserverToEdgePositive(observer);
 	}
+}
+
+//-----------------------------------------------
+BitInput* MultiplexInputs::GetInput(byte ch)
+//-----------------------------------------------
+{
+	if (ch < MAX_MUXINPUTS)
+	{
+		return inputs[ch];
+	}
+	return NULL;
 }
 

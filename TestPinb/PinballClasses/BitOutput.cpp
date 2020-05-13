@@ -14,11 +14,24 @@ BitOutput::BitOutput(LatchOutputs *latch, byte port)
 	LogMessage(F("BitOutput Constructor"));
 	#endif
 	
-	m_portNumber = port;
 	m_LatchOutputs = latch;
+	m_portNumber = port;
+	m_EventToTurnOn = NULL;
 
 	m_TimerOn = new NewTimer(100, NewTimerType::once);
 	m_TimerOn->AddObserverToTimeIsOver(this);
+}
+
+//-------------------------------------------------------//
+BitOutput::~BitOutput()
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGESCREATION
+	LogMessage(F("BitOutput Destructor"));
+	#endif
+
+	delete m_TimerOn;
+	delete m_EventToTurnOn;
 }
 
 //-------------------------------------------------------//
@@ -63,33 +76,11 @@ void BitOutput::TurnOn()
 	#endif
 
 	m_turnOn = true;
-	m_LatchOutputs->writeChannelLatch(m_portNumber, HIGH);
-}
+	m_LatchOutputs->writeAllOutput();
 
-//-------------------------------------------------------//
-void BitOutput::TurnOnByTimer(unsigned long time)
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	LogMessage(F("BitOutput::TurnOnByTime"));
-	#endif
-
-	m_TimerOn->ChangeTimerValue(time);
-	m_TimerOn->Start();
-	TurnOn();
-}
-
-//-------------------------------------------------------//
-void BitOutput::onNotifySubject(const Subject*, EventType event, byte value)
-//-------------------------------------------------------//
-{
-    #ifdef DEBUGMESSAGES
-    LogMessage(F("BitOutput::NotifyEvent"));
-    #endif
-
-	if (event == EventType::TimeIsOver)
+	if (m_EventToTurnOn != NULL)
 	{
-		TurnOff();
+		m_EventToTurnOn->notifyObserver();
 	}
 }
 
@@ -102,5 +93,33 @@ void BitOutput::TurnOff()
 	#endif
 
 	m_turnOn = false;
-	m_LatchOutputs->writeChannelLatch(m_portNumber, LOW);
+	m_LatchOutputs->writeAllOutput();
+}
+
+
+//-------------------------------------------------------//
+void BitOutput::TurnOnByTimer(unsigned long time)
+//-------------------------------------------------------//
+{
+	#ifdef DEBUGMESSAGES
+	LogMessage(F("BitOutput::TurnOnByTime"));
+	#endif
+
+	m_TimerOn->ChangeTimerValue(time);
+	TurnOn();
+	m_TimerOn->Start();
+}
+
+//-------------------------------------------------------//
+void BitOutput::onNotifySubject(const Subject*, EventType event, byte /*value*/)
+//-------------------------------------------------------//
+{
+    #ifdef DEBUGMESSAGES
+    LogMessage(F("BitOutput::NotifyEvent"));
+    #endif
+
+	if (event == EventType::TimeIsOver)
+	{
+		TurnOff();
+	}
 }

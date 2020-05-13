@@ -4,15 +4,20 @@
 
 #include "..\\OOP\\defines.h"
 class BitOutput;
+class Observer;
 
-#define MAX_OUTPUTS 32
+#define MAX_OUTPUTS 16
 
 class LatchOutputs 
 {
 public:
 	LatchOutputs(const byte latchPin, const byte clockPin, const byte dataPin);
-	void writeChannelLatch(byte ch, byte value);
+	~LatchOutputs();
+
+	void AddOutputObserverToTurnOn(byte ch, Observer* observer);
+	void writeAllOutput();
 	void resetAllOutput();
+	BitOutput* GetOuput(byte ch);
 
 private:
 	byte _latchPin;

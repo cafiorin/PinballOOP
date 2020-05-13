@@ -21,12 +21,18 @@ NewTimer::NewTimer(unsigned long time, NewTimerType type) : Runnable()
 	m_time = time;
 	m_enabled = false;
 	m_type = type;
+	m_EventToTimeIsOver = NULL;
 }
 
 //-------------------------------------------------------//
 NewTimer::~NewTimer()
 //-------------------------------------------------------//
 {
+	#ifdef DEBUGMESSAGESCREATION
+	LogMessage(F("NewTimer destructor"));
+	#endif
+
+	delete m_EventToTimeIsOver;
 }
 
 //-------------------------------------------------------//
@@ -48,10 +54,6 @@ bool NewTimer::Check(unsigned long time /*=0 default*/)
 {
 	if (m_enabled)
 	{
-		#ifdef DEBUGMESSAGESLOOP
-		LogMessage(F("NewTimer::Check"));
-		#endif
-
 		bool ret = false;
 
 		#ifdef ARDUINOLIB

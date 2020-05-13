@@ -8,6 +8,9 @@ class Subject
 {
 public:
     Subject(EventType event, byte value);
+    ~Subject();
+
+
     void registerObserver(Observer*);
     void notifyObserver();
 

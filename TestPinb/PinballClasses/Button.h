@@ -4,20 +4,24 @@
 #include "Runnable.h"
 #include "..\\OOP\\defines.h"
 
+class Subject;
+class Observer;
 
-class Button : public Runnable 
+class Button : public Runnable
 {
+private:
     byte m_pin;
     uint8_t m_state;
 
     unsigned long buttonDownMs;
 
-  protected:
-    virtual void shortClick() = 0;
-    virtual void longClick() = 0;
+protected:
+    Subject* m_EventPressed;
 
-  public:
+public:
     Button(byte attachTo);
+    void AddObserverToEdgePositive(Observer* observer);
+
     void loop();
     int GetInput();
     void SetState(uint8_t state) { m_state = state; }

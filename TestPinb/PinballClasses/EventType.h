@@ -7,7 +7,8 @@ enum EventType
 	EdgeNegative,
 	TurnOn,
 	TurnOff,
-	TimeIsOver
+	TimeIsOver,
+	Pressed
 };
 
 #endif

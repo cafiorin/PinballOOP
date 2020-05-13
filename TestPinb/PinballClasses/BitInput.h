@@ -19,6 +19,7 @@ class BitInput : public Runnable
 
 public:
 	BitInput(byte portNumber);
+	~BitInput();
 
 	bool GetInput();
 	void SetInput(bool value) { m_inputValue = value; }

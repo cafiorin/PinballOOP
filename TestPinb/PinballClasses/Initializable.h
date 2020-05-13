@@ -3,14 +3,14 @@
 
 class Initializable
 {
-    private:
-        static Initializable* headInitializable;
-        Initializable* nextInitializable;
+private:
+    static Initializable* headInitializable;
+    Initializable* nextInitializable;
 
-    public:
-        Initializable();
-        virtual void init() = 0;
-        static void initAll();
+public:
+    Initializable();
+    virtual void init() = 0;
+    static void initAll();
 };
 
 #endif

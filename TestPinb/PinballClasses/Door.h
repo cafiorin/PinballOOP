@@ -2,11 +2,12 @@
 #define Door__INCLUDED_
 
 class Button;
+#include "Observer.h"
 
 class Door
 {
 public:
-	Door();
+	Door(Observer* observer);
 	~Door();
 
 private:

@@ -5,7 +5,22 @@
 #include "Subject.h"
 
 //------------------------------------------------//
-Button::Button(byte attachTo)
+Button::Button(byte attachTo):Runnable()
+//------------------------------------------------//
+{
+    Initialize(attachTo);
+}
+
+//------------------------------------------------//
+Button::Button(byte attachTo, Observer* observer)
+//------------------------------------------------//
+{
+    Initialize(attachTo);
+    AddObserverToEdgePositive(observer);
+}
+
+//------------------------------------------------//
+void Button::Initialize(byte attachTo)
 //------------------------------------------------//
 {
     m_pin = attachTo;
@@ -14,8 +29,16 @@ Button::Button(byte attachTo)
 
     #ifdef ARDUINOLIB
     pinMode(m_pin, INPUT_PULLUP);
-    m_state = digitalRead(pin);
+    m_state = digitalRead(m_pin);
     #endif
+}
+
+
+//------------------------------------------------//
+Button::~Button()
+//------------------------------------------------//
+{
+    delete m_EventPressed;
 }
 
 //------------------------------------------------//

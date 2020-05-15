@@ -14,12 +14,16 @@ private:
     uint8_t m_state;
 
     unsigned long buttonDownMs;
+    void Initialize(byte attachTo);
 
 protected:
     Subject* m_EventPressed;
 
 public:
     Button(byte attachTo);
+    Button(byte attachTo, Observer* observer);
+    ~Button();
+
     void AddObserverToEdgePositive(Observer* observer);
 
     void loop();

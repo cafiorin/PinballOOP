@@ -3,11 +3,11 @@
 #include "NewTimer.h"
 #include "LatchOutputs.h"
 
-#include "..\\OOP\\Utils.h"
-#include "..\\OOP\\defines.h"
+#include "Utils.h"
+#include "defines.h"
 
 //-------------------------------------------------------//
-BitOutput::BitOutput(LatchOutputs *latch, byte port)
+BitOutput::BitOutput(LatchOutputs *latch, byte port) : Initializable(),Observer()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -18,8 +18,7 @@ BitOutput::BitOutput(LatchOutputs *latch, byte port)
 	m_portNumber = port;
 	m_EventToTurnOn = NULL;
 
-	m_TimerOn = new NewTimer(100, NewTimerType::once);
-	m_TimerOn->AddObserverToTimeIsOver(this);
+	m_TimerOn = new NewTimer(100, NewTimerType::once, this);
 }
 
 //-------------------------------------------------------//
@@ -68,6 +67,16 @@ void BitOutput::TurnOnByDelay(unsigned long time)
 }
 
 //-------------------------------------------------------//
+void BitOutput::Pulse(unsigned long time)
+//-------------------------------------------------------//
+{
+	TurnOn();
+	delay(time);
+	TurnOff();
+}
+
+
+//-------------------------------------------------------//
 void BitOutput::TurnOn()
 //-------------------------------------------------------//
 {
@@ -111,7 +120,7 @@ void BitOutput::TurnOnByTimer(unsigned long time)
 }
 
 //-------------------------------------------------------//
-void BitOutput::onNotifySubject(const Subject*, EventType event, byte /*value*/)
+void BitOutput::onNotifySubject(EventType event, byte /*value*/)
 //-------------------------------------------------------//
 {
     #ifdef DEBUGMESSAGES

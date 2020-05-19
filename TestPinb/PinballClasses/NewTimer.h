@@ -7,7 +7,7 @@ http://pinballhomemade.blogspot.com.br
 #if !defined(NewTimer__INCLUDED_)
 #define NewTimer__INCLUDED_
 
-#include "..\\OOP\\defines.h"
+#include "defines.h"
 #include "Runnable.h"
 
 class Observer;
@@ -22,11 +22,13 @@ enum NewTimerType
 class NewTimer : public Runnable
 {
 public:
-	NewTimer(unsigned long time, NewTimerType type=NewTimerType::once);
-	~NewTimer();
+	NewTimer(unsigned long time, NewTimerType type, Observer* observer);
+
+	virtual ~NewTimer();
 
 	void loop();
 	void Start();
+	void Stop() { m_enabled = false; }
 	bool Check(unsigned long time=0);
 	void ChangeTimerValue(unsigned long time) 
 	{ 
@@ -35,6 +37,7 @@ public:
 	void AddObserverToTimeIsOver(Observer* observer);
 
 private:
+	void Initialize(unsigned long time, NewTimerType type);
 	NewTimerType m_type;
 	bool m_enabled;
 	Subject* m_EventToTimeIsOver;

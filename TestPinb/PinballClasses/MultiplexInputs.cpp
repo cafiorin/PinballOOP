@@ -5,7 +5,7 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "..\\OOP\\Utils.h"
+#include "Utils.h"
 #include "MultiplexInputs.h"
 
 #ifdef ARDUINOLIB

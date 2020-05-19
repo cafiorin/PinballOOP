@@ -1,6 +1,6 @@
 #if !defined(Observer__INCLUDED_)
 #define Observer__INCLUDED_
-#include "..\\OOP\\defines.h"
+#include "defines.h"
 #include "EventType.h"
 
 class Subject;
@@ -11,7 +11,7 @@ public:
     Observer();
     virtual ~Observer() {}
     void attachSubject(Subject* subject);
-    virtual void onNotifySubject(const Subject* , EventType event, byte value) = 0;
+    virtual void onNotifySubject(EventType event, byte value) = 0;
     Observer* nextObserver;
 };
 

@@ -1,6 +1,6 @@
 
-#include "..\OOP\Utils.h"
-#include "..\OOP\defines.h"
+#include "Utils.h"
+#include "defines.h"
 #include "LatchOutputs.h"
 #include "BitOutput.h"
 

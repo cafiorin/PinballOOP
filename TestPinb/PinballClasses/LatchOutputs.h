@@ -2,7 +2,7 @@
 #ifndef _LATCH_OUTPUTS_H_
 #define _LATCH_OUTPUTS_H_
 
-#include "..\\OOP\\defines.h"
+#include "defines.h"
 class BitOutput;
 class Observer;
 

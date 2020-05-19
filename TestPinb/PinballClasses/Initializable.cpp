@@ -1,7 +1,7 @@
-#include "..\\OOP\\defines.h"
+#include "defines.h"
 #include "Initializable.h"
 
-Initializable* Initializable::headInitializable = nullptr;
+Initializable* Initializable::headInitializable = NULL;
 
 //-------------------------------------------------------//
 Initializable::Initializable()

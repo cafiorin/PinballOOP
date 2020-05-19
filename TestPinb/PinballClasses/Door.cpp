@@ -1,6 +1,6 @@
 #include "Door.h"
 #include "Button.h"
-#include "..\\OOP\\defines.h"
+#include "defines.h"
 
 //-------------------------
 Door::Door(Observer *observer)

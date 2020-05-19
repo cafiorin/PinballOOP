@@ -1,4 +1,4 @@
-#include "..\\OOP\\defines.h"
+#include "defines.h"
 #include "Runnable.h"
 
 Runnable* Runnable::headRunnable = nullptr;

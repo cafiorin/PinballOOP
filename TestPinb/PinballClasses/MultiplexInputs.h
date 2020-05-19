@@ -30,7 +30,7 @@ http://pinballhomemade.blogspot.com.br
 #ifndef _MULTIPLEXINPUTS_H_
 #define _MULTIPLEXINPUTS_H_
 
-#include "..\\OOP\defines.h"
+#include "defines.h"
 #include "Runnable.h"
 #include "BitInput.h"
 

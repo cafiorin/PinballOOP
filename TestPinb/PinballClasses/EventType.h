@@ -8,7 +8,15 @@ enum EventType
 	TurnOn,
 	TurnOff,
 	TimeIsOver,
-	Pressed
+	Pressed,
+	DropTargetComplete,
+	BallKickHole,
+	LostBall,
+	SlingShotActivated,
+	BumperActivated,
+	HitTarget,
+	ExitMenu,
+	MenuOptionSelected
 };
 
 #endif

@@ -24,99 +24,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OOP\PinballObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\HardwareSerial.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\defines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Output.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Port.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Pinball.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\SlingShot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\KickoutHole.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\DropTarget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Bumper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\ht1632pinball.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\OutBall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\PinballMaster.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Multiplex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\DefinesMp3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\SelfTest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\SequencerLeds.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\ReturnKickBall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\AccumulatorBall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Target.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Flag.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\LedControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\InputArduino.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OOP\OutputArduino.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PinballClasses\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -159,90 +66,75 @@
     <ClInclude Include="PinballClasses\Door.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PinballClasses\PlayfieldClasses\AccumulatorBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\PlayfieldClasses\Bumper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\PlayfieldClasses\DropTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\PlayfieldClasses\KickoutHole.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\PlayfieldClasses\OutBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\PlayfieldClasses\ReturnKickBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\PlayfieldClasses\SlingShot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\LedControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Playfield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\PlayfieldClasses\Target.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\SelfTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\SequencerLeds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\DefinesMp3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Flag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\HardwareSerial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\ht1632pinball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestPinb.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\PinballObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\HardwareSerial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Output.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Port.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Pinball.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\SlingShot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\KickoutHole.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\DropTarget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Bumper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Light.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\OutBall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\PinballMaster.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Menu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Multiplex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\SelfTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\SequencerLeds.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\ReturnKickBall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\AccumulatorBall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Target.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\LedControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\InputArduino.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OOP\OutputArduino.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PinballClasses\Button.cpp">
@@ -282,6 +174,51 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PinballClasses\Door.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\PlayfieldClasses\AccumulatorBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\PlayfieldClasses\Bumper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\PlayfieldClasses\DropTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\PlayfieldClasses\KickoutHole.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\PlayfieldClasses\OutBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\PlayfieldClasses\ReturnKickBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\PlayfieldClasses\SlingShot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\LedControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\Playfield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\PlayfieldClasses\Target.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\SelfTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\SequencerLeds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\HardwareSerial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

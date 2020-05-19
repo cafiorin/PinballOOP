@@ -1,5 +1,5 @@
-#include "..\\OOP\\defines.h"
-#include "..\\OOP\\utils.h"
+#include "defines.h"
+#include "utils.h"
 #include "Button.h"
 #include "Observer.h"
 #include "Subject.h"

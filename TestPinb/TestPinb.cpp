@@ -5,27 +5,27 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// TestPinb.cpp : Defines the entry pouint8_t for the console application.
+// TestPinb.cpp : Defines the entry pobyte for the console application.
 // use with #define DOS and comment define ARDUINOLIB
 
 #include "stdafx.h"
-#include "OOP\PinballMaster.h"
-#include "OOP\PinballSlave.h"
-#include "OOP\HardwareSerial.h"
-#include "OOP\Utils.h"
-#include "OOP\Input.h"
-#include "OOP\InputArduino.h"
-#include "OOP\LedControl.h"
+#include "PinballClasses\\PinballMachine.h"
+#include "PinballClasses\\HardwareSerial.h"
+#include "PinballClasses\\Utils.h"
+#include "PinballClasses\\BitInput.h"
+#include "PinballClasses\\Button.h"
+#include "PinballClasses\\LedControl.h"
+#include "PinballClasses\\MultiplexInputs.h"
 
-uint8_t ikeyCount = 0;
+byte ikeyCount = 0;
 char szKey[80];
-uint8_t Ard = 0;
+byte Ard = 0;
 
 
 void PrintReadKey()
 {
-	uint8_t x = 70;
-	uint8_t y = 20;
+	byte x = 70;
+	byte y = 20;
 	clrbox(x, y, x + 18, y + 2, BLACK);
 
 	setcolor(WHITE);
@@ -36,8 +36,8 @@ void PrintReadKey()
 
 void PrintTime(unsigned long time)
 {
-	uint8_t x = 70;
-	uint8_t y = 40;
+	byte x = 70;
+	byte y = 40;
 	clrbox(x, y, x + 18, y + 2, BLACK);
 
 	setcolor(WHITE);
@@ -64,7 +64,7 @@ int ReadKey()
 		}
 		else if (ch == 13) // ENTER
 		{
-			uint8_t sw = atoi(szKey);
+			byte sw = atoi(szKey);
 			ikeyCount = 0;
 			szKey[ikeyCount] = 0;
 			PrintReadKey();
@@ -86,7 +86,7 @@ int ReadKey()
 	return -1;
 }
 
-void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
+void printLeds(PinballMachine *pPinballMaster, HardwareSerial *ledPrint)
 {
 	LedControl *pLedControl = pPinballMaster->GetLedControl();
 	if (pLedControl != NULL)
@@ -95,7 +95,7 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 		ledPrint->m_YInit = 1;
 		ledPrint->m_XInit = 100;
 
-		uint8_t i = 0;
+		byte i = 0;
 		for (; i < NUM_LEDS / 2; i++)
 		{
 			char szMsg[30];
@@ -116,24 +116,24 @@ void printLeds(PinballMaster *pPinballMaster, HardwareSerial *ledPrint)
 	}
 }
 
-InputArduino* GetInputArduino(PinballMaster *pPinballMaster, int port)
+Button* GetInputArduino(PinballMachine *pPinballMaster, byte port)
 {
 	switch (port)
 	{
 	case INPUT_MENU_BUTTON:
-		return pPinballMaster->m_MenuButton;
+		//TODO: return pPinballMaster->m_MenuButton;
 		break;
 	case INPUT_UP_BUTTON:
-		return pPinballMaster->m_UpButton;
+		//TODO: return pPinballMaster->m_UpButton;
 		break;
 	case INPUT_DOWN_BUTTON:
-		return pPinballMaster->m_DownButton;
+		//TODO: return pPinballMaster->m_DownButton;
 		break;
 	case INPUT_ENTER_BUTTON:
-		return pPinballMaster->m_EnterButton;
+		//TODO: return pPinballMaster->m_EnterButton;
 		break;
 	case INPUT_START_BUTTON:
-		return pPinballMaster->m_StartButton;
+		//TODO: return pPinballMaster->m_StartButton;
 		break;
 	}
 
@@ -141,7 +141,7 @@ InputArduino* GetInputArduino(PinballMaster *pPinballMaster, int port)
 }
 
 
-uint8_t main()
+byte main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
@@ -150,7 +150,7 @@ uint8_t main()
 	bool Leds[NUM_LEDS];
 
 	HardwareSerial *serial = new HardwareSerial(0,0);
-	PinballMaster *pPinballMaster = new PinballMaster(serial);
+	PinballMachine *pPinballMaster = new PinballMachine(serial);
 	HardwareSerial *ledPrint = new HardwareSerial(100, 1);
 
 	HardwareSerial *inputs = new HardwareSerial(1, 30);
@@ -181,7 +181,7 @@ uint8_t main()
 
 	if (pPinballMaster->GetLedControl() != NULL)
 	{
-		for (uint8_t i = 0; i < NUM_LEDS; i++)
+		for (byte i = 0; i < NUM_LEDS; i++)
 		{
 			Leds[i] = pPinballMaster->GetLedControl()->IsTurn(i);
 		}
@@ -198,7 +198,7 @@ uint8_t main()
 		{
 			if (ch < INPUT_MENU_BUTTON)
 			{
-				Input *input = pPinballMaster->GetInput(ch);
+				BitInput *input = pPinballMaster->GetMuxInputs()->GetInput(ch);
 				if (input != NULL)
 				{
 					bool value = input->GetInput();
@@ -208,11 +208,11 @@ uint8_t main()
 			}
 			else
 			{
-				InputArduino* pButton = GetInputArduino(pPinballMaster, ch);
+				Button* pButton = GetInputArduino(pPinballMaster, ch);
 				if (pButton != NULL)
 				{
 					bool value = pButton->GetInput();
-					pButton->SetInput(!value);
+					//TODO pButton->SetInput(!value);
 				}
 			}
 		}
@@ -227,7 +227,7 @@ uint8_t main()
 			if (pPinballMaster->GetLedControl() != NULL)
 			{
 				bool someChange = false;
-				for (uint8_t i = 0; i < NUM_LEDS; i++)
+				for (byte i = 0; i < NUM_LEDS; i++)
 				{
 					if (Leds[i] != pPinballMaster->GetLedControl()->IsTurn(i))
 					{
@@ -243,7 +243,7 @@ uint8_t main()
 		}
 
 		unsigned long t1 = Millis();
-		pPinballMaster->Loop(0);
+		pPinballMaster->Loop();
 		unsigned long t2 = Millis() - t1;
 		if (lastTime < t2)
 		{
@@ -260,6 +260,6 @@ uint8_t main()
 	delete inputs;
 	delete pPinballMaster;
 	delete ledPrint;
-	//delete serial;
+	delete serial;
 	return 0;
 }

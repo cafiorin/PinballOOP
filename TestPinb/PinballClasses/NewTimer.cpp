@@ -4,25 +4,35 @@
 Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-#include "..\\OOP\\defines.h"
-#include "..\\OOP\\utils.h"
+#include "defines.h"
+#include "utils.h"
 #include "NewTimer.h"
 #include "Runnable.h"
+#include "Observer.h"
 #include "Subject.h"
 
 //-------------------------------------------------------//
-NewTimer::NewTimer(unsigned long time, NewTimerType type) : Runnable()
+NewTimer::NewTimer(unsigned long time, NewTimerType type, Observer* observer) : Runnable()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
 	LogMessage(F("NewTimer Constructor"));
 	#endif
+	
+	Initialize(time, type);
+	AddObserverToTimeIsOver(observer);
+}
 
+//-------------------------------------------------------//
+void NewTimer::Initialize(unsigned long time, NewTimerType type)
+//-------------------------------------------------------//
+{
 	m_time = time;
 	m_enabled = false;
 	m_type = type;
 	m_EventToTimeIsOver = NULL;
 }
+
 
 //-------------------------------------------------------//
 NewTimer::~NewTimer()

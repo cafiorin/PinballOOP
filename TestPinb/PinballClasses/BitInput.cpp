@@ -5,7 +5,7 @@ Code by Cassius Fiorin - cafiorin@gmail.com
 http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "..\\OOP\\utils.h"
+#include "utils.h"
 #include "BitInput.h"
 #include "Observer.h"
 #include "Subject.h"

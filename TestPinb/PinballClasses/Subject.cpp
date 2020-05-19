@@ -1,4 +1,4 @@
-#include "..\\OOP\\defines.h"
+#include "defines.h"
 #include "Subject.h"
 #include "Observer.h"
 
@@ -15,13 +15,7 @@ Subject::Subject(EventType event, byte value)
 Subject::~Subject()
 //-------------------------------------------------------//
 {
-    Observer* observer = headObserver;
-    while (observer != NULL)
-    {
-        Observer* next = observer->nextObserver;
-        delete observer;
-        observer = next;
-    }
+    headObserver = NULL;
 }
 
 //-------------------------------------------------------//
@@ -40,12 +34,15 @@ void Subject::registerObserver(Observer* observer)
 }
 
 //-------------------------------------------------------//
-void Subject::notifyObserver()
+void Subject::notifyObserver(byte value /*=0 default*/)
 //-------------------------------------------------------//
 {
     for (Observer* observer = headObserver; observer; observer = observer->nextObserver)
     {
-        observer->onNotifySubject(this,m_eventType,m_value);
+        if(value != 0)
+            observer->onNotifySubject(m_eventType,m_value);
+        else
+            observer->onNotifySubject(m_eventType, value);
     }
 }
 

@@ -1,18 +1,18 @@
 #if !defined(Subject__INCLUDED_)
 #define Subject__INCLUDED_
-#include "..\\OOP\\defines.h"
+#include "defines.h"
 #include "EventType.h"
 class Observer;
 
 class Subject 
 {
 public:
-    Subject(EventType event, byte value);
+    Subject(EventType event, byte value=0);
     ~Subject();
 
 
     void registerObserver(Observer*);
-    void notifyObserver();
+    void notifyObserver(byte value=0);
 
 private:
     Observer* headObserver;

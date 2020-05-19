@@ -5,7 +5,7 @@
 #include "Arduino.h"
 #endif
 
-#include "..\\OOP\defines.h"
+#include "defines.h"
 
 class MultiplexOutputs
 {

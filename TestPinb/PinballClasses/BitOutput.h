@@ -8,7 +8,7 @@ http://pinballhomemade.blogspot.com.br
 #ifndef BitOutput__INCLUDED_
 #define BitOutput__INCLUDED_
 
-#include "..\\OOP\\defines.h"
+#include "defines.h"
 
 #include "Initializable.h"
 #include "Observer.h"
@@ -19,7 +19,6 @@ class BitOutput : public Initializable, public Observer
 {
 public:
 	BitOutput(LatchOutputs* latch, byte portNumber);
-	~BitOutput();
 
 	bool IsTurnOn(){return m_turnOn;}
 	void TurnOn();
@@ -27,10 +26,12 @@ public:
 	void TurnOnByDelay(unsigned long time = TIME_COIL_ON);
 	void Pulse(unsigned long time = TIME_COIL_ON);
 	void TurnOff();
+	byte GetPortNumber() { return m_portNumber; }
 
-	void AddObserverToTurnOn(Observer* observer);
-
+	//virtual
+	virtual ~BitOutput();
 	void init();
+	void AddObserverToTurnOn(Observer* observer);
 
 protected:
 	bool m_turnOn;
@@ -40,7 +41,7 @@ protected:
 
 private:
 	NewTimer *m_TimerOn;
-	void onNotifySubject(const Subject*, EventType event, byte value);
+	void onNotifySubject(EventType event, byte value);
 };
 
 #endif 

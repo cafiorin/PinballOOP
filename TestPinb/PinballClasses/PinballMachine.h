@@ -44,6 +44,7 @@ public :
 	MultiplexInputs* GetMuxInputs() { return m_muxInputs; }
 	LatchOutputs* GetOutputsLowVoltage() { return m_LatchOutputLowVoltage; }
 	LatchOutputs* GetOutputsHighVoltage() { return m_LatchOutputHighVoltage; }
+	Door* GetDoor() { return m_Door; }
 
 protected:
 	void onNotifySubject(EventType event, byte value);

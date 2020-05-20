@@ -20,13 +20,12 @@ class AccumulatorBall;
 class Playfield : public Observer
 {
 public:
-	Playfield(Observer* observer, MultiplexInputs* multiplexInputs,
+	Playfield(MultiplexInputs* multiplexInputs,
 		LatchOutputs* latchOutputsLow, LatchOutputs* LatchOutputsHigh, LedControl* ledControl);
 	~Playfield();
 	void onNotifySubject(EventType event, byte value);
 
 private:
-	Button* m_StartButton;
 	MultiplexInputs* m_muxInputs;
 	LatchOutputs* m_LatchOutputLowVoltage;
 	LatchOutputs* m_LatchOutputHighVoltage;

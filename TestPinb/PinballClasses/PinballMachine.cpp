@@ -69,7 +69,7 @@ void PinballMachine::CreateObjects()
 	//m_Sequencer = new Sequencer()
 
 	m_Door = new Door(this);
-	m_Playfield = new Playfield(this,m_muxInputs,m_LatchOutputLowVoltage,m_LatchOutputHighVoltage,m_LedControl);
+	m_Playfield = new Playfield(m_muxInputs,m_LatchOutputLowVoltage,m_LatchOutputHighVoltage,m_LedControl);
 
 	m_TimerToShowPlayers = new NewTimer(1000, NewTimerType::continuous, this);
 

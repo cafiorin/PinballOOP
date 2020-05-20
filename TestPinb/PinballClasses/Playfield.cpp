@@ -15,8 +15,7 @@
 #include "defines.h"
 
 //-------------------------
-Playfield::Playfield(Observer* observer, 
-					MultiplexInputs* multiplexInputs, 
+Playfield::Playfield(MultiplexInputs* multiplexInputs, 
 					LatchOutputs* latchOutputsLow, 
 					LatchOutputs* LatchOutputsHigh,
 					LedControl* ledControl) : Observer()
@@ -26,8 +25,6 @@ Playfield::Playfield(Observer* observer,
 	m_LatchOutputLowVoltage = latchOutputsLow;
 	m_LatchOutputHighVoltage = LatchOutputsHigh;
 	m_LedControl = ledControl;
-
-	m_StartButton = new Button(INPUT_START_BUTTON, observer);
 
 	m_MotorSR = m_LatchOutputLowVoltage->GetOuput(OUTPUT_MOTOR_SR);
 	m_MotorRX = m_LatchOutputLowVoltage->GetOuput(OUTPUT_MOTOR_RX);
@@ -119,8 +116,6 @@ Playfield::Playfield(Observer* observer,
 Playfield::~Playfield()
 //-------------------------
 {
-	delete m_StartButton;
-
 	delete m_OutBall;
 	delete m_Hole;
 	delete m_SlingShotLeft;

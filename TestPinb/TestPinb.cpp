@@ -16,6 +16,7 @@ http://pinballhomemade.blogspot.com.br
 #include "PinballClasses\\Button.h"
 #include "PinballClasses\\LedControl.h"
 #include "PinballClasses\\MultiplexInputs.h"
+#include "PinballClasses\\Door.h"
 
 byte ikeyCount = 0;
 char szKey[80];
@@ -121,19 +122,19 @@ Button* GetInputArduino(PinballMachine *pPinballMaster, byte port)
 	switch (port)
 	{
 	case INPUT_MENU_BUTTON:
-		//TODO: return pPinballMaster->m_MenuButton;
+		return pPinballMaster->GetDoor()->GetMenuButton();
 		break;
 	case INPUT_UP_BUTTON:
-		//TODO: return pPinballMaster->m_UpButton;
+		return pPinballMaster->GetDoor()->GetUpButton();
 		break;
 	case INPUT_DOWN_BUTTON:
-		//TODO: return pPinballMaster->m_DownButton;
+		return pPinballMaster->GetDoor()->GetDownButton();
 		break;
 	case INPUT_ENTER_BUTTON:
-		//TODO: return pPinballMaster->m_EnterButton;
+		return pPinballMaster->GetDoor()->GetEnterButton();
 		break;
 	case INPUT_START_BUTTON:
-		//TODO: return pPinballMaster->m_StartButton;
+		return pPinballMaster->GetDoor()->GetStartButton();
 		break;
 	}
 
@@ -212,7 +213,7 @@ byte main()
 				if (pButton != NULL)
 				{
 					bool value = pButton->GetInput();
-					//TODO pButton->SetInput(!value);
+					pButton->SetState(!value);
 				}
 			}
 		}

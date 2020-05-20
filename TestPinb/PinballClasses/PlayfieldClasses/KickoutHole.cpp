@@ -11,13 +11,14 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\Observer.h"
 #include "..\\Subject.h"
 #include "..\\Initializable.h"
+#include "..\\Logger.h"
 
 //-------------------------------------------------------//
 KickoutHole::KickoutHole(BitInput* input, BitOutput* output) : Observer(), Initializable()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("KickoutHole Constructor"));
+	Logger::LogMessage(F("KickoutHole Constructor"));
 	#endif
 	
 	m_EventToBallKickHole = NULL;
@@ -33,7 +34,7 @@ KickoutHole::~KickoutHole()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("KickoutHole Destructor"));
+	Logger::LogMessage(F("KickoutHole Destructor"));
 	#endif
 
 	delete m_EventToBallKickHole;
@@ -44,7 +45,7 @@ void KickoutHole::init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("KickoutHole::Init"));
+	Logger::LogMessage(F("KickoutHole::Init"));
 	#endif
 
 	LanchBall();
@@ -55,7 +56,7 @@ void KickoutHole::onNotifySubject(EventType event, byte /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("KickoutHole::NotifyEvent"));
+	Logger::LogMessage(F("KickoutHole::NotifyEvent"));
 	#endif
 
 	if (event == EventType::EdgePositive)
@@ -78,7 +79,7 @@ void KickoutHole::LanchBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("KickoutHole::LanchBall"));
+	Logger::LogMessage(F("KickoutHole::LanchBall"));
 	#endif
 
 	if (m_input->GetInput())

@@ -9,6 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #include "BitInput.h"
 #include "Observer.h"
 #include "Subject.h"
+#include "Logger.h"
 
 #define DEBOUNCE_TO_EDGE 50
 
@@ -17,7 +18,7 @@ BitInput::BitInput(byte portNumber)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("BitInput Constructor"));
+	Logger::Logger::LogMessage(F("BitInput Constructor"));
 	#endif
 
 	m_portNumber = portNumber;
@@ -34,7 +35,7 @@ BitInput::~BitInput()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("BitInput Destructor"));
+	Logger::Logger::LogMessage(F("BitInput Destructor"));
 	#endif
 
 	delete m_EventEdgePositive;

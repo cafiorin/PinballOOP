@@ -30,11 +30,11 @@ public :
 	PinballMachine(HardwareSerial* serial);
 	virtual ~PinballMachine();
 
-	void playSong(char song[], bool priority = true) {/*TODO*/}
-	void ChangeVolume(bool plus, byte delta = 5) {/*TODO*/ }
-	void PlaySongToInput(byte) {/*TODO*/ }
-	void clearDisplay(byte = 0) {/*TODO*/ }
-	void printText(char*, char*, char) {/*TODO*/ }
+	void playSong(char song[], bool priority = true);
+	void ChangeVolume(bool plus, byte delta = 5);
+	void PlaySongToInput(byte);
+	void clearDisplay(byte = 0);
+	void printText(char*, char*, char);
 
 	void EnableSFX(bool enable) { m_enableSfx = enable; }
 	bool IsEnabledSFX() { return m_enableSfx; }

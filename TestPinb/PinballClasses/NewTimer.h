@@ -25,6 +25,7 @@ public:
 	NewTimer(unsigned long time, NewTimerType type, Observer* observer);
 
 	virtual ~NewTimer();
+	byte GetId() { return m_Id; }
 
 	void loop();
 	void Start();
@@ -42,6 +43,8 @@ private:
 	bool m_enabled;
 	Subject* m_EventToTimeIsOver;
 
+	static byte m_IdGenerator;
+	byte m_Id;
 
 protected:
 	#ifdef DOS

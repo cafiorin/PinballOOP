@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PinballClasses\Logger.h" />
     <ClInclude Include="PinballClasses\font.h" />
     <ClInclude Include="PinballClasses\Door.h" />
     <ClInclude Include="PinballClasses\BitOutput.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PinballClasses\Logger.cpp" />
     <ClCompile Include="PinballClasses\Door.cpp" />
     <ClCompile Include="PinballClasses\BitOutput.cpp" />
     <ClCompile Include="PinballClasses\Initializable.cpp" />

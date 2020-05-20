@@ -14,6 +14,7 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\BitInput.h"
 #include "..\\Initializable.h"
 #include "..\\utils.h"
+#include "..\\Logger.h"
 
 //-------------------------------------------------------//
 AccumulatorBall::AccumulatorBall(byte portNumberInput1, 
@@ -26,7 +27,7 @@ AccumulatorBall::AccumulatorBall(byte portNumberInput1,
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("AccumulatorBall Constructor"));
+	Logger::LogMessage(F("AccumulatorBall Constructor"));
 	#endif
 
 	inputs->AddInputObserverToEdgePositive(portNumberInput1, this);
@@ -49,7 +50,7 @@ AccumulatorBall::~AccumulatorBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("AccumulatorBall Destructor"));
+	Logger::LogMessage(F("AccumulatorBall Destructor"));
 	#endif
 }
 
@@ -58,7 +59,7 @@ void AccumulatorBall::init()
 //-------------------------------------------------------//
 {
 #ifdef DEBUGMESSAGES
-	LogMessage(F("AccumulatorBall::Init"));
+	Logger::LogMessage(F("AccumulatorBall::Init"));
 #endif
 
 	byte nTries = 5;
@@ -80,7 +81,7 @@ void AccumulatorBall::onNotifySubject(EventType event, byte /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("AccumulatorBall::NotifyEvent"));
+	Logger::LogMessage(F("AccumulatorBall::NotifyEvent"));
 	#endif
 
 	if (event == EventType::EdgePositive)
@@ -99,7 +100,7 @@ void AccumulatorBall::LanchBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("AccumulatorBall::LanchBall"));
+	Logger::LogMessage(F("AccumulatorBall::LanchBall"));
 	#endif
 
 	if (m_nBalls >= 1)

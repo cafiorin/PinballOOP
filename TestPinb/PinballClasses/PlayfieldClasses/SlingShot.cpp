@@ -12,13 +12,14 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\Subject.h"
 #include "..\\EventType.h"
 #include "..\\Utils.h"
+#include "..\\Logger.h"
 
 //-------------------------------------------------------//
 SlingShot::SlingShot(BitInput* input1, BitInput* input2, BitOutput* output) : Observer()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("SlingShot Constructor"));
+	Logger::LogMessage(F("SlingShot Constructor"));
 	#endif
 
 	m_EventToSlingShotActivated = NULL;
@@ -34,7 +35,7 @@ SlingShot::~SlingShot()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("SlingShot Destructor"));
+	Logger::LogMessage(F("SlingShot Destructor"));
 	#endif
 
 	delete m_EventToSlingShotActivated;
@@ -45,7 +46,7 @@ void SlingShot::onNotifySubject(EventType event, byte /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Slingshot::NotifyEvent"));
+	Logger::LogMessage(F("Slingshot::NotifyEvent"));
 	#endif
 
 	if (event == EventType::EdgePositive)

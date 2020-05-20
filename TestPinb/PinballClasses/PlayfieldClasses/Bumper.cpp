@@ -10,13 +10,14 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\BitInput.h"
 #include "..\\BitOutput.h"
 #include "..\\Subject.h"
+#include "..\\Logger.h"
 
 //-------------------------------------------------------//
 Bumper::Bumper(BitInput* input, BitOutput* output, BitOutput* ledOutput):Observer()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("Bumper Constructor"));
+	Logger::LogMessage(F("Bumper Constructor"));
 	#endif
 
 	m_input = input;
@@ -31,7 +32,7 @@ Bumper::~Bumper()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("Bumper Destructor"));
+	Logger::LogMessage(F("Bumper Destructor"));
 	#endif
 
 	delete m_EventToBumperActivated;
@@ -42,14 +43,15 @@ void Bumper::onNotifySubject(EventType event, byte /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Bumper::NotifyEvent"));
+	Logger::LogMessage(F("Bumper::NotifyEvent"));
 	#endif
 
 	if (event == EventType::EdgePositive)
 	{
 		m_output->Pulse();
-		//m_Pinball->NotifyEvent(sender, event, value); TODO how to add points to player
 		m_Led->TurnOnByTimer(500);
+		if (m_EventToBumperActivated != NULL)
+			m_EventToBumperActivated->notifyObserver();
 	}
 }
 

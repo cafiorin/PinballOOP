@@ -1,5 +1,6 @@
 #include "MultiplexOutputs.h"
 #include "Utils.h"
+#include "Logger.h"
 
 #ifdef ARDUINOLIB
 #include <Arduino.h>
@@ -30,7 +31,7 @@ MultiplexOutputs::MultiplexOutputs(const byte SIGOUTPUT2, const byte Sout10, con
 //-----------------------------------------------
 {
 #ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("MultiplexOutputs Constructor"));
+	Logger::LogMessage(F("MultiplexOutputs Constructor"));
 #endif
 
 	_sigOutput2 = SIGOUTPUT2;
@@ -57,7 +58,7 @@ void MultiplexOutputs::resetAllOutput()
 //-----------------------------------------------
 {
 #ifdef DEBUGMESSAGES
-	LogMessage(F("MultiplexOutputs::resetAllOutput"));
+	Logger::LogMessage(F("MultiplexOutputs::resetAllOutput"));
 #endif
 
 	digitalWrite(_sigOutput2, LOW);
@@ -75,7 +76,7 @@ void MultiplexOutputs::writeChannel(byte ch, byte value, unsigned long time /*= 
 //-----------------------------------------------
 {
 #ifdef DEBUGMESSAGES
-	LogMessage(F("MultiplexOutputs::writeChannel"));
+	Logger::LogMessage(F("MultiplexOutputs::writeChannel"));
 #endif
 
 	if (ch >= 16 && ch < 32)

@@ -20,6 +20,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "Observer.h"
 #include "PinballMachine.h"
+#include "Logger.h"
 
 
 //---------------------------------------------------------------------//
@@ -27,7 +28,7 @@ SelfTest::SelfTest(PinballMachine* pinballMachine)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("SelfTest Constructor"));
+	Logger::LogMessage(F("SelfTest Constructor"));
 	#endif
 	m_Pinball = pinballMachine;
 	m_timerAuto = new NewTimer(1000, NewTimerType::continuous, this);
@@ -38,7 +39,7 @@ SelfTest::~SelfTest()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("SelfTest Destructor"));
+	Logger::LogMessage(F("SelfTest Destructor"));
 	#endif
 
 	delete m_timerAuto; 
@@ -49,7 +50,7 @@ void SelfTest::IncrementTestValue()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest IncrementTestValue"));
+	Logger::LogMessage(F("SelfTest IncrementTestValue"));
 	#endif
 
 	m_startTestValue++;
@@ -95,7 +96,7 @@ void SelfTest::DecrementTestValue()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest DecrementTestValue"));
+	Logger::LogMessage(F("SelfTest DecrementTestValue"));
 	#endif
 
 	m_startTestValue--;
@@ -135,7 +136,7 @@ bool SelfTest::EventUpDownButton(bool upButton)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest EventUpDownButton"));
+	Logger::LogMessage(F("SelfTest EventUpDownButton"));
 	#endif
 
 
@@ -156,7 +157,7 @@ void SelfTest::StartTest(byte event)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest::StartTest"));
+	Logger::LogMessage(F("SelfTest::StartTest"));
 	#endif
 
 	m_MenuTest = event;
@@ -169,7 +170,7 @@ void SelfTest::DoTest()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest::DoTest"));
+	Logger::LogMessage(F("SelfTest::DoTest"));
 	#endif
 
 	switch (m_MenuTest)
@@ -253,7 +254,7 @@ void SelfTest::DoSfxOnOff()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest DoSfxOnOff"));
+	Logger::LogMessage(F("SelfTest DoSfxOnOff"));
 	#endif
 
 
@@ -275,7 +276,7 @@ void SelfTest::DoTestLed()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest::DoTestLed"));
+	Logger::LogMessage(F("SelfTest::DoTestLed"));
 	#endif
 
 	char szLed[5];
@@ -301,7 +302,7 @@ void SelfTest::DoTestCoin()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest::DoTestCoin"));
+	Logger::LogMessage(F("SelfTest::DoTestCoin"));
 	#endif
 
 
@@ -321,7 +322,7 @@ void SelfTest::DoTestOutput()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest::DoTestOutput"));
+	Logger::LogMessage(F("SelfTest::DoTestOutput"));
 	#endif
 
 	BitOutput* pOutput = NULL;
@@ -349,7 +350,7 @@ void SelfTest::DoTestInput()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest::DoTestInput"));
+	Logger::LogMessage(F("SelfTest::DoTestInput"));
 	#endif
 	
 	BitInput* pInput = m_Pinball->GetMuxInputs()->GetInput(m_startTestValue + INPUT_PLAYFIELD_INIT);
@@ -368,7 +369,7 @@ void SelfTest::DisplayInput(byte valueToSend)
 	if (m_MenuTest == EVENT_TEST_INPUTS_AUTO)
 	{
 		#ifdef DEBUGMESSAGES
-		LogMessage(F("SelfTest::EventToInput"));
+		Logger::LogMessage(F("SelfTest::EventToInput"));
 		#endif
 
 		bool values[8];
@@ -424,7 +425,7 @@ void SelfTest::DoPlaySound(bool board)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest::DoPlaySound"));
+	Logger::LogMessage(F("SelfTest::DoPlaySound"));
 	#endif
 
 	if (board)
@@ -445,7 +446,7 @@ void SelfTest::FinishTest()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest::FinishTest"));
+	Logger::LogMessage(F("SelfTest::FinishTest"));
 	#endif
 
 	m_Pinball->clearDisplay();
@@ -473,7 +474,7 @@ void SelfTest::onNotifySubject(EventType event, byte value)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SelfTest::NotifyEvent"));
+	Logger::LogMessage(F("SelfTest::NotifyEvent"));
 	#endif
 
 	// -- T I M E R  I S  O V E R --

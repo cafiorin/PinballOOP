@@ -9,6 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #include "NewTimer.h"
 #include "LedControl.h"
 #include "Observer.h"
+#include "Logger.h"
 
 #include "defines.h"
 
@@ -21,7 +22,7 @@ SequencerLeds::SequencerLeds(SequencerType type, unsigned long time, LedControl*
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("SequencerLeds Constructor"));
+	Logger::LogMessage(F("SequencerLeds Constructor"));
 	#endif
 	m_LedControl = ledControl;
 	m_timerSeq = new NewTimer(time, NewTimerType::continuous, this);
@@ -36,7 +37,7 @@ SequencerLeds::~SequencerLeds()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("SequencerLeds Destructor"));
+	Logger::LogMessage(F("SequencerLeds Destructor"));
 	#endif
 
 	delete m_timerSeq;
@@ -48,7 +49,7 @@ void SequencerLeds::AddLed(byte led, bool turnOnWithNext)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SequencerLeds::AddLed"));
+	Logger::LogMessage(F("SequencerLeds::AddLed"));
 	#endif
 
 	if (m_count < MAXLIGHTS)
@@ -78,7 +79,7 @@ void SequencerLeds::RemoveLed(byte led)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SequencerLeds::RemoveLed"));
+	Logger::LogMessage(F("SequencerLeds::RemoveLed"));
 	#endif
 
 	bool found = false;
@@ -107,7 +108,7 @@ void SequencerLeds::Start()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SequencerLeds::Start"));
+	Logger::LogMessage(F("SequencerLeds::Start"));
 	#endif
 
 	if (m_count > 0)
@@ -134,7 +135,7 @@ void SequencerLeds::End()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("SequencerLeds::End"));
+	Logger::LogMessage(F("SequencerLeds::End"));
 	#endif
 
 	m_pos = 0;
@@ -150,12 +151,12 @@ void SequencerLeds::onNotifySubject(EventType /*event*/, byte /*value*/)
 //---------------------------------------------------------------------//
 {
 #ifdef DEBUGMESSAGES
-	LogMessage(F("SequencerLeds::NotifyEvent"));
+	Logger::LogMessage(F("SequencerLeds::NotifyEvent"));
 #endif
 
 	// -- T I M E R  I S  O V E R --
 #ifdef DEBUGMESSAGES
-	LogMessage(F("...Timer is over to seq"));
+	Logger::LogMessage(F("...Timer is over to seq"));
 #endif
 
 	if (m_type == SequencerType::turnOnAndturnOff_1by1)

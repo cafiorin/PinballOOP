@@ -3,6 +3,7 @@
 #include "defines.h"
 #include "LatchOutputs.h"
 #include "BitOutput.h"
+#include "Logger.h"
 
 #ifdef ARDUINOLIB
 #include <Arduino.h>
@@ -13,7 +14,7 @@ LatchOutputs::LatchOutputs(const byte latchPin, const byte clockPin, const byte 
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("LatchOutputs Constructor"));
+	Logger::LogMessage(F("LatchOutputs Constructor"));
 	#endif
 
 	_latchPin = latchPin;
@@ -37,7 +38,7 @@ LatchOutputs::~LatchOutputs()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("LatchOutputs Destructor"));
+	Logger::LogMessage(F("LatchOutputs Destructor"));
 	#endif
 	for (byte i = 0; i < MAX_OUTPUTS; i++)
 	{
@@ -51,7 +52,7 @@ void LatchOutputs::resetAllOutput()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("LatchOutputs::resetAllOutput"));
+	Logger::LogMessage(F("LatchOutputs::resetAllOutput"));
 	#endif
 
 	for (byte i = 0; i < MAX_OUTPUTS; i++)
@@ -65,7 +66,7 @@ void LatchOutputs::writeAllOutput()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("LatchOutputs::writeAllOutput"));
+	Logger::LogMessage(F("LatchOutputs::writeAllOutput"));
 	#endif
 
 	bool outLsb[8];
@@ -82,7 +83,7 @@ void LatchOutputs::writeAllOutput()
 	#ifdef DEBUGMESSAGES
 	char szNumber[20];
 	sprintf(szNumber, "%x %x", LSB, MSB);
-	LogMessageToConstChar(szNumber);
+	Logger::LogMessageToConstChar(szNumber);
 	#endif
 
 	digitalWrite(_latchPin, 0);

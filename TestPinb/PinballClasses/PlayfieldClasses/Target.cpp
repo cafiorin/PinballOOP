@@ -10,13 +10,14 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\NewTimer.h"
 #include "..\\LedControl.h"
 #include "..\\Subject.h"
+#include "..\\Logger.h"
 
 //-------------------------------------------------------//
 Target::Target(BitInput* input, LedControl* ledControl, byte led) : Observer()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("Target Constructor"));
+	Logger::LogMessage(F("Target Constructor"));
 	#endif
 	m_EventToHitTarget = NULL;
 
@@ -32,7 +33,7 @@ Target::~Target()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("Target Destructor"));
+	Logger::LogMessage(F("Target Destructor"));
 	#endif
 	
 	delete m_timerBlinkLed;
@@ -44,7 +45,7 @@ void Target::StartPlayMode()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Target::StartPlayMode"));
+	Logger::LogMessage(F("Target::StartPlayMode"));
 	#endif
 
 	m_timerBlinkLed->Start();
@@ -56,7 +57,7 @@ void Target::onNotifySubject(EventType event, byte value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Target::NotifyEvent"));
+	Logger::LogMessage(F("Target::NotifyEvent"));
 	#endif
 
 	if (event == EventType::EdgePositive)

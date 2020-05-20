@@ -144,87 +144,33 @@ Playfield::~Playfield()
 void Playfield::onNotifySubject(EventType event, byte value)
 //---------------------------------------------------------------------//
 {
-//#ifdef DEBUGMESSAGES
-//	LogMessage(F("PinballMaster::NotifyEvent"));
-//#endif
-//
-//	if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
-//	{
-//#ifdef DEBUGMESSAGES
-//		LogMessage(F("PinballMaster::NotifyEvent Test"));
-//#endif
-//
-//		return SetupTest(event);
-//	}
-//	else if (event == EVENT_EDGEPOSITIVE)
-//	{
-//#ifdef DEBUGMESSAGES
-//		LogMessage(F("PinballMaster::NotifyEvent edge Positive"));
-//#endif
-//
-//		// -- E D G E  P O S I T I V E --
-//		switch (valueToSend)
-//		{
-//		case INPUT_START_BUTTON:
-//		{
-//			return EventStartButton();
-//		}
-//		break;
-//
-//		case INPUT_MENU_BUTTON:
-//		{
-//			return EventMenuButton();
-//		}
-//		break;
-//
-//		case INPUT_UP_BUTTON:
-//		{
-//			return EventUpDownButton(sender, true);
-//		}
-//		break;
-//
-//		case INPUT_DOWN_BUTTON:
-//		{
-//			return EventUpDownButton(sender, false);
-//		}
-//		break;
-//		case INPUT_ENTER_BUTTON:
-//		{
-//			return EventEnterButton();
-//		}
-//		break;
-//		}
-//
-//		// -- P L A Y F I E L D --
-//		if (valueToSend >= INPUT_PLAYFIELD_INIT && valueToSend <= INPUT_PLAYFIELD_FINISH)
-//		{
-//			if (m_Status == StatusPinball::menutest)
-//			{
-//				m_Menu->EventToInput(sender, event, valueToSend);
-//			}
-//			else
-//			{
-//				return PlayfieldEvent(sender, event, valueToSend);
-//			}
-//		}
-//
-//		return true;
-//	}
-//	// -- D R O P  T A R G E T --
-//	else if (event == EVENT_DROPTARGETDOWN)
-//	{
-//		return PlayfieldEvent(sender, event, valueToSend);
-//	}
-//	// -- T I M E R  I S  O V E R --
-//	else if (event == EVENT_TIMEISOVER)
-//	{
-//		return TimerIsOver(sender);
-//	}
-//	else if (event == EVENT_LOST_BALL)
-//	{
-//		PlayerLostBall();
-//	}
+	switch (event)
+	{
+		case EventType::EdgePositive:
+			break;
 
+		case EventType::BallKickHole:
+			break;
+
+		case EventType::BumperActivated:
+			break;
+
+		case EventType::DropTargetComplete:
+			break;
+
+		case EventType::HitTarget:
+			break;
+
+		case EventType::LostBall:
+			break;
+
+		case EventType::SlingShotActivated:
+			break;
+
+		default:
+			break;
+
+	}
 }
 
 

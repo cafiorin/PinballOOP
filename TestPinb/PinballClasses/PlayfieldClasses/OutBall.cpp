@@ -18,13 +18,14 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\Subject.h"
 #include "..\\Utils.h"
 #include "..\\Initializable.h"
+#include "..\\Logger.h"
 
 //-------------------------------------------------------//
 OutBall::OutBall(BitInput* input1, BitOutput* output1, BitInput* input2, BitOutput* output2) : Observer(), Initializable()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("OutBall Constructor"));
+	Logger::LogMessage(F("OutBall Constructor"));
 	#endif
 	m_EventToLostBall = NULL;
 
@@ -42,7 +43,7 @@ OutBall::~OutBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("OutBall Destructor"));
+	Logger::LogMessage(F("OutBall Destructor"));
 	#endif
 
 	delete m_EventToLostBall;
@@ -53,7 +54,7 @@ void OutBall::init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("OutBall::Init"));
+	Logger::LogMessage(F("OutBall::Init"));
 	#endif
 
 	if (m_input1->GetInput() && m_input2->GetInput())
@@ -77,7 +78,7 @@ void OutBall::init()
 	}
 
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("OutBall::Init Error"));
+	Logger::LogMessage(F("OutBall::Init Error"));
 	#endif
 }
 
@@ -86,7 +87,7 @@ void OutBall::onNotifySubject(EventType event, byte value)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("OutBall::NotifyEvent"));
+	Logger::LogMessage(F("OutBall::NotifyEvent"));
 	#endif
 
 	if (event == EventType::EdgePositive && 
@@ -111,7 +112,7 @@ void OutBall::LanchBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("OutBall::LanchBall"));
+	Logger::LogMessage(F("OutBall::LanchBall"));
 	#endif
 
 	if (m_nBalls > 0)

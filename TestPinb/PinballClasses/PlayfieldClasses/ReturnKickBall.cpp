@@ -13,13 +13,14 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\NewTimer.h"
 #include "..\\Utils.h"
 #include "..\\LedControl.h"
+#include "..\\Logger.h"
 
 //-------------------------------------------------------//
 ReturnKickBall::ReturnKickBall(BitInput* input, BitOutput *output, LedControl *ledControl, byte led) : Observer()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("ReturnKickBall Constructor"));
+	Logger::LogMessage(F("ReturnKickBall Constructor"));
 	#endif
 
 	m_led = led;
@@ -46,7 +47,7 @@ ReturnKickBall::~ReturnKickBall()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("ReturnKickBall Destructor"));
+	Logger::LogMessage(F("ReturnKickBall Destructor"));
 	#endif
 	delete m_timerBlinkLed;
 }
@@ -72,7 +73,7 @@ void ReturnKickBall::onNotifySubject(EventType event, byte /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("ReturnKickBall::NotifyEvent"));
+	Logger::LogMessage(F("ReturnKickBall::NotifyEvent"));
 	#endif
 
 	if (event == EventType::EdgePositive)

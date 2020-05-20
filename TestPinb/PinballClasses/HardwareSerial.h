@@ -32,6 +32,7 @@ public:
 	void print(const char *szLog);
 	void print(char *szLog);
 	void print(int value);
+	void println(byte value);
 
 	int m_line;
 	char m_strings[MAX_STRINGS][50];

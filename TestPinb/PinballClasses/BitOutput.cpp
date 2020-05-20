@@ -2,6 +2,7 @@
 #include "Subject.h"
 #include "NewTimer.h"
 #include "LatchOutputs.h"
+#include "Logger.h"
 
 #include "Utils.h"
 #include "defines.h"
@@ -11,7 +12,7 @@ BitOutput::BitOutput(LatchOutputs *latch, byte port) : Initializable(),Observer(
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("BitOutput Constructor"));
+	Logger::LogMessage(F("BitOutput Constructor"));
 	#endif
 	
 	m_LatchOutputs = latch;
@@ -26,7 +27,7 @@ BitOutput::~BitOutput()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("BitOutput Destructor"));
+	Logger::LogMessage(F("BitOutput Destructor"));
 	#endif
 
 	delete m_TimerOn;
@@ -38,7 +39,7 @@ void BitOutput::init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("BitOutput::Init"));
+	Logger::LogMessage(F("BitOutput::Init"));
 	#endif
 
 	TurnOff();
@@ -81,7 +82,7 @@ void BitOutput::TurnOn()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("BitOutput::TurnOn"));
+	Logger::LogMessage(F("BitOutput::TurnOn"));
 	#endif
 
 	m_turnOn = true;
@@ -98,7 +99,7 @@ void BitOutput::TurnOff()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("BitOutput::TurnOff"));
+	Logger::LogMessage(F("BitOutput::TurnOff"));
 	#endif
 
 	m_turnOn = false;
@@ -111,7 +112,7 @@ void BitOutput::TurnOnByTimer(unsigned long time)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("BitOutput::TurnOnByTime"));
+	Logger::LogMessage(F("BitOutput::TurnOnByTime"));
 	#endif
 
 	m_TimerOn->ChangeTimerValue(time);
@@ -124,7 +125,7 @@ void BitOutput::onNotifySubject(EventType event, byte /*value*/)
 //-------------------------------------------------------//
 {
     #ifdef DEBUGMESSAGES
-    LogMessage(F("BitOutput::NotifyEvent"));
+    Logger::LogMessage(F("BitOutput::NotifyEvent"));
     #endif
 
 	if (event == EventType::TimeIsOver)

@@ -116,6 +116,40 @@ void HardwareSerial::println(const char *szLog)
 }
 
 /*---------------------------------------------------------------------*/
+void HardwareSerial::println(byte value)
+/*---------------------------------------------------------------------*/
+{
+	char szLog[20];
+	sprintf(szLog, "%d", value);
+
+	if (strlen(szLog) == 0)
+		return;
+
+	byte x = m_XInit;
+	byte y = m_YInit;
+	setcolor(WHITE);
+	box(x, y, x + 52, y + MAX_STRINGS + 1, y + 6, y + 6, "Logger");
+
+	m_line++;
+	if (m_line >= MAX_STRINGS)
+	{
+		m_line = MAX_STRINGS - 1;
+		for (byte i = 1; i < MAX_STRINGS; i++)
+		{
+			strcpy(m_strings[i - 1], m_strings[i]);
+			gotoxy(x + 2, y + 1 + i - 1);
+			printf("%-50s", m_strings[i - 1]);
+		}
+	}
+
+	strcpy(m_strings[m_line], szLog);
+	gotoxy(x + 2, y + 1 + m_line);
+	printf("%-50s", m_strings[m_line]);
+}
+
+
+
+/*---------------------------------------------------------------------*/
 void HardwareSerial::jumpline()
 /*---------------------------------------------------------------------*/
 {

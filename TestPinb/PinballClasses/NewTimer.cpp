@@ -10,15 +10,18 @@ http://pinballhomemade.blogspot.com.br
 #include "Runnable.h"
 #include "Observer.h"
 #include "Subject.h"
+#include "Logger.h"
+
+byte NewTimer::m_IdGenerator = 0;
 
 //-------------------------------------------------------//
 NewTimer::NewTimer(unsigned long time, NewTimerType type, Observer* observer) : Runnable()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("NewTimer Constructor"));
+	Logger::LogMessage(F("NewTimer Constructor"));
 	#endif
-	
+	m_Id = m_IdGenerator++;
 	Initialize(time, type);
 	AddObserverToTimeIsOver(observer);
 }
@@ -39,7 +42,7 @@ NewTimer::~NewTimer()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("NewTimer destructor"));
+	Logger::LogMessage(F("NewTimer destructor"));
 	#endif
 
 	delete m_EventToTimeIsOver;
@@ -50,7 +53,7 @@ void NewTimer::Start()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("NewTimer::Start"));
+	Logger::LogMessage(F("NewTimer::Start"));
 	#endif
 
 	m_enabled = true;
@@ -93,7 +96,7 @@ void NewTimer::AddObserverToTimeIsOver(Observer* observer)
 {
 	if (m_EventToTimeIsOver == NULL)
 	{
-		m_EventToTimeIsOver = new Subject(EventType::TimeIsOver, 0);
+		m_EventToTimeIsOver = new Subject(EventType::TimeIsOver, m_Id);
 	}
 
 	m_EventToTimeIsOver->registerObserver(observer);
@@ -106,7 +109,7 @@ void NewTimer::loop()
 	if (m_enabled && m_EventToTimeIsOver != NULL)
 	{
 		#ifdef DEBUGMESSAGESLOOP
-		LogMessage(F("NewTimer::Loop"));
+		Logger::LogMessage(F("NewTimer::Loop"));
 		#endif
 
 		if (Check())

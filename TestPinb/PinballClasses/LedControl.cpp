@@ -6,6 +6,7 @@ http://pinballhomemade.blogspot.com.br
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include "LedControl.h"
+#include "Logger.h"
 
 #ifdef ARDUINOLIB
 #include<FastLED.h>
@@ -17,7 +18,7 @@ LedControl::LedControl()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(("LedControl Constructor"));
+	Logger::LogMessage(F("LedControl Constructor"));
 	#endif
 
 	#ifdef ARDUINOLIB
@@ -35,7 +36,7 @@ void LedControl::TurnAll(bool turnOn)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("LedControl::TurnOnAll"));
+	Logger::LogMessage(F("LedControl::TurnOnAll"));
 	#endif
 
 	for (byte i = LED_FIRST; i <= LED_LAST; i++)
@@ -57,7 +58,7 @@ void LedControl::TurnOn(byte Led)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("LedControl::TurnOn"));
+	Logger::LogMessage(F("LedControl::TurnOn"));
 	#endif
 	
 	if (Led < NUM_LEDS)
@@ -76,7 +77,7 @@ void LedControl::TurnOff(byte Led)
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("LedControl::TurnOff"));
+	Logger::LogMessage(F("LedControl::TurnOff"));
 	#endif
 	if (Led < NUM_LEDS)
 	{
@@ -95,7 +96,7 @@ void LedControl::AttractModeLoop()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESLOOP
-	Debug("LedControl::AttractModeLoop");
+	Logger::LogMessage(F"LedControl::AttractModeLoop");
 	#endif
 
 	#ifdef ARDUINOLIB

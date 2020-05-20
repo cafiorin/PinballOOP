@@ -10,13 +10,14 @@ http://pinballhomemade.blogspot.com.br
 #include "SelfTest.h"
 #include "Observer.h"
 #include "Subject.h"
+#include "Logger.h"
 
 //-------------------------------------------------------//
 Menu::Menu(PinballMachine *pinballMachine) 
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Menu Constructor"));
+	Logger::LogMessage(F("Menu Constructor"));
 	#endif
 
 	m_EventExitMenu = new Subject(EventType::ExitMenu);
@@ -79,7 +80,7 @@ Menu::~Menu()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Menu Destructor"));
+	Logger::LogMessage(F("Menu Destructor"));
 	#endif
 
 	DestroyChildren(m_pMenu);
@@ -105,7 +106,7 @@ bool Menu::Init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Menu::Init"));
+	Logger::LogMessage(F("Menu::Init"));
 	#endif
 
 	m_isShowing = false;
@@ -118,7 +119,7 @@ void Menu::PressButtonMenu()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Menu::PressButtonMenu"));
+	Logger::LogMessage(F("Menu::PressButtonMenu"));
 	#endif
 
 	if (!m_isShowing)
@@ -145,7 +146,7 @@ void Menu::PressButtonEnter()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Menu::PressButtonEnter"));
+	Logger::LogMessage(F("Menu::PressButtonEnter"));
 	#endif
 
 	if (m_isShowing)
@@ -218,7 +219,7 @@ bool Menu::PressUpDownButton(bool upButton)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Menu::PressButton"));
+	Logger::LogMessage(F("Menu::PressButton"));
 	#endif
 
 	if (upButton)
@@ -240,7 +241,7 @@ void Menu::EventUpDownButton(bool upButton)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Menu::EventUpDownButton"));
+	Logger::LogMessage(F("Menu::EventUpDownButton"));
 	#endif
 	
 	m_SelfTest->EventUpDownButton(upButton);
@@ -251,7 +252,7 @@ void Menu::StartTest(byte event)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Menu::StartTest"));
+	Logger::LogMessage(F("Menu::StartTest"));
 	#endif
 
 	if (m_SelfTest != NULL)
@@ -265,7 +266,7 @@ void Menu::FinishTest()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	m_Pinball->LogMessage(F("Menu::FinishTest"));
+	Logger::LogMessage(F("Menu::FinishTest"));
 	#endif
 
 	if (m_SelfTest != NULL)

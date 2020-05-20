@@ -13,6 +13,7 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\Initializable.h"
 #include "..\\EventType.h"
 #include "..\\Subject.h"
+#include "..\\Logger.h"
 
 //-------------------------------------------------------//
 DropTarget::DropTarget(BitInput* input1, BitInput* input2, BitInput* input3,
@@ -36,7 +37,7 @@ void DropTarget::Initialize(byte sizeInputs,BitInput* input1,BitInput* input2,Bi
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("DropTarget Constructor"));
+	Logger::LogMessage(F("DropTarget Constructor"));
 	#endif
 
 	m_EventToDropTargetComplete = NULL;
@@ -63,7 +64,7 @@ DropTarget::~DropTarget()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("DropTarget Destructor"));
+	Logger::LogMessage(F("DropTarget Destructor"));
 	#endif
 
 	delete m_SequencerLeds;
@@ -75,7 +76,7 @@ void DropTarget::init()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("DropTarget::Init"));
+	Logger::LogMessage(F("DropTarget::Init"));
 	#endif
 
 	Reset();
@@ -107,7 +108,7 @@ void DropTarget::onNotifySubject(EventType event, byte /*value*/)
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("DropTarget::NotifyEvent"));
+	Logger::LogMessage(F("DropTarget::NotifyEvent"));
 	#endif
 
 	if (event == EventType::EdgePositive)
@@ -146,7 +147,7 @@ void DropTarget::Reset()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("DropTarget::Reset"));
+	Logger::LogMessage(F("DropTarget::Reset"));
 	#endif
 
 	m_AllTargets = false;

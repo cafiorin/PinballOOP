@@ -7,6 +7,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "Utils.h"
 #include "MultiplexInputs.h"
+#include "Logger.h"
 
 #ifdef ARDUINOLIB
 #include <Arduino.h>
@@ -41,7 +42,7 @@ MultiplexInputs::MultiplexInputs(const byte S0, const byte S1, const byte S2, co
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("Multiplex Constructor"));
+	Logger::LogMessage(F("Multiplex Constructor"));
 	#endif
 
 	_adrsPin[0] = S0;
@@ -74,7 +75,7 @@ MultiplexInputs::~MultiplexInputs()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	LogMessage(F("Multiplex Destructor"));
+	Logger::LogMessage(F("Multiplex Destructor"));
 	#endif
 
 	for (byte i = 0; i < MAX_MUXINPUTS; i++)
@@ -89,7 +90,7 @@ byte MultiplexInputs::readChannel(byte ch)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGES
-	LogMessage(F("Multiplex::readChannel"));
+	Logger::LogMessage(F("Multiplex::readChannel"));
 	#endif
 
 	if (ch < MAX_MUXINPUTS)
@@ -119,7 +120,7 @@ void MultiplexInputs::loop()
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESLOOP
-	LogMessage(F("Multiplex::Loop"));
+	Logger::LogMessage(F("Multiplex::Loop"));
 	#endif
 
 	byte read = 0;
@@ -141,23 +142,20 @@ void MultiplexInputs::loop()
 	}
 
 	#ifdef DEBUGINPUTS
-	if (m_Serial != NULL)
-	{
-		m_Serial->println(F("Ports ... "));
+		Logger::LogMessage(F("Ports ... "));
 
 		for (byte ch = 0; ch < 48; ch++)
 		{
-			Input* input = m_Pinball->GetInput(ch);
+			BitInput* input = GetInput(ch);
 			if (input != NULL)
 			{
-				m_Serial->print(F("Port "));
-				m_Serial->print(ch);
-				m_Serial->print(F("==>"));
-				m_Serial->print((int)input->GetInput());
-				m_Serial->println(F("<=="));
+				Logger::LogMessage(F("Port "));
+				Logger::LogMessageByte(ch);
+				Logger::LogMessage(F("==>"));
+				Logger::LogMessageByte(input->GetInput());
+				Logger::LogMessage(F("<=="));
 			}
 		}
-	}
 	#endif
 
 }

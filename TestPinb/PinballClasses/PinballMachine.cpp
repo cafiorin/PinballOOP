@@ -5,9 +5,12 @@
 #include "LatchOutputs.h"
 #include "MultiplexInputs.h"
 #include "Door.h"
+
 #include "Observer.h"
 #include "Initializable.h"
 #include "Runnable.h"
+#include "ChangeableStatus.h"
+
 #include "Playfield.h"
 #include "LedControl.h"
 #include "NewTimer.h"
@@ -34,7 +37,8 @@ PinballMachine::PinballMachine(HardwareSerial* serial) : Observer()
 	#ifdef DEBUGMESSAGESCREATION
 	Logger::LogMessage(F("PinballMachine Construtor"));
 	#endif
-	
+
+	printText("Pinball", "init", 0);
 	CreateObjects();
 	Initialize();
 }
@@ -81,10 +85,18 @@ void PinballMachine::InitVars()
 //---------------------------------------------------------------------
 {
 	m_Menu = NULL;
-	m_Status = StatusPinballMachine::initializing;
+	ChangeStatus(StatusPinballMachine::initializing);
 	m_nBallByPlayer = MAX_BALLS;
 	m_enableSfx = true;
 	m_nSecondsTimerToShowPlayers = 5;
+}
+
+//---------------------------------------------------------------------
+void PinballMachine::ChangeStatus(StatusPinballMachine status)
+//---------------------------------------------------------------------
+{
+	m_Status = status;
+	ChangeableStatus::ChangeStatusAll(status);
 }
 
 //---------------------------------------------------------------------
@@ -97,6 +109,14 @@ void PinballMachine::onNotifySubject(EventType event, byte value)
 		ButtonPressed(value);
 		break;
 	
+	case EventType::MenuOptionSelected:
+		SetupTest(value);
+		break;
+
+	case EventType::TimeIsOver:
+		TimerIsOver();
+		break;
+
 	default:
 		break;
 	}
@@ -123,6 +143,10 @@ void PinballMachine::ButtonPressed(byte value)
 	case INPUT_ENTER_BUTTON:
 		EventEnterButton();
 		break;
+
+	case INPUT_START_BUTTON:
+		EventStartButton();
+		break;
 	default:
 		break;
 	}
@@ -132,6 +156,11 @@ void PinballMachine::ButtonPressed(byte value)
 void PinballMachine::Initialize()
 {
 	Initializable::initAll();
+
+	printText("Pinball", "OK", 0);
+	delay(200);
+
+	ChangeStatus(StatusPinballMachine::attractmode);
 }
 
 void PinballMachine::Loop()
@@ -154,7 +183,8 @@ void PinballMachine::EventStartButton()
 		{
 			m_TimerToShowPlayers->Start();
 		}
-		m_Status = StatusPinballMachine::getplayers;
+
+		ChangeStatus(StatusPinballMachine::getplayers);
 		m_nPlayers = 1;
 		m_nSecondsTimerToShowPlayers = 5;
 		ShowChooseNumberOfPlayers();
@@ -190,7 +220,7 @@ void PinballMachine::EventMenuButton()
 		{
 			m_Menu = new Menu(this);
 		}
-		m_Status = StatusPinballMachine::menusetup;
+		ChangeStatus(StatusPinballMachine::menusetup);
 		m_Menu->PressButtonMenu();
 	}
 	else if (m_Status == StatusPinballMachine::menutest ||
@@ -276,7 +306,7 @@ void PinballMachine::SetupTest(byte event)
 			m_Menu->FinishTest();
 			printText("Pinball", "OK", 0);
 		}
-		m_Status = StatusPinballMachine::attractmode;
+		ChangeStatus(StatusPinballMachine::attractmode);
 	}
 	else if (event >= EVENT_TEST_INIT && event <= EVENT_TEST_FINISH)
 	{
@@ -285,7 +315,8 @@ void PinballMachine::SetupTest(byte event)
 			this->SetBallsByPlayer(3 + (event - EVENT_TEST_NBALLS3));
 			printText("Set", "Ball", 1);
 			delay(300);
-			m_Status = StatusPinballMachine::attractmode;
+			ChangeStatus(StatusPinballMachine::attractmode);
+
 		}
 		else
 		{
@@ -321,20 +352,14 @@ void PinballMachine::StartGame(byte Players)
 #ifdef DEBUGMESSAGES
 	Logger::LogMessage(F("PinballMaster::StartGame"));
 #endif
-	//TODO: this->Init(StatusPinball::playingmode);
+	ChangeStatus(StatusPinballMachine::initplaymode);
 
 	m_nPlayers = Players;
 
 	printText("Player", "0", 0);
-	m_Status = StatusPinballMachine::playingmode;
-	//GetNewBall();
-
+	ChangeStatus(StatusPinballMachine::playingmode);
 	m_playerPlaying = 0;
-
-	//if (m_TurnFlipperOn != NULL)
-	//	m_TurnFlipperOn->TurnOn();
 }
-
 
 //---------------------------------------------------------------------//
 void PinballMachine::ShowChooseNumberOfPlayers()

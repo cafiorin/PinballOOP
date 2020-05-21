@@ -13,12 +13,13 @@
 #include "PlayfieldClasses\\AccumulatorBall.h"
 #include "PlayfieldClasses\\ReturnKickBall.h"
 #include "defines.h"
+#include "ChangeableStatus.h"
 
 //-------------------------
 Playfield::Playfield(MultiplexInputs* multiplexInputs, 
 					LatchOutputs* latchOutputsLow, 
 					LatchOutputs* LatchOutputsHigh,
-					LedControl* ledControl) : Observer()
+					LedControl* ledControl) : Observer(), ChangeableStatus()
 //-------------------------
 {
 	m_muxInputs = multiplexInputs;
@@ -168,4 +169,13 @@ void Playfield::onNotifySubject(EventType event, byte value)
 	}
 }
 
+//-------------------------------------------------------//
+void Playfield::changeStatus(StatusPinballMachine status)
+//-------------------------------------------------------//
+{
+	if (status == StatusPinballMachine::initplaymode)
+	{
+		m_TurnFlipperOn->TurnOn();
+	}
+}
 

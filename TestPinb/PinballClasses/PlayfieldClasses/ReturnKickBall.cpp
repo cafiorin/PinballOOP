@@ -14,32 +14,25 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\Utils.h"
 #include "..\\LedControl.h"
 #include "..\\Logger.h"
+#include "..\\ChangeableStatus.h"
 
 //-------------------------------------------------------//
-ReturnKickBall::ReturnKickBall(BitInput* input, BitOutput *output, LedControl *ledControl, byte led) : Observer()
+ReturnKickBall::ReturnKickBall(BitInput* input, BitOutput *output, LedControl *ledControl, byte led) : Observer(), ChangeableStatus()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
 	Logger::LogMessage(F("ReturnKickBall Constructor"));
 	#endif
 
+	m_status = StatusPinballMachine::initializing;
 	m_led = led;
 	m_LedControl = ledControl;
 
 	m_input1 = input;
 	m_output = output;
 
-	m_returnBallOn = true;
 	m_timerBlinkLed = new NewTimer(400, NewTimerType::continuous, this);
-}
-
-//-------------------------------------------------------//
-void ReturnKickBall::StartPlayMode()
-//-------------------------------------------------------//
-{
-	m_returnBallOn = true;
-	m_timerBlinkLed->Stop();
-	m_LedControl->TurnOn(m_led);
+	SetReturnBall(false);
 }
 
 //-------------------------------------------------------//
@@ -59,6 +52,7 @@ void ReturnKickBall::SetReturnBall(bool returnBallOn)
 	m_returnBallOn = returnBallOn;
 	if (!m_returnBallOn)
 	{
+		m_LedControl->TurnOff(m_led);
 		m_timerBlinkLed->Start();
 	}
 	else
@@ -75,20 +69,32 @@ void ReturnKickBall::onNotifySubject(EventType event, byte /*value*/)
 	#ifdef DEBUGMESSAGES
 	Logger::LogMessage(F("ReturnKickBall::NotifyEvent"));
 	#endif
-
-	if (event == EventType::EdgePositive)
+	if (m_status == StatusPinballMachine::playingmode)
 	{
-		if (m_returnBallOn)
+		if (event == EventType::EdgePositive)
 		{
-			m_output->Pulse();
+			if (m_returnBallOn)
+			{
+				m_output->Pulse();
+			}
+		}
+		else if (event == EventType::TimeIsOver)
+		{
+			if (m_LedControl->IsTurn(m_led))
+				m_LedControl->TurnOff(m_led);
+			else
+				m_LedControl->TurnOn(m_led);
 		}
 	}
-	else if (event == EventType::TimeIsOver)
+}
+
+//-------------------------------------------------------//
+void ReturnKickBall::changeStatus(StatusPinballMachine status)
+//-------------------------------------------------------//
+{
+	m_status = status;
+	if (m_status == StatusPinballMachine::initplaymode)
 	{
-		//TODO: if (m_Pinball->IsPlaying())
-		if (m_LedControl->IsTurn(m_led))
-			m_LedControl->TurnOff(m_led);
-		else
-			m_LedControl->TurnOn(m_led);
+		SetReturnBall(true);
 	}
 }

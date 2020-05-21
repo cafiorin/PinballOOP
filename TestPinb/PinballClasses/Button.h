@@ -28,7 +28,7 @@ public:
 
     void loop();
     int GetInput();
-    void SetState(byte state) { m_state = state; }
+    void SetState(byte state);
 
 };
 

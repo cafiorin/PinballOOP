@@ -2,18 +2,7 @@
 #define PinballMachine__INCLUDED_
 
 #include "Observer.h"
-
-enum StatusPinballMachine
-{
-	initializing,
-	menusetup,
-	menutest,
-	attractmode,
-	getplayers,
-	playingmode,
-	waitingmessages
-};
-
+#include "StatusPinballMachine.h"
 
 class MultiplexInputs;
 class LatchOutputs;
@@ -80,7 +69,7 @@ private :
 	void EventEnterButton();
 	void EventUpDownButton(bool upButton);
 	void SetupTest(byte event);
-
+	void ChangeStatus(StatusPinballMachine status);
 
 public:
 	void Initialize();

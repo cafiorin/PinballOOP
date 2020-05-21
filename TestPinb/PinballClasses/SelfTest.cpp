@@ -430,12 +430,12 @@ void SelfTest::DoPlaySound(bool board)
 
 	if (board)
 	{
-		m_Pinball->playSong(MP3_TESTSOUND);
+		//TODOm_Pinball->playSong(MP3_TESTSOUND);
 		m_Pinball->printText("Play", "board1", 0);
 	}
 	else
 	{
-		//TODO : m_Pinball->sendMessageToAnotherArduino(ADDRESS_SLAVE, COMM_TEST_SOUND);
+		//TODOm_Pinball->playSongSFX(MP3_TESTSOUND);
 		m_Pinball->printText("Play", "board2", 0);
 	}
 }

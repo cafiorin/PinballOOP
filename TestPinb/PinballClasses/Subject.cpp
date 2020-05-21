@@ -39,7 +39,7 @@ void Subject::notifyObserver(byte value /*=0 default*/)
 {
     for (Observer* observer = headObserver; observer; observer = observer->nextObserver)
     {
-        if(value != 0)
+        if(m_value != 0)
             observer->onNotifySubject(m_eventType,m_value);
         else
             observer->onNotifySubject(m_eventType, value);

@@ -213,7 +213,7 @@ byte main()
 				if (pButton != NULL)
 				{
 					bool value = pButton->GetInput();
-					pButton->SetState(!value);
+					pButton->SetState(true);
 				}
 			}
 		}

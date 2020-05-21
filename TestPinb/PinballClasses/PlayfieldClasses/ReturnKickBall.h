@@ -9,6 +9,7 @@ http://pinballhomemade.blogspot.com.br
 #define ReturnKickBall__INCLUDED_
 
 #include "..\\Observer.h"
+#include "..\\ChangeableStatus.h"
 
 class BitInput;
 class BitOutput;
@@ -16,16 +17,16 @@ class NewTimer;
 class Subject;
 class LedControl;
 
-class ReturnKickBall : public Observer
+class ReturnKickBall : public Observer, ChangeableStatus
 {
 public:
 	ReturnKickBall(BitInput* input, BitOutput* output, LedControl* ledControl, byte led);
-	void StartPlayMode();
 	void SetReturnBall(bool returnBallOn);
 
 	//virtual
 	virtual ~ReturnKickBall();
 	void onNotifySubject(EventType event, byte value);
+	void changeStatus(StatusPinballMachine status);
 
 protected:
 	BitInput *m_input1;
@@ -34,5 +35,6 @@ protected:
 	bool m_returnBallOn;
 	NewTimer *m_timerBlinkLed;
 	LedControl* m_LedControl;
+	StatusPinballMachine m_status;
 };
 #endif // !defined(ReturnKickBall__INCLUDED_)

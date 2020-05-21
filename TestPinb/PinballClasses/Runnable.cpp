@@ -1,7 +1,7 @@
 #include "defines.h"
 #include "Runnable.h"
 
-Runnable* Runnable::headRunnable = nullptr;
+Runnable* Runnable::headRunnable = NULL;
 
 //-------------------------------------------------------//
 Runnable::Runnable()

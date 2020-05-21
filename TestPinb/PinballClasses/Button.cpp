@@ -92,3 +92,12 @@ void Button::loop()
       }
 }
 
+void Button::SetState(byte state)
+{
+    m_state = state;
+    if (m_state && m_EventPressed != NULL)
+    {
+        m_EventPressed->notifyObserver();
+    }
+}
+

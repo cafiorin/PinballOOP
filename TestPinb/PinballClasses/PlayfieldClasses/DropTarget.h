@@ -10,6 +10,7 @@ http://pinballhomemade.blogspot.com.br
 
 #include "..\\Observer.h"
 #include "..\\Initializable.h"
+#include "..\\ChangeableStatus.h"
 
 class SequencerLeds;
 class BitOutput;
@@ -17,7 +18,7 @@ class BitInput;
 class Subject;
 class LedControl;
 
-class DropTarget : public Observer, public Initializable
+class DropTarget : public Observer, public Initializable, public ChangeableStatus
 
 {
 public:
@@ -29,7 +30,7 @@ public:
 	virtual ~DropTarget();
 	void init();
 	void onNotifySubject(EventType event, byte value);
-
+	void changeStatus(StatusPinballMachine status);
 
 	void Reset();
 	bool IsAllTargets() { return m_AllTargets; }

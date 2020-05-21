@@ -11,14 +11,17 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\LedControl.h"
 #include "..\\Subject.h"
 #include "..\\Logger.h"
+#include "..\\ChangeableStatus.h"
 
 //-------------------------------------------------------//
-Target::Target(BitInput* input, LedControl* ledControl, byte led) : Observer()
+Target::Target(BitInput* input, LedControl* ledControl, byte led) : Observer(), ChangeableStatus()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
 	Logger::LogMessage(F("Target Constructor"));
 	#endif
+
+	m_status = StatusPinballMachine::initializing;
 	m_EventToHitTarget = NULL;
 
 	input->AddObserverToEdgePositive(this);
@@ -41,18 +44,6 @@ Target::~Target()
 }
 
 //-------------------------------------------------------//
-void Target::StartPlayMode()
-//-------------------------------------------------------//
-{
-	#ifdef DEBUGMESSAGES
-	Logger::LogMessage(F("Target::StartPlayMode"));
-	#endif
-
-	m_timerBlinkLed->Start();
-	m_hit = false;
-}
-
-//-------------------------------------------------------//
 void Target::onNotifySubject(EventType event, byte value)
 //-------------------------------------------------------//
 {
@@ -60,26 +51,26 @@ void Target::onNotifySubject(EventType event, byte value)
 	Logger::LogMessage(F("Target::NotifyEvent"));
 	#endif
 
-	if (event == EventType::EdgePositive)
+	if (m_status == StatusPinballMachine::playingmode)
 	{
-		m_timerBlinkLed->Stop();
-		m_LedControl->TurnOn(m_led);
-		m_hit = true;
-
-		if (m_EventToHitTarget != NULL)
+		if (event == EventType::EdgePositive)
 		{
-			m_EventToHitTarget->notifyObserver();
-		}
-	}
-	else if (event == EventType::TimeIsOver)
-	{
-		//TODO if (m_Pinball->IsPlaying())
-		//{
-		if (m_LedControl->IsTurn(m_led))
-			m_LedControl->TurnOff(m_led);
-		else
+			m_timerBlinkLed->Stop();
 			m_LedControl->TurnOn(m_led);
-		//}
+			m_hit = true;
+
+			if (m_EventToHitTarget != NULL)
+			{
+				m_EventToHitTarget->notifyObserver();
+			}
+		}
+		else if (event == EventType::TimeIsOver)
+		{
+			if (m_LedControl->IsTurn(m_led))
+				m_LedControl->TurnOff(m_led);
+			else
+				m_LedControl->TurnOn(m_led);
+		}
 	}
 }
 
@@ -95,3 +86,14 @@ void Target::AddObserverToSlingShotActivated(Observer* observer)
 	m_EventToHitTarget->registerObserver(observer);
 }
 
+//-------------------------------------------------------//
+void Target::changeStatus(StatusPinballMachine status)
+//-------------------------------------------------------//
+{
+	m_status = status;
+	if (m_status == StatusPinballMachine::initplaymode)
+	{
+		m_timerBlinkLed->Start();
+		m_hit = false;
+	}
+}

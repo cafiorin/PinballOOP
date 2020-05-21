@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PinballClasses\ChangeableStatus.h" />
     <ClInclude Include="PinballClasses\Logger.h" />
     <ClInclude Include="PinballClasses\font.h" />
     <ClInclude Include="PinballClasses\Door.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="PinballClasses\SequencerLeds.h" />
     <ClInclude Include="PinballClasses\PlayfieldClasses\SlingShot.h" />
     <ClInclude Include="PinballClasses\PlayfieldClasses\Target.h" />
+    <ClInclude Include="PinballClasses\StatusPinballMachine.h" />
     <ClInclude Include="PinballClasses\Utils.h" />
     <ClInclude Include="PinballClasses\Vector.h" />
     <ClInclude Include="PinballClasses\Button.h" />
@@ -185,6 +187,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PinballClasses\ChangeableStatus.cpp" />
     <ClCompile Include="PinballClasses\Logger.cpp" />
     <ClCompile Include="PinballClasses\Door.cpp" />
     <ClCompile Include="PinballClasses\BitOutput.cpp" />

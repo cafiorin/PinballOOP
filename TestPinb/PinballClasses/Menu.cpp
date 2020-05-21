@@ -83,6 +83,9 @@ Menu::~Menu()
 	Logger::LogMessage(F("Menu Destructor"));
 	#endif
 
+	delete m_EventExitMenu;
+	delete m_EventMenuOptionSelected;
+
 	DestroyChildren(m_pMenu);
 	delete m_SelfTest;
 }

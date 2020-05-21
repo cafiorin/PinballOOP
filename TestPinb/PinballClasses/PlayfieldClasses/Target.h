@@ -9,6 +9,8 @@ http://pinballhomemade.blogspot.com.br
 #define Target__INCLUDED_
 
 #include "..\\Observer.h"
+#include "..\\ChangeableStatus.h"
+
 
 class Timer;
 class BitInput;
@@ -17,18 +19,17 @@ class Input;
 class NewTimer;
 class Subject;
 
-class Target : public Observer
+class Target : public Observer, public ChangeableStatus
 {
 public:
 	Target(BitInput* input, LedControl* ledControl, byte led);
+
 	//virtual
 	virtual ~Target();
-	void StartPlayMode();
-
+	void changeStatus(StatusPinballMachine status);
 	void onNotifySubject(EventType event, byte value);
 
 	void AddObserverToSlingShotActivated(Observer* observer);
-
 	bool IsHit() { return m_hit; }
 
 protected:
@@ -37,6 +38,6 @@ protected:
 	NewTimer *m_timerBlinkLed;
 	LedControl* m_LedControl;
 	Subject* m_EventToHitTarget;
-
+	StatusPinballMachine m_status;
 };
 #endif // !defined(Target__INCLUDED_)

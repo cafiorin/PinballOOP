@@ -2,6 +2,7 @@
 #define Playfield__INCLUDED_
 
 #include "Observer.h"
+#include "ChangeableStatus.h"
 
 class Button;
 class MultiplexInputs;
@@ -17,13 +18,16 @@ class Bumper;
 class ReturnKickBall;
 class AccumulatorBall;
 
-class Playfield : public Observer
+class Playfield : public Observer, public ChangeableStatus
 {
 public:
 	Playfield(MultiplexInputs* multiplexInputs,
 		LatchOutputs* latchOutputsLow, LatchOutputs* LatchOutputsHigh, LedControl* ledControl);
-	~Playfield();
+
+//virtual
+	virtual ~Playfield();
 	void onNotifySubject(EventType event, byte value);
+	void changeStatus(StatusPinballMachine status);
 
 private:
 	MultiplexInputs* m_muxInputs;

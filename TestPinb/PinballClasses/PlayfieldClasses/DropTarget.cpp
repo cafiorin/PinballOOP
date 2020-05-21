@@ -14,10 +14,11 @@ http://pinballhomemade.blogspot.com.br
 #include "..\\EventType.h"
 #include "..\\Subject.h"
 #include "..\\Logger.h"
+#include "..\\ChangeableStatus.h"
 
 //-------------------------------------------------------//
 DropTarget::DropTarget(BitInput* input1, BitInput* input2, BitInput* input3,
-					   BitOutput* output, LedControl* ledControl) : Observer(), Initializable()
+					   BitOutput* output, LedControl* ledControl) : Observer(), Initializable(), ChangeableStatus()
 //-------------------------------------------------------//
 {
 	Initialize(3, input1, input2, input3, NULL, NULL, output, ledControl);
@@ -25,7 +26,7 @@ DropTarget::DropTarget(BitInput* input1, BitInput* input2, BitInput* input3,
 
 //-------------------------------------------------------//
 DropTarget::DropTarget(	BitInput* input1,BitInput* input2, BitInput* input3,
-	BitInput* input4,BitInput* input5,BitOutput* output, LedControl* ledControl) : Observer(), Initializable()
+	BitInput* input4,BitInput* input5,BitOutput* output, LedControl* ledControl) : Observer(), Initializable(), ChangeableStatus()
 //-------------------------------------------------------//
 {
 	Initialize(5, input1, input2, input3, input4, input5, output, ledControl);
@@ -152,7 +153,6 @@ void DropTarget::Reset()
 
 	m_AllTargets = false;
 	m_output->Pulse();
-	m_SequencerLeds->Start();
 }
 
 //------------------------------------------------//
@@ -166,3 +166,19 @@ void DropTarget::AddObserverToDropTargeComplete(Observer* observer)
 
 	m_EventToDropTargetComplete->registerObserver(observer);
 }
+
+//-------------------------------------------------------//
+void DropTarget::changeStatus(StatusPinballMachine status)
+//-------------------------------------------------------//
+{
+	if (status == StatusPinballMachine::initplaymode)
+	{
+		Reset();
+	}
+	else if (status == StatusPinballMachine::playingmode)
+	{
+		m_SequencerLeds->Start();
+	}
+
+}
+

@@ -66,34 +66,10 @@
     <ClInclude Include="PinballClasses\Door.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PinballClasses\PlayfieldClasses\AccumulatorBall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PinballClasses\PlayfieldClasses\Bumper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PinballClasses\PlayfieldClasses\DropTarget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PinballClasses\PlayfieldClasses\KickoutHole.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PinballClasses\PlayfieldClasses\OutBall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PinballClasses\PlayfieldClasses\ReturnKickBall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PinballClasses\PlayfieldClasses\SlingShot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PinballClasses\LedControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PinballClasses\Playfield.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PinballClasses\PlayfieldClasses\Target.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PinballClasses\Menu.h">
@@ -136,6 +112,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PinballClasses\ChangeableStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\KickoutHole.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\DropTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Bumper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\AccumulatorBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\OutBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\ReturnKickBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\SlingShot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinballClasses\Target.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -185,34 +185,10 @@
     <ClCompile Include="PinballClasses\Door.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PinballClasses\PlayfieldClasses\AccumulatorBall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PinballClasses\PlayfieldClasses\Bumper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PinballClasses\PlayfieldClasses\DropTarget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PinballClasses\PlayfieldClasses\KickoutHole.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PinballClasses\PlayfieldClasses\OutBall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PinballClasses\PlayfieldClasses\ReturnKickBall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PinballClasses\PlayfieldClasses\SlingShot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PinballClasses\LedControl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PinballClasses\Playfield.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PinballClasses\PlayfieldClasses\Target.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PinballClasses\Menu.cpp">
@@ -234,6 +210,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PinballClasses\ChangeableStatus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\KickoutHole.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\DropTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\Bumper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\AccumulatorBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\OutBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\ReturnKickBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\SlingShot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PinballClasses\Target.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

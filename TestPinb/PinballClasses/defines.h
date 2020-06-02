@@ -9,8 +9,9 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
-#define DOS
-//#define ARDUINOLIB
+//#define DOS
+#define ARDUINOLIB
+#define LCD
 
 // To Show DEBUG messages
 //#define DEBUGINPUTS
@@ -248,11 +249,25 @@ http://pinballhomemade.blogspot.com.br
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #define DEBOUNCEREAD 5
 
-#define INPUT_MENU_BUTTON 33
-#define INPUT_UP_BUTTON 35
-#define INPUT_DOWN_BUTTON A2
-#define INPUT_ENTER_BUTTON A7
+#define INPUT_MENU_BUTTON A1
+#define INPUT_UP_BUTTON A6
+#define INPUT_DOWN_BUTTON A7
+#define INPUT_ENTER_BUTTON A2
+
+#define INPUT_MENU_BUTTON_DEBUG A8
+#define INPUT_UP_BUTTON_DEBUG A9
+#define INPUT_DOWN_BUTTON_DEBUG A10
+#define INPUT_ENTER_BUTTON_DEBUG A11
+
 #define INPUT_START_BUTTON A0
+
+#define LatchOutputLowSER A4
+#define LatchOutputLowSRCLK A5 
+#define LatchOutputLowRCLK A3
+
+#define LatchOutputHighSER 66 //A12
+#define LatchOutputHighSRCLK 67 //A13
+#define LatchOutputHighRCLK 68 //A14
 
 #endif //ARDUINOLIB
 

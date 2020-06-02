@@ -4,6 +4,12 @@
 #include "Observer.h"
 #include "StatusPinballMachine.h"
 
+#ifdef ARDUINOLIB
+#include <Arduino.h>
+#include <DFRobotDFPlayerMini.h>
+#include <LiquidCrystal_I2C.h>
+#endif
+
 class MultiplexInputs;
 class LatchOutputs;
 class Door;
@@ -16,11 +22,21 @@ class NewTimer;
 class PinballMachine : public Observer
 {
 public :
-	PinballMachine(HardwareSerial* serial);
+	PinballMachine();
 	virtual ~PinballMachine();
+	void Initialize();
+	void Loop();
 
-	void playSong(char song[], bool priority = true);
-	void ChangeVolume(bool plus, byte delta = 5);
+	#ifdef ARDUINOLIB
+	void Setup(DFRobotDFPlayerMini* DFPlayerMain, DFRobotDFPlayerMini* DFPlayerSFX, HardwareSerial* serial, LiquidCrystal_I2C* lcd);
+	#endif // ARDUINOLIB
+	
+	#ifdef DOS
+	void Setup(HardwareSerial* serial);
+	#endif
+
+	void playSong(int number, bool SFX=false);
+	void ChangeVolume(bool plus);
 	void PlaySongToInput(byte);
 	void clearDisplay(byte = 0);
 	void printText(char*, char*, char);
@@ -71,20 +87,15 @@ private :
 	void SetupTest(byte event);
 	void ChangeStatus(StatusPinballMachine status);
 
-public:
-	void Initialize();
-	void Loop();
-
-	//Display
-	//Som
-	
-	//Display debug e buttons debug
-	//Serial output debug
-
-	//PinballGame
-	//Players
+#ifdef ARDUINOLIB
+	DFRobotDFPlayerMini* m_playerMain;
+	DFRobotDFPlayerMini* m_playerSFX;
+	LiquidCrystal_I2C* m_lcd;
+#endif // ARDUINOLIB
 
 
+	//TODO: PinballGame
+	//TODO: Players
 };
 
 #endif

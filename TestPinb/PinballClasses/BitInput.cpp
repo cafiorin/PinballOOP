@@ -27,7 +27,7 @@ BitInput::BitInput(byte portNumber)
 
 	#ifdef ARDUINOLIB
 	pinMode(m_portNumber, INPUT_PULLUP);
-	m_inputValue = digitalRead(pin);
+	m_inputValue = digitalRead(m_portNumber);
 	#endif
 }
 //-------------------------------------------------------//

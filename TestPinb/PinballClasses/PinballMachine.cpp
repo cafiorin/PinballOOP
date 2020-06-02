@@ -20,28 +20,57 @@
 #include "Logger.h"
 
 #ifdef ARDUINOLIB
+#include "Arduino.h"
 #include "ht1632pinball.h"
+#include <DFRobotDFPlayerMini.h>
+#include <LiquidCrystal_I2C.h>
 #endif
 
 
 //----------------------------------------
-PinballMachine::PinballMachine(HardwareSerial* serial) : Observer()
+PinballMachine::PinballMachine() : Observer()
 //----------------------------------------
 {
-	m_Serial = serial;
+}
 
-	#ifdef ARDUINOLIB
-	ht1632_setup();
-	#endif
-
+#ifdef DOS
+//----------------------------------------
+void PinballMachine::Setup(HardwareSerial* serial)
+//----------------------------------------
+{
 	#ifdef DEBUGMESSAGESCREATION
-	Logger::LogMessage(F("PinballMachine Construtor"));
+	Logger::LogMessage(F("PinballMachine Setup"));
 	#endif
+	m_Serial = serial;
 
 	printText("Pinball", "init", 0);
 	CreateObjects();
 	Initialize();
 }
+#endif
+
+#ifdef ARDUINOLIB
+//----------------------------------------
+void PinballMachine::Setup(DFRobotDFPlayerMini *DFPlayerMain, DFRobotDFPlayerMini* DFPlayerSFX, HardwareSerial* serial, LiquidCrystal_I2C *lcd)
+//----------------------------------------
+{
+	#ifdef DEBUGMESSAGESCREATION
+	Logger::LogMessage(F("PinballMachine Setup"));
+	#endif
+
+	m_Serial = serial;
+	m_playerMain = DFPlayerMain;
+	m_playerSFX = DFPlayerSFX;
+	m_lcd = lcd;
+
+	ht1632_setup();
+
+	printText("Pinball", "init", 0);
+	CreateObjects();
+	Initialize();
+}
+#endif // ARDUINOLIB
+
 
 //----------------------------------------
 PinballMachine::~PinballMachine()
@@ -66,8 +95,8 @@ void PinballMachine::CreateObjects()
 //----------------------------------------
 {
 	m_muxInputs = new MultiplexInputs(/*S0*/23, /*S1*/25, /*S2*/27,/*S3*/29, /*SIn0*/22, /*SIn1*/34, /*SIn2*/36);
-	m_LatchOutputLowVoltage = new LatchOutputs(A4, A5, A3);
-	m_LatchOutputHighVoltage = new LatchOutputs(A8, A9, A10); // TODO: Fix this values
+	m_LatchOutputLowVoltage = new LatchOutputs(LatchOutputLowSER, LatchOutputLowSRCLK, LatchOutputLowRCLK);
+	m_LatchOutputHighVoltage = new LatchOutputs(LatchOutputHighSER, LatchOutputHighSRCLK, LatchOutputHighRCLK);
 	m_LedControl = new LedControl();
 	
 	//m_Sequencer = new Sequencer()
@@ -129,24 +158,29 @@ void PinballMachine::ButtonPressed(byte value)
 	switch (value)
 	{
 	case INPUT_MENU_BUTTON:
+	case INPUT_MENU_BUTTON_DEBUG:
 		EventMenuButton();
 		break;
 
 	case INPUT_UP_BUTTON:
+	case INPUT_UP_BUTTON_DEBUG:
 		EventUpDownButton(true);
 		break;
 
 	case INPUT_DOWN_BUTTON:
+	case INPUT_DOWN_BUTTON_DEBUG:
 		EventUpDownButton(false);
 		break;
 
 	case INPUT_ENTER_BUTTON:
+	case INPUT_ENTER_BUTTON_DEBUG:
 		EventEnterButton();
 		break;
 
 	case INPUT_START_BUTTON:
 		EventStartButton();
 		break;
+
 	default:
 		break;
 	}
@@ -438,6 +472,17 @@ void PinballMachine::printText(char* text1, char* text2, char font)
 	clearDisplay(0);
 	textcolor1(1, 1, text1, RED, font);
 	textcolor1(1, 8 + font, text2, GREEN, font);
+
+#ifdef LCD
+	if (m_lcd != NULL)
+	{
+		m_lcd->setCursor(0, 0);
+		m_lcd->print(text1);
+		m_lcd->setCursor(0, 1);
+		m_lcd->print(text2);
+	}
+#endif // LCD
+
 #endif
 }
 
@@ -641,68 +686,54 @@ void PinballMachine::PlaySongToInput(byte portNumber)
 }
 
 //----------------------------------------------------//
-void PinballMachine::playSong(char song[], bool priority /*default=true*/)
+void PinballMachine::playSong(int number, bool SFX/*=false*/)
 //-----------------------------------------------------------------------//
 {
 #ifdef DOS
 #ifdef DEBUGMESSAGES
 	char szMsg[30]; //12 + 10 + 1
-	sprintf(szMsg, "Play song:%s", song);
+	sprintf(szMsg, "Play song:%d", number);
 	Logger::LogMessage(szMsg);
 #endif 
 #endif
 
 #ifdef ARDUINOLIB
-	if (song != NULL && m_MP3player != NULL)
+	if (!SFX && m_playerMain != NULL)
 	{
-		if (priority && m_MP3player->getState() == playback)
-		{
-			m_MP3player->stopTrack();
-		}
-
-		int8_t result = m_MP3player->playMP3(song);
-		if (result != 0)
-		{
-#ifdef DOS
-			char szMsg[50];
-			sprintf(szMsg, "Error code: %d when trying to play track", result);
-			LogMessage(szMsg);
-#endif	
-		}
+		m_playerMain->play(number);
 	}
+	else if (!SFX && m_playerSFX != NULL)
+	{
+		m_playerSFX->play(number);
+	}
+
 #endif // ARDUINOLIB
 }
 
 //-----------------------------------------------------------------------//
-void PinballMachine::ChangeVolume(bool plus, byte delta /*default = 5*/)
+void PinballMachine::ChangeVolume(bool plus)
 //-----------------------------------------------------------------------//
 {
-#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGES
 	Logger::LogMessage(F("Pinball::ChangeVolume"));
 	Logger::LogMessage(F("Change Volume"));
-#endif
+	#endif
 
-#ifdef ARDUINOLIB
-	if (m_MP3player != NULL)
+	#ifdef ARDUINOLIB
+	if (m_playerMain != NULL)
 	{
-		union twobyte mp3_vol;
-		mp3_vol.word = m_MP3player->getVolume();
-		uint8_t volume = mp3_vol.byte[1];
 		if (plus)
-			volume += delta;
+			m_playerMain->volumeUp();
 		else
-			volume -= delta;
-
-		if (volume >= 254)
-		{
-			volume = 254;
-		}
-		else if (volume <= 2)
-		{
-			volume = 2;
-		}
-
-		m_MP3player->setVolume(volume, volume);
+			m_playerMain->volumeDown();
 	}
-#endif // ARDUINOLIB
+
+	if (m_playerSFX != NULL)
+	{
+		if (plus)
+			m_playerSFX->volumeUp();
+		else
+			m_playerSFX->volumeDown();
+	}
+	#endif // ARDUINOLIB
 }

@@ -145,7 +145,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PinballClasses\AccumulatorBall.h" />
+    <ClInclude Include="PinballClasses\Bumper.h" />
     <ClInclude Include="PinballClasses\ChangeableStatus.h" />
+    <ClInclude Include="PinballClasses\DropTarget.h" />
+    <ClInclude Include="PinballClasses\KickoutHole.h" />
     <ClInclude Include="PinballClasses\Logger.h" />
     <ClInclude Include="PinballClasses\font.h" />
     <ClInclude Include="PinballClasses\Door.h" />
@@ -156,24 +160,20 @@
     <ClInclude Include="PinballClasses\BitInput.h" />
     <ClInclude Include="PinballClasses\MultiplexInputs.h" />
     <ClInclude Include="PinballClasses\EventType.h" />
-    <ClInclude Include="PinballClasses\PlayfieldClasses\AccumulatorBall.h" />
-    <ClInclude Include="PinballClasses\PlayfieldClasses\Bumper.h" />
     <ClInclude Include="PinballClasses\defines.h" />
     <ClInclude Include="PinballClasses\DefinesMp3.h" />
-    <ClInclude Include="PinballClasses\PlayfieldClasses\DropTarget.h" />
     <ClInclude Include="PinballClasses\Flag.h" />
     <ClInclude Include="PinballClasses\HardwareSerial.h" />
     <ClInclude Include="PinballClasses\ht1632pinball.h" />
-    <ClInclude Include="PinballClasses\PlayfieldClasses\KickoutHole.h" />
     <ClInclude Include="PinballClasses\LedControl.h" />
     <ClInclude Include="PinballClasses\Menu.h" />
-    <ClInclude Include="PinballClasses\PlayfieldClasses\OutBall.h" />
-    <ClInclude Include="PinballClasses\PlayfieldClasses\ReturnKickBall.h" />
+    <ClInclude Include="PinballClasses\OutBall.h" />
+    <ClInclude Include="PinballClasses\ReturnKickBall.h" />
     <ClInclude Include="PinballClasses\SelfTest.h" />
     <ClInclude Include="PinballClasses\SequencerLeds.h" />
-    <ClInclude Include="PinballClasses\PlayfieldClasses\SlingShot.h" />
-    <ClInclude Include="PinballClasses\PlayfieldClasses\Target.h" />
+    <ClInclude Include="PinballClasses\SlingShot.h" />
     <ClInclude Include="PinballClasses\StatusPinballMachine.h" />
+    <ClInclude Include="PinballClasses\Target.h" />
     <ClInclude Include="PinballClasses\Utils.h" />
     <ClInclude Include="PinballClasses\Vector.h" />
     <ClInclude Include="PinballClasses\Button.h" />
@@ -187,7 +187,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PinballClasses\AccumulatorBall.cpp" />
+    <ClCompile Include="PinballClasses\Bumper.cpp" />
     <ClCompile Include="PinballClasses\ChangeableStatus.cpp" />
+    <ClCompile Include="PinballClasses\DropTarget.cpp" />
+    <ClCompile Include="PinballClasses\KickoutHole.cpp" />
     <ClCompile Include="PinballClasses\Logger.cpp" />
     <ClCompile Include="PinballClasses\Door.cpp" />
     <ClCompile Include="PinballClasses\BitOutput.cpp" />
@@ -196,19 +200,15 @@
     <ClCompile Include="PinballClasses\MultiplexOutputs.cpp" />
     <ClCompile Include="PinballClasses\BitInput.cpp" />
     <ClCompile Include="PinballClasses\MultiplexInputs.cpp" />
-    <ClCompile Include="PinballClasses\PlayfieldClasses\AccumulatorBall.cpp" />
-    <ClCompile Include="PinballClasses\PlayfieldClasses\Bumper.cpp" />
-    <ClCompile Include="PinballClasses\PlayfieldClasses\DropTarget.cpp" />
     <ClCompile Include="PinballClasses\HardwareSerial.cpp" />
-    <ClCompile Include="PinballClasses\PlayfieldClasses\KickoutHole.cpp" />
     <ClCompile Include="PinballClasses\LedControl.cpp" />
     <ClCompile Include="PinballClasses\Menu.cpp" />
-    <ClCompile Include="PinballClasses\PlayfieldClasses\OutBall.cpp" />
-    <ClCompile Include="PinballClasses\PlayfieldClasses\ReturnKickBall.cpp" />
+    <ClCompile Include="PinballClasses\OutBall.cpp" />
+    <ClCompile Include="PinballClasses\ReturnKickBall.cpp" />
     <ClCompile Include="PinballClasses\SelfTest.cpp" />
     <ClCompile Include="PinballClasses\SequencerLeds.cpp" />
-    <ClCompile Include="PinballClasses\PlayfieldClasses\SlingShot.cpp" />
-    <ClCompile Include="PinballClasses\PlayfieldClasses\Target.cpp" />
+    <ClCompile Include="PinballClasses\SlingShot.cpp" />
+    <ClCompile Include="PinballClasses\Target.cpp" />
     <ClCompile Include="PinballClasses\Utils.cpp" />
     <ClCompile Include="PinballClasses\Button.cpp" />
     <ClCompile Include="PinballClasses\NewTimer.cpp" />

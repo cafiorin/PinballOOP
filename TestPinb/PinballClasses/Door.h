@@ -22,6 +22,11 @@ private:
 	Button* m_DownButton;
 	Button* m_EnterButton;
 
+	Button* m_MenuButtonDebug;
+	Button* m_UpButtonDebug;
+	Button* m_DownButtonDebug;
+	Button* m_EnterButtonDebug;
+
 	Button* m_StartButton;
 
 };

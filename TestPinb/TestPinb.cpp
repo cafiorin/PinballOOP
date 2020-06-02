@@ -151,7 +151,8 @@ byte main()
 	bool Leds[NUM_LEDS];
 
 	HardwareSerial *serial = new HardwareSerial(0,0);
-	PinballMachine *pPinballMaster = new PinballMachine(serial);
+	PinballMachine *pPinballMaster = new PinballMachine();
+	pPinballMaster->Setup(serial);
 	HardwareSerial *ledPrint = new HardwareSerial(100, 1);
 
 	HardwareSerial *inputs = new HardwareSerial(1, 30);

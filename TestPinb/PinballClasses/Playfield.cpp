@@ -158,6 +158,8 @@ void Playfield::onNotifySubject(EventType event, byte value)
 			break;
 
 		case EventType::LostBall:
+			// TODO:
+			NextBall();
 			break;
 
 		case EventType::SlingShotActivated:
@@ -168,6 +170,18 @@ void Playfield::onNotifySubject(EventType event, byte value)
 
 	}
 }
+
+void Playfield::StartGame()
+{
+	m_OutBall->LanchBall();
+}
+
+void Playfield::NextBall()
+{
+	delay(500);
+	m_OutBall->LanchBall();
+}
+
 
 //-------------------------------------------------------//
 void Playfield::changeStatus(StatusPinballMachine status)

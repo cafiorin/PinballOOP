@@ -24,12 +24,8 @@ BitInput::BitInput(byte portNumber)
 	m_portNumber = portNumber;
 	m_inputValue = HIGH;
 	m_EventEdgePositive = NULL;
-
-	#ifdef ARDUINOLIB
-	pinMode(m_portNumber, INPUT_PULLUP);
-	m_inputValue = digitalRead(m_portNumber);
-	#endif
 }
+
 //-------------------------------------------------------//
 BitInput::~BitInput()
 //-------------------------------------------------------//
@@ -45,10 +41,6 @@ BitInput::~BitInput()
 bool BitInput::GetInput()
 //------------------------------------------------//
 {
-	#ifdef ARDUINOLIB
-	m_inputValue = digitalRead(m_portNumber);
-	#endif
-
 	return m_inputValue;
 }
 

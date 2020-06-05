@@ -15,9 +15,9 @@ http://pinballhomemade.blogspot.com.br
 
 // To Show DEBUG messages
 //#define DEBUGINPUTS
-//#define DEBUGMESSAGES
-//#define DEBUGMESSAGESLOOP
-//#define DEBUGMESSAGESCREATION
+#define DEBUGMESSAGES
+#define DEBUGMESSAGESLOOP
+#define DEBUGMESSAGESCREATION
 //-----------------------
 
 #define MAX_DEBOUNCE_PER_SECOND 5
@@ -265,9 +265,9 @@ http://pinballhomemade.blogspot.com.br
 #define LatchOutputLowSRCLK A5 
 #define LatchOutputLowRCLK A3
 
-#define LatchOutputHighSER 66 //A12
-#define LatchOutputHighSRCLK 67 //A13
-#define LatchOutputHighRCLK 68 //A14
+#define LatchOutputHighSER 68 //A14
+#define LatchOutputHighSRCLK 66 //A12
+#define LatchOutputHighRCLK 67 //A13
 
 #endif //ARDUINOLIB
 

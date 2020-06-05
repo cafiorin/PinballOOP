@@ -1,5 +1,6 @@
 #include "PinballMachine.h"
 #include "HardwareSerial.h"
+#include "Logger.h"
 #include "Menu.h"
 
 #include "LatchOutputs.h"
@@ -59,6 +60,7 @@ void PinballMachine::Setup(DFRobotDFPlayerMini *DFPlayerMain, DFRobotDFPlayerMin
 	#endif
 
 	m_Serial = serial;
+	m_Logger = new Logger(m_Serial);
 	m_playerMain = DFPlayerMain;
 	m_playerSFX = DFPlayerSFX;
 	m_lcd = lcd;
@@ -80,6 +82,7 @@ PinballMachine::~PinballMachine()
 	delete m_LatchOutputLowVoltage;
 	delete m_LatchOutputHighVoltage;
 	delete m_LedControl;
+	delete m_Logger;
 
 	//delete m_Sequencer;
 
@@ -393,6 +396,8 @@ void PinballMachine::StartGame(byte Players)
 	printText("Player", "0", 0);
 	ChangeStatus(StatusPinballMachine::playingmode);
 	m_playerPlaying = 0;
+	
+	m_Playfield->StartGame();
 }
 
 //---------------------------------------------------------------------//

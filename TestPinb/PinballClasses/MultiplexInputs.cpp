@@ -42,7 +42,7 @@ MultiplexInputs::MultiplexInputs(const byte S0, const byte S1, const byte S2, co
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
-	Logger::LogMessage(F("Multiplex Constructor"));
+	Logger::LogMessage(F("MultiplexInputs Constructor"));
 	#endif
 
 	_adrsPin[0] = S0;

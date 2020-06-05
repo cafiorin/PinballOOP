@@ -96,7 +96,7 @@ void LedControl::AttractModeLoop()
 //-----------------------------------------------------------
 {
 	#ifdef DEBUGMESSAGESLOOP
-	Logger::LogMessage(F"LedControl::AttractModeLoop");
+	Logger::LogMessage(F("LedControl::AttractModeLoop"));
 	#endif
 
 	#ifdef ARDUINOLIB

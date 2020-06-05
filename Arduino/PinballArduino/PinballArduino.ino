@@ -1,11 +1,8 @@
 
 #include <Arduino.h>
-#include <avr/pgmspace.h>
-#include <SPI.h>
 #include <DFRobotDFPlayerMini.h>
 #include <PinballMachine.h>
 #include <LiquidCrystal_I2C.h>
-//#include <MemoryFree.h>
 
 DFRobotDFPlayerMini DFPlayerMain;
 DFRobotDFPlayerMini DFPlayerSFX;
@@ -51,7 +48,4 @@ void setup()
 void loop()
 {
   m_pinball.Loop();
-    
-  //Serial.print(F("freeMemory()="));
-  //Serial.println(freeMemory());  
 }

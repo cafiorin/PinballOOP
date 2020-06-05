@@ -18,6 +18,7 @@ class LedControl;
 class HardwareSerial;
 class Menu;
 class NewTimer;
+class Logger;
 
 class PinballMachine : public Observer
 {
@@ -63,6 +64,7 @@ private :
 	LedControl* m_LedControl;
 	HardwareSerial* m_Serial;
 	Menu* m_Menu;
+	Logger* m_Logger;
 
 	Playfield* m_Playfield;
 	Door* m_Door;

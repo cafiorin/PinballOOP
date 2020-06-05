@@ -23,6 +23,9 @@ class Playfield : public Observer, public ChangeableStatus
 public:
 	Playfield(MultiplexInputs* multiplexInputs,
 		LatchOutputs* latchOutputsLow, LatchOutputs* LatchOutputsHigh, LedControl* ledControl);
+	
+	void StartGame();
+	void NextBall();
 
 //virtual
 	virtual ~Playfield();

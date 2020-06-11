@@ -17,12 +17,12 @@ http://pinballhomemade.blogspot.com.br
 #include "ChangeableStatus.h"
 
 //-------------------------------------------------------//
-ReturnKickBall::ReturnKickBall(BitInput* input, BitOutput *output, LedControl *ledControl, byte led) : Observer(), ChangeableStatus()
+ReturnKickBall::ReturnKickBall(BitInput* input, BitOutput* output, LedControl* ledControl, byte led) : Observer(), ChangeableStatus()
 //-------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGESCREATION
+#ifdef DEBUGMESSAGESCREATION
 	Logger::LogMessage(F("ReturnKickBall Constructor"));
-	#endif
+#endif
 
 	m_status = StatusPinballMachine::initializing;
 	m_led = led;
@@ -32,9 +32,10 @@ ReturnKickBall::ReturnKickBall(BitInput* input, BitOutput *output, LedControl *l
 	m_output = output;
 
 	m_timerBlinkLed = new NewTimer(400, NewTimerType::continuous, this);
-	SetReturnBall(false);
-}
 
+	m_returnBallOn = false;
+	m_LedControl->TurnOff(m_led);
+}
 //-------------------------------------------------------//
 ReturnKickBall::~ReturnKickBall()
 //-------------------------------------------------------//

@@ -9,22 +9,17 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
-//#define DOS
-#define ARDUINOLIB
-#define LCD
+#define DOS
+//#define ARDUINOLIB
+//#define LCD
 
 // To Show DEBUG messages
 //#define DEBUGINPUTS
 #define DEBUGMESSAGES
-#define DEBUGMESSAGESLOOP
-#define DEBUGMESSAGESCREATION
+//#define DEBUGMESSAGESLOOP
+//#define DEBUGMESSAGESCREATION
 //-----------------------
 
-#define MAX_DEBOUNCE_PER_SECOND 5
-#define MAX_TRY_DEBOUNCES 10
-
-#define ADDRESS_MASTER 4
-#define ADDRESS_SLAVE  5
 #define DATA_STRIP_LED 5
 
 #define MAX_SIZE_DEBUG_MESSAGE 50
@@ -261,13 +256,13 @@ http://pinballhomemade.blogspot.com.br
 
 #define INPUT_START_BUTTON A0
 
-#define LatchOutputLowSER A4
-#define LatchOutputLowSRCLK A5 
-#define LatchOutputLowRCLK A3
+#define LatchOutputLowSER A4  //=> RCLK
+#define LatchOutputLowSRCLK A5 //=>SR_CLK
+#define LatchOutputLowRCLK A3 //=>SER
 
-#define LatchOutputHighSER 68 //A14
-#define LatchOutputHighSRCLK 66 //A12
-#define LatchOutputHighRCLK 67 //A13
+#define LatchOutputHighSER 32 //=> RCLK
+#define LatchOutputHighSRCLK 30 //=>SR_CLK
+#define LatchOutputHighRCLK 28 //=>SER
 
 #endif //ARDUINOLIB
 
@@ -295,6 +290,20 @@ using namespace std;
 #define INPUT_DOWN_BUTTON 46
 #define INPUT_ENTER_BUTTON 47
 #define INPUT_START_BUTTON 48
+
+#define INPUT_MENU_BUTTON_DEBUG 49
+#define INPUT_UP_BUTTON_DEBUG 50
+#define INPUT_DOWN_BUTTON_DEBUG 51
+#define INPUT_ENTER_BUTTON_DEBUG 52
+#define LatchOutputLowSER 53  //=> RCLK
+#define LatchOutputLowSRCLK 54 //=>SR_CLK
+#define LatchOutputLowRCLK 55 //=>SER
+
+#define LatchOutputHighSER 56 //=> RCLK
+#define LatchOutputHighSRCLK 57 //=>SR_CLK
+#define LatchOutputHighRCLK 58 //=>SER
+
+
 #define A3 100
 #define A4 101
 #define A5 102

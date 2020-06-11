@@ -10,11 +10,12 @@ http://pinballhomemade.blogspot.com.br
 
 #include "defines.h"
 #include "Observer.h"
+#include "Runnable.h"
 
 class NewTimer;
 class PinballMachine;
 
-class SelfTest : Observer
+class SelfTest : Observer, Runnable
 {
 public:
 	SelfTest(PinballMachine* pinballMachine);
@@ -38,13 +39,17 @@ public:
 	void DoSfxOnOff();
 
 	void FinishTest();
-	void Loop();
+	void loop();
 
 protected:
 	byte m_MenuTest;
 	int m_startTestValue;
 	NewTimer *m_timerAuto;
 	PinballMachine* m_Pinball;
+
+	char m_szOut[15];
+	char m_szHexa[15];
+
 
 };
 

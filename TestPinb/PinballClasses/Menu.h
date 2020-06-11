@@ -77,7 +77,6 @@ public:
 	void EventToInput(byte valueToSend);
 	void StartTest(byte event);
 	void FinishTest();
-	void Loop();
 
 protected:
 	MenuString *m_pMenu;

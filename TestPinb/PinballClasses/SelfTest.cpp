@@ -21,10 +21,11 @@ http://pinballhomemade.blogspot.com.br
 #include "Observer.h"
 #include "PinballMachine.h"
 #include "Logger.h"
+#include "Runnable.h"
 
 
 //---------------------------------------------------------------------//
-SelfTest::SelfTest(PinballMachine* pinballMachine)
+SelfTest::SelfTest(PinballMachine* pinballMachine) : Runnable()
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -32,6 +33,9 @@ SelfTest::SelfTest(PinballMachine* pinballMachine)
 	#endif
 	m_Pinball = pinballMachine;
 	m_timerAuto = new NewTimer(1000, NewTimerType::continuous, this);
+	strcpy(m_szOut, "");
+	strcpy(m_szHexa, "");
+
 }
 
 //---------------------------------------------------------------------//
@@ -169,7 +173,7 @@ void SelfTest::StartTest(byte event)
 void SelfTest::DoTest()
 //---------------------------------------------------------------------//
 {
-	#ifdef DEBUGMESSAGES
+	#ifdef DEBUGMESSAGESLOOP
 	Logger::LogMessage(F("SelfTest::DoTest"));
 	#endif
 
@@ -305,16 +309,13 @@ void SelfTest::DoTestCoin()
 	Logger::LogMessage(F("SelfTest::DoTestCoin"));
 	#endif
 
+	byte coinToTest = m_startTestValue + OUTPUT_COINS_INIT;
 
 	char szCoin[5];
-	sprintf(szCoin, "%d", m_startTestValue + OUTPUT_COINS_INIT);
+	sprintf(szCoin, "%d", coinToTest);
 	m_Pinball->printText("Coin", szCoin, 0);
 
-	BitOutput *pOutput = m_Pinball->GetOutputsHighVoltage()->GetOuput(m_startTestValue + OUTPUT_COINS_INIT);
-	if (pOutput != NULL)
-	{
-		pOutput->TurnOn();
-	}
+	m_Pinball->GetOutputsHighVoltage()->GetOuput(coinToTest)->Pulse(500);
 }
 
 //---------------------------------------------------------------------//
@@ -368,7 +369,7 @@ void SelfTest::DisplayInput(byte valueToSend)
 {
 	if (m_MenuTest == EVENT_TEST_INPUTS_AUTO)
 	{
-		#ifdef DEBUGMESSAGES
+		#ifdef DEBUGMESSAGESLOOP
 		Logger::LogMessage(F("SelfTest::EventToInput"));
 		#endif
 
@@ -406,8 +407,14 @@ void SelfTest::DisplayInput(byte valueToSend)
 
 		char szHexa[20];
 		sprintf(szHexa, "%02x%02x%02x%02x%02x%02x", bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5]);
+		
+		if (strcmp(szHexa, m_szHexa) || strcmp(szOut, m_szOut))
+		{
+			strcpy(m_szHexa, szHexa);
+			strcpy(m_szOut, szOut);
 
-		m_Pinball->printText(szHexa, szOut, 0);
+			m_Pinball->printText(szHexa, szOut, 0);
+		}
 
 	}
 
@@ -430,12 +437,12 @@ void SelfTest::DoPlaySound(bool board)
 
 	if (board)
 	{
-		//TODOm_Pinball->playSong(MP3_TESTSOUND);
+		m_Pinball->playSong(MP3_TESTSOUND);
 		m_Pinball->printText("Play", "board1", 0);
 	}
 	else
 	{
-		//TODOm_Pinball->playSongSFX(MP3_TESTSOUND);
+		m_Pinball->playSong(MP3_TESTSOUND,true);
 		m_Pinball->printText("Play", "board2", 0);
 	}
 }
@@ -485,10 +492,11 @@ void SelfTest::onNotifySubject(EventType event, byte value)
 }
 
 //---------------------------------------------------------------------//
-void SelfTest::Loop()
+void SelfTest::loop()
 //---------------------------------------------------------------------//
 {
-	if (m_MenuTest == EVENT_TEST_INPUTS_1BY1)
+	if (m_MenuTest == EVENT_TEST_INPUTS_1BY1 ||
+		m_MenuTest == EVENT_TEST_INPUTS_AUTO)
 	{
 		DoTest();
 	}

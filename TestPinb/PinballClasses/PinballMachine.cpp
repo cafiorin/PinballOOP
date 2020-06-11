@@ -43,6 +43,7 @@ void PinballMachine::Setup(HardwareSerial* serial)
 	Logger::LogMessage(F("PinballMachine Setup"));
 	#endif
 	m_Serial = serial;
+	m_Logger = new Logger(m_Serial);
 
 	printText("Pinball", "init", 0);
 	CreateObjects();
@@ -264,12 +265,7 @@ void PinballMachine::EventMenuButton()
 		m_Status == StatusPinballMachine::menusetup)
 	{
 		SetupTest(EVENT_TEST_EXIT_MENU);
-
-		if (m_Menu != NULL)
-		{
-			delete m_Menu;
-			m_Menu = NULL;
-		}
+		m_Menu->PressButtonMenu();
 	}
 }
 
@@ -291,12 +287,6 @@ void PinballMachine::EventEnterButton()
 	else if (m_Status == StatusPinballMachine::menutest)
 	{
 		SetupTest(EVENT_TEST_EXIT_MENU);
-		if (m_Menu != NULL)
-		{
-			delete m_Menu;
-			m_Menu = NULL;
-		}
-
 	}
 }
 
@@ -482,7 +472,11 @@ void PinballMachine::printText(char* text1, char* text2, char font)
 	if (m_lcd != NULL)
 	{
 		m_lcd->setCursor(0, 0);
+		m_lcd->print("                ");
+		m_lcd->setCursor(0, 0);
 		m_lcd->print(text1);
+		m_lcd->setCursor(0, 1);
+		m_lcd->print("                ");
 		m_lcd->setCursor(0, 1);
 		m_lcd->print(text2);
 	}

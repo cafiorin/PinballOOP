@@ -74,7 +74,6 @@ public:
 	void PressButtonEnter();
 
 	void EventUpDownButton(bool upButton);
-	void EventToInput(byte valueToSend);
 	void StartTest(byte event);
 	void FinishTest();
 

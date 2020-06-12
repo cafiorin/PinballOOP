@@ -55,7 +55,7 @@ void Button::AddObserverToEdgePositive(Observer* observer)
 
 
 //------------------------------------------------//
-int Button::GetInput()
+byte Button::GetInput()
 //------------------------------------------------//
 {
     #ifdef ARDUINOLIB

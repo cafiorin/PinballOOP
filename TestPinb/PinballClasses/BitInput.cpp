@@ -63,7 +63,7 @@ void BitInput::loop()
 	if (m_EventEdgePositive == NULL)
 		return;
 
-	int prevState = m_inputValue;
+	bool prevState = m_inputValue;
 	m_inputValue = GetInput();
 	if (prevState == HIGH && m_inputValue == LOW)
 	{

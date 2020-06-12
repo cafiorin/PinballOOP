@@ -27,7 +27,7 @@ public:
     void AddObserverToEdgePositive(Observer* observer);
 
     void loop();
-    int GetInput();
+    byte GetInput();
     void SetState(byte state);
 
 };

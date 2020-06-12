@@ -33,8 +33,7 @@ public:
 	void DoTestCoin();
 	void DoTestOutput();
 	void DoTestInput();
-	void EventToInput(byte valueToSend);
-	void DisplayInput(byte valueToSend);
+	void DisplayInput();
 	void DoPlaySound(bool board);
 	void DoSfxOnOff();
 
@@ -49,6 +48,7 @@ protected:
 
 	char m_szOut[15];
 	char m_szHexa[15];
+	byte m_lastIndexHigh;
 
 
 };

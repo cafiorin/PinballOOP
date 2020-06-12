@@ -52,7 +52,7 @@ void DropTarget::Initialize(byte sizeInputs,BitInput* input1,BitInput* input2,Bi
 	m_input[3] = input4;
 	m_input[4] = input5;
 
-	for (int i = 0; i < m_sizeInputs; i++)
+	for (byte i = 0; i < m_sizeInputs; i++)
 		m_input[i]->AddObserverToEdgePositive(this);
 
 	m_output = output;

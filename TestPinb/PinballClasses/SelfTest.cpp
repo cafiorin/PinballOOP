@@ -35,7 +35,7 @@ SelfTest::SelfTest(PinballMachine* pinballMachine) : Runnable()
 	m_timerAuto = new NewTimer(1000, NewTimerType::continuous, this);
 	strcpy(m_szOut, "");
 	strcpy(m_szHexa, "");
-
+	m_lastIndexHigh = 0;
 }
 
 //---------------------------------------------------------------------//
@@ -229,7 +229,7 @@ void SelfTest::DoTest()
 
 		case EVENT_TEST_INPUTS_AUTO:
 		{
-			DisplayInput(0);
+			DisplayInput();
 		}
 		break;
 
@@ -364,46 +364,39 @@ void SelfTest::DoTestInput()
 }
 
 //---------------------------------------------------------------------//
-void SelfTest::DisplayInput(byte valueToSend)
+void SelfTest::DisplayInput()
 //---------------------------------------------------------------------//
 {
 	if (m_MenuTest == EVENT_TEST_INPUTS_AUTO)
 	{
 		#ifdef DEBUGMESSAGESLOOP
-		Logger::LogMessage(F("SelfTest::EventToInput"));
+		Logger::LogMessage(F("SelfTest::DisplayInput"));
 		#endif
 
 		bool values[8];
 		byte bytes[6];
 
-		byte j = 0, z = 0;
-		for (byte i = INPUT_TEST_INIT; i <= INPUT_TEST_FINISH; i++)
+		byte indexValues = 0, indexBytes = 0;
+		for (byte index = INPUT_TEST_INIT; index <= INPUT_TEST_FINISH; index++)
 		{
-			bool value = false;
-			BitInput* pInput = m_Pinball->GetMuxInputs()->GetInput(i);
-			if (pInput != NULL)
+			values[indexValues] = m_Pinball->GetMuxInputs()->GetInput(index)->GetInput();
+			if (values[indexValues])
 			{
-				value = pInput->GetInput();
+				m_lastIndexHigh = index;
 			}
-			values[j] = value;
-			j++;
-			if (j == 8)
+			indexValues++;
+			if (indexValues == 8)
 			{
-				j = 0;
-				bytes[z] = ToByte(values);
-				z++;
+				indexValues = 0;
+				bytes[indexBytes] = ToByte(values);
+				indexBytes++;
 			}
 		}
 
-		BitInput* pInput = m_Pinball->GetMuxInputs()->GetInput(valueToSend);
-		bool turnOn = false;
-		if (pInput != NULL)
-		{
-			turnOn = pInput->GetInput();
-		}
+		bool turnOn = m_Pinball->GetMuxInputs()->GetInput(m_lastIndexHigh)->GetInput();
 
 		char szOut[15];
-		sprintf(szOut, "In%d : %d", valueToSend, turnOn);
+		sprintf(szOut, "In%d : %d", m_lastIndexHigh, turnOn);
 
 		char szHexa[20];
 		sprintf(szHexa, "%02x%02x%02x%02x%02x%02x", bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5]);
@@ -415,16 +408,7 @@ void SelfTest::DisplayInput(byte valueToSend)
 
 			m_Pinball->printText(szHexa, szOut, 0);
 		}
-
 	}
-
-}
-
-//---------------------------------------------------------------------//
-void SelfTest::EventToInput(byte valueToSend)
-//---------------------------------------------------------------------//
-{
-	DisplayInput(valueToSend);
 }
 
 //---------------------------------------------------------------------//

@@ -278,9 +278,3 @@ void Menu::FinishTest()
 	}
 }
 
-//---------------------------------------------------------------------//
-void Menu::EventToInput(byte valueToSend)
-//---------------------------------------------------------------------//
-{
-	m_SelfTest->EventToInput(valueToSend);
-}

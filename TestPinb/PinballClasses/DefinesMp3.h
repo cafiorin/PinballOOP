@@ -13,8 +13,9 @@ http://pinballhomemade.blogspot.com.br
 #define high1 3
 #define skillhit 4
 #define yahoo 5
-#define theme 6
-#define theme00 7
+#define test1 6
+#define test2 7
+#define test3 8
 #define stage 9
 #define themeSFX 10
 
@@ -27,10 +28,10 @@ http://pinballhomemade.blogspot.com.br
 #define whold 17
 #define yahoo2 18
 #define engine1 19
-#define b1 20
+#define b1file 20
 
-#define b2 21
-#define b3 22
+#define b2file 21
+#define b3file 22
 #define here 23 
 #define sling01m 24
 #define sling02m 25
@@ -88,9 +89,9 @@ http://pinballhomemade.blogspot.com.br
 #define MP3_YAHOO  yahoo2
 
 #define MP3_STARTBUTTONPORT engine1
-#define MP3_MENU_BUTTON  b1
-#define MP3_UP_BUTTON  b2
-#define MP3_DOWN_BUTTON  b3
+#define MP3_MENU_BUTTON  b1file
+#define MP3_UP_BUTTON  b2file
+#define MP3_DOWN_BUTTON  b3file
 #define MP3_ALL_ROLLOVERS  here
 #define MP3_SLINGSHOT_RIGHT  sling01m
 #define MP3_SLINGSHOT_LEFT  sling02m
@@ -104,12 +105,12 @@ http://pinballhomemade.blogspot.com.br
 #define MP3_OUTLANE_RIGHT  hahaha2
 #define MP3_RETURNBALL_LEFT  yahoo
 #define MP3_RETURNBALL_RIGHT  yahoo
-#define MP3_TARGET_RED1  b1
-#define MP3_TARGET_GREEN1  b2
-#define MP3_TARGET_YELLOW1  b3
-#define MP3_TARGET_RED2  b1
-#define MP3_TARGET_GREEN2  b2
-#define MP3_TARGET_YELLOW2  b3
+#define MP3_TARGET_RED1  b1file
+#define MP3_TARGET_GREEN1  b2file
+#define MP3_TARGET_YELLOW1  b3file
+#define MP3_TARGET_RED2  b1file
+#define MP3_TARGET_GREEN2  b2file
+#define MP3_TARGET_YELLOW2  b3file
 #define MP3_DROPTARGET_51  drop51
 #define MP3_DROPTARGET_52  drop52
 #define MP3_DROPTARGET_53  drop53
@@ -119,9 +120,9 @@ http://pinballhomemade.blogspot.com.br
 #define MP3_DROPTARGET_32  aer
 #define MP3_DROPTARGET_33  god
 
-#define MP3_ROLLOVER_STAR_GREEN  b1
-#define MP3_ROLLOVER_STAR_RED1  b2
-#define MP3_ROLLOVER_STAR_RED2  b2
+#define MP3_ROLLOVER_STAR_GREEN  b1file
+#define MP3_ROLLOVER_STAR_RED1  b2file
+#define MP3_ROLLOVER_STAR_RED2  b2file
 #define MP3_ROLLOVER_LEFT  aer
 #define MP3_ROLLOVER_CENTER  aer
 #define MP3_ROLLOVER_RIGHT  aer
@@ -131,11 +132,11 @@ http://pinballhomemade.blogspot.com.br
 #define MP3_RAMP_OUT2  rampo2
 
 #define MP3_TARGET_HIGHER  bump03
-#define MP3_SPINNER  b1
+#define MP3_SPINNER  b1file
 #define MP3_HOLE  yahoo2
-#define MP3_ACCBALL1  b1
-#define MP3_ACCBALL2  b2
-#define MP3_ACCBALL3  b3
-#define MP3_ACCBALL4  b1
+#define MP3_ACCBALL1  b1file
+#define MP3_ACCBALL2  b2file
+#define MP3_ACCBALL3  b3file
+#define MP3_ACCBALL4  b1file
 
 #endif

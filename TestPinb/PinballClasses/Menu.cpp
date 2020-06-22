@@ -163,7 +163,11 @@ void Menu::PressButtonEnter()
 		else if (m_subOptionSelected->GetAction() != EVENT_NULL && !m_backSelected)
 		{
 			m_EventMenuOptionSelected->notifyObserver(m_subOptionSelected->GetAction());
-			m_isShowing = false;
+			if (m_subOptionSelected->GetAction() != EVENT_TEST_SOUND_BOARD1 &&
+				m_subOptionSelected->GetAction() != EVENT_TEST_SOUND_BOARD2)
+			{
+				m_isShowing = false;
+			}
 		}
 		else
 		{
@@ -206,7 +210,7 @@ void Menu::PrintMenu(ButtonPressed button)
 	if(m_subOption >= children.size() || m_subOption < 0)
 	{
 		m_subOption = (byte) children.size();
-		m_Pinball->printText(szLine1, "Voltar", 0);
+		m_Pinball->printText(szLine1, "Back", 0);
 		m_backSelected = true;
 		return;
 	}

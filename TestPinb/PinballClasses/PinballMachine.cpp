@@ -98,7 +98,7 @@ PinballMachine::~PinballMachine()
 void PinballMachine::CreateObjects()
 //----------------------------------------
 {
-	m_muxInputs = new MultiplexInputs(/*S0*/23, /*S1*/25, /*S2*/27,/*S3*/29, /*SIn0*/22, /*SIn1*/34, /*SIn2*/36);
+	m_muxInputs = new MultiplexInputs(/*S0*/23, /*S1*/25, /*S2*/27,/*S3*/29, /*SIn0*/22, /*SIn1*/24, /*SIn2*/26);
 	m_LatchOutputLowVoltage = new LatchOutputs(LatchOutputLowSER, LatchOutputLowSRCLK, LatchOutputLowRCLK);
 	m_LatchOutputHighVoltage = new LatchOutputs(LatchOutputHighSER, LatchOutputHighSRCLK, LatchOutputHighRCLK);
 	m_LedControl = new LedControl();
@@ -701,7 +701,7 @@ void PinballMachine::playSong(int number, bool SFX/*=false*/)
 	{
 		m_playerMain->play(number);
 	}
-	else if (!SFX && m_playerSFX != NULL)
+	else if (SFX && m_playerSFX != NULL)
 	{
 		m_playerSFX->play(number);
 	}

@@ -127,6 +127,7 @@ void MultiplexInputs::loop()
 	for (byte ch = 0; ch < INPUTS_BY_CHIP; ch++)
 	{
 		_addressing(ch);
+		delay(10);
 
 		//channel 0-15
 		read = (byte) digitalRead(_sigInput1);
@@ -139,6 +140,8 @@ void MultiplexInputs::loop()
 		//channel 32-47
 		read = (byte) digitalRead(_sigInput3);
 		inputs[ch + INPUTS_BY_CHIP*2]->SetInput(read);
+
+		delay(10);
 	}
 
 	#ifdef DEBUGINPUTS
@@ -165,10 +168,9 @@ void MultiplexInputs::loop()
 void MultiplexInputs::_addressing(byte ch)
 //-----------------------------------------------
 {
-	if (ch < 16)
+	if (ch < INPUTS_BY_CHIP)
 	{
-		byte i;
-		for (i = 0; i < 4; i++)
+		for (byte i = 0; i < 4; i++)
 		{
 			digitalWrite(_adrsPin[i], _muxChAddress[ch][i]);
 		}

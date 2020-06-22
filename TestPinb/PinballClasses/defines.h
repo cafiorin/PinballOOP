@@ -9,13 +9,13 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
-#define DOS
-//#define ARDUINOLIB
-//#define LCD
+//#define DOS
+#define ARDUINOLIB
+#define LCD
 
 // To Show DEBUG messages
 //#define DEBUGINPUTS
-#define DEBUGMESSAGES
+//#define DEBUGMESSAGES
 //#define DEBUGMESSAGESLOOP
 //#define DEBUGMESSAGESCREATION
 //-----------------------

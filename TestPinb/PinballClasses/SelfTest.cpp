@@ -244,7 +244,8 @@ void SelfTest::DoTest()
 		{
 			DoPlaySound(false);
 		}
-		
+		break;
+
 		case EVENT_TEST_SFX_ONOFF:
 		{
 			DoSfxOnOff();
@@ -380,7 +381,7 @@ void SelfTest::DisplayInput()
 		for (byte index = INPUT_TEST_INIT; index <= INPUT_TEST_FINISH; index++)
 		{
 			values[indexValues] = m_Pinball->GetMuxInputs()->GetInput(index)->GetInput();
-			if (values[indexValues])
+			if (values[indexValues] != values[indexValues])
 			{
 				m_lastIndexHigh = index;
 			}
@@ -422,12 +423,16 @@ void SelfTest::DoPlaySound(bool board)
 	if (board)
 	{
 		m_Pinball->playSong(MP3_TESTSOUND);
-		m_Pinball->printText("Play", "board1", 0);
+		m_Pinball->printText("Playing", "Board1", 0);
+		delay(1000);
+		m_Pinball->printText("Sound", "Board1", 0);
 	}
 	else
 	{
 		m_Pinball->playSong(MP3_TESTSOUND,true);
-		m_Pinball->printText("Play", "board2", 0);
+		m_Pinball->printText("Playing", "Board2", 0);
+		delay(1000);
+		m_Pinball->printText("Sound", "Board2", 0);
 	}
 }
 
@@ -461,7 +466,7 @@ void SelfTest::FinishTest()
 }
 
 //---------------------------------------------------------------------//
-void SelfTest::onNotifySubject(EventType event, byte value)
+void SelfTest::onNotifySubject(EventType event, byte /*value*/)
 //---------------------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGES

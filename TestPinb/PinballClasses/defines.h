@@ -9,9 +9,10 @@ http://pinballhomemade.blogspot.com.br
 #define defines_h
 
 //-----------------------
+#define LCD
+
 //#define DOS
 #define ARDUINOLIB
-#define LCD
 
 // To Show DEBUG messages
 //#define DEBUGINPUTS

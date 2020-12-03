@@ -39,7 +39,7 @@ Playfield::Playfield(MultiplexInputs* multiplexInputs,
 	m_LockRampOff = m_LatchOutputLowVoltage->GetOuput(OUTPUT_RAMP_LOCK_OFF);
 
 	m_TurnFlipperOn = m_LatchOutputLowVoltage->GetOuput(OUTPUT_FLIPPER_ON_5V);
-	
+
 	m_OutBall = new OutBall(m_muxInputs->GetInput(INPUT_SW_OUTBALL1), 
 		m_LatchOutputHighVoltage->GetOuput(OUTPUT_OUTBALL1_48V),
 		m_muxInputs->GetInput(INPUT_SW_OUTBALL2), 
@@ -188,7 +188,9 @@ void Playfield::NextBall()
 void Playfield::changeStatus(StatusPinballMachine status)
 //-------------------------------------------------------//
 {
-	if (status == StatusPinballMachine::initplaymode)
+	if (status == StatusPinballMachine::initplaymode 
+		//TODO: To test , remove it
+		|| status == StatusPinballMachine::attractmode)
 	{
 		m_TurnFlipperOn->TurnOn();
 	}

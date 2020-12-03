@@ -327,24 +327,12 @@ void SelfTest::DoTestOutput()
 	Logger::LogMessage(F("SelfTest::DoTestOutput"));
 	#endif
 
-	BitOutput* pOutput = NULL;
-	while (pOutput == NULL)
-	{
-		pOutput = m_Pinball->GetOutputsLowVoltage()->GetOuput(m_startTestValue + OUTPUT_LOW_INIT);
-		if (pOutput == NULL)
-		{
-			IncrementTestValue();
-		}
-	}
-
-	if (pOutput != NULL)
-	{
-	  char szOut[5];
-	  sprintf(szOut, "%d", pOutput->GetPortNumber());
-	  m_Pinball->printText("Output", szOut, 0);
+	BitOutput* pOutput = m_Pinball->GetOutputsLowVoltage()->GetOuput(m_startTestValue + OUTPUT_LOW_INIT);
+	char szOut[5];
+	sprintf(szOut, "%d", pOutput->GetPortNumber());
+	m_Pinball->printText("Output", szOut, 0);
 		
-	  pOutput->TurnOnByTimer(1000);
-	}
+	pOutput->TurnOnByTimer(1000);
 }
 
 //---------------------------------------------------------------------//
@@ -358,9 +346,12 @@ void SelfTest::DoTestInput()
 	BitInput* pInput = m_Pinball->GetMuxInputs()->GetInput(m_startTestValue + INPUT_PLAYFIELD_INIT);
 	if (pInput != NULL)
 	{
+		char szInputOut[15];
+		sprintf(szInputOut, "In %d", pInput->GetPortNumber());
+
 		char szOut[15];
-		sprintf(szOut, "In%d : %d", pInput->GetPortNumber(), pInput->GetInput());
-		m_Pinball->printText("Input", szOut, 0);
+		sprintf(szOut, "%s", (pInput->GetInput()?"true":"false"));
+		m_Pinball->printText(szInputOut, szOut, 0);
 	}
 }
 

@@ -22,12 +22,17 @@ public:
 	virtual ~BitInput();
 
 	bool GetInput();
-	void SetInput(bool value) { m_inputValue = value; }
+	void SetInput(bool value) 
+	{ 
+		m_inputValueOld = m_inputValue;
+		m_inputValue = value;
+	}
 	void loop();
 	void AddObserverToEdgePositive(Observer* observer);
 	byte GetPortNumber() { return m_portNumber; }
 private:
 	bool m_inputValue;
+	bool m_inputValueOld;
 	byte m_portNumber;
 	unsigned long buttonDownMs;
 

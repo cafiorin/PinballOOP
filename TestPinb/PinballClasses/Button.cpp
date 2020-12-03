@@ -81,7 +81,7 @@ void Button::loop()
       }
       else if (prevState == LOW && m_state == HIGH) 
       {
-            if (Millis() - buttonDownMs < 250) 
+            if (Millis() - buttonDownMs < 20) 
             {
               // ignore this for debounce
             }

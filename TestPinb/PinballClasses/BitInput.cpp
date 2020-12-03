@@ -22,6 +22,7 @@ BitInput::BitInput(byte portNumber)
 	#endif
 
 	m_portNumber = portNumber;
+	m_inputValueOld = HIGH;
 	m_inputValue = HIGH;
 	m_EventEdgePositive = NULL;
 }
@@ -63,7 +64,7 @@ void BitInput::loop()
 	if (m_EventEdgePositive == NULL)
 		return;
 
-	bool prevState = m_inputValue;
+	bool prevState = m_inputValueOld;
 	m_inputValue = GetInput();
 	if (prevState == HIGH && m_inputValue == LOW)
 	{
@@ -74,6 +75,7 @@ void BitInput::loop()
 		if (Millis() - buttonDownMs > DEBOUNCE_TO_EDGE)
 		{
 			m_EventEdgePositive->notifyObserver();
+			m_inputValueOld = m_inputValue;
 		}
 	}
 }

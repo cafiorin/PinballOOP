@@ -197,7 +197,6 @@ void PinballMachine::Initialize()
 
 	printText("Pinball", "OK", 0);
 	delay(200);
-
 	ChangeStatus(StatusPinballMachine::attractmode);
 }
 
@@ -347,6 +346,7 @@ void PinballMachine::SetupTest(byte event)
 		}
 		else
 		{
+			ChangeStatus(StatusPinballMachine::menutest);
 			if (m_Menu != NULL)
 			{
 				m_Menu->StartTest(event);

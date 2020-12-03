@@ -204,7 +204,9 @@ byte main()
 				if (input != NULL)
 				{
 					bool value = input->GetInput();
-					input->SetInput(!value);
+					input->SetInput(true);
+					input->loop();
+					delay(100);
 					gotoxy(72 + 10 + ikeyCount, 21);
 				}
 			}

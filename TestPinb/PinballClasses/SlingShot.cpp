@@ -26,7 +26,9 @@ SlingShot::SlingShot(BitInput* input1, BitInput* input2, BitOutput* output) : Ob
 
 	m_input1 = input1;
 	m_input2 = input2;
-	
+	m_input1->AddObserverToEdgePositive(this);
+	m_input2->AddObserverToEdgePositive(this);
+
 	m_output = output;
 }
 

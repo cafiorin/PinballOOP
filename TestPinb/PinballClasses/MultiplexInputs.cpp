@@ -188,6 +188,16 @@ void MultiplexInputs::AddInputObserverToEdgePositive(byte ch, Observer* observer
 }
 
 //-----------------------------------------------
+void MultiplexInputs::AddInputObserverToEdgeNegative(byte ch, Observer* observer)
+//-----------------------------------------------
+{
+	if (ch < MAX_MUXINPUTS)
+	{
+		this->inputs[ch]->AddObserverToEdgeNegative(observer);
+	}
+}
+
+//-----------------------------------------------
 BitInput* MultiplexInputs::GetInput(byte ch)
 //-----------------------------------------------
 {

@@ -110,8 +110,8 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_SW_BUMPER_LEFT 24 //conector 4D - pin 8 
 #define INPUT_SW_BUMPER_CENTER 27 //conector 4D - pin 9 
 #define INPUT_SW_BUMPER_RIGHT 14 //conector 4D - pin 10 
-#define INPUT_SW_RAMP_IN 42 //conector 5E - pin 15
-#define INPUT_SW_RAMP_OUT1 35 //conector 5E - pin 16
+#define INPUT_SW_RAMP_IN 35 //conector 5E - pin 15
+#define INPUT_SW_RAMP_OUT1 42 //conector 5E - pin 16
 #define INPUT_SW_RAMP_OUT2 43 //conector 5E - pin 6
 #define INPUT_SW_SPINNER 12 //conector 3C - pin 17 
 #define INPUT_SW_HOLE 19 //conector 4D - pin 6 
@@ -147,16 +147,16 @@ http://pinballhomemade.blogspot.com.br
 #define OUTPUT_COINS_INIT 0
 #define OUTPUT_HOLE_48V 0 //0
 #define OUTPUT_OUTBALL2_48V 1
-#define OUTPUT_BUMPER_LEFT_48V 2
+#define OUTPUT_RETURNBALL_48V 2
 #define OUTPUT_SLINGSHOTLEFT_48V 3
 #define OUTPUT_SLINGSHOTRIGHT_48V 4
-#define OUTPUT_ACCBALL_48V 5
-#define OUTPUT_BUMPER_RIGHT_48V 6
+#define OUTPUT_ACCBALL_48V 5 
+#define OUTPUT_DROPTARGET5_48V 6
 #define OUTPUT_DROPTARGET3_48V 7
 #define OUTPUT_OUTBALL1_48V 8 // 8
-#define OUTPUT_DROPTARGET5_48V 9
+#define OUTPUT_BUMPER_LEFT_48V 9
 #define OUTPUT_BUMPER_CENTER_48V 10
-#define OUTPUT_RETURNBALL_48V 11
+#define OUTPUT_BUMPER_RIGHT_48V 11
 #define OUTPUT_COINS_FINISH 11
 
 //LEDS (STRIP)
@@ -245,17 +245,17 @@ http://pinballhomemade.blogspot.com.br
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #define DEBOUNCEREAD 5
 
-#define INPUT_MENU_BUTTON A1
-#define INPUT_UP_BUTTON A6
+#define INPUT_MENU_BUTTON A0
+#define INPUT_UP_BUTTON A2
 #define INPUT_DOWN_BUTTON A7
-#define INPUT_ENTER_BUTTON A2
+#define INPUT_ENTER_BUTTON A1
 
 #define INPUT_MENU_BUTTON_DEBUG A8
 #define INPUT_UP_BUTTON_DEBUG A9
 #define INPUT_DOWN_BUTTON_DEBUG A10
 #define INPUT_ENTER_BUTTON_DEBUG A11
 
-#define INPUT_START_BUTTON A0
+#define INPUT_START_BUTTON A6
 
 #define LatchOutputLowSER A4  //=> RCLK
 #define LatchOutputLowSRCLK A5 //=>SR_CLK

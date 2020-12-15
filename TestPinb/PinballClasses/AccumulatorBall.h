@@ -27,6 +27,7 @@ public:
 
 	virtual ~AccumulatorBall();
 	byte GetNumberBalls() {return m_nBalls;}
+	void VerifyNumberOfBalls();
 	void LanchBall();
 
 //virtual

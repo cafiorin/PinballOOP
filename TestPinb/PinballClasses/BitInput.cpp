@@ -25,6 +25,8 @@ BitInput::BitInput(byte portNumber)
 	m_inputValueOld = HIGH;
 	m_inputValue = HIGH;
 	m_EventEdgePositive = NULL;
+	m_EventEdgeNegative = NULL;
+
 }
 
 //-------------------------------------------------------//
@@ -36,6 +38,7 @@ BitInput::~BitInput()
 	#endif
 
 	delete m_EventEdgePositive;
+	delete m_EventEdgeNegative;
 }
 
 //------------------------------------------------//
@@ -58,10 +61,22 @@ void BitInput::AddObserverToEdgePositive(Observer* observer)
 }
 
 //------------------------------------------------//
+void BitInput::AddObserverToEdgeNegative(Observer* observer)
+//------------------------------------------------//
+{
+	if (m_EventEdgeNegative == NULL)
+	{
+		m_EventEdgeNegative = new Subject(EventType::EdgeNegative, m_portNumber);
+	}
+
+	m_EventEdgeNegative->registerObserver(observer);
+}
+
+//------------------------------------------------//
 void BitInput::loop()
 //------------------------------------------------//
 {
-	if (m_EventEdgePositive == NULL)
+	if (m_EventEdgePositive == NULL && m_EventEdgeNegative == NULL)
 		return;
 
 	bool prevState = m_inputValueOld;
@@ -69,14 +84,23 @@ void BitInput::loop()
 	if (prevState == HIGH && m_inputValue == LOW)
 	{
 		buttonDownMs = Millis();
+		if (m_EventEdgeNegative != NULL &&
+		   (buttonDownMs - buttonUpMs > DEBOUNCE_TO_EDGE))
+		{
+			m_EventEdgeNegative->notifyObserver();
+			m_inputValueOld = m_inputValue;
+		}
 	}
 	else if (prevState == LOW && m_inputValue == HIGH)
 	{
-		if (Millis() - buttonDownMs > DEBOUNCE_TO_EDGE)
+		buttonUpMs = Millis();
+		if (m_EventEdgePositive != NULL && 
+			buttonUpMs - buttonDownMs > DEBOUNCE_TO_EDGE)
 		{
 			m_EventEdgePositive->notifyObserver();
 			m_inputValueOld = m_inputValue;
 		}
 	}
+
 }
 

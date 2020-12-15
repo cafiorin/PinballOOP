@@ -29,14 +29,17 @@ public:
 	}
 	void loop();
 	void AddObserverToEdgePositive(Observer* observer);
+	void AddObserverToEdgeNegative(Observer* observer);
+
 	byte GetPortNumber() { return m_portNumber; }
 private:
 	bool m_inputValue;
 	bool m_inputValueOld;
 	byte m_portNumber;
 	unsigned long buttonDownMs;
-
+	unsigned long buttonUpMs;
 	Subject* m_EventEdgePositive;
+	Subject* m_EventEdgeNegative;
 };
 #endif 
 

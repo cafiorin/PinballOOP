@@ -49,6 +49,7 @@ protected:
 	char m_szOut[15];
 	char m_szHexa[15];
 	byte m_lastIndexHigh;
+	bool allValues[INPUT_TEST_FINISH + 1];
 
 
 };

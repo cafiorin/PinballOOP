@@ -51,6 +51,7 @@ public:
 
 	void loop();
 	void AddInputObserverToEdgePositive(byte ch, Observer* observer);
+	void AddInputObserverToEdgeNegative(byte ch, Observer* observer);
 	BitInput* GetInput(byte ch);
 
 private:

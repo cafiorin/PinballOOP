@@ -63,18 +63,7 @@ void OutBall::init()
 	}
 	else
 	{
-		byte nTries = 0;
-		while (m_input1->GetInput() && !m_input2->GetInput() && nTries < 5)
-		{
-			m_output1->Pulse(40);
-			delay(500);
-			nTries++;
-		}
-
-		if (nTries < 5)
-		{
-			m_nBalls = 4;
-		}
+		//TODO: Notify error
 	}
 
 	#ifdef DEBUGMESSAGES
@@ -102,7 +91,7 @@ void OutBall::onNotifySubject(EventType event, byte value)
 
 		if (m_input1->GetInput() && !m_input2->GetInput())
 		{
-			m_output1->Pulse(40);
+			m_output1->Pulse(20);
 		}
 	}
 }
@@ -122,7 +111,7 @@ void OutBall::LanchBall()
 		delay(300);
 		if (m_input1->GetInput() && !m_input2->GetInput())
 		{
-			m_output1->Pulse(40);
+			m_output1->Pulse(20);
 		}
 	}
 

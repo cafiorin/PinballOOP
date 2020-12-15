@@ -166,6 +166,12 @@ void SelfTest::StartTest(byte event)
 
 	m_MenuTest = event;
 	m_startTestValue = 0;
+	m_lastIndexHigh = 0;
+	for (byte index = INPUT_TEST_INIT; index <= INPUT_TEST_FINISH; index++)
+	{
+		allValues[index] = false;
+	}
+
 	DoTest();
 }
 
@@ -366,16 +372,19 @@ void SelfTest::DisplayInput()
 		#endif
 
 		bool values[8];
-		byte bytes[6];
+		byte bytes[8];
 
 		byte indexValues = 0, indexBytes = 0;
 		for (byte index = INPUT_TEST_INIT; index <= INPUT_TEST_FINISH; index++)
 		{
 			values[indexValues] = m_Pinball->GetMuxInputs()->GetInput(index)->GetInput();
-			if (values[indexValues] != values[indexValues])
+			if (values[indexValues] != allValues[index] &&
+				!allValues[index])
 			{
 				m_lastIndexHigh = index;
 			}
+			allValues[index] = values[indexValues];
+
 			indexValues++;
 			if (indexValues == 8)
 			{

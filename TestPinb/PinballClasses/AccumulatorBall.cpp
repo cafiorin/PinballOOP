@@ -30,10 +30,10 @@ AccumulatorBall::AccumulatorBall(byte portNumberInput1,
 	Logger::LogMessage(F("AccumulatorBall Constructor"));
 	#endif
 
-	inputs->AddInputObserverToEdgePositive(portNumberInput1, this);
-	inputs->AddInputObserverToEdgePositive(portNumberInput2, this);
-	inputs->AddInputObserverToEdgePositive(portNumberInput3, this);
-	inputs->AddInputObserverToEdgePositive(portNumberInput4, this);
+	inputs->AddInputObserverToEdgeNegative(portNumberInput1, this);
+	inputs->AddInputObserverToEdgeNegative(portNumberInput2, this);
+	inputs->AddInputObserverToEdgeNegative(portNumberInput3, this);
+	inputs->AddInputObserverToEdgeNegative(portNumberInput4, this);
 
 	m_input1 = inputs->GetInput(portNumberInput1);
 	m_input2 = inputs->GetInput(portNumberInput1);
@@ -43,6 +43,7 @@ AccumulatorBall::AccumulatorBall(byte portNumberInput1,
 	m_output = outputHighVoltage->GetOuput(portNumberOutput);
 
 	m_nBalls = 0;
+	VerifyNumberOfBalls();
 }
 
 //-------------------------------------------------------//
@@ -65,7 +66,7 @@ void AccumulatorBall::init()
 	byte nTries = 5;
 	while (m_nBalls > 0 || nTries > 0)
 	{
-		if (m_input1->GetInput())
+		if (!m_input1->GetInput()) //false there are balls
 		{
 			LanchBall();
 			delay(1000);
@@ -75,6 +76,15 @@ void AccumulatorBall::init()
 	m_nBalls = 0;
 }
 
+void AccumulatorBall::VerifyNumberOfBalls()
+{
+	bool input1 = m_input1->GetInput();
+	bool input2 = m_input2->GetInput();
+	bool input3 = m_input3->GetInput();
+	bool input4 = m_input4->GetInput();
+
+	m_nBalls = (int)!input1 + (int)!input2 + (int)!input3 + (int)!input4;
+}
 
 //-------------------------------------------------------//
 void AccumulatorBall::onNotifySubject(EventType event, byte /*value*/)
@@ -84,14 +94,14 @@ void AccumulatorBall::onNotifySubject(EventType event, byte /*value*/)
 	Logger::LogMessage(F("AccumulatorBall::NotifyEvent"));
 	#endif
 
-	if (event == EventType::EdgePositive)
+	if (event == EventType::EdgeNegative)
 	{
 		bool input1 = m_input1->GetInput();
 		bool input2 = m_input2->GetInput();
 		bool input3 = m_input3->GetInput();
 		bool input4 = m_input4->GetInput();
 
-		m_nBalls = (int)input1 + (int)input2 + (int)input3 + (int)input4;
+		m_nBalls = (int)!input1 + (int)!input2 + (int)!input3 + (int)!input4;
 	}
 }
 

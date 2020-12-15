@@ -44,3 +44,5 @@ TestPinb/TestPinb.cscope_file_list
 *.ipch
 *.opendb
 *.suo
+.vs/TestPinb/v16/Browse.VC.db-shm
+.vs/TestPinb/v16/Browse.VC.db-wal

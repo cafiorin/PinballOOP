@@ -33,6 +33,8 @@ public:
 	void changeStatus(StatusPinballMachine status);
 
 private:
+	StatusPinballMachine m_Status;
+
 	MultiplexInputs* m_muxInputs;
 	LatchOutputs* m_LatchOutputLowVoltage;
 	LatchOutputs* m_LatchOutputHighVoltage;

@@ -1,3 +1,5 @@
+#include "PinballMachine.h"
+
 #include "Playfield.h"
 #include "LatchOutputs.h"
 #include "MultiplexInputs.h"
@@ -23,6 +25,8 @@ Playfield::Playfield(MultiplexInputs* multiplexInputs,
 					LedControl* ledControl) : Observer(), ChangeableStatus()
 //-------------------------
 {
+	m_Status = StatusPinballMachine::initializing;
+
 	m_muxInputs = multiplexInputs;
 	m_LatchOutputLowVoltage = latchOutputsLow;
 	m_LatchOutputHighVoltage = LatchOutputsHigh;
@@ -144,6 +148,10 @@ void Playfield::onNotifySubject(EventType event, byte value)
 	switch (event)
 	{
 		case EventType::EdgePositive:
+			if (m_Status == StatusPinballMachine::playingmode)
+			{
+				PinballMachine::PlaySongToInput(value);
+			}
 			break;
 
 		case EventType::BallKickHole:
@@ -188,6 +196,7 @@ void Playfield::NextBall()
 void Playfield::changeStatus(StatusPinballMachine status)
 //-------------------------------------------------------//
 {
+	m_Status = status;
 	if (status == StatusPinballMachine::initplaymode 
 		//TODO: To test , remove it
 		|| status == StatusPinballMachine::attractmode)

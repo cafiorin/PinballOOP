@@ -36,11 +36,11 @@ public :
 	void Setup(HardwareSerial* serial);
 	#endif
 
-	void playSong(int number, bool SFX=false);
-	void ChangeVolume(bool plus);
-	void PlaySongToInput(byte);
-	void clearDisplay(byte = 0);
-	void printText(char*, char*, char);
+	static void playSong(int number, bool SFX=false);
+	static void ChangeVolume(bool plus);
+	static void PlaySongToInput(byte);
+	static void clearDisplay(byte = 0);
+	static void printText(char*, char*, char);
 
 	void EnableSFX(bool enable) { m_enableSfx = enable; }
 	bool IsEnabledSFX() { return m_enableSfx; }
@@ -90,9 +90,9 @@ private :
 	void ChangeStatus(StatusPinballMachine status);
 
 #ifdef ARDUINOLIB
-	DFRobotDFPlayerMini* m_playerMain;
-	DFRobotDFPlayerMini* m_playerSFX;
-	LiquidCrystal_I2C* m_lcd;
+	static DFRobotDFPlayerMini* m_playerMain;
+	static DFRobotDFPlayerMini* m_playerSFX;
+	static LiquidCrystal_I2C* m_lcd;
 #endif // ARDUINOLIB
 
 

@@ -322,7 +322,7 @@ void SelfTest::DoTestCoin()
 	sprintf(szCoin, "%d", coinToTest);
 	m_Pinball->printText("Coin", szCoin, 0);
 
-	m_Pinball->GetOutputsHighVoltage()->GetOuput(coinToTest)->Pulse(500);
+	m_Pinball->GetOutputsHighVoltage()->GetOuput(coinToTest)->TurnOnByTimer();
 }
 
 //---------------------------------------------------------------------//

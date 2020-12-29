@@ -152,7 +152,7 @@ void DropTarget::Reset()
 	#endif
 
 	m_AllTargets = false;
-	m_output->Pulse();
+	m_output->TurnOnByTimer(200);
 }
 
 //------------------------------------------------//

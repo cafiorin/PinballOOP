@@ -14,6 +14,7 @@ http://pinballhomemade.blogspot.com.br
 
 class BitOutput;
 class Subject;
+class NewTimer;
 
 class KickoutHole : public Observer, public Initializable
 {
@@ -33,6 +34,7 @@ protected:
 	BitInput* m_input;
 	BitOutput* m_output;
 	Subject* m_EventToBallKickHole;
+	NewTimer* m_TimerAvoidOn;
 
 };
 #endif // !defined(KickoutHole__INCLUDED_)

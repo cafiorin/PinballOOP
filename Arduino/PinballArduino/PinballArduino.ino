@@ -39,7 +39,10 @@ void setup()
 
 	lcd.init();                      
 	lcd.backlight();
-	
+
+
+  DFPlayerMain.volume(5);
+  DFPlayerSFX.volume(10);
 	//Pinball    
     m_pinball.Setup(&DFPlayerMain, &DFPlayerSFX , &Serial, &lcd);
     Serial.println(F("End setup"));

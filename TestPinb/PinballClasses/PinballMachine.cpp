@@ -69,6 +69,9 @@ void PinballMachine::Setup(DFRobotDFPlayerMini *DFPlayerMain, DFRobotDFPlayerMin
 	m_Logger = new Logger(m_Serial);
 	m_playerMain = DFPlayerMain;
 	m_playerSFX = DFPlayerSFX;
+
+	//m_playerMain->volume(5); //(0-30)
+	//m_playerSFX->volume(10);
 	m_lcd = lcd;
 
 	ht1632_setup();
@@ -103,9 +106,9 @@ PinballMachine::~PinballMachine()
 void PinballMachine::CreateObjects()
 //----------------------------------------
 {
+	m_LatchOutputHighVoltage = new LatchOutputs(LatchOutputHighSER, LatchOutputHighSRCLK, LatchOutputHighRCLK, RESET_LATCH);
+	m_LatchOutputLowVoltage = new LatchOutputs(LatchOutputLowSER, LatchOutputLowSRCLK, LatchOutputLowRCLK, RESET_LATCH);
 	m_muxInputs = new MultiplexInputs(/*S0*/23, /*S1*/25, /*S2*/27,/*S3*/29, /*SIn0*/22, /*SIn1*/24, /*SIn2*/26);
-	m_LatchOutputLowVoltage = new LatchOutputs(LatchOutputLowSER, LatchOutputLowSRCLK, LatchOutputLowRCLK);
-	m_LatchOutputHighVoltage = new LatchOutputs(LatchOutputHighSER, LatchOutputHighSRCLK, LatchOutputHighRCLK);
 	m_LedControl = new LedControl();
 	
 	//m_Sequencer = new Sequencer()

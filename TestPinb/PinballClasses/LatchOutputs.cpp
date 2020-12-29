@@ -10,7 +10,7 @@
 #endif
 
 //-----------------------------------------------
-LatchOutputs::LatchOutputs(const byte latchPin, const byte clockPin, const byte dataPin)
+LatchOutputs::LatchOutputs(const byte latchPin, const byte clockPin, const byte dataPin, byte resetPin)
 //-----------------------------------------------
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -24,12 +24,19 @@ LatchOutputs::LatchOutputs(const byte latchPin, const byte clockPin, const byte 
 	pinMode(latchPin, OUTPUT);
 	pinMode(clockPin, OUTPUT);
 	pinMode(dataPin, OUTPUT);
+	
+	pinMode(resetPin, OUTPUT);
+	
+	digitalWrite(resetPin, 0);
+	delay(100);
+	digitalWrite(resetPin, 1);
 
 	for (byte i = 0; i < MAX_OUTPUTS; i++)
 	{
 		outputs[i] = new BitOutput(this, i);
 	}
 
+	writeAllOutput();
 	resetAllOutput();
 }
 

@@ -11,7 +11,7 @@ class Observer;
 class LatchOutputs 
 {
 public:
-	LatchOutputs(const byte latchPin, const byte clockPin, const byte dataPin);
+	LatchOutputs(const byte latchPin, const byte clockPin, const byte dataPin, const byte resetPin);
 	~LatchOutputs();
 
 	void AddOutputObserverToTurnOn(byte ch, Observer* observer);

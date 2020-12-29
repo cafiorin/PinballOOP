@@ -76,7 +76,7 @@ void ReturnKickBall::onNotifySubject(EventType event, byte /*value*/)
 		{
 			if (m_returnBallOn)
 			{
-				m_output->Pulse();
+				m_output->TurnOnByTimer();
 			}
 		}
 		else if (event == EventType::TimeIsOver)

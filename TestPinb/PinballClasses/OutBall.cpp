@@ -21,7 +21,7 @@ http://pinballhomemade.blogspot.com.br
 #include "Logger.h"
 
 //-------------------------------------------------------//
-OutBall::OutBall(BitInput* input1, BitOutput* output1, BitInput* input2, BitOutput* output2) : Observer(), Initializable()
+OutBall::OutBall(BitInput* input1, BitOutput* output1, BitInput* input2, BitOutput* output2, BitInput *alreadyBall) : Observer(), Initializable()
 //-------------------------------------------------------//
 {
 	#ifdef DEBUGMESSAGESCREATION
@@ -34,6 +34,7 @@ OutBall::OutBall(BitInput* input1, BitOutput* output1, BitInput* input2, BitOutp
 	m_output1 = output1;
 	m_input2 = input2;
 	m_output2 = output2;
+	m_alreadyBall = alreadyBall;
 
 	m_nBalls = 4;
 }
@@ -79,19 +80,20 @@ void OutBall::onNotifySubject(EventType event, byte value)
 	Logger::LogMessage(F("OutBall::NotifyEvent"));
 	#endif
 
-	if (event == EventType::EdgePositive && 
-		value == m_input1->GetPortNumber())
+	if (event == EventType::EdgePositive)
 	{
 		AddBall();
+		
+		delay(300);
+		if (!m_input2->GetInput())
+		{
+			m_output1->Pulse(30);
+		}
+		delay(300);
 
 		if (m_EventToLostBall != NULL)
 		{
 			m_EventToLostBall->notifyObserver();
-		}
-
-		if (m_input1->GetInput() && !m_input2->GetInput())
-		{
-			m_output1->Pulse(20);
 		}
 	}
 }
@@ -104,15 +106,16 @@ void OutBall::LanchBall()
 	Logger::LogMessage(F("OutBall::LanchBall"));
 	#endif
 
-	if (m_nBalls > 0)
+	if (m_nBalls > 0 && !m_alreadyBall->GetInput())
 	{
 		RemoveBall();
 		m_output2->Pulse(800);
 		delay(300);
-		if (m_input1->GetInput() && !m_input2->GetInput())
-		{
-			m_output1->Pulse(20);
-		}
+	}
+
+	if (m_input1->GetInput() && !m_input2->GetInput())
+	{
+		m_output1->Pulse(30);
 	}
 
 }

@@ -245,6 +245,11 @@ http://pinballhomemade.blogspot.com.br
 #pragma GCC diagnostic ignored "-Wwrite-strings"
 #define DEBOUNCEREAD 5
 
+#define PIN_A12  (66)
+#define PIN_A13  (67)
+#define PIN_A14  (68)
+#define PIN_A15  (69)
+
 #define INPUT_MENU_BUTTON A0
 #define INPUT_UP_BUTTON A2
 #define INPUT_DOWN_BUTTON A7
@@ -254,6 +259,7 @@ http://pinballhomemade.blogspot.com.br
 #define INPUT_UP_BUTTON_DEBUG A9
 #define INPUT_DOWN_BUTTON_DEBUG A10
 #define INPUT_ENTER_BUTTON_DEBUG A11
+#define RESET_LATCH PIN_A12
 
 #define INPUT_START_BUTTON A6
 

@@ -53,7 +53,7 @@ void SlingShot::onNotifySubject(EventType event, byte /*value*/)
 
 	if (event == EventType::EdgePositive)
 	{
-		m_output->Pulse();
+		m_output->TurnOnByTimer();
 	}
 }
 

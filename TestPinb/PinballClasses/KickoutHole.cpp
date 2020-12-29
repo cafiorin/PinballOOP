@@ -8,6 +8,7 @@ http://pinballhomemade.blogspot.com.br
 #include "KickoutHole.h"
 #include "BitInput.h"
 #include "BitOutput.h"
+#include "NewTimer.h"
 #include "Observer.h"
 #include "Subject.h"
 #include "Initializable.h"
@@ -25,6 +26,9 @@ KickoutHole::KickoutHole(BitInput* input, BitOutput* output) : Observer(), Initi
 	
 	m_input = input;
 	input->AddObserverToEdgePositive(this);
+	
+	m_TimerAvoidOn = new NewTimer(300, NewTimerType::once, this);
+	//m_TimerAvoidOn->AddObserverToTimeIsOver(this);
 
 	m_output = output;
 }
@@ -38,6 +42,7 @@ KickoutHole::~KickoutHole()
 	#endif
 
 	delete m_EventToBallKickHole;
+	delete m_TimerAvoidOn;
 }
 
 //-------------------------------------------------------//
@@ -82,9 +87,10 @@ void KickoutHole::LanchBall()
 	Logger::LogMessage(F("KickoutHole::LanchBall"));
 	#endif
 
-	if (m_input->GetInput())
+	if (m_input->GetInput() && !m_TimerAvoidOn->IsRunning())
 	{
-		m_output->Pulse();
+		m_output->TurnOnByTimer();
+		m_TimerAvoidOn->Start();
 	}
 }
 

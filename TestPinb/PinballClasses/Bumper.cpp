@@ -48,8 +48,8 @@ void Bumper::onNotifySubject(EventType event, byte /*value*/)
 
 	if (event == EventType::EdgePositive)
 	{
-		m_output->Pulse();
-		m_Led->TurnOnByTimer(500);
+		m_output->TurnOnByTimer();
+		m_Led->TurnOnByTimer(200);
 		if (m_EventToBumperActivated != NULL)
 			m_EventToBumperActivated->notifyObserver();
 	}

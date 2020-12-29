@@ -102,6 +102,8 @@ void AccumulatorBall::onNotifySubject(EventType event, byte /*value*/)
 		bool input4 = m_input4->GetInput();
 
 		m_nBalls = (int)!input1 + (int)!input2 + (int)!input3 + (int)!input4;
+
+		LanchBall();
 	}
 }
 

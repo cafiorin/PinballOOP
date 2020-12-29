@@ -20,7 +20,7 @@ class Subject;
 class OutBall : public Observer, public Initializable
 {
 public:
-	OutBall(BitInput* input1, BitOutput* output1, BitInput* input2, BitOutput* output2);
+	OutBall(BitInput* input1, BitOutput* output1, BitInput* input2, BitOutput* output2, BitInput* alreadyBall);
 
 	//virtual
 	virtual ~OutBall();
@@ -36,7 +36,8 @@ protected:
 	BitInput *m_input1;
 	BitOutput *m_output1;
 	BitInput *m_input2;
-	BitOutput *m_output2;
+	BitOutput* m_output2;
+	BitInput* m_alreadyBall;
 	byte m_nBalls;
 
 	void AddBall() { (m_nBalls + 1) > MAX_PINBALLBALL ? m_nBalls = MAX_PINBALLBALL : m_nBalls++; }

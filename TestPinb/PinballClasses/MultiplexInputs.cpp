@@ -141,7 +141,7 @@ void MultiplexInputs::loop()
 		read = (byte) digitalRead(_sigInput3);
 		inputs[ch + INPUTS_BY_CHIP*2]->SetInput(read);
 
-		delay(10);
+		//delay(10);
 	}
 
 	#ifdef DEBUGINPUTS

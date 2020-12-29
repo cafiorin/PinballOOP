@@ -66,7 +66,7 @@ void MultiplexOutputs::resetAllOutput()
 	for (byte i = 0; i < 16; i++)
 	{
 		_addressingS1(i);
-		delay(25);
+		delay(10);
 	}
 }
 

@@ -26,6 +26,7 @@ public:
 
 	virtual ~NewTimer();
 	byte GetId() { return m_Id; }
+	bool IsRunning() { return m_enabled; }
 
 	void loop();
 	void Start();

@@ -47,7 +47,10 @@ Playfield::Playfield(MultiplexInputs* multiplexInputs,
 	m_OutBall = new OutBall(m_muxInputs->GetInput(INPUT_SW_OUTBALL1), 
 		m_LatchOutputHighVoltage->GetOuput(OUTPUT_OUTBALL1_48V),
 		m_muxInputs->GetInput(INPUT_SW_OUTBALL2), 
-		m_LatchOutputHighVoltage->GetOuput(OUTPUT_OUTBALL2_48V));
+		m_LatchOutputHighVoltage->GetOuput(OUTPUT_OUTBALL2_48V),
+		m_muxInputs->GetInput(INPUT_SW_LAUNCHBALL));
+
+	m_OutBall->AddObserverToLostBall(this);
 
 	m_Hole = new KickoutHole(m_muxInputs->GetInput(INPUT_SW_HOLE), 
 		m_LatchOutputHighVoltage->GetOuput(OUTPUT_HOLE_48V));
@@ -145,6 +148,15 @@ Playfield::~Playfield()
 void Playfield::onNotifySubject(EventType event, byte value)
 //---------------------------------------------------------------------//
 {
+	if (m_Status == StatusPinballMachine::playingmode)
+	{
+		char szValue[5];
+		char szEvent[5];
+		sprintf(szValue, "%d", value);
+		sprintf(szEvent, "%d", event);
+		PinballMachine::printText(szEvent, szValue, 0);
+	}
+
 	switch (event)
 	{
 		case EventType::EdgePositive:
@@ -187,8 +199,13 @@ void Playfield::StartGame()
 
 void Playfield::NextBall()
 {
+	PinballMachine::printText("Next", "ball", 0);
 	delay(500);
 	m_OutBall->LanchBall();
+	delay(200);
+	m_DropTarget3->Reset();
+	delay(200);
+	m_DropTarget5->Reset();
 }
 
 
